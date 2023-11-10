@@ -1,13 +1,20 @@
-package theme
+package presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
 
-val PrimaryColor = Color(0xFFEA515E)
+val PrimaryColor = Color(0xFFFF4747)
 val PrimaryVariantColor = Color(0xFFCA3D49)
 val AccentColor = Color(0xFFC62F79)
 val AccentVariantColor = Color(0xFFB82A70)
 
+val Grey = Color(0xFF404649)
+
+val PagerDotColor = Color(0xFFC4CDD3)
+val IconColorGrey = Grey
+
+val TextFieldColor = Color(0xFFf6f6f6)
+val BorderColor = Color(0xFFDBDBDC)
 
 
 val amber_050 = Color(0xFFfff8e1) // Use with black text
