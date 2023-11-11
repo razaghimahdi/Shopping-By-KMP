@@ -18,7 +18,7 @@ Our goal is to create a high-quality, multiplatform shopping application that de
 Please stay tuned for updates and feel free to contribute to the project by submitting pull requests or opening issues. 
 Together, we can create a great shopping application that meets the needs of users across multiple platforms.
 
-![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.jpg)
+![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.png)
 
 ## Architecture
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
@@ -41,7 +41,7 @@ you can get the same experience for Android as if you were developing an Android
 
 | Splash                                            | Sign In                                           | Sign Up                                           | Main(Home)                                        |
 |---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|
-| <img src="screenshots/android1.jpg" width="300"/> | <img src="screenshots/android2.jpg" width="300"/> | <img src="screenshots/android3.jpg" width="300"/> | <img src="screenshots/android4.jpg" width="300"/> |
+| <img src="screenshots/android1.png" width="300"/> | <img src="screenshots/android2.png" width="300"/> | <img src="screenshots/android3.png" width="300"/> | <img src="screenshots/android4.png" width="300"/> |
 
 
 ### IOS
@@ -53,7 +53,7 @@ You can use the same APIs to build user interfaces for both Android and iOS.
 
 | Splash                                        | Sign In                                       | Sign Up                                       | Main(Home)                                    |
 |-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
-| <img src="screenshots/ios1.jpg" width="300"/> | <img src="screenshots/ios2.jpg" width="300"/> | <img src="screenshots/ios3.jpg" width="300"/> | <img src="screenshots/ios4.jpg" width="300"/> |
+| <img src="screenshots/ios1.png" width="300"/> | <img src="screenshots/ios2.png" width="300"/> | <img src="screenshots/ios3.png" width="300"/> | <img src="screenshots/ios4.png" width="300"/> |
 
 
 ## Contributing
