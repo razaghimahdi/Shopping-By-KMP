@@ -39,9 +39,9 @@ It's also responsible for mapping data from the domain layer into a format that 
 When Android is one of your targets, 
 you can get the same experience for Android as if you were developing an Android app using Jetpack Compose.
 
-| Splash                                     | Main                                       | Detail                                     |
-|--------------------------------------------|--------------------------------------------|--------------------------------------------|
-| <img src="screenshots/android3.jpg" width="300"/> | <img src="screenshots/android1.jpg" width="300"/> | <img src="screenshots/android2.jpg" width="300"/> |
+| Splash                                            | Sign In                                           | Sign Up                                           | Main(Home)                                        |
+|---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|
+| <img src="screenshots/android1.jpg" width="300"/> | <img src="screenshots/android2.jpg" width="300"/> | <img src="screenshots/android3.jpg" width="300"/> | <img src="screenshots/android4.jpg" width="300"/> |
 
 
 ### IOS
@@ -51,9 +51,9 @@ Compose Multiplatform shares most of its API with Jetpack Compose, the Android U
 You can use the same APIs to build user interfaces for both Android and iOS.
 
 
-| Splash                                     | Main                                       | Detail                                     |
-|--------------------------------------------|--------------------------------------------|--------------------------------------------|
-| <img src="screenshots/ios3.jpg" width="300"/> | <img src="screenshots/ios1.jpg" width="300"/> | <img src="screenshots/ios2.jpg" width="300"/> |
+| Splash                                        | Sign In                                       | Sign Up                                       | Main(Home)                                    |
+|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
+| <img src="screenshots/ios1.jpg" width="300"/> | <img src="screenshots/ios2.jpg" width="300"/> | <img src="screenshots/ios3.jpg" width="300"/> | <img src="screenshots/ios4.jpg" width="300"/> |
 
 
 ## Contributing
