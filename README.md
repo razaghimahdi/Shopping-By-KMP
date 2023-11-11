@@ -59,7 +59,7 @@ Contributions are welcome! If you have any feedback or suggestions, please don't
 We appreciate your contributions and support. Also if you find a bug or would like to create a new feature, please submit a pull request.
 
 ## License
-This library is licensed under the MIT License. See [LICENSE.txt](https://github.com/razaghimahdi/ShopKmp01/blob/master/license)
+This library is licensed under the MIT License. See [LICENSE.txt](https://github.com/razaghimahdi/Shoping-By-KMP/blob/master/LICENSE)
 
 
 ### more ideas:
