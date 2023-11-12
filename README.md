@@ -21,7 +21,7 @@ Our goal is to create a high-quality, multiplatform shopping application that de
 Please stay tuned for updates and feel free to contribute to the project by submitting pull requests or opening issues. 
 Together, we can create a great shopping application that meets the needs of users across multiple platforms.
 
-![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.png)
+![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.jpg)
 
 ## Architecture
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
