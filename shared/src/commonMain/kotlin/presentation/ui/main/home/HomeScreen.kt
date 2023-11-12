@@ -7,6 +7,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,10 +61,12 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultScreenUI
+import presentation.component.ProductBox
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
+import presentation.theme.BackgroundContent
 import presentation.theme.IconColorGrey
 import presentation.theme.PagerDotColor
 
@@ -84,7 +87,6 @@ fun HomeScreen() {
 
     DefaultScreenUI() {
         Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-
             Column(
                 modifier = Modifier.fillMaxWidth().background(
                     MaterialTheme.colorScheme.primary,
@@ -219,7 +221,260 @@ fun HomeScreen() {
                 )
             }
 
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp)
+            ) {
+                CategoryBox(title = "Clothes", image = "shirt.xml")
+                CategoryBox(title = "Computer", image = "pc.xml")
+                CategoryBox(title = "Shoes", image = "shoes.xml")
+                CategoryBox(title = "Watch", image = "watch.xml")
+                CategoryBox(title = "Mobile", image = "phone.xml")
+            }
 
+
+
+            Spacer_16dp()
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text("Flash Sale", style = MaterialTheme.typography.titleLarge)
+                    TimerBox()
+                }
+                Text(
+                    "See All",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp)
+            ) {
+                ProductBox(
+                    title = "Nike model-934",
+                    rate = "4.5",
+                    isLike = true,
+                    price = "$120.00",
+                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5b0981ff-45f8-40c3-9372-32430a62aaea/dunk-high-womens-shoes-PXHcGT.png",
+                )
+                ProductBox(
+                    title = "Nike model-637",
+                    rate = "3.4",
+                    isLike = false,
+                    price = "$180.00",
+                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
+                )
+                ProductBox(
+                    title = "Shirt model-232",
+                    rate = "2.4",
+                    isLike = false,
+                    price = "$99.00",
+                    image = "https://thumblr.uniid.it/product/184401/802183c05c13.jpg",
+                )
+                ProductBox(
+                    title = "Shirt model-131",
+                    rate = "4.4",
+                    isLike = true,
+                    price = "$82.00",
+                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
+                )
+            }
+
+
+
+            Spacer_16dp()
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Most Sale", style = MaterialTheme.typography.titleLarge)
+                Text(
+                    "See All",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp)
+            ) {
+
+                ProductBox(
+                    title = "SmartWatch-113",
+                    rate = "2.4",
+                    isLike = false,
+                    price = "$530.00",
+                    image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
+                )
+                ProductBox(
+                    title = "Shirt model-131",
+                    rate = "4.4",
+                    isLike = true,
+                    price = "$82.00",
+                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
+                )
+                ProductBox(
+                    title = "SmartWatch-113",
+                    rate = "4.5",
+                    isLike = true,
+                    price = "$999.00",
+                    image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
+                )
+                ProductBox(
+                    title = "Nike model-637",
+                    rate = "3.4",
+                    isLike = false,
+                    price = "$180.00",
+                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
+                )
+            }
+
+
+
+            Spacer_16dp()
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Newest Products", style = MaterialTheme.typography.titleLarge)
+                Text(
+                    "See All",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 8.dp)
+            ) {
+
+                ProductBox(
+                    title = "SmartWatch-113",
+                    rate = "4.5",
+                    isLike = true,
+                    price = "$999.00",
+                    image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
+                )
+                ProductBox(
+                    title = "SmartWatch-113",
+                    rate = "2.4",
+                    isLike = false,
+                    price = "$530.00",
+                    image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
+                )
+                ProductBox(
+                    title = "Shirt model-131",
+                    rate = "4.4",
+                    isLike = true,
+                    price = "$82.00",
+                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
+                )
+                ProductBox(
+                    title = "Nike model-637",
+                    rate = "3.4",
+                    isLike = false,
+                    price = "$180.00",
+                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
+                )
+            }
+
+
+        }
+    }
+}
+
+
+@Composable
+fun TimerBox() {
+    Row(
+        modifier = Modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
+        Box(
+            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+                .padding(4.dp)
+        ) {
+            Text(
+                "02",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+        Text(
+            ":",
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.labelMedium
+        )
+        Box(
+            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+                .padding(4.dp)
+        ) {
+            Text(
+                "13",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+        Text(
+            ":",
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.labelMedium
+        )
+
+        Box(
+            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+                .padding(4.dp)
+        ) {
+            Text(
+                "54",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+    }
+
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun CategoryBox(title: String, image: String) {
+    Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier.background(BackgroundContent, CircleShape).size(60.dp)
+                    .padding(12.dp)
+            ) {
+                Icon(
+                    painterResource(image),
+                    null,
+                    modifier = Modifier.fillMaxSize(),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+            Spacer_8dp()
+            Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1)
         }
     }
 }
