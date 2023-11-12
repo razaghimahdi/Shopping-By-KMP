@@ -7,6 +7,7 @@ val PrimaryColor = Color(0xFFFF4747)
 val PrimaryVariantColor = Color(0xFFCA3D49)
 val AccentColor = Color(0xFFC62F79)
 val AccentVariantColor = Color(0xFFB82A70)
+val BackgroundContent = Color(0xFFf6f6f6)
 
 val Grey = Color(0xFF404649)
 
