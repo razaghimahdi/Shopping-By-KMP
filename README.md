@@ -32,7 +32,7 @@ It's also responsible for mapping data from the domain layer into a format that 
 
 **Domain**: This layer includes the business logic and use cases of the application. It's also responsible for defining the data models and the repository interfaces.
 
-**Data**: This layer includes the repository implementation that fetches data from the https://fakestoreapi.com server using Ktor after that cache data from network using SqlDelight.
+**Data**: This layer includes the repository implementation that fetches data from the backend using Ktor.
 
  <img src="https://user-images.githubusercontent.com/61207818/232203143-1815f502-18d4-4051-b636-dc016699c770.png" alt="Clean Architecture in Android" width="600"/>
 
