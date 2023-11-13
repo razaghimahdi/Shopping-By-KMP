@@ -66,6 +66,7 @@ import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
+import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
 import presentation.theme.IconColorGrey
 import presentation.theme.PagerDotColor
@@ -78,7 +79,7 @@ val sampleBannerList = listOf<String>(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navigateToDetail: () -> Unit) {
 
 
     // val pagerState = rememberPagerState { sampleBannerList.size }
@@ -266,28 +267,28 @@ fun HomeScreen() {
                     isLike = true,
                     price = "$120.00",
                     image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5b0981ff-45f8-40c3-9372-32430a62aaea/dunk-high-womens-shoes-PXHcGT.png",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Nike model-637",
                     rate = "3.4",
                     isLike = false,
                     price = "$180.00",
                     image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Shirt model-232",
                     rate = "2.4",
                     isLike = false,
                     price = "$99.00",
                     image = "https://thumblr.uniid.it/product/184401/802183c05c13.jpg",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Shirt model-131",
                     rate = "4.4",
                     isLike = true,
                     price = "$82.00",
                     image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                )
+                ) { navigateToDetail() }
             }
 
 
@@ -319,28 +320,28 @@ fun HomeScreen() {
                     isLike = false,
                     price = "$530.00",
                     image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Shirt model-131",
                     rate = "4.4",
                     isLike = true,
                     price = "$82.00",
                     image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "SmartWatch-113",
                     rate = "4.5",
                     isLike = true,
                     price = "$999.00",
                     image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Nike model-637",
                     rate = "3.4",
                     isLike = false,
                     price = "$180.00",
                     image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                )
+                ) { navigateToDetail() }
             }
 
 
@@ -372,28 +373,28 @@ fun HomeScreen() {
                     isLike = true,
                     price = "$999.00",
                     image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "SmartWatch-113",
                     rate = "2.4",
                     isLike = false,
                     price = "$530.00",
                     image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Shirt model-131",
                     rate = "4.4",
                     isLike = true,
                     price = "$82.00",
                     image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                )
+                ) { navigateToDetail() }
                 ProductBox(
                     title = "Nike model-637",
                     rate = "3.4",
                     isLike = false,
                     price = "$180.00",
                     image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                )
+                ) { navigateToDetail() }
             }
 
 
@@ -494,9 +495,7 @@ fun BannerImage(it: String, onFocusedChanged: () -> Unit) {
             elevation = CardDefaults.cardElevation(8.dp)
         ) {
             Image(
-                painter = rememberImagePainter(
-                    it,
-                    placeholderPainter = { painterResource("default_image_loader.png") }),
+                painter = rememberCustomImagePainter(it),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
