@@ -41,20 +41,30 @@ import presentation.theme.orange_400
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun ProductBox(title: String, rate: String, isLike: Boolean, price: String, image: String) {
-    Box(modifier = Modifier.padding(8.dp)) {
+fun ProductBox(
+    title: String,
+    rate: String,
+    isLike: Boolean,
+    price: String,
+    image: String,
+    onClick: () -> Unit
+) {
+    Box(modifier = Modifier.padding(8.dp).noRippleClickable { onClick() }) {
         Column(modifier = Modifier.width(180.dp).height(240.dp)) {
-            Box(modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f).clip(MaterialTheme.shapes.small)) {
+            Box(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f)
+                    .clip(MaterialTheme.shapes.small)
+            ) {
                 Image(
-                    painter = rememberImagePainter(
-                        image,
-                        placeholderPainter = { painterResource("default_image_loader.png") }),
+                    painter = rememberCustomImagePainter(image),
                     null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-                Box(modifier = Modifier.padding(8.dp)
-                    .align(Alignment.TopEnd)) {
+                Box(
+                    modifier = Modifier.padding(8.dp)
+                        .align(Alignment.TopEnd)
+                ) {
                     Box(
                         modifier = Modifier
                             .background(BackgroundContent, CircleShape)
