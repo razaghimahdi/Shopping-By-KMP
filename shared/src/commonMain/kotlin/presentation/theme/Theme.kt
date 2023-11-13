@@ -19,6 +19,7 @@ private val LightColorPalette = lightColorScheme(
     primaryContainer = PrimaryVariantColor,
     secondary = AccentColor,
     background = Color.White,
+    surfaceVariant = Color.White,
 
     /* Other default colors to override
     background = Color.White,
