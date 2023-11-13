@@ -8,6 +8,9 @@ The application allows users to browse, search, and purchase products from a sho
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
 ## Development
+
+Firs, let me say the backend development is also in progress. You can find the backend source code [here](https://github.com/soheilkhaledabdi/shop).
+
 This project is a work in progress and is not yet complete. 
 We will continue to work on it and update it regularly until we have a complete shopping application. 
 We appreciate any feedback or suggestions that you may have to help us improve the project.
@@ -18,7 +21,7 @@ Our goal is to create a high-quality, multiplatform shopping application that de
 Please stay tuned for updates and feel free to contribute to the project by submitting pull requests or opening issues. 
 Together, we can create a great shopping application that meets the needs of users across multiple platforms.
 
-![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.png)
+![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.jpg)
 
 ## Architecture
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
@@ -29,7 +32,7 @@ It's also responsible for mapping data from the domain layer into a format that 
 
 **Domain**: This layer includes the business logic and use cases of the application. It's also responsible for defining the data models and the repository interfaces.
 
-**Data**: This layer includes the repository implementation that fetches data from the https://fakestoreapi.com server using Ktor after that cache data from network using SqlDelight.
+**Data**: This layer includes the repository implementation that fetches data from the backend using Ktor.
 
  <img src="https://user-images.githubusercontent.com/61207818/232203143-1815f502-18d4-4051-b636-dc016699c770.png" alt="Clean Architecture in Android" width="600"/>
 
