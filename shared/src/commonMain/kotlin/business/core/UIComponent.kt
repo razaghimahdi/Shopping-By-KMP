@@ -1,6 +1,16 @@
 package business.core
 
+import business.datasource.network.common.JAlertResponse
+
 sealed class UIComponent {
+
+    data class Toast(
+        val alert: JAlertResponse
+    ): UIComponent()
+
+    data class Dialog(
+        val alert:JAlertResponse
+    ): UIComponent()
 
 
     data class ToastSimple(
