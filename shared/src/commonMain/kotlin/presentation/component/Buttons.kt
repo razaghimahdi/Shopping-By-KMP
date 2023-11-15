@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import business.core.ProgressBarState
 import presentation.theme.DefaultButtonTheme
 import presentation.theme.DefaultButtonWithBorderPrimaryTheme
 
@@ -28,9 +30,11 @@ val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
 val DEFAULT__BUTTON_SIZE_45 = 50.dp
 
+
 @Composable
 fun ButtonLoading(
     modifier: Modifier = Modifier,
+    progressBarState: ProgressBarState,
     onClick: () -> Unit,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -42,7 +46,7 @@ fun ButtonLoading(
     content: @Composable RowScope.() -> Unit
 ) {
     Button(
-        enabled = (enabled ),
+        enabled = (enabled || progressBarState != ProgressBarState.Idle),
         modifier = modifier,
         interactionSource = interactionSource,
         elevation = elevation,
@@ -57,6 +61,15 @@ fun ButtonLoading(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
+            AnimatedVisibility(visible = (progressBarState == ProgressBarState.ButtonLoading || progressBarState == ProgressBarState.FullScreenLoading)) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(25.dp),
+                    strokeWidth = 2.dp,
+                    color = if (enabled) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.primary,
+                )
+            }
+
             content()
         }
     }
@@ -65,9 +78,11 @@ fun ButtonLoading(
 @Composable
 fun DefaultButton(
     modifier: Modifier = Modifier,
+    progressBarState: ProgressBarState = ProgressBarState.Idle,
     enabled: Boolean = true,
     enableElevation: Boolean = false,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
+    shape: Shape = MaterialTheme.shapes.extraLarge,
     text: String,
     onClick: () -> Unit,
 ) {
@@ -80,8 +95,9 @@ fun DefaultButton(
             1.dp,
             MaterialTheme.colorScheme.primary
         ),
-        shape =MaterialTheme.shapes.extraLarge,
+        shape = shape,
         onClick = onClick,
+        progressBarState = progressBarState,
     ) {
         Text(
             text = text,
@@ -89,4 +105,3 @@ fun DefaultButton(
         )
     }
 }
-
