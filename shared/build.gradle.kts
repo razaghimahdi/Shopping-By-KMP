@@ -38,10 +38,20 @@ kotlin {
                 implementation(libs.ktor.logging)
                 implementation(libs.ktor.serialization)
                 implementation(libs.ktor.negotiation)
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.androidx.datastore.preferences)
                 implementation(libs.image.loader)
-                implementation(libs.precompose)
-                implementation(libs.precompose.viewmodel)
+                api(libs.koin.core)
+                api(libs.koin.compose)
+                api(libs.precompose)
+                api(libs.precompose.viewmodel)
+                api(libs.precompose.koin)
+/*
+                api(libs.mvvm.core)
+                api(libs.mvvm.compose)
+                api(libs.mvvm.flow)
+                api(libs.mvvm.flow.compose)*/
+
             }
         }
 
@@ -51,19 +61,12 @@ kotlin {
                 api(libs.androidx.appcompat)
                 api(libs.androidx.core)
                 implementation(libs.ktor.okhttp)
-                /*  api("androidx.activity:activity-compose:1.8.0")
-                  api("androidx.appcompat:appcompat:1.6.1")
-                  api("androidx.core:core-ktx:1.12.0")
-                  implementation("io.ktor:ktor-client-okhttp:2.3.5")*/
             }
         }
         iosMain {
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:2.3.5")
                 implementation("io.ktor:ktor-client-ios:2.3.5")
-                /*
-                implementation(libs.ktor.darwin)
-                implementation(libs.ktor.ios) */
             }
         }
 
