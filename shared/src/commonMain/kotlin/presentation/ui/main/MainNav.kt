@@ -2,9 +2,14 @@ package presentation.ui.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -31,6 +36,7 @@ import presentation.ui.main.home.HomeScreen
 import presentation.ui.main.profile.ProfileScreen
 import presentation.ui.main.wishlist.WishlistScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNav() {
 
@@ -38,25 +44,25 @@ fun MainNav() {
 
     Scaffold(bottomBar = {
         BottomNavigationUI(navigator)
-    }) {innerPadding ->
+    }) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-        NavHost(
-            navigator = navigator,
-            initialRoute = MainNavigation.Home.route,
-        ) {
-            scene(route = MainNavigation.Home.route) {
-                HomeNav()
+            NavHost(
+                navigator = navigator,
+                initialRoute = MainNavigation.Home.route,
+            ) {
+                scene(route = MainNavigation.Home.route) {
+                    HomeNav()
+                }
+                scene(route = MainNavigation.Wishlist.route) {
+                    WishlistScreen()
+                }
+                scene(route = MainNavigation.Cart.route) {
+                    CartScreen()
+                }
+                scene(route = MainNavigation.Profile.route) {
+                    ProfileScreen()
+                }
             }
-            scene(route = MainNavigation.Wishlist.route) {
-                WishlistScreen()
-            }
-            scene(route = MainNavigation.Cart.route) {
-                CartScreen()
-            }
-            scene(route = MainNavigation.Profile.route) {
-                ProfileScreen()
-            }
-        }
         }
 
     }
@@ -65,35 +71,45 @@ fun MainNav() {
 
 @Composable
 fun BottomNavigationUI(navigator: Navigator) {
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.background,
-        contentColor = MaterialTheme.colorScheme.background,
-        tonalElevation = 8.dp
-    ) {
-
-        val items = listOf(
-            MainNavigation.Home,
-            MainNavigation.Wishlist,
-            MainNavigation.Cart,
-            MainNavigation.Profile,
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(10.dp),
+        shape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp
         )
-        items.forEach {
-            NavigationBarItem(label = { Text(text = it.title) }, colors = DefaultNavigationBarItemTheme(),
-                selected = it.route == currentRoute(navigator),
-                icon = {
-                    Icon(
-                        if (it.route == currentRoute(navigator)) it.selectedIcon else it.unSelectedIcon,
-                        it.title
-                    )
-                },
-                onClick = {
-                    navigator.navigate(
-                        it.route,
-                        NavOptions(
-                            launchSingleTop = true,
-                        ),
-                    )
-                })
+    ) {
+        NavigationBar(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.background,
+            tonalElevation = 8.dp
+        ) {
+
+            val items = listOf(
+                MainNavigation.Home,
+                MainNavigation.Wishlist,
+                MainNavigation.Cart,
+                MainNavigation.Profile,
+            )
+            items.forEach {
+                NavigationBarItem(label = { Text(text = it.title) },
+                    colors = DefaultNavigationBarItemTheme(),
+                    selected = it.route == currentRoute(navigator),
+                    icon = {
+                        Icon(
+                            if (it.route == currentRoute(navigator)) it.selectedIcon else it.unSelectedIcon,
+                            it.title
+                        )
+                    },
+                    onClick = {
+                        navigator.navigate(
+                            it.route,
+                            NavOptions(
+                                launchSingleTop = true,
+                            ),
+                        )
+                    })
+            }
         }
     }
 }
