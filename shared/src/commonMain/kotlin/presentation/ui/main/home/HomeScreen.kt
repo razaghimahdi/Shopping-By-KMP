@@ -21,14 +21,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Notifications
@@ -51,11 +48,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import business.domain.main.Category
 import com.seiko.imageloader.rememberImagePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -70,23 +68,31 @@ import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
 import presentation.theme.IconColorGrey
 import presentation.theme.PagerDotColor
-
-val sampleBannerList = listOf<String>(
-    "https://t4.ftcdn.net/jpg/04/95/28/65/360_F_495286577_rpsT2Shmr6g81hOhGXALhxWOfx1vOQBa.jpg",
-    "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
-    "https://bbdniit.ac.in/wp-content/uploads/2020/09/banner-background-without-image-min.jpg",
-)
+import presentation.ui.main.home.view_model.HomeEvent
+import presentation.ui.main.home.view_model.HomeState
+import presentation.ui.splash.view_model.LoginEvent
+import presentation.ui.splash.view_model.LoginState
+import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(navigateToDetail: () -> Unit) {
+fun HomeScreen(
+    navigateToDetail: (Int) -> Unit,
+    state: HomeState,
+    events: (HomeEvent) -> Unit
+) {
 
 
-    // val pagerState = rememberPagerState { sampleBannerList.size }
     var selectedIndex by remember { mutableStateOf(0) }
 
 
-    DefaultScreenUI() {
+    DefaultScreenUI(
+        queue = state.errorQueue,
+        onRemoveHeadFromQueue = { events(HomeEvent.OnRemoveHeadFromQueue) },
+        progressBarState = state.progressBarState,
+        networkState = state.networkState,
+        onTryAgain = { events(HomeEvent.OnRetryNetwork) }
+    ) {
         Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
             Column(
                 modifier = Modifier.fillMaxWidth().background(
@@ -189,9 +195,9 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                items(sampleBannerList) {
-                    BannerImage(it) {
-                        selectedIndex = sampleBannerList.indexOf(it)
+                items(state.home.banners) {
+                    BannerImage(it.banner) {
+                        selectedIndex = state.home.banners.indexOf(it)
                     }
                 }
             }
@@ -200,7 +206,7 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
 
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 DotsIndicator(
-                    totalDots = sampleBannerList.size,
+                    totalDots = state.home.banners.size,
                     selectedIndex = selectedIndex,
                     dotSize = 8.dp
                 )
@@ -222,15 +228,14 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
                 )
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-                CategoryBox(title = "Clothes", image = "shirt.xml")
-                CategoryBox(title = "Computer", image = "pc.xml")
-                CategoryBox(title = "Shoes", image = "shoes.xml")
-                CategoryBox(title = "Watch", image = "watch.xml")
-                CategoryBox(title = "Mobile", image = "phone.xml")
+                items(state.home.categories) {
+
+                    CategoryBox(category = it)
+                }
             }
 
 
@@ -257,38 +262,13 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
                 )
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-                ProductBox(
-                    title = "Nike model-934",
-                    rate = "4.5",
-                    isLike = true,
-                    price = "$120.00",
-                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5b0981ff-45f8-40c3-9372-32430a62aaea/dunk-high-womens-shoes-PXHcGT.png",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Nike model-637",
-                    rate = "3.4",
-                    isLike = false,
-                    price = "$180.00",
-                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Shirt model-232",
-                    rate = "2.4",
-                    isLike = false,
-                    price = "$99.00",
-                    image = "https://thumblr.uniid.it/product/184401/802183c05c13.jpg",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Shirt model-131",
-                    rate = "4.4",
-                    isLike = true,
-                    price = "$82.00",
-                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                ) { navigateToDetail() }
+                items(state.home.flashSale.products) {
+                    ProductBox(product = it) { navigateToDetail(it.id) }
+                }
             }
 
 
@@ -309,40 +289,16 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
                 )
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-
-                ProductBox(
-                    title = "SmartWatch-113",
-                    rate = "2.4",
-                    isLike = false,
-                    price = "$530.00",
-                    image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Shirt model-131",
-                    rate = "4.4",
-                    isLike = true,
-                    price = "$82.00",
-                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "SmartWatch-113",
-                    rate = "4.5",
-                    isLike = true,
-                    price = "$999.00",
-                    image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Nike model-637",
-                    rate = "3.4",
-                    isLike = false,
-                    price = "$180.00",
-                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                ) { navigateToDetail() }
+                items(state.home.mostSale) {
+                    ProductBox(product = it) { navigateToDetail(it.id) }
+                }
             }
+
 
 
 
@@ -362,41 +318,15 @@ fun HomeScreen(navigateToDetail: () -> Unit) {
                 )
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-
-                ProductBox(
-                    title = "SmartWatch-113",
-                    rate = "4.5",
-                    isLike = true,
-                    price = "$999.00",
-                    image = "https://www.fitbit.com/global/content/dam/fitbit/global/pdp/devices/google-pixel-watch/hero-static/charcoal/google-pixel-watch-charcoal-device-3qt-left.png",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "SmartWatch-113",
-                    rate = "2.4",
-                    isLike = false,
-                    price = "$530.00",
-                    image = "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT653_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-ocean-ultra2_VW_34FR_GEO_DE?wid=2000&hei=2000&fmt=png-alpha&.v=1694507270905",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Shirt model-131",
-                    rate = "4.4",
-                    isLike = true,
-                    price = "$82.00",
-                    image = "https://www.deinsportsfreund.de/media/image/product/399225/lg/nike-academy-pro-t-shirt-herren-schwarz-grau-weiss.jpg",
-                ) { navigateToDetail() }
-                ProductBox(
-                    title = "Nike model-637",
-                    rate = "3.4",
-                    isLike = false,
-                    price = "$180.00",
-                    image = "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/019f60a9-aa10-4327-b5f6-b940b753fbdb/dunk-high-1985-shoes-L05QbB.png",
-                ) { navigateToDetail() }
+                items(state.home.newestProduct) {
+                    ProductBox(product = it) { navigateToDetail(it.id) }
+                }
             }
-
 
         }
     }
@@ -457,25 +387,32 @@ fun TimerBox() {
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun CategoryBox(title: String, image: String) {
+fun CategoryBox(category: Category) {
     Box(modifier = Modifier.padding(horizontal = 8.dp)) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.width(75.dp)
         ) {
             Box(
                 modifier = Modifier.background(BackgroundContent, CircleShape).size(60.dp)
                     .padding(12.dp)
             ) {
-                Icon(
-                    painterResource(image),
+
+                Image(
+                    painter = rememberImagePainter(category.icon),
                     null,
-                    modifier = Modifier.fillMaxSize(),
-                    tint = MaterialTheme.colorScheme.primary
+                    modifier = Modifier.fillMaxSize().size(55.dp),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer_8dp()
-            Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+            Text(
+                category.name,
+                style = MaterialTheme.typography.labelMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
