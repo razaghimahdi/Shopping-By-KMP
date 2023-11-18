@@ -11,19 +11,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,162 +37,286 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import business.domain.main.Comment
+import business.domain.main.Product
+import presentation.component.CircleImage
+import presentation.component.DEFAULT__BUTTON_SIZE
+import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
+import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
 import presentation.theme.orange_400
+import presentation.ui.main.detail.view_model.DetailEvent
+import presentation.ui.main.detail.view_model.DetailState
+import presentation.ui.main.home.view_model.HomeEvent
+import kotlin.reflect.KFunction1
 
 
-private val imageList = listOf(
-    "https://thumblr.uniid.it/product/184401/802183c05c13.jpg",
-    "https://scene7.zumiez.com/is/image/zumiez/image/Nike-Essential-White-T-Shirt-_329802.jpg",
-    "https://www.nepal.ubuy.com/productimg/?image=aHR0cHM6Ly9pNS53YWxtYXJ0aW1hZ2VzLmNvbS9hc3IvNzQwNTU4ZjgtMTQ0ZC00ZGIyLTgzMTgtYjlmMDY5YmJiNDFlLjc3NDNlZTY2ZTI0NGQxM2ZlMjhhYWEyZmRmMzdjNTE2LmpwZWc.jpg",
-    "https://i.ebayimg.com/images/g/TYsAAOSwzHdfwBTi/s-l400.jpg",
-    "https://cdn.idealo.com/folder/Product/200245/1/200245140/s4_produktbild_gross_19/nike-t-shirt-sportswear-essential-bv6169.jpg",
-    "https://cms.brnstc.de/product_images/680x930_retina/cpro/media/images/product/23/5/100143057613000_0_1683184689767.jpg",
-    "https://www.junior.shop/media/image/product/38605/lg/t-shirts-nike-t-shirt-mit-logo-marine-104-110-86e765-695.jpg",
-)
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen() {
+fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) -> Unit) {
 
-    var selectedImage by remember { mutableStateOf(imageList.first()) }
 
-    DefaultScreenUI() {
-        Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+    DefaultScreenUI(
+        queue = state.errorQueue,
+        onRemoveHeadFromQueue = { events(DetailEvent.OnRemoveHeadFromQueue) },
+        progressBarState = state.progressBarState,
+        networkState = state.networkState,
+        onTryAgain = { events(DetailEvent.OnRetryNetwork) }
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxSize().align(Alignment.TopCenter)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = 75.dp)
+            ) {
 
-            Box(modifier = Modifier.fillMaxWidth().height(400.dp)) {
+                Box(modifier = Modifier.fillMaxWidth().height(400.dp)) {
 
-                Image(
-                    painter = rememberCustomImagePainter(selectedImage),
-                    null, modifier = Modifier.fillMaxSize()
-                )
+                    Image(
+                        painter = rememberCustomImagePainter(state.selectedImage),
+                        null, modifier = Modifier.fillMaxSize()
+                    )
 
-                Box(modifier = Modifier.padding(16.dp).align(Alignment.TopStart)) {
-                    Card(
-                        modifier = Modifier.size(55.dp).padding(4.dp),
-                        shape = CircleShape,
-                        elevation = CardDefaults.cardElevation(8.dp),
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                    Box(modifier = Modifier.padding(16.dp).align(Alignment.TopStart)) {
+                        Card(
+                            modifier = Modifier.size(55.dp).padding(4.dp),
+                            shape = CircleShape,
+                            elevation = CardDefaults.cardElevation(8.dp),
+                            onClick = {
+                                popup()
+                            }
                         ) {
-                            Icon(Icons.Filled.ArrowBack, null)
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(Icons.Filled.ArrowBack, null)
+                            }
                         }
                     }
-                }
 
-                Box(modifier = Modifier.padding(16.dp).align(Alignment.TopEnd)) {
-                    Card(
-                        modifier = Modifier.size(55.dp).padding(4.dp),
-                        shape = CircleShape,
-                        elevation = CardDefaults.cardElevation(8.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                    Box(modifier = Modifier.padding(16.dp).align(Alignment.TopEnd)) {
+                        Card(
+                            modifier = Modifier.size(55.dp).padding(4.dp),
+                            shape = CircleShape,
+                            elevation = CardDefaults.cardElevation(8.dp)
                         ) {
-                            Icon(Icons.Filled.FavoriteBorder, null)
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(Icons.Filled.FavoriteBorder, null)
+                            }
                         }
                     }
-                }
 
-                Box(
-                    modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(16.dp)
-                ) {
-                    Card(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                        shape = MaterialTheme.shapes.small
+                    Box(
+                        modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
+                            .padding(16.dp)
                     ) {
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentPadding = PaddingValues(8.dp)
+                        Card(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                            shape = MaterialTheme.shapes.small
                         ) {
-                            items(imageList) {
-                                ImageSliderBox(it) {
-                                    selectedImage = it
+                            LazyRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentPadding = PaddingValues(8.dp)
+                            ) {
+                                items(state.product.gallery) {
+                                    ImageSliderBox(it) {
+                                        events(DetailEvent.OnUpdateSelectedImage(it))
+                                    }
                                 }
                             }
                         }
                     }
+
+
                 }
 
+                Spacer_32dp()
 
+                Column(modifier = Modifier.padding(16.dp)) {
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            state.product.category.name,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(Icons.Filled.Star, null, tint = orange_400)
+                            Text(
+                                state.product.rate.toString(),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                    }
+
+
+                    Spacer_16dp()
+
+
+                    Text(state.product.title, style = MaterialTheme.typography.headlineLarge)
+
+                    Spacer_16dp()
+
+                    Text("Product Details", style = MaterialTheme.typography.titleLarge)
+
+                    Spacer_8dp()
+
+                    Text(
+                        text = buildAnnotatedString {
+                            append(state.product.description)
+                            withStyle(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    textDecoration = TextDecoration.Underline
+                                )
+                            ) {
+                                append(" ")
+                                append("Read More")
+                            }
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+
+                    Spacer_16dp()
+
+                    Divider(
+                        modifier = Modifier.fillMaxWidth(),
+                        thickness = 1.dp,
+                        color = BackgroundContent
+                    )
+
+                    Spacer_16dp()
+
+                    Text(
+                        text = "Read some comments",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+
+                    Spacer_8dp()
+
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(horizontal = 8.dp)
+                    ) {
+                        items(state.product.comments) {
+                            CommentBox(comment = it)
+                        }
+                    }
+
+
+                }
+            }
+            Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
+                BuyButtonBox(
+                    state.product
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun BuyButtonBox(product: Product) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(8.dp),
+        shape = RoundedCornerShape(
+            topStart = 8.dp,
+            topEnd = 8.dp
+        )
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(.3f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("Total Price", style = MaterialTheme.typography.titleMedium)
+                Text(product.getPrice(), style = MaterialTheme.typography.titleLarge)
             }
 
-            Spacer_32dp()
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth(.7f).height(DEFAULT__BUTTON_SIZE),
+                text = "Add to Cart"
+            ) {
 
-            Column(modifier = Modifier.padding(16.dp)) {
+            }
+        }
+    }
+}
 
+@Composable
+fun CommentBox(comment: Comment) {
+    Box(modifier = Modifier.padding(horizontal = 8.dp), contentAlignment = Alignment.Center) {
+        Card(
+            modifier = Modifier.width(300.dp).height(160.dp),
+            elevation = CardDefaults.cardElevation(8.dp), shape = MaterialTheme.shapes.small
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(8.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Clothes", style = MaterialTheme.typography.titleMedium)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CircleImage(
+                            image = comment.user.image,
+                            modifier = Modifier.size(55.dp)
+                        )
+                        Spacer_4dp()
+                        Text(comment.user.fetchName(), style = MaterialTheme.typography.titleSmall)
+                    }
+                    Text("2 days ago", style =  MaterialTheme.typography.titleSmall)
+                }
+                Spacer_8dp()
+                Column {
+                    Text(
+                        comment.comment,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer_4dp()
 
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Filled.Star, null, tint = orange_400)
-                        Text("4.5", style = MaterialTheme.typography.titleMedium)
+                        Text(comment.rate.toString(), style = MaterialTheme.typography.bodySmall)
                     }
                 }
-
-
-                Spacer_16dp()
-
-
-                Text("Shirt model-231", style = MaterialTheme.typography.headlineLarge)
-
-                Spacer_16dp()
-
-                Text("Product Details", style = MaterialTheme.typography.titleLarge)
-
-                Spacer_8dp()
-
-                Text(
-                    text = buildAnnotatedString {
-                        append(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                                    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-                                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
-                                    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
-                                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. "
-                        )
-                        withStyle(
-                            style = SpanStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                textDecoration = TextDecoration.Underline
-                            )
-                        ) {
-                            append("Read More")
-                        }
-                    },
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-
-                Spacer_16dp()
-
-                Divider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = BackgroundContent
-                )
-
-
             }
         }
     }
