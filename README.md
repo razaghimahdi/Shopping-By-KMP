@@ -14,16 +14,18 @@ https://github.com/razaghimahdi/Shoping-By-KMP/assets/61207818/5d094b0e-a28d-43a
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
 ## Features ✨
-- Login, Sign Up ✔️
-- Home ✔️
-- product Detail and Comments ✔️
-- Wishlist (Working on it) ⚠️
-- Cart (Working on it) ⚠️
-- Search (Working on it) ⚠️
-- Profile (Working on it) ⚠️
-- Notification (Working on it) ⚠️
-- Category (Working on it) ⚠️
-- Setting (Working on it) ⚠️
+| Feature                     | Status        |
+| --------------------------- | ------------- |
+| Login, Sign Up              | ✔️ Implemented |
+| Home                        | ✔️ Implemented |
+| Product Detail and Comments | ✔️ Implemented |
+| Wishlist                    | ⚠️ Working on it |
+| Cart                        | ⚠️ Working on it |
+| Search                      | ⚠️ Working on it |
+| Profile                     | ⚠️ Working on it |
+| Notification                | ⚠️ Working on it |
+| Category                    | ⚠️ Working on it |
+| Setting                     | ⚠️ Working on it |
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
