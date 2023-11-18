@@ -2,10 +2,17 @@ package common
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import platform.Foundation.NSUserDefaults
+import kotlinx.coroutines.flow.MutableSharedFlow
+import platform.Foundation.setValue
+
 
 actual suspend fun Context.putData(key: String, `object`: String) {
+    val sharedFlow = MutableSharedFlow<String>()
+    NSUserDefaults.standardUserDefaults().setObject(`object`, key)
+    sharedFlow.emit(`object`)
 }
 
 actual suspend inline fun Context.getData(key: String): String? {
-    return ""
+    return NSUserDefaults.standardUserDefaults().stringForKey(key)
 }
