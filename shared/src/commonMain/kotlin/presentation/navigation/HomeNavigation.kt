@@ -7,7 +7,7 @@ sealed class HomeNavigation(
 ) {
     object Home : AppNavigation(route = "Home")
 
-    object Detail : AppNavigation(route = "Detail")
+    object Detail : AppNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
 
