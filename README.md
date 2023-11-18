@@ -15,23 +15,14 @@ If you like or are using this project to learn or start your solution, please gi
 
 ## Features ✨
 Login, Sign Up 
-
 Flash Sale 
-
 product Detail and Comments 
-
 Wishlist (Working on it)
-
 Cart (Working on it)
-
 Search (Working on it)
-
 Profile (Working on it)
-
 Notification (Working on it)
-
 Category (Working on it)
-
 Setting (Working on it)
 
 ## Tech Stack 📚
