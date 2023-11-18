@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,19 +22,25 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.ui.splash.view_model.LoginEvent
+import presentation.ui.splash.view_model.LoginState
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun SplashScreen(
+    state: LoginState,
+    events: (LoginEvent) -> Unit,
     navigateToMain: () -> Unit,
     navigateToLogin: () -> Unit,
 ) {
 
-    val coroutine = rememberCoroutineScope()
-
-    coroutine.launch {
+    LaunchedEffect(state.navigateToMain){
         delay(3000L)
-        navigateToLogin()
+        if (state.navigateToMain) {
+            navigateToMain()
+        } else {
+            navigateToLogin()
+        }
     }
 
     Column(

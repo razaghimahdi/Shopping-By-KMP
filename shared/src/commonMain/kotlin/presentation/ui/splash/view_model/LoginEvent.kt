@@ -10,6 +10,8 @@ sealed class LoginEvent{
     data class OnUpdateUsernameLogin(val value: String) : LoginEvent()
     data class OnUpdatePasswordLogin(val value: String) : LoginEvent()
 
+    object Register : LoginEvent()
+    object Login : LoginEvent()
     object OnRemoveHeadFromQueue : LoginEvent()
 
     data class Error(

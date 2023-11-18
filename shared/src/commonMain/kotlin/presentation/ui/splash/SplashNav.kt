@@ -1,25 +1,31 @@
 package presentation.ui.splash
 
 import androidx.compose.runtime.Composable
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
+import org.koin.compose.koinInject
 import presentation.navigation.SplashNavigation
 import presentation.ui.splash.view_model.LoginViewModel
 
 @Composable
-internal fun SplashNav(navigateToMain: () -> Unit) {
+internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain: () -> Unit) {
     val navigator = rememberNavigator()
-    val viewModel = LoginViewModel()
+    // val viewModel = koinViewModel(LoginViewModel::class)
 
     NavHost(
         navigator = navigator,
         initialRoute = SplashNavigation.Splash.route,
     ) {
         scene(route = SplashNavigation.Splash.route) {
-            SplashScreen(navigateToMain = navigateToMain, navigateToLogin = {
-                navigator.popBackStack()
-                navigator.navigate(SplashNavigation.Login.route)
-            })
+            SplashScreen(
+                state = viewModel.state.value,
+                events = viewModel::onTriggerEvent,
+                navigateToMain = navigateToMain,
+                navigateToLogin = {
+                    navigator.popBackStack()
+                    navigator.navigate(SplashNavigation.Login.route)
+                })
         }
         scene(route = SplashNavigation.Login.route) {
             LoginScreen(
@@ -31,9 +37,10 @@ internal fun SplashNav(navigateToMain: () -> Unit) {
             )
         }
         scene(route = SplashNavigation.Register.route) {
-            RegisterScreen(navigateToMain = navigateToMain, popUp = {
-                navigator.popBackStack()
-            }, state = viewModel.state.value,
+            RegisterScreen(
+                navigateToMain = navigateToMain, popUp = {
+                    navigator.popBackStack()
+                }, state = viewModel.state.value,
                 events = viewModel::onTriggerEvent
             )
         }

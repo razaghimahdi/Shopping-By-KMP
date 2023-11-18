@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import presentation.component.DEFAULT__BUTTON_SIZE_EXTRA
 import presentation.component.DefaultButton
+import presentation.component.DefaultScreenUI
 import presentation.component.PasswordTextField
 import presentation.component.SimpleImageButton
 import presentation.component.Spacer_16dp
@@ -41,6 +44,7 @@ import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     state: LoginState,
@@ -49,152 +53,168 @@ fun LoginScreen(
     navigateToRegister: () -> Unit
 ) {
 
+    LaunchedEffect(state.navigateToMain) {
+        if (state.navigateToMain) {
+            navigateToMain()
+        }
+    }
+
     var isUsernameError by rememberSaveable { mutableStateOf(false) }
     var isPasswordError by rememberSaveable { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    DefaultScreenUI(
+       queue = state.errorQueue,
+        onRemoveHeadFromQueue = { events(LoginEvent.OnRemoveHeadFromQueue) },
+        progressBarState = state.progressBarState
     ) {
-        Text("Sign In", style = MaterialTheme.typography.displaySmall)
-        Spacer_16dp()
-        Text("Hi! Welcome back, you've been missed", style = MaterialTheme.typography.labelMedium)
-        Spacer_32dp()
-
         Column(
-            horizontalAlignment = Alignment.Start
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("Email")
-            Spacer_4dp()
-            TextField(
-                isError = isUsernameError,
-                value = state.usernameLogin,
-                onValueChange = {
-                    if (it.length < 32) {
-                        events(LoginEvent.OnUpdateUsernameLogin(it))
-                        isUsernameError = it.isEmpty()
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = DefaultTextFieldTheme(),
-                shape = MaterialTheme.shapes.small,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Email,
-                ),
-            )
-            AnimatedVisibility(visible = isUsernameError) {
-                Text(
-                    "Enter valid email",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-            Spacer_8dp()
-
-            Text("Password")
-            Spacer_4dp()
-            PasswordTextField(
-                isError = isPasswordError,
-                value = state.passwordLogin,
-                onValueChange = {
-                    events(LoginEvent.OnUpdatePasswordLogin(it))
-                    isPasswordError = it.length < 8
-                },
-                label = "",
-                modifier = Modifier.fillMaxWidth(),
-            )
-
-            AnimatedVisibility(visible = isPasswordError) {
-                Text(
-                    "Enter valid password",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        }
-
-        Spacer_8dp()
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
-        ) {
+            Text("Sign In", style = MaterialTheme.typography.displaySmall)
+            Spacer_16dp()
             Text(
-                "Forget Password?",
-                style =MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
+                "Hi! Welcome back, you've been missed",
+                style = MaterialTheme.typography.labelMedium
             )
-        }
-
-        Spacer_32dp()
-
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            DefaultButton(
-                text = "Sign In",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(DEFAULT__BUTTON_SIZE_EXTRA),
-                onClick = { navigateToMain() }
-            )
-
-            Spacer(Modifier.height(32.dp))
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Divider(modifier = Modifier.width(75.dp))
-                Text(text = "Or sign in with")
-                Divider(modifier = Modifier.width(75.dp))
-            }
             Spacer_32dp()
 
+            Column(
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text("Email")
+                Spacer_4dp()
+                TextField(
+                    isError = isUsernameError,
+                    value = state.usernameLogin,
+                    onValueChange = {
+                        if (it.length < 32) {
+                            events(LoginEvent.OnUpdateUsernameLogin(it))
+                            isUsernameError = it.isEmpty()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = DefaultTextFieldTheme(),
+                    shape = MaterialTheme.shapes.small,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Email,
+                    ),
+                )
+                AnimatedVisibility(visible = isUsernameError) {
+                    Text(
+                        "Enter valid email",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+                Spacer_8dp()
+
+                Text("Password")
+                Spacer_4dp()
+                PasswordTextField(
+                    isError = isPasswordError,
+                    value = state.passwordLogin,
+                    onValueChange = {
+                        events(LoginEvent.OnUpdatePasswordLogin(it))
+                        isPasswordError = it.length < 8
+                    },
+                    label = "",
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+                AnimatedVisibility(visible = isPasswordError) {
+                    Text(
+                        "Enter valid password",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+
+            Spacer_8dp()
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.End
             ) {
-                SimpleImageButton("facebook.xml")
-                SimpleImageButton("apple.xml")
-                SimpleImageButton("google.xml")
+                Text(
+                    "Forget Password?",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline
+                )
+            }
+
+            Spacer_32dp()
+
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                DefaultButton(
+                    progressBarState = state.progressBarState,
+                    text = "Sign In",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(DEFAULT__BUTTON_SIZE_EXTRA),
+                    onClick = { events(LoginEvent.Login) }
+                )
+
+                Spacer(Modifier.height(32.dp))
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Divider(modifier = Modifier.width(75.dp))
+                    Text(text = "Or sign in with")
+                    Divider(modifier = Modifier.width(75.dp))
+                }
+                Spacer_32dp()
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    SimpleImageButton("facebook.xml")
+                    SimpleImageButton("apple.xml")
+                    SimpleImageButton("google.xml")
+                }
+
+            }
+
+            Spacer_32dp()
+
+
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Don't have an account?",
+                )
+                Spacer_4dp()
+                Text(
+                    modifier = Modifier.clickable {
+                        navigateToRegister()
+                    },
+                    text = "Sign Up",
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline
+                )
             }
 
         }
-
-        Spacer_32dp()
-
-
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "Don't have an account?",
-            )
-            Spacer_4dp()
-            Text(
-                modifier = Modifier.clickable {
-                    navigateToRegister()
-                },
-                text = "Sign Up",
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
-            )
-        }
-
     }
 }
