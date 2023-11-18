@@ -7,7 +7,29 @@ The application allows users to browse, search, and purchase products from a sho
 ## Give a Star! ⭐
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
-## Development
+## Features ✨
+Login, Sign Up
+Flash Sale
+product Detail and Comments
+Wishlist (Working on it)
+Cart (Working on it)
+Search (Working on it)
+Profile (Working on it)
+Notification (Working on it)
+Category (Working on it)
+Setting (Working on it)
+
+## Tech Stack 📚
+Kotlin Multiplatform
+Kotlin Coroutines
+Compose Multiplatform
+Material3
+Ktor
+Datastore
+Decompose
+Koin
+
+## Development 💻
 
 Firs, let me say the backend development is also in progress. You can find the backend source code [here](https://github.com/soheilkhaledabdi/shop).
 
@@ -23,7 +45,7 @@ Together, we can create a great shopping application that meets the needs of use
 
 ![mobile-app-development-banner](https://user-images.githubusercontent.com/61207818/232203047-54940b08-d53f-41ce-a313-483a5fbeb9d3.jpg)
 
-## Architecture
+## Architecture 🏢
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
 The application is divided into the following layers:
 
@@ -37,7 +59,7 @@ It's also responsible for mapping data from the domain layer into a format that 
  <img src="https://user-images.githubusercontent.com/61207818/232203143-1815f502-18d4-4051-b636-dc016699c770.png" alt="Clean Architecture in Android" width="600"/>
 
 
-### Android
+### Android 📱
 
 When Android is one of your targets, 
 you can get the same experience for Android as if you were developing an Android app using Jetpack Compose.
@@ -47,7 +69,7 @@ you can get the same experience for Android as if you were developing an Android
 | <img src="screenshots/android1.png" width="300"/> | <img src="screenshots/android2.png" width="300"/> | <img src="screenshots/android3.png" width="300"/> | <img src="screenshots/android4.png" width="300"/> |
 
 
-### IOS
+### IOS 📱
 > iOS support is in Alpha. It may change incompatibly and require manual migration in the future.
 
 Compose Multiplatform shares most of its API with Jetpack Compose, the Android UI framework developed by Google. 
@@ -58,7 +80,7 @@ You can use the same APIs to build user interfaces for both Android and iOS.
 |-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
 | <img src="screenshots/ios1.png" width="300"/> | <img src="screenshots/ios2.png" width="300"/> | <img src="screenshots/ios3.png" width="300"/> | <img src="screenshots/ios4.png" width="300"/> |
 
-### Backend
+### Backend 🌐
 [This project](https://github.com/soheilkhaledabdi/shop) involves building a robust admin panel for managing an e-commerce platform. 
 It utilizes **Laravel** for the backend structure and **Livewire** for dynamic frontend interactions. 
 The panel comes with a comprehensive **API**, ensuring scalability and flexibility.
