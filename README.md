@@ -37,7 +37,7 @@ If you like or are using this project to learn or start your solution, please gi
 
 ## Development 💻
 
-Firs, let me say the backend development is also in progress. You can find the backend source code [here](https://github.com/soheilkhaledabdi/shop).
+Firs, let me say the backend is also in progress. You can find the backend source code [here](https://github.com/soheilkhaledabdi/shop).
 
 This project is a work in progress and is not yet complete. 
 We will continue to work on it and update it regularly until we have a complete shopping application. 
