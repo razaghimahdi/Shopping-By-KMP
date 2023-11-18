@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.domain.main.Product
 import com.seiko.imageloader.rememberImagePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -42,11 +43,7 @@ import presentation.theme.orange_400
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProductBox(
-    title: String,
-    rate: String,
-    isLike: Boolean,
-    price: String,
-    image: String,
+    product: Product,
     onClick: () -> Unit
 ) {
     Box(modifier = Modifier.padding(8.dp).noRippleClickable { onClick() }) {
@@ -56,7 +53,7 @@ fun ProductBox(
                     .clip(MaterialTheme.shapes.small)
             ) {
                 Image(
-                    painter = rememberCustomImagePainter(image),
+                    painter = rememberCustomImagePainter(product.image),
                     null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -72,7 +69,7 @@ fun ProductBox(
                             .padding(6.dp)
                     ) {
                         Icon(
-                            if (isLike) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            if (product.isLike) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.fillMaxSize()
@@ -88,7 +85,7 @@ fun ProductBox(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    title,
+                    product.title,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -98,12 +95,12 @@ fun ProductBox(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(Icons.Filled.Star, null, tint = orange_400)
-                    Text(rate, style = MaterialTheme.typography.bodySmall)
+                    Text(product.rate.toString(), style = MaterialTheme.typography.bodySmall)
                 }
             }
             Spacer_4dp()
             Text(
-                price,
+                product.getPrice(),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
