@@ -140,7 +140,7 @@ fun RegisterScreen(
                 Text("Password")
                 Spacer_4dp()
                 PasswordTextField(
-                    isError = isPasswordError,
+                   // isError = isPasswordError,
                     value = state.passwordLogin,
                     onValueChange = {
                         events(LoginEvent.OnUpdatePasswordLogin(it))
