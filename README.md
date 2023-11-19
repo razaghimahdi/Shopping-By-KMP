@@ -16,16 +16,17 @@ https://github.com/razaghimahdi/Shoping-By-KMP/assets/61207818/3bed76a8-4576-45c
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
 ## Features ✨
-| Feature                     | Status        |
-| --------------------------- | ------------- |
-| Login, Sign Up              | ✔️ Implemented |
-| Home                        | ✔️ Implemented |
-| Product Detail and Comments | ✔️ Implemented |
+| Feature                     | Status           |
+|-----------------------------|------------------|
+| Login, Sign Up              | ✔️ Implemented   |
+| Home                        | ✔️ Implemented   |
+| Product Detail and Comments | ✔️ Implemented   |
 | Wishlist                    | ⚠️ Working on it |
 | Cart                        | ⚠️ Working on it |
 | Search                      | ⚠️ Working on it |
 | Profile                     | ⚠️ Working on it |
 | Notification                | ⚠️ Working on it |
+| Submit Comment              | ⚠️ Working on it |
 | Category                    | ⚠️ Working on it |
 | Setting                     | ⚠️ Working on it |
 
@@ -36,7 +37,7 @@ If you like or are using this project to learn or start your solution, please gi
 - Material3 
 - Ktor 
 - Datastore 
-- Decompose 
+- Precompose 
 - Koin
 
 ## Development 💻
