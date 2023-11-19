@@ -74,11 +74,11 @@ It's also responsible for mapping data from the domain layer into a format that 
 
 When Android is one of your targets, 
 you can get the same experience for Android as if you were developing an Android app using Jetpack Compose.
-
+<!--
 | Splash                                            | Sign In                                           | Sign Up                                           | Main(Home)                                        |
 |---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|---------------------------------------------------|
 | <img src="screenshots/android1.png" width="300"/> | <img src="screenshots/android2.png" width="300"/> | <img src="screenshots/android3.png" width="300"/> | <img src="screenshots/android4.png" width="300"/> |
-
+-->
 
 ### IOS 📱
 > iOS support is in Alpha. It may change incompatibly and require manual migration in the future.
@@ -86,10 +86,11 @@ you can get the same experience for Android as if you were developing an Android
 Compose Multiplatform shares most of its API with Jetpack Compose, the Android UI framework developed by Google. 
 You can use the same APIs to build user interfaces for both Android and iOS.
 
-
+<!--
 | Splash                                        | Sign In                                       | Sign Up                                       | Main(Home)                                    |
 |-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
 | <img src="screenshots/ios1.png" width="300"/> | <img src="screenshots/ios2.png" width="300"/> | <img src="screenshots/ios3.png" width="300"/> | <img src="screenshots/ios4.png" width="300"/> |
+-->
 
 ### Backend 🌐
 [This project](https://github.com/soheilkhaledabdi/shop) involves building a robust admin panel for managing an e-commerce platform. 
