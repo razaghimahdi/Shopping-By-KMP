@@ -17,3 +17,12 @@ data class Product(
 ) {
     fun getPrice() = "$ $price"
 }
+
+val product_sample = Product(
+    description = "Such a great Shoes",
+    image = "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/17c9cb39-4a80-4c27-8ff1-57028b5f91d6/air-force-1-high-womens-shoes-vBhHD4.png",
+    isLike = true,
+    price = 30,
+    rate = 4.4,
+    title = "Nike-121",
+)
