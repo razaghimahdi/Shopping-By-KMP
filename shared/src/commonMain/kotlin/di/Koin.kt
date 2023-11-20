@@ -33,6 +33,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
+import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
 
@@ -100,6 +101,7 @@ fun appModule(context: Context) = module {
     single { MainInteractors.build(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get()) }
+    factory { WishlistViewModel() }
     factory { DetailViewModel(get()) }
     single { LoginInteractor(get(), get()) }
     single { RegisterInteractor(get(), get()) }
