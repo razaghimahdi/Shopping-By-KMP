@@ -43,11 +43,12 @@ import presentation.theme.orange_400
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProductBox(
+    modifier: Modifier = Modifier.width(180.dp),
     product: Product,
     onClick: () -> Unit
 ) {
-    Box(modifier = Modifier.padding(8.dp).noRippleClickable { onClick() }) {
-        Column(modifier = Modifier.width(180.dp).height(240.dp)) {
+    Box(modifier = modifier.height(250.dp).padding(8.dp).noRippleClickable { onClick() }) {
+        Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f)
                     .clip(MaterialTheme.shapes.small)
