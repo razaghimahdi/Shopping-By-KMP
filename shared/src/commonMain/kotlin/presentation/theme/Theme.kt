@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 private val DarkColorPalette = darkColorScheme(
     primary = PrimaryColor,
     primaryContainer = PrimaryVariantColor,
-    secondary = AccentColor
+    secondary = AccentColor,
 )
 
 private val LightColorPalette = lightColorScheme(
@@ -20,6 +20,7 @@ private val LightColorPalette = lightColorScheme(
     secondary = AccentColor,
     background = Color.White,
     surfaceVariant = Color.White,
+    surface = lightSurface,
 
     /* Other default colors to override
     background = Color.White,
@@ -43,7 +44,7 @@ fun AppTheme(
     }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = LightColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content
