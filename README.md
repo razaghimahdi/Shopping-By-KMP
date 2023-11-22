@@ -21,7 +21,7 @@ If you like or are using this project to learn or start your solution, please gi
 | Login, Sign Up              | ✔️ Implemented   |
 | Home                        | ✔️ Implemented   |
 | Product Detail and Comments | ✔️ Implemented   |
-| Wishlist                    | ⚠️ Working on it |
+| Wishlist                    | ✔️ Implemented   |
 | Cart                        | ⚠️ Working on it |
 | Search                      | ⚠️ Working on it |
 | Profile                     | ⚠️ Working on it |
