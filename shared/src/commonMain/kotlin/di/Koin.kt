@@ -8,8 +8,10 @@ import business.datasource.network.main.MainServiceImpl
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.SplashServiceImpl
 import business.interactors.main.HomeInteractor
+import business.interactors.main.LikeInteractor
 import business.interactors.main.MainInteractors
 import business.interactors.main.ProductInteractor
+import business.interactors.main.WishListInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
@@ -31,6 +33,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
 import presentation.ui.main.wishlist.view_model.WishlistViewModel
@@ -100,9 +103,12 @@ fun appModule(context: Context) = module {
     single { SplashInteractors.build(get()) }
     single { MainInteractors.build(get()) }
     factory { LoginViewModel(get(), get(), get()) }
-    factory { HomeViewModel(get()) }
-    factory { WishlistViewModel() }
+    factory { HomeViewModel(get(), get()) }
+    factory { WishlistViewModel(get(), get()) }
+    factory { CartViewModel() }
     factory { DetailViewModel(get()) }
+    single { WishListInteractor(get(), get()) }
+    single { LikeInteractor(get(), get()) }
     single { LoginInteractor(get(), get()) }
     single { RegisterInteractor(get(), get()) }
     single { CheckTokenInteractor(get()) }
