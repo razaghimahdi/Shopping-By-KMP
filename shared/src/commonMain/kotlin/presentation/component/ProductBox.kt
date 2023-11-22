@@ -45,6 +45,7 @@ import presentation.theme.orange_400
 fun ProductBox(
     modifier: Modifier = Modifier.width(180.dp),
     product: Product,
+    onLikeClick: () -> Unit,
     onClick: () -> Unit
 ) {
     Box(modifier = modifier.height(250.dp).padding(8.dp).noRippleClickable { onClick() }) {
@@ -65,6 +66,7 @@ fun ProductBox(
                 ) {
                     Box(
                         modifier = Modifier
+                            .noRippleClickable { onLikeClick() }
                             .background(BackgroundContent, CircleShape)
                             .size(30.dp)
                             .padding(6.dp)
