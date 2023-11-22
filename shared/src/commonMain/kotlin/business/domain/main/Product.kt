@@ -25,4 +25,5 @@ val product_sample = Product(
     price = 30,
     rate = 4.4,
     title = "Nike-121",
+    category = Category(name = "Shoes")
 )

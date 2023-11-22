@@ -6,3 +6,10 @@ data class Category(
     val name: String = "",
     val parent: Int = 0
 )
+
+val category_all = Category(
+    icon = "",
+    id = -1,
+    name = "All",
+    parent = 0,
+)
