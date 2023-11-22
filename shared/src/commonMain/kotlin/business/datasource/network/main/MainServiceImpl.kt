@@ -1,9 +1,11 @@
 package business.datasource.network.main
 
 import business.constants.BASE_URL
+import business.datasource.network.common.JRNothing
 import business.datasource.network.common.MainGenericResponse
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
+import business.datasource.network.main.responses.WishlistDTO
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.responses.RegisterRequestDTO
 import io.ktor.client.HttpClient
@@ -49,5 +51,37 @@ class MainServiceImpl(
             }
             contentType(ContentType.Application.Json)
         }.body()
+    }
+
+    override suspend fun like(token: String, id: Int): MainGenericResponse<JRNothing?> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.PRODUCT
+                encodedPath += "/$id"
+                encodedPath += MainService.LIKE
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
+    override suspend fun wishlist(
+        token: String,
+        categoryId: Int?,
+        page: Int
+    ): MainGenericResponse<WishlistDTO> {
+        return httpClient.get {
+        url {
+            headers {
+                append(HttpHeaders.Authorization, token)
+            }
+            takeFrom(BASE_URL)
+            encodedPath += MainService.WISHLIST
+        }
+        contentType(ContentType.Application.Json)
+    }.body()
     }
 }
