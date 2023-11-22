@@ -30,9 +30,8 @@ class LoginInteractor(
             val apiResponse = service.login(email, password)
 
 
-            println("AppDebug LoginInteractor apiResponse:"+apiResponse)
 
-             apiResponse.alert?.let { alert ->
+            apiResponse.alert?.let { alert ->
                 emit(
                     DataState.Response<String>(
                         uiComponent = UIComponent.Dialog(
@@ -57,7 +56,6 @@ class LoginInteractor(
             emit(DataState.Data(result, apiResponse.status))
 
         } catch (e: Exception) {
-            println("AppDebug LoginInteractor e:"+e.message)
             e.printStackTrace()
             emit(handleUseCaseException(e))
 
