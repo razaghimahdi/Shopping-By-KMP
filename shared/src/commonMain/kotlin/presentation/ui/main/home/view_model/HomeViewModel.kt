@@ -6,7 +6,9 @@ import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
+import business.domain.main.Home
 import business.interactors.main.HomeInteractor
+import business.interactors.main.LikeInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
@@ -14,9 +16,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.wishlist.view_model.WishlistEvent
 
 class HomeViewModel(
     private val homeInteractor: HomeInteractor,
+    private val likeInteractor: LikeInteractor,
 ) : ViewModel() {
 
 
@@ -28,6 +32,10 @@ class HomeViewModel(
 
     fun onTriggerEvent(event: HomeEvent) {
         when (event) {
+
+            is HomeEvent.Like -> {
+                likeProduct(id = event.id)
+            }
 
             is HomeEvent.OnRemoveHeadFromQueue -> {
                 removeHeadMessage()
@@ -51,6 +59,86 @@ class HomeViewModel(
         getHome()
     }
 
+
+    private fun likeProduct(id: Int) {
+        likeInteractor.execute(id = id)
+            .onEach { dataState ->
+                when (dataState) {
+                    is DataState.NetworkStatus -> {}
+                    is DataState.Response -> {
+                        onTriggerEvent(HomeEvent.Error(dataState.uiComponent))
+                    }
+
+                    is DataState.Data -> {
+                        dataState.data?.let {
+                            if (it) updateLike(id)
+                        }
+                    }
+
+                    is DataState.Loading -> {
+                        state.value =
+                            state.value.copy(progressBarState = dataState.progressBarState)
+                    }
+                }
+            }.launchIn(viewModelScope)
+    }
+
+
+    private fun updateLike(id: Int) {
+
+        val tmpMostSale = state.value.home.mostSale.toMutableList()
+        val tmpNewestProduct = state.value.home.newestProduct.toMutableList()
+        val tmpFlashSale = state.value.home.flashSale.products.toMutableList()
+        var currentItemMostSale = tmpMostSale.find { it.id == id }
+        var currentItemNewestProduct = tmpNewestProduct.find { it.id == id }
+        var currentItemFlashSale = tmpFlashSale.find { it.id == id }
+        val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)
+        val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
+        val indexCurrentItemFlashSale = tmpFlashSale.indexOf(currentItemFlashSale)
+        val newLikes1 =
+            if (currentItemMostSale?.isLike == true) currentItemMostSale?.likes?.minus(1) else currentItemMostSale?.likes?.plus(
+                1
+            )
+        val newLikes2 =
+            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct?.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
+                1
+            )
+        val newLikes3 =
+            if (currentItemFlashSale?.isLike == true) currentItemFlashSale?.likes?.minus(1) else currentItemFlashSale?.likes?.plus(
+                1
+            )
+        currentItemMostSale =
+            currentItemMostSale?.copy(isLike = !currentItemMostSale.isLike, likes = newLikes1 ?: 0)
+        currentItemNewestProduct = currentItemNewestProduct?.copy(
+            isLike = !currentItemNewestProduct.isLike,
+            likes = newLikes2 ?: 0
+        )
+        currentItemFlashSale = currentItemFlashSale?.copy(
+            isLike = !currentItemFlashSale.isLike,
+            likes = newLikes3 ?: 0
+        )
+        if (currentItemMostSale != null) {
+            tmpMostSale[indexCurrentItemMostSale] = currentItemMostSale
+        }
+        if (currentItemNewestProduct != null) {
+            tmpNewestProduct[indexCurrentItemNewestProduct] = currentItemNewestProduct
+        }
+        if (currentItemFlashSale != null) {
+            tmpFlashSale[indexCurrentItemFlashSale] = currentItemFlashSale
+        }
+        val newHome =
+            Home(
+                banners = state.value.home.banners,
+                categories = state.value.home.categories,
+                flashSale = state.value.home.flashSale.copy(products = tmpFlashSale),
+                mostSale = tmpMostSale,
+                newestProduct = tmpNewestProduct,
+            )
+        state.value =
+            state.value.copy(home = newHome)
+    }
+
+
     private fun getHome() {
         homeInteractor.execute().onEach { dataState ->
             when (dataState) {
@@ -72,7 +160,6 @@ class HomeViewModel(
             }
         }.launchIn(viewModelScope)
     }
-
 
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {

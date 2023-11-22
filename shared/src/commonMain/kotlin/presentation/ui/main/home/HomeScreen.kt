@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -66,6 +67,7 @@ import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
+import presentation.theme.BorderColor
 import presentation.theme.IconColorGrey
 import presentation.theme.PagerDotColor
 import presentation.ui.main.home.view_model.HomeEvent
@@ -74,7 +76,7 @@ import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
 import kotlin.reflect.KFunction1
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     navigateToDetail: (Int) -> Unit,
@@ -95,10 +97,7 @@ fun HomeScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
             Column(
-                modifier = Modifier.fillMaxWidth().background(
-                    MaterialTheme.colorScheme.primary,
-                    RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)
-                ).padding(16.dp)
+                modifier = Modifier.fillMaxWidth().padding(16.dp)
             ) {
 
                 Spacer_8dp()
@@ -112,31 +111,41 @@ fun HomeScreen(
                         Text(
                             "Location",
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color.White
                         )
                         Spacer_4dp()
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            Icon(Icons.Filled.LocationOn, null, tint = Color.White)
+                            Icon(
+                                painterResource("location.xml"),
+                                null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
                             Text(
                                 "New York, USA",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = Color.White
                             )
-                            Icon(Icons.Filled.KeyboardArrowDown, null, tint = Color.White)
+                            Icon(
+                                Icons.Filled.KeyboardArrowDown,
+                                null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
 
                         }
                     }
                     Box(
                         modifier = Modifier.background(
-                            IconColorGrey.copy(.2f),
-                            MaterialTheme.shapes.small
+                            MaterialTheme.colorScheme.primary.copy(.2f),
+                            CircleShape
                         ).size(45.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(Icons.Filled.Notifications, null, tint = Color.White)
+                        Icon(
+                            painterResource("bell.xml"),
+                            null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
 
@@ -150,7 +159,7 @@ fun HomeScreen(
                 ) {
                     Box(
                         modifier = Modifier.fillMaxWidth(.8f).height(DEFAULT__BUTTON_SIZE)
-                            .background(Color.White, MaterialTheme.shapes.small)
+                            .border(1.dp, BorderColor, MaterialTheme.shapes.small)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxSize().padding(8.dp),
@@ -158,7 +167,9 @@ fun HomeScreen(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             Icon(
-                                Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.primary
+                                painterResource("search.xml"),
+                                null,
+                                tint = MaterialTheme.colorScheme.primary
                             )
                             Spacer_4dp()
                             Text("Search", style = MaterialTheme.typography.titleMedium)
@@ -166,168 +177,184 @@ fun HomeScreen(
                     }
                     Box(
                         modifier = Modifier.fillMaxWidth().height(DEFAULT__BUTTON_SIZE)
-                            .background(Color.White, MaterialTheme.shapes.small),
+                            .background(
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.shapes.small
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(Icons.Filled.Settings, null, tint = MaterialTheme.colorScheme.primary)
+                        Icon(
+                            painterResource("setting.xml"),
+                            null,
+                            tint = MaterialTheme.colorScheme.background
+                        )
                     }
                 }
 
 
             }
 
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("#SpecialForYou", style = MaterialTheme.typography.titleLarge)
-                Text(
-                    "See All",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
+            Column(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
 
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(horizontal = 8.dp)
-            ) {
-                items(state.home.banners) {
-                    BannerImage(it.banner) {
-                        selectedIndex = state.home.banners.indexOf(it)
-                    }
-                }
-            }
-
-            Spacer_8dp()
-
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                DotsIndicator(
-                    totalDots = state.home.banners.size,
-                    selectedIndex = selectedIndex,
-                    dotSize = 8.dp
-                )
-            }
-
-            Spacer_16dp()
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Category", style = MaterialTheme.typography.titleLarge)
-                Text(
-                    "See All",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                items(state.home.categories) {
-
-                    CategoryBox(category = it)
-                }
-            }
-
-
-
-            Spacer_16dp()
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
                 Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Flash Sale", style = MaterialTheme.typography.titleLarge)
-                    TimerBox()
+                    Text("#SpecialForYou", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "See All",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
-                Text(
-                    "See All",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                items(state.home.flashSale.products) {
-                    ProductBox(product = it) { navigateToDetail(it.id) }
+
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 8.dp)
+                ) {
+                    items(state.home.banners) {
+                        BannerImage(it.banner) {
+                            selectedIndex = state.home.banners.indexOf(it)
+                        }
+                    }
                 }
-            }
 
+                Spacer_8dp()
 
-
-            Spacer_16dp()
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Most Sale", style = MaterialTheme.typography.titleLarge)
-                Text(
-                    "See All",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                items(state.home.mostSale) {
-                    ProductBox(product = it) { navigateToDetail(it.id) }
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    DotsIndicator(
+                        totalDots = state.home.banners.size,
+                        selectedIndex = selectedIndex,
+                        dotSize = 8.dp
+                    )
                 }
-            }
+
+                Spacer_16dp()
 
 
-
-
-            Spacer_16dp()
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Newest Products", style = MaterialTheme.typography.titleLarge)
-                Text(
-                    "See All",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                items(state.home.newestProduct) {
-                    ProductBox(product = it) { navigateToDetail(it.id) }
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("Category", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "See All",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
-            }
 
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    items(state.home.categories) {
+
+                        CategoryBox(category = it)
+                    }
+                }
+
+
+
+                Spacer_16dp()
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text("Flash Sale", style = MaterialTheme.typography.titleLarge)
+                        TimerBox()
+                    }
+                    Text(
+                        "See All",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    items(state.home.flashSale.products) {
+                        ProductBox(product = it,onLikeClick ={
+                            events(HomeEvent.Like(it.id))
+                        }) { navigateToDetail(it.id) }
+                    }
+                }
+
+
+
+                Spacer_16dp()
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("Most Sale", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "See All",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    items(state.home.mostSale) {
+                        ProductBox(product = it,onLikeClick ={
+                            events(HomeEvent.Like(it.id))
+                        }) { navigateToDetail(it.id) }
+                    }
+                }
+
+
+
+
+                Spacer_16dp()
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("Newest Products", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "See All",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    items(state.home.newestProduct) {
+                        ProductBox(product = it,onLikeClick ={
+                            events(HomeEvent.Like(it.id))
+                        }) { navigateToDetail(it.id) }
+                    }
+                }
+
+            }
         }
     }
 }
@@ -341,7 +368,10 @@ fun TimerBox() {
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Box(
-            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+            modifier = Modifier.background(
+                MaterialTheme.colorScheme.primary.copy(alpha = .2f),
+                MaterialTheme.shapes.small
+            )
                 .padding(4.dp)
         ) {
             Text(
@@ -356,7 +386,10 @@ fun TimerBox() {
             style = MaterialTheme.typography.labelMedium
         )
         Box(
-            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+            modifier = Modifier.background(
+                MaterialTheme.colorScheme.primary.copy(alpha = .2f),
+                MaterialTheme.shapes.small
+            )
                 .padding(4.dp)
         ) {
             Text(
@@ -372,7 +405,10 @@ fun TimerBox() {
         )
 
         Box(
-            modifier = Modifier.background(BackgroundContent, MaterialTheme.shapes.small)
+            modifier = Modifier.background(
+                MaterialTheme.colorScheme.primary.copy(alpha = .2f),
+                MaterialTheme.shapes.small
+            )
                 .padding(4.dp)
         ) {
             Text(
@@ -395,7 +431,10 @@ fun CategoryBox(category: Category) {
             modifier = Modifier.width(75.dp)
         ) {
             Box(
-                modifier = Modifier.background(BackgroundContent, CircleShape).size(60.dp)
+                modifier = Modifier.background(
+                    MaterialTheme.colorScheme.primary.copy(.2f),
+                    CircleShape
+                ).size(60.dp)
                     .padding(12.dp)
             ) {
 
