@@ -47,7 +47,9 @@ fun PasswordTextField(
         readOnly = readOnly,
         value = value,
         label = {
-            Text(text = label)
+          if(label.isNotEmpty()) {
+              Text(text = label)
+          }
         },
         onValueChange = { onValueChange(it) },
         trailingIcon = {
