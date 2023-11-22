@@ -9,9 +9,9 @@ interface SplashService {
         const val LOGIN = "login"
     }
 
-    suspend fun login(email: String, password: String): MainGenericResponse<String>
+    suspend fun login(email: String, password: String): MainGenericResponse<String?>
 
-    suspend fun register(name: String, email: String, password: String): MainGenericResponse<String>
+    suspend fun register(name: String, email: String, password: String): MainGenericResponse<String?>
 
     object Factory {
         fun build(): SplashService {

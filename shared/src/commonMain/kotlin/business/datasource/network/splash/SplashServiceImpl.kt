@@ -19,7 +19,7 @@ class SplashServiceImpl(
     private val httpClient: HttpClient
 ) : SplashService {
     @OptIn(InternalAPI::class)
-    override suspend fun login(email: String, password: String): MainGenericResponse<String> {
+    override suspend fun login(email: String, password: String): MainGenericResponse<String?> {
         return httpClient.post {
             url {
                 takeFrom(BASE_URL)
@@ -40,7 +40,7 @@ class SplashServiceImpl(
         name: String,
         email: String,
         password: String
-    ): MainGenericResponse<String> {
+    ): MainGenericResponse<String?> {
         return httpClient.post {
             url {
                 takeFrom(BASE_URL)
