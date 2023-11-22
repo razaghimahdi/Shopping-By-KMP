@@ -21,32 +21,32 @@ import androidx.compose.ui.unit.dp
 sealed class MainNavigation(
     val route: String,
     val title: String,
-    val selectedIcon: ImageVector,
-    val unSelectedIcon: ImageVector,
+    val selectedIcon: String,
+    val unSelectedIcon: String,
 ) {
 
     object Home : MainNavigation(
         route = "Home", title = "Home",
-        selectedIcon = Icons.Filled.Home,
-        unSelectedIcon = Icons.Outlined.Home
+        selectedIcon = "home.xml",
+        unSelectedIcon = "home_border.xml"
     )
 
     object Wishlist : MainNavigation(
         route = "Wishlist", title = "Wishlist",
-        selectedIcon = Icons.Filled.Bookmark,
-        unSelectedIcon = Icons.Outlined.BookmarkBorder
+        selectedIcon = "heart2.xml",
+        unSelectedIcon = "heart_border2.xml"
     )
 
     object Cart : MainNavigation(
         route = "Cart", title = "Cart",
-        selectedIcon = Icons.Filled.ShoppingCart,
-        unSelectedIcon = Icons.Outlined.ShoppingCart
+        selectedIcon = "cart.xml",
+        unSelectedIcon = "cart_border.xml"
     )
 
     object Profile : MainNavigation(
         route = "Profile", title = "Profile",
-        selectedIcon = Icons.Filled.People,
-        unSelectedIcon = Icons.Outlined.People
+        selectedIcon = "profile.xml",
+        unSelectedIcon = "profile_border.xml"
     )
 
 
