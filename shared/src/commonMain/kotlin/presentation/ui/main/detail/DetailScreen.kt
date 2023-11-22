@@ -49,6 +49,7 @@ import presentation.component.CircleImage
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
+import presentation.component.ExpandingText
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
@@ -184,21 +185,14 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
 
                     Spacer_8dp()
 
-                    Text(
-                        text = buildAnnotatedString {
-                            append(state.product.description)
-                            withStyle(
-                                style = SpanStyle(
-                                    color = MaterialTheme.colorScheme.primary,
-                                    textDecoration = TextDecoration.Underline
-                                )
-                            ) {
-                                append(" ")
-                                append("Read More")
-                            }
-                        },
+                    ExpandingText(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = state.product.description,
                         style = MaterialTheme.typography.bodyMedium,
-                    )
+                    ) {
+
+                    }
+
 
                     Spacer_16dp()
 
@@ -297,7 +291,7 @@ fun CommentBox(comment: Comment) {
                         Spacer_4dp()
                         Text(comment.user.fetchName(), style = MaterialTheme.typography.titleSmall)
                     }
-                    Text("2 days ago", style =  MaterialTheme.typography.titleSmall)
+                    Text("2 days ago", style = MaterialTheme.typography.titleSmall)
                 }
                 Spacer_8dp()
                 Column {
