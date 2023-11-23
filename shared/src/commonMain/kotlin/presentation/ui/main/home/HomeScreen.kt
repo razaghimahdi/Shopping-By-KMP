@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -85,7 +87,8 @@ fun HomeScreen(
 ) {
 
 
-    var selectedIndex by remember { mutableStateOf(0) }
+
+    val pagerState = rememberPagerState { state.home.banners.size }
 
 
     DefaultScreenUI(
@@ -211,23 +214,21 @@ fun HomeScreen(
                 }
 
 
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(horizontal = 8.dp)
-                ) {
-                    items(state.home.banners) {
-                        BannerImage(it.banner) {
-                            selectedIndex = state.home.banners.indexOf(it)
-                        }
-                    }
+                HorizontalPager(
+                    state = pagerState,
+                    verticalAlignment = Alignment.CenterVertically
+                ) { page ->
+                    BannerImage(state.home.banners.getOrNull(page)?.banner?:"")
                 }
+
+
 
                 Spacer_8dp()
 
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     DotsIndicator(
                         totalDots = state.home.banners.size,
-                        selectedIndex = selectedIndex,
+                        selectedIndex =  pagerState.currentPage,
                         dotSize = 8.dp
                     )
                 }
@@ -287,7 +288,7 @@ fun HomeScreen(
                         .padding(horizontal = 8.dp)
                 ) {
                     items(state.home.flashSale.products) {
-                        ProductBox(product = it,onLikeClick ={
+                        ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
                     }
@@ -317,7 +318,7 @@ fun HomeScreen(
                         .padding(horizontal = 8.dp)
                 ) {
                     items(state.home.mostSale) {
-                        ProductBox(product = it,onLikeClick ={
+                        ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
                     }
@@ -348,7 +349,7 @@ fun HomeScreen(
                         .padding(horizontal = 8.dp)
                 ) {
                     items(state.home.newestProduct) {
-                        ProductBox(product = it,onLikeClick ={
+                        ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
                     }
@@ -458,16 +459,11 @@ fun CategoryBox(category: Category) {
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun BannerImage(it: String, onFocusedChanged: () -> Unit) {
+fun BannerImage(it: String) {
     Box(modifier = Modifier.padding(horizontal = 8.dp)) {
         Card(
-            modifier = Modifier.height(150.dp).width(300.dp)
-                .focusable(true)
-                .onFocusChanged { focusState ->
-                    if (focusState.isFocused) {
-                        onFocusedChanged()
-                    }
-                }, shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.height(160.dp).fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
             elevation = CardDefaults.cardElevation(8.dp)
         ) {
             Image(
