@@ -86,56 +86,82 @@ class HomeViewModel(
 
     private fun updateLike(id: Int) {
 
-        val tmpMostSale = state.value.home.mostSale.toMutableList()
-        val tmpNewestProduct = state.value.home.newestProduct.toMutableList()
+        updateMostSaleProductLike(id = id)
+        updateNewestProductLike(id = id)
+        updateFlashSaleProductLike(id = id)
+
+    }
+
+    private fun updateFlashSaleProductLike(id: Int) {
+
         val tmpFlashSale = state.value.home.flashSale.products.toMutableList()
-        var currentItemMostSale = tmpMostSale.find { it.id == id }
-        var currentItemNewestProduct = tmpNewestProduct.find { it.id == id }
         var currentItemFlashSale = tmpFlashSale.find { it.id == id }
-        val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)
-        val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
         val indexCurrentItemFlashSale = tmpFlashSale.indexOf(currentItemFlashSale)
-        val newLikes1 =
-            if (currentItemMostSale?.isLike == true) currentItemMostSale?.likes?.minus(1) else currentItemMostSale?.likes?.plus(
-                1
-            )
-        val newLikes2 =
-            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct?.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
-                1
-            )
         val newLikes3 =
             if (currentItemFlashSale?.isLike == true) currentItemFlashSale?.likes?.minus(1) else currentItemFlashSale?.likes?.plus(
                 1
             )
-        currentItemMostSale =
-            currentItemMostSale?.copy(isLike = !currentItemMostSale.isLike, likes = newLikes1 ?: 0)
-        currentItemNewestProduct = currentItemNewestProduct?.copy(
-            isLike = !currentItemNewestProduct.isLike,
-            likes = newLikes2 ?: 0
-        )
         currentItemFlashSale = currentItemFlashSale?.copy(
             isLike = !currentItemFlashSale.isLike,
             likes = newLikes3 ?: 0
         )
-        if (currentItemMostSale != null) {
-            tmpMostSale[indexCurrentItemMostSale] = currentItemMostSale
-        }
-        if (currentItemNewestProduct != null) {
-            tmpNewestProduct[indexCurrentItemNewestProduct] = currentItemNewestProduct
-        }
         if (currentItemFlashSale != null) {
             tmpFlashSale[indexCurrentItemFlashSale] = currentItemFlashSale
         }
-        val newHome =
-            Home(
-                banners = state.value.home.banners,
-                categories = state.value.home.categories,
-                flashSale = state.value.home.flashSale.copy(products = tmpFlashSale),
-                mostSale = tmpMostSale,
-                newestProduct = tmpNewestProduct,
-            )
+
         state.value =
-            state.value.copy(home = newHome)
+            state.value.copy(
+                home = state.value.home.copy(
+                    flashSale = state.value.home.flashSale.copy(
+                        products = tmpFlashSale
+                    )
+                )
+            )
+    }
+
+    private fun updateNewestProductLike(id: Int) {
+        val tmpNewestProduct = state.value.home.newestProduct.toMutableList()
+        var currentItemNewestProduct = tmpNewestProduct.find { it.id == id }
+        val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
+
+        val newLikes2 =
+            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct?.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
+                1
+            )
+
+        currentItemNewestProduct = currentItemNewestProduct?.copy(
+            isLike = !currentItemNewestProduct.isLike,
+            likes = newLikes2 ?: 0
+        )
+
+
+        if (currentItemNewestProduct != null) {
+            tmpNewestProduct[indexCurrentItemNewestProduct] = currentItemNewestProduct
+        }
+
+        state.value =
+            state.value.copy(home = state.value.home.copy(newestProduct = tmpNewestProduct))
+    }
+
+    private fun updateMostSaleProductLike(id: Int) {
+        val tmpMostSale = state.value.home.mostSale.toMutableList()
+        var currentItemMostSale = tmpMostSale.find { it.id == id }
+        val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)
+
+        val newLikes1 =
+            if (currentItemMostSale?.isLike == true) currentItemMostSale?.likes?.minus(1) else currentItemMostSale?.likes?.plus(
+                1
+            )
+
+        currentItemMostSale =
+            currentItemMostSale?.copy(isLike = !currentItemMostSale.isLike, likes = newLikes1 ?: 0)
+
+        if (currentItemMostSale != null) {
+            tmpMostSale[indexCurrentItemMostSale] = currentItemMostSale
+        }
+
+        state.value =
+            state.value.copy(home = state.value.home.copy(mostSale = tmpMostSale))
     }
 
 
