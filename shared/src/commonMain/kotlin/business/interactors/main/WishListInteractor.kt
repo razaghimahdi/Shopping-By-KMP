@@ -37,7 +37,7 @@ class WishListInteractor(
 
             val apiResponse = service.wishlist(
                 token = token,
-                categoryId =if(categoryId != -1) categoryId else null,
+                categoryId = if (categoryId != -1) categoryId else null,
                 page = page
             )
 
