@@ -13,12 +13,14 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.headers
+import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
+import io.ktor.http.parameters
 import io.ktor.http.takeFrom
 import io.ktor.util.InternalAPI
 import kotlinx.serialization.json.Json
@@ -61,7 +63,7 @@ class MainServiceImpl(
                 }
                 takeFrom(BASE_URL)
                 encodedPath += MainService.PRODUCT
-                encodedPath += "/$id"
+                encodedPath += "/$id/"
                 encodedPath += MainService.LIKE
             }
             contentType(ContentType.Application.Json)
@@ -74,14 +76,16 @@ class MainServiceImpl(
         page: Int
     ): MainGenericResponse<WishlistDTO> {
         return httpClient.get {
-        url {
-            headers {
-                append(HttpHeaders.Authorization, token)
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.WISHLIST
+                parameter("category_id", categoryId)
+                parameter("page", page)
             }
-            takeFrom(BASE_URL)
-            encodedPath += MainService.WISHLIST
-        }
-        contentType(ContentType.Application.Json)
-    }.body()
+            contentType(ContentType.Application.Json)
+        }.body()
     }
 }
