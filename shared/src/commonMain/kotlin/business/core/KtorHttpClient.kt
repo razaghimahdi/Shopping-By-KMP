@@ -26,13 +26,13 @@ object KtorHttpClient {
 
 
     fun httpClient() = HttpClient() {
-            expectSuccess = false
-            install(HttpTimeout) {
-                val timeout = 60000L
-                connectTimeoutMillis = timeout
-                requestTimeoutMillis = timeout
-                socketTimeoutMillis = timeout
-            }
+        expectSuccess = false
+        install(HttpTimeout) {
+            val timeout = 60000L
+            connectTimeoutMillis = timeout
+            requestTimeoutMillis = timeout
+            socketTimeoutMillis = timeout
+        }
 
 
 
@@ -63,21 +63,27 @@ object KtorHttpClient {
             }
         }
 
-            install(Logging) {
-                logger = Logger.DEFAULT
-                level = LogLevel.ALL
-            }
-            install(ContentNegotiation) {
-                json(Json {
-                    explicitNulls = false
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                    prettyPrint = true
-                    encodeDefaults = true
-                    classDiscriminator = "#class"
-                })
-            }
+        install(Logging) {
+            //  logger = Logger.DEFAULT
+            level = LogLevel.ALL
 
+            logger = object : Logger {
+                override fun log(message: String) {
+                    println("AppDebug KtorHttpClient message:$message")
+                }
+            }
         }
+        install(ContentNegotiation) {
+            json(Json {
+                explicitNulls = false
+                ignoreUnknownKeys = true
+                isLenient = true
+                prettyPrint = true
+                encodeDefaults = true
+                classDiscriminator = "#class"
+            })
+        }
+
+    }
 
 }

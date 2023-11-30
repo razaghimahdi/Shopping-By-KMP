@@ -52,8 +52,14 @@ fun appModule(context: Context) = module {
                 socketTimeoutMillis = timeout
             }
             install(Logging) {
-                logger = Logger.DEFAULT
+                // logger = Logger.DEFAULT
                 level = LogLevel.ALL
+
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        println("AppDebug KtorHttpClient message:$message")
+                    }
+                }
             }
 
             install(ResponseObserver) {
