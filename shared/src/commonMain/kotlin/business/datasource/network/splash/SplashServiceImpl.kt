@@ -27,12 +27,6 @@ class SplashServiceImpl(
             }
             contentType(ContentType.Application.Json)
             setBody(LoginRequestDTO(email = email, password = password))
-            val jsonBody = Json.encodeToString(
-                LoginRequestDTO.serializer(),
-                LoginRequestDTO(email = email, password = password)
-            )
-
-          //  body = jsonBody
         }.body()
     }
 
