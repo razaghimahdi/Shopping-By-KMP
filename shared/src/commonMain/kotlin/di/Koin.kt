@@ -7,6 +7,9 @@ import business.datasource.network.main.MainService
 import business.datasource.network.main.MainServiceImpl
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.SplashServiceImpl
+import business.interactors.main.AddBasketInteractor
+import business.interactors.main.BasketListInteractor
+import business.interactors.main.DeleteBasketInteractor
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.MainInteractors
@@ -111,9 +114,12 @@ fun appModule(context: Context) = module {
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
     factory { WishlistViewModel(get(), get()) }
-    factory { CartViewModel() }
-    factory { DetailViewModel(get()) }
+    factory { CartViewModel(get(), get(), get()) }
+    factory { DetailViewModel(get(), get(), get()) }
     single { WishListInteractor(get(), get()) }
+    single { BasketListInteractor(get(), get()) }
+    single { AddBasketInteractor(get(), get()) }
+    single { DeleteBasketInteractor(get(), get()) }
     single { LikeInteractor(get(), get()) }
     single { LoginInteractor(get(), get()) }
     single { RegisterInteractor(get(), get()) }
