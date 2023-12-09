@@ -6,17 +6,18 @@ import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
-import business.interactors.main.HomeInteractor
-import business.interactors.splash.CheckTokenInteractor
-import business.interactors.splash.LoginInteractor
-import business.interactors.splash.RegisterInteractor
+import business.interactors.main.AddBasketInteractor
+import business.interactors.main.BasketListInteractor
+import business.interactors.main.DeleteBasketInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class CartViewModel(
-    
+    private val basketListInteractor: BasketListInteractor,
+    private val addBasketInteractor: AddBasketInteractor,
+    private val deleteBasketInteractor: DeleteBasketInteractor,
 ) : ViewModel() {
 
 
@@ -28,6 +29,10 @@ class CartViewModel(
 
     fun onTriggerEvent(event: CartEvent) {
         when (event) {
+
+            is CartEvent.DeleteFromBasket -> {
+                deleteFromBasket(id = event.id)
+            }
 
             is CartEvent.OnRemoveHeadFromQueue -> {
                 removeHeadMessage()
@@ -48,11 +53,11 @@ class CartViewModel(
     }
 
     init {
-        getWishlist()
+        getCart()
     }
 
-    private fun getWishlist() {/*
-        homeInteractor.execute().onEach { dataState ->
+    private fun getCart() {
+        basketListInteractor.execute().onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {}
                 is DataState.Response -> {
@@ -61,7 +66,9 @@ class CartViewModel(
 
                 is DataState.Data -> {
                     dataState.data?.let {
-                        state.value = state.value.copy(home = it)
+                        state.value = state.value.copy(baskets = it)
+                        val totalCost = state.value.baskets.map { it.product }.sumOf { it.price }
+                        state.value = state.value.copy(totalCost = "$ $totalCost")
                     }
                 }
 
@@ -70,9 +77,28 @@ class CartViewModel(
                         state.value.copy(progressBarState = dataState.progressBarState)
                 }
             }
-        }.launchIn(viewModelScope)*/
+        }.launchIn(viewModelScope)
     }
 
+    private fun deleteFromBasket(id: Int) {
+        deleteBasketInteractor.execute(id = id).onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {}
+                is DataState.Response -> {
+                    onTriggerEvent(CartEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    if (dataState.data == true) onTriggerEvent(CartEvent.OnRetryNetwork)
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
@@ -100,7 +126,7 @@ class CartViewModel(
 
 
     private fun onRetryNetwork() {
-        getWishlist()
+        getCart()
     }
 
 
