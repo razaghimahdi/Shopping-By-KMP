@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -46,21 +48,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import business.domain.main.Basket
 import business.domain.main.Product
 import business.domain.main.product_sample
+import presentation.component.DEFAULT__BUTTON_SIZE
+import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_4dp
+import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.ui.main.cart.view_model.CartEvent
 import presentation.ui.main.cart.view_model.CartState
+import presentation.ui.main.detail.BuyButtonBox
+import presentation.ui.main.detail.view_model.DetailEvent
 
 
 @Composable
 fun CartScreen(
     state: CartState,
     events: (CartEvent) -> Unit,
-    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Int) -> Unit,
+    navigateToCheckout: () -> Unit,
 ) {
 
 
@@ -71,26 +80,74 @@ fun CartScreen(
         networkState = state.networkState,
         onTryAgain = { events(CartEvent.OnRetryNetwork) }
     ) {
-        Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-
-            Column(modifier = Modifier.fillMaxWidth()) {
-                for (i in 1..10) {
-                    CartBox(product_sample)
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxSize().align(Alignment.Center)) {
+                items(state.baskets) {
+                    CartBox(it, navigateToDetail = navigateToDetail) {
+                        events(CartEvent.DeleteFromBasket(it.id))
+                    }
                 }
             }
 
+            if (state.baskets.isNotEmpty()) {
+                Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
+                    ProceedButtonBox(
+                        state.totalCost
+                    ) {
+                        navigateToCheckout()
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+
+@Composable
+fun ProceedButtonBox(totalCost: String, onClick: () -> Unit) {
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(8.dp),
+        shape = RoundedCornerShape(
+            topStart = 8.dp,
+            topEnd = 8.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Total Cost", style = MaterialTheme.typography.titleMedium)
+                Text(totalCost, style = MaterialTheme.typography.titleLarge)
+            }
+
+            Spacer_16dp()
+
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth().height(DEFAULT__BUTTON_SIZE),
+                text = "Proceed to Checkout"
+            ) {
+                onClick()
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartBox(product: Product) {
+fun CartBox(basket: Basket, navigateToDetail: (Int) -> Unit, deleteFromBasket: () -> Unit) {
     var show by remember { mutableStateOf(true) }
 
     val dismissState = rememberDismissState(
         confirmValueChange = {
-            if (it == DismissValue.DismissedToStart ) {
+            if (it == DismissValue.DismissedToStart) {
+                deleteFromBasket()
                 show = false
                 true
             } else false
@@ -98,26 +155,27 @@ fun CartBox(product: Product) {
     )
 
     AnimatedVisibility(
-        show,exit = fadeOut(spring())
+        show, exit = fadeOut(spring())
     ) {
-    SwipeToDismiss(
-        state = dismissState,
-        modifier = Modifier,
-        background = {
-            DismissBackground(dismissState)
-        },
-        dismissContent = {
-            DismissCartContent(product)
-        })
-}
+        SwipeToDismiss(
+            state = dismissState,
+            modifier = Modifier,
+            background = {
+                DismissBackground(dismissState)
+            },
+            dismissContent = {
+                DismissCartContent(basket, navigateToDetail = navigateToDetail)
+            })
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissCartContent(product: Product) {
+fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp).height(150.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
+                .height(150.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -126,9 +184,12 @@ fun DismissCartContent(product: Product) {
                 modifier = Modifier.fillMaxHeight().padding(vertical = 16.dp)
                     .weight(.3f)
                     .clip(MaterialTheme.shapes.small)
+                    .noRippleClickable {
+                        navigateToDetail(basket.product.id)
+                    }
             ) {
                 Image(
-                    painter = rememberCustomImagePainter(product.image),
+                    painter = rememberCustomImagePainter(basket.product.image),
                     null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -138,11 +199,11 @@ fun DismissCartContent(product: Product) {
             Spacer_16dp()
 
             Column(modifier = Modifier.weight(.4f)) {
-                Text(product.title, style = MaterialTheme.typography.titleMedium)
+                Text(basket.product.title, style = MaterialTheme.typography.titleMedium)
                 Spacer_4dp()
-                Text(product.category.name, style = MaterialTheme.typography.bodySmall)
+                Text(basket.product.category.name, style = MaterialTheme.typography.bodySmall)
                 Spacer_4dp()
-                Text(product.getPrice(), style = MaterialTheme.typography.labelMedium)
+                Text(basket.product.getPrice(), style = MaterialTheme.typography.labelMedium)
             }
             Row(
                 modifier = Modifier.fillMaxHeight()
@@ -163,7 +224,7 @@ fun DismissCartContent(product: Product) {
                     }
                 }
                 Spacer_4dp()
-                Text("1")
+                Text(basket.count.toString())
                 Spacer_4dp()
                 Card(
                     modifier = Modifier.size(25.dp),

@@ -23,11 +23,11 @@ fun CartNav() {
             val viewModel: CartViewModel = koinInject()
             CartScreen(
                 state = viewModel.state.value,
-                events = viewModel::onTriggerEvent
-            ) {
-                navigator.popBackStack()
-                navigator.navigate(CartNavigation.Detail.route.plus("/$it"))
-            }
+                events = viewModel::onTriggerEvent,
+                navigateToDetail = {
+                    navigator.popBackStack()
+                    navigator.navigate(CartNavigation.Detail.route.plus("/$it"))
+                }, navigateToCheckout = {})
         }
         scene(route = CartNavigation.Detail.route.plus(CartNavigation.Detail.objectPath)) { backStackEntry ->
             val id: Int? = backStackEntry.path<Int>(CartNavigation.Detail.objectName)
