@@ -49,7 +49,7 @@ fun WishlistScreen(
         networkState = state.networkState,
         onTryAgain = { events(WishlistEvent.OnRetryNetwork) }
     ) {
-        Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        Column(modifier = Modifier.fillMaxSize()) {
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(8.dp)
