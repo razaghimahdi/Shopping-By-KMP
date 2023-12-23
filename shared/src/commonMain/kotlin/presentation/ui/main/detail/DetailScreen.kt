@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -112,13 +113,19 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                         Card(
                             modifier = Modifier.size(55.dp).padding(4.dp),
                             shape = CircleShape,
-                            elevation = CardDefaults.cardElevation(8.dp)
+                            elevation = CardDefaults.cardElevation(8.dp),
+                            onClick = {
+                                events(DetailEvent.Like(state.product.id))
+                            }
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(Icons.Filled.FavoriteBorder, null)
+                                Icon(
+                                    if (state.product.isLike) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                    null
+                                )
                             }
                         }
                     }
@@ -189,9 +196,7 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                         modifier = Modifier.fillMaxWidth(),
                         text = state.product.description,
                         style = MaterialTheme.typography.bodyMedium,
-                    ) {
-
-                    }
+                    ) {}
 
 
                     Spacer_16dp()
@@ -226,14 +231,16 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
             Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
                 BuyButtonBox(
                     state.product
-                )
+                ) {
+                    events(DetailEvent.AddBasket(state.product.id))
+                }
             }
         }
     }
 }
 
 @Composable
-fun BuyButtonBox(product: Product) {
+fun BuyButtonBox(product: Product, onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -260,7 +267,7 @@ fun BuyButtonBox(product: Product) {
                 modifier = Modifier.fillMaxWidth(.7f).height(DEFAULT__BUTTON_SIZE),
                 text = "Add to Cart"
             ) {
-
+                onClick()
             }
         }
     }
