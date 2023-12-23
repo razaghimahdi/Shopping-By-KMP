@@ -6,7 +6,9 @@ import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
+import business.interactors.main.AddBasketInteractor
 import business.interactors.main.HomeInteractor
+import business.interactors.main.LikeInteractor
 import business.interactors.main.ProductInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
@@ -15,9 +17,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.home.view_model.HomeEvent
 
 class DetailViewModel(
     private val productInteractor: ProductInteractor,
+    private val addBasketInteractor: AddBasketInteractor,
+    private val likeInteractor: LikeInteractor,
 ) : ViewModel() {
 
 
@@ -29,6 +34,14 @@ class DetailViewModel(
 
     fun onTriggerEvent(event: DetailEvent) {
         when (event) {
+
+            is DetailEvent.Like -> {
+                likeProduct(id = event.id)
+            }
+
+            is DetailEvent.AddBasket -> {
+                addBasket(id = event.id)
+            }
 
             is DetailEvent.OnUpdateSelectedImage -> {
                 onUpdateSelectedImage(event.value)
@@ -58,6 +71,56 @@ class DetailViewModel(
 
     private fun onUpdateSelectedImage(value: String) {
         state.value = state.value.copy(selectedImage = value)
+    }
+
+
+    private fun likeProduct(id: Int) {
+        likeInteractor.execute(id = id)
+            .onEach { dataState ->
+                when (dataState) {
+                    is DataState.NetworkStatus -> {}
+                    is DataState.Response -> {
+                        onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
+                    }
+
+                    is DataState.Data -> {
+                        dataState.data?.let {
+                            if (it) updateLike()
+                        }
+                    }
+
+                    is DataState.Loading -> {
+                        state.value =
+                            state.value.copy(progressBarState = dataState.progressBarState)
+                    }
+                }
+            }.launchIn(viewModelScope)
+    }
+
+
+    private fun addBasket(id: Int) {
+        addBasketInteractor.execute(id = id, 1)
+            .onEach { dataState ->
+                when (dataState) {
+                    is DataState.NetworkStatus -> {}
+                    is DataState.Response -> {
+                        onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
+                    }
+
+                    is DataState.Data -> {}
+
+                    is DataState.Loading -> {
+                        state.value =
+                            state.value.copy(progressBarState = dataState.progressBarState)
+                    }
+                }
+            }.launchIn(viewModelScope)
+    }
+
+
+    private fun updateLike() {
+        state.value =
+            state.value.copy(product = state.value.product.copy(isLike = !state.value.product.isLike))
     }
 
 
