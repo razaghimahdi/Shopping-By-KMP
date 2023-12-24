@@ -8,6 +8,7 @@ import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.BasketDeleteRequestDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
+import business.datasource.network.main.responses.ProfileDTO
 import business.datasource.network.main.responses.WishlistDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -25,6 +26,20 @@ import io.ktor.http.takeFrom
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+
+    override suspend fun getProfile(token: String): MainGenericResponse<ProfileDTO> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.PROFILE
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
     override suspend fun basket(token: String): MainGenericResponse<List<BasketDTO>> {
         return httpClient.get {
             url {
@@ -38,7 +53,11 @@ class MainServiceImpl(
         }.body()
     }
 
-    override suspend fun basketAdd(token: String, id: Int, count: Int): MainGenericResponse<JRNothing?> {
+    override suspend fun basketAdd(
+        token: String,
+        id: Int,
+        count: Int
+    ): MainGenericResponse<JRNothing?> {
         return httpClient.post {
             url {
                 headers {

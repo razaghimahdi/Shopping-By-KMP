@@ -6,6 +6,7 @@ import business.datasource.network.common.MainGenericResponse
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
+import business.datasource.network.main.responses.ProfileDTO
 import business.datasource.network.main.responses.WishlistDTO
 
 interface MainService {
@@ -16,8 +17,11 @@ interface MainService {
         const val HOME = "home"
         const val PRODUCT = "product"
         const val LIKE = "like"
+        const val PROFILE = "profile"
         const val WISHLIST = "product/wishlist"
     }
+
+    suspend fun getProfile(token: String): MainGenericResponse<ProfileDTO>
 
     suspend fun basket(token: String): MainGenericResponse<List<BasketDTO>>
     suspend fun basketAdd(token: String, id: Int, count: Int): MainGenericResponse<JRNothing?>
