@@ -10,6 +10,7 @@ import business.datasource.network.splash.SplashServiceImpl
 import business.interactors.main.AddBasketInteractor
 import business.interactors.main.BasketListInteractor
 import business.interactors.main.DeleteBasketInteractor
+import business.interactors.main.GetProfileInteractor
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.MainInteractors
@@ -118,6 +119,7 @@ fun appModule(context: Context) = module {
     factory { DetailViewModel(get(), get(), get()) }
     single { WishListInteractor(get(), get()) }
     single { BasketListInteractor(get(), get()) }
+    single { GetProfileInteractor(get(), get()) }
     single { AddBasketInteractor(get(), get()) }
     single { DeleteBasketInteractor(get(), get()) }
     single { LikeInteractor(get(), get()) }
