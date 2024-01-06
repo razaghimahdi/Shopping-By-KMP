@@ -3,6 +3,7 @@ package presentation.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CircleImage(
     image: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier.size(55.dp),
     onClick: (() -> Unit?)? = null,
     width: Dp = 1.5.dp,
     color: Color = Color.White
