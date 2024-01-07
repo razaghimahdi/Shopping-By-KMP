@@ -1,3 +1,5 @@
+import org.jetbrains.compose.compose
+
 plugins {
     /*   alias(libs.plugins.kotlinMultiplatform)
        alias(libs.plugins.androidLibrary)
@@ -25,6 +27,23 @@ kotlin {
     }
 
     sourceSets {
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+
+                implementation(libs.kotest.framework.engine)
+                implementation(libs.kotest.assertions.core)
+                implementation(libs.kotest.property)
+                implementation(libs.ktor.mock)
+                implementation(libs.coroutines.test)
+                implementation (libs.turbine.turbine)
+
+
+            }
+        }
         commonMain {
             dependencies {
                 implementation(compose.runtime)
@@ -40,7 +59,7 @@ kotlin {
                 implementation(libs.ktor.negotiation)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.androidx.datastore.preferences)
-               // implementation(libs.image.loader)
+                // implementation(libs.image.loader)
                 api(libs.koin.core)
                 api(libs.koin.compose)
                 api(libs.coil3)
@@ -48,11 +67,7 @@ kotlin {
                 api(libs.precompose)
                 api(libs.precompose.viewmodel)
                 api(libs.precompose.koin)
-/*
-                api(libs.mvvm.core)
-                api(libs.mvvm.compose)
-                api(libs.mvvm.flow)
-                api(libs.mvvm.flow.compose)*/
+
 
             }
         }
@@ -63,6 +78,10 @@ kotlin {
                 api(libs.androidx.appcompat)
                 api(libs.androidx.core)
                 implementation(libs.ktor.okhttp)
+                api(libs.coil3.gif)
+                api(libs.coil3.svg)
+                api(libs.coil3.core)
+                api(libs.coil3.video)
             }
         }
         iosMain {
