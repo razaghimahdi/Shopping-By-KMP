@@ -18,6 +18,10 @@ sqldelight = "2.0.0-alpha05"
 koin = "3.4.3"
 koin-compose = "1.0.4"
 coil3-io = "3.0.0-alpha01"
+coroutines-test-ver = "1.7.1"
+kotest = "5.8.0"
+turbine = "1.0.0"
+
 
 [libraries]
 
@@ -35,6 +39,7 @@ ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json-ver" }
@@ -44,6 +49,13 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+
+
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test-ver" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -68,8 +80,13 @@ mvvm-flow-compose = { module = "dev.icerock.moko:mvvm-flow-compose", version.ref
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-datastore" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+
 coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3-io" }
 coil3-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coil3-io" }
+coil3-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil3-io" }
+coil3-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil3-io" }
+coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3-io" }
+coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
 
 
 [bundles]
