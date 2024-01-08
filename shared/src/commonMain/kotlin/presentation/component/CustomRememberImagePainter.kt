@@ -1,20 +1,34 @@
 package presentation.component
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.painter.Painter
-import com.seiko.imageloader.ImageLoader
-import com.seiko.imageloader.LocalImageLoader
-import com.seiko.imageloader.model.ImageRequest
-import com.seiko.imageloader.rememberImagePainter
+import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-
+import coil3.ImageLoader
+import coil3.compose.rememberAsyncImagePainter
+import coil3.network.CacheStrategy
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun rememberCustomImagePainter(
-    url: String,
-) = rememberImagePainter(url, placeholderPainter = { painterResource("default_image_loader.png") })
+    model: Any?,
+    imageLoader: ImageLoader,
+    contentScale: ContentScale = ContentScale.Fit,
+) = rememberAsyncImagePainter(
+    model, imageLoader,
+    error = painterResource("default_image_loader.png"),
+    placeholder = painterResource("default_image_loader.png"),
+    contentScale = contentScale
+)
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun rememberCustomImagePainter(
+    model: Any?,
+    contentScale: ContentScale = ContentScale.Fit,
+) = rememberAsyncImagePainter(
+    model,
+    error = painterResource("default_image_loader.png"),
+    placeholder = painterResource("default_image_loader.png"),
+    contentScale = contentScale,
+)
