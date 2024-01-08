@@ -1,0 +1,193 @@
+package business.interactors.splash
+
+import business.core.AppDataStore
+import business.core.DataState
+import business.core.ProgressBarState
+import business.core.UIComponent
+import business.datasoruce.datastore.AppDataStoreFake
+import business.datasoruce.network.LoginServiceResponseType
+import business.datasoruce.network.splash.LoginFakeDataGenerator
+import business.datasoruce.network.splash.SplashServiceFake
+import business.datasource.network.splash.SplashService
+import io.kotest.common.runBlocking
+import kotlinx.coroutines.flow.toList
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+
+class LoginInteractorTest {
+
+    private lateinit var loginInteractor: LoginInteractor
+    private lateinit var service: SplashService
+    private lateinit var appDataStoreManager: AppDataStore
+    private var email = ""
+    private var password = ""
+
+
+    @Test
+    fun `Test if request time out`() = runBlocking {
+
+        // setup
+        service = SplashServiceFake.build(type = LoginServiceResponseType.TimeOut)
+        appDataStoreManager = AppDataStoreFake()
+        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        email = LoginFakeDataGenerator.email
+        password = LoginFakeDataGenerator.password
+
+        // Execute the use-case
+        val result = loginInteractor.execute(
+            email = email,
+            password = password
+        ).toList()
+
+
+        // First emission should be loading
+        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+
+        // Confirm entered email is not empty
+        assertTrue(email.isNotEmpty())
+
+        // Confirm entered password is not empty
+        assertTrue(password.isNotEmpty())
+
+        // Confirm second emission is dialog
+        assertTrue(result[1] is DataState.Response)
+        assertEquals(result[1], DataState.Response<String>(uiComponent = UIComponent.None("")))
+/*
+
+        // Confirm third emission is data
+        assertTrue(result[2] is DataState.Data)
+
+        // Confirm third emission is DataState with null result and appropriate status
+        assertTrue(result[2] is DataState.Data)
+        assertNull((result[2] as DataState.Data).data)
+       // assertEquals(apiResponse.status, (result[2] as DataState.Data).status)
+*/
+
+
+        // Confirm loading state is IDLE
+        assertEquals(result[2], DataState.Loading<String>(ProgressBarState.Idle))
+
+    }
+
+
+
+    @Test
+    fun `Test if email or password is empty`() = runBlocking {
+
+        // setup
+        service = SplashServiceFake.build(type = LoginServiceResponseType.FillDataCurrently)
+        appDataStoreManager = AppDataStoreFake()
+        loginInteractor = LoginInteractor(service, appDataStoreManager)
+
+        // Execute the use-case
+        val result = loginInteractor.execute(
+            email = email,
+            password = password
+        ).toList()
+
+
+        // First emission should be loading
+        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+
+        // Confirm second emission is dialog
+        assertTrue(result[1] is DataState.Response)
+
+        // Confirm third emission is data
+        assertTrue(result[2] is DataState.Data)
+
+        // Confirm entered email is empty
+        assertTrue(email.isEmpty())
+
+        // Confirm entered password is empty
+        assertTrue(password.isEmpty())
+
+        // Confirm loading state is IDLE
+        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+
+    }
+
+    @Test
+    fun `Test if result is null`() = runBlocking {
+
+        // setup
+        service = SplashServiceFake.build(type = LoginServiceResponseType.MalformedData)
+        appDataStoreManager = AppDataStoreFake()
+        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        email = LoginFakeDataGenerator.email
+        password = LoginFakeDataGenerator.password
+
+        // Execute the use-case
+        val result = loginInteractor.execute(
+            email = email,
+            password = password
+        ).toList()
+
+
+        // First emission should be loading
+        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+
+
+        // Confirm entered email is not empty
+        assertTrue(email.isNotEmpty())
+
+        // Confirm entered password is not empty
+        assertTrue(password.isNotEmpty())
+
+        // Confirm second emission is dialog
+        assertTrue(result[1] is DataState.Response)
+
+        // Confirm third emission is data
+        assertTrue(result[2] is DataState.Data)
+
+        // Confirm result if null
+        assertEquals(result[2], DataState.Data<String>(null, false))
+
+        // Confirm loading state is IDLE
+        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+
+    }
+
+    @Test
+    fun `Test login success`() = runBlocking {
+
+        // setup
+        service = SplashServiceFake.build(type = LoginServiceResponseType.GoodData)
+        appDataStoreManager = AppDataStoreFake()
+        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        email = LoginFakeDataGenerator.email
+        password = LoginFakeDataGenerator.password
+
+        // Execute the use-case
+        val result = loginInteractor.execute(
+            email = email,
+            password = password
+        ).toList()
+
+
+        // First emission should be loading
+        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+
+
+        // Confirm entered email is not empty
+        assertTrue(email.isNotEmpty())
+
+        // Confirm entered password is not empty
+        assertTrue(password.isNotEmpty())
+
+        // Confirm second emission is dialog
+        assertTrue(result[1] is DataState.Response)
+
+        // Confirm third emission is data
+        assertTrue(result[2] is DataState.Data)
+
+
+        // Confirm loading state is IDLE
+        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+
+
+    }
+
+
+}

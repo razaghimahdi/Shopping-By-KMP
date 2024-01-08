@@ -33,7 +33,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Product
-import com.seiko.imageloader.rememberImagePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.theme.BackgroundContent
@@ -48,7 +47,7 @@ fun ProductBox(
     onLikeClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    Box(modifier = modifier.height(250.dp).padding(8.dp).noRippleClickable { onClick() }) {
+    Box(modifier = modifier.height(260.dp).padding(8.dp).noRippleClickable { onClick() }) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f)
