@@ -29,6 +29,7 @@ import presentation.theme.DefaultNavigationBarItemTheme
 import presentation.ui.main.cart.CartNav
 import presentation.ui.main.cart.CartScreen
 import presentation.ui.main.home.HomeNav
+import presentation.ui.main.profile.ProfileNav
 import presentation.ui.main.profile.ProfileScreen
 import presentation.ui.main.wishlist.WishlistNav
 import presentation.ui.main.wishlist.WishlistScreen
@@ -57,7 +58,7 @@ fun MainNav() {
                     CartNav()
                 }
                 scene(route = MainNavigation.Profile.route) {
-                    ProfileScreen()
+                    ProfileNav()
                 }
             }
         }
