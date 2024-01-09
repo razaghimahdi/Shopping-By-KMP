@@ -39,7 +39,8 @@ kotlin {
                 implementation(libs.kotest.property)
                 implementation(libs.ktor.mock)
                 implementation(libs.coroutines.test)
-                implementation (libs.turbine.turbine)
+                implementation(libs.turbine.turbine)
+                implementation(libs.mockk.io)
 
 
             }
