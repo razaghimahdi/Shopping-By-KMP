@@ -24,7 +24,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
 
-    private val TAG = "AppDebug LoginViewModel"
+    private val TAG = "AppDebug HomeViewModel"
 
 
     val state: MutableState<HomeState> = mutableStateOf(HomeState())
