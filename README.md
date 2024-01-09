@@ -23,13 +23,10 @@ If you like or are using this project to learn or start your solution, please gi
 | Home                        | ✔️ Implemented   |
 | Product Detail and Comments | ✔️ Implemented   |
 | Wishlist                    | ✔️ Implemented   |
-| Cart                        | ⚠️ Working on it |
-| Search                      | ⚠️ Working on it |
-| Profile                     | ⚠️ Working on it |
-| Notification                | ⚠️ Working on it |
-| Submit Comment              | ⚠️ Working on it |
+| Cart                        | ✔️ Implemented   |
+| Profile                     | ✔️ Implemented   |
 | Category                    | ⚠️ Working on it |
-| Setting                     | ⚠️ Working on it |
+| Search                      | ⚠️ Working on it |
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
@@ -40,6 +37,10 @@ If you like or are using this project to learn or start your solution, please gi
 - Datastore 
 - Precompose 
 - Koin
+- Coil
+- Turbine
+- Kotest
+- Mockk
 
 ## Development 💻
 
