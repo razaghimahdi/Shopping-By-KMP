@@ -40,6 +40,7 @@ import org.koin.dsl.module
 import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
+import presentation.ui.main.profile.view_model.ProfileViewModel
 import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
@@ -114,6 +115,7 @@ fun appModule(context: Context) = module {
     single { MainInteractors.build(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
+    factory { ProfileViewModel(get()) }
     factory { WishlistViewModel(get(), get()) }
     factory { CartViewModel(get(), get(), get()) }
     factory { DetailViewModel(get(), get(), get()) }
