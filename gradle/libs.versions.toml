@@ -21,6 +21,7 @@ coil3-io = "3.0.0-alpha01"
 coroutines-test-ver = "1.7.1"
 kotest = "5.8.0"
 turbine = "1.0.0"
+mockk = "1.8.13.kotlin13"
 
 
 [libraries]
@@ -56,6 +57,7 @@ kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", versio
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+mockk-io = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
