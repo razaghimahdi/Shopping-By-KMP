@@ -72,6 +72,35 @@ It's also responsible for mapping data from the domain layer into a format that 
  <img src="https://user-images.githubusercontent.com/61207818/232203143-1815f502-18d4-4051-b636-dc016699c770.png" alt="Clean Architecture in Android" width="600"/>
 
 
+## Testing 🧪
+
+### Overview
+Testing is a crucial aspect of software development to ensure the reliability and functionality of the application. 
+In the Shoping-By-KMP project, we utilize various testing frameworks and tools to maintain the quality of our codebase.
+
+### Testing Frameworks
+#### Kotest
+Kotest is a flexible and comprehensive testing framework for Kotlin. 
+It supports various styles of testing, including property testing, behavior-driven development (BDD), and more. 
+In our project, Kotest is used to write unit tests for different components.
+
+#### Turbine
+Turbine is a testing library designed for Kotlin Flows. 
+It simplifies the testing of asynchronous code, making it easier to write concise and readable tests for reactive programming. 
+Turbine is utilized in our project to test code that involves Kotlin Flows.
+
+#### Mockk
+Mockk is a mocking library for Kotlin. 
+It enables the creation of mock objects for testing purposes, allowing us to isolate and test individual components in isolation. 
+Mockk is used in conjunction with other testing frameworks to create mock objects and verify interactions in our unit tests.
+
+#### Fake Data
+Fake data generation is a crucial aspect of testing, 
+especially for scenarios where real data may not be suitable or readily available. 
+In our testing suite, we make use of fake data to simulate various scenarios and ensure that our application behaves as expected under different conditions.
+
+
+
 ### Android 📱
 
 When Android is one of your targets, 
