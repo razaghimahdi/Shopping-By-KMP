@@ -57,7 +57,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import business.domain.main.Category
-import com.seiko.imageloader.rememberImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -440,7 +440,7 @@ fun CategoryBox(category: Category) {
             ) {
 
                 Image(
-                    painter = rememberImagePainter(category.icon),
+                    painter = rememberAsyncImagePainter(category.icon),
                     null,
                     modifier = Modifier.fillMaxSize().size(55.dp),
                     contentScale = ContentScale.Crop
