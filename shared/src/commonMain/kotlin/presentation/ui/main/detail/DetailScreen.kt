@@ -292,8 +292,7 @@ fun CommentBox(comment: Comment) {
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircleImage(
-                            image = comment.user.image,
-                            modifier = Modifier.size(55.dp)
+                            image = comment.user.image
                         )
                         Spacer_4dp()
                         Text(comment.user.fetchName(), style = MaterialTheme.typography.titleSmall)
