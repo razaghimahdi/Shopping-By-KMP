@@ -1,4 +1,4 @@
-package business.datasoruce.network
+package business.datasoruce.network.splash
 
 sealed class LoginServiceResponseType {
 

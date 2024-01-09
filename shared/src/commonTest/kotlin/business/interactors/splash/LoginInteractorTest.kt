@@ -5,7 +5,7 @@ import business.core.DataState
 import business.core.ProgressBarState
 import business.core.UIComponent
 import business.datasoruce.datastore.AppDataStoreFake
-import business.datasoruce.network.LoginServiceResponseType
+import business.datasoruce.network.splash.LoginServiceResponseType
 import business.datasoruce.network.splash.LoginFakeDataGenerator
 import business.datasoruce.network.splash.SplashServiceFake
 import business.datasource.network.splash.SplashService
@@ -13,7 +13,6 @@ import io.kotest.common.runBlocking
 import kotlinx.coroutines.flow.toList
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LoginInteractorTest {
@@ -54,16 +53,6 @@ class LoginInteractorTest {
         // Confirm second emission is dialog
         assertTrue(result[1] is DataState.Response)
         assertEquals(result[1], DataState.Response<String>(uiComponent = UIComponent.None("")))
-/*
-
-        // Confirm third emission is data
-        assertTrue(result[2] is DataState.Data)
-
-        // Confirm third emission is DataState with null result and appropriate status
-        assertTrue(result[2] is DataState.Data)
-        assertNull((result[2] as DataState.Data).data)
-       // assertEquals(apiResponse.status, (result[2] as DataState.Data).status)
-*/
 
 
         // Confirm loading state is IDLE

@@ -1,15 +1,13 @@
 package business.datasoruce.network.splash
 
 import business.constants.BASE_URL
-import business.datasoruce.network.LoginServiceResponseType
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.SplashServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
-import io.ktor.client.engine.mock.respondError
+import io.ktor.client.plugins.ConnectTimeoutException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.HttpResponseData
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Url
 import io.ktor.http.fullPath
@@ -78,12 +76,7 @@ class SplashServiceFake {
                                         )
                                     }
                                     is LoginServiceResponseType.TimeOut -> {
-                                        throw Exception()
-                                        respond(
-                                            status = HttpStatusCode.RequestTimeout,
-                                            headers = responseHeaders,
-                                            content = LoginFakeDataGenerator.timeout,
-                                        )
+                                        throw ConnectTimeoutException(request)
                                     }
                                 }
                             }
