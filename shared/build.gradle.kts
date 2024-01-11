@@ -87,8 +87,8 @@ kotlin {
         }
         iosMain {
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:2.3.5")
-                implementation("io.ktor:ktor-client-ios:2.3.5")
+                implementation(libs.ktor.darwin.ios)
+                implementation(libs.ktor.ios)
             }
         }
 
