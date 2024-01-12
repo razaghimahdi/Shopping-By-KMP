@@ -7,7 +7,10 @@ The application allows users to browse, search, and purchase products from a sho
 
 
 
-https://github.com/razaghimahdi/Shoping-By-KMP/assets/61207818/d110360a-7e52-42a9-87f3-d50b9283a48c
+
+
+https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48b0-88f1-bcb9c42d273e
+
 
 
 
