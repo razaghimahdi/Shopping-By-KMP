@@ -59,6 +59,7 @@ kotlin {
                 implementation(libs.ktor.serialization)
                 implementation(libs.ktor.negotiation)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.datastore.preferences)
                 // implementation(libs.image.loader)
                 api(libs.koin.core)
