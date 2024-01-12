@@ -28,8 +28,8 @@ If you like or are using this project to learn or start your solution, please gi
 | Wishlist                    | ✔️ Implemented   |
 | Cart                        | ✔️ Implemented   |
 | Profile                     | ✔️ Implemented   |
+| Search                      | ✔️ Implemented   |
 | Category                    | ⚠️ Working on it |
-| Search                      | ⚠️ Working on it |
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
