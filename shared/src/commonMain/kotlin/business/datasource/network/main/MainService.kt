@@ -7,10 +7,14 @@ import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
+import business.datasource.network.main.responses.SearchDTO
+import business.datasource.network.main.responses.SearchFilterDTO
 import business.datasource.network.main.responses.WishlistDTO
 
 interface MainService {
     companion object {
+        const val SEARCH_FILTER = "search/filter"
+        const val SEARCH = "search"
         const val BASKET = "basket"
         const val BASKET_ADD = "basket/add"
         const val BASKET_DELETE = "basket/delete"
@@ -20,6 +24,18 @@ interface MainService {
         const val PROFILE = "profile"
         const val WISHLIST = "product/wishlist"
     }
+
+    suspend fun search(
+        token: String,
+        minPrice: Int?,
+        maxPrice: Int?,
+        categoriesId: String?,
+        page: Int,
+    ): MainGenericResponse<SearchDTO>
+
+    suspend fun getSearchFilter(
+        token: String,
+    ): MainGenericResponse<SearchFilterDTO>
 
     suspend fun getProfile(token: String): MainGenericResponse<ProfileDTO>
 

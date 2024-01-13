@@ -9,6 +9,8 @@ import business.datasource.network.main.responses.BasketDeleteRequestDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
+import business.datasource.network.main.responses.SearchDTO
+import business.datasource.network.main.responses.SearchFilterDTO
 import business.datasource.network.main.responses.WishlistDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -26,6 +28,44 @@ import io.ktor.http.takeFrom
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+    override suspend fun search(
+        token: String,
+        minPrice: Int?,
+        maxPrice: Int?,
+        categoriesId: String?,
+        page: Int
+    ): MainGenericResponse<SearchDTO> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.SEARCH
+
+                parameter("categories_id", categoriesId)
+                parameter("page", page)
+                parameter("min_price", minPrice)
+                parameter("max_price", maxPrice)
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
+    override suspend fun getSearchFilter(
+        token: String,
+    ): MainGenericResponse<SearchFilterDTO> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.SEARCH_FILTER
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
 
     override suspend fun getProfile(token: String): MainGenericResponse<ProfileDTO> {
         return httpClient.get {
