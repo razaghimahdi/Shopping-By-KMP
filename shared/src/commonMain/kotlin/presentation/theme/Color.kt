@@ -18,6 +18,8 @@ val IconColorGrey = Grey
 val TextFieldColor = Color(0xFFf6f6f6)
 val BorderColor = Color(0xFFDBDBDC)
 
+val splashBackground = Color(0xFF272320)
+
 
 val amber_050 = Color(0xFFfff8e1) // Use with black text
 val amber_100 = Color(0xFFffecb3) // Use with black text

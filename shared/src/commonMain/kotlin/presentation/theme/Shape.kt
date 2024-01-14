@@ -75,3 +75,16 @@ fun DefaultNavigationBarItemTheme() = NavigationBarItemDefaults.colors(
     selectedTextColor = MaterialTheme.colorScheme.primary,
     indicatorColor = MaterialTheme.colorScheme.background,
 )
+
+
+
+@Composable
+fun TextFieldWithTransparentTheme() = TextFieldDefaults.colors(
+   // cursorColor = Color.Transparent,
+    focusedIndicatorColor = Color.Transparent,
+    unfocusedIndicatorColor = Color.Transparent,
+    disabledIndicatorColor = Color.Transparent,
+    focusedContainerColor = Color.Transparent,
+    disabledContainerColor = Color.Transparent,
+    unfocusedContainerColor = Color.Transparent
+)
