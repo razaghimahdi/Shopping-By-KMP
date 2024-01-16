@@ -27,7 +27,6 @@ import presentation.theme.IconColorGrey
 fun PasswordTextField(
     modifier: Modifier = Modifier.fillMaxWidth(),
     value: String,
-    label: String = "Password",
     readOnly: Boolean = false,
     isError: Boolean = false,
     enabled: Boolean = true,
@@ -46,11 +45,6 @@ fun PasswordTextField(
         shape = MaterialTheme.shapes.small,
         readOnly = readOnly,
         value = value,
-        label = {
-          if(label.isNotEmpty()) {
-              Text(text = label)
-          }
-        },
         onValueChange = { onValueChange(it) },
         trailingIcon = {
             IconButton(onClick = {
