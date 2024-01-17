@@ -23,6 +23,7 @@ coroutines-test-ver = "1.7.1"
 kotest = "5.8.0"
 turbine = "1.0.0"
 mockk = "1.8.13.kotlin13"
+accompanist-version = "0.33.2-alpha"
 
 
 [libraries]
@@ -84,6 +85,7 @@ androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-p
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+system-ui-controller = {module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-version"}
 
 
 coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3-io" }
