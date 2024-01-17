@@ -84,6 +84,7 @@ kotlin {
                 api(libs.coil3.svg)
                 api(libs.coil3.core)
                 api(libs.coil3.video)
+                implementation(libs.system.ui.controller)
             }
         }
         iosMain {
