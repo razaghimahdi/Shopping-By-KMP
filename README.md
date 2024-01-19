@@ -7,6 +7,7 @@ The application allows users to browse, search, and purchase products from a sho
 
 
 <img src="screenshots/banner.png"/> 
+<img src="screenshots/banner2.png"/> 
 
 
 https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48b0-88f1-bcb9c42d273e
@@ -29,7 +30,7 @@ If you like or are using this project to learn or start your solution, please gi
 | Cart                        | ✔️ Implemented   |
 | Profile                     | ✔️ Implemented   |
 | Search                      | ✔️ Implemented   |
-| Category                    | ⚠️ Working on it |
+| Category                    | ✔️ Implemented   |
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
