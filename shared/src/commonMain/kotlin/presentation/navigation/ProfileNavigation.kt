@@ -5,7 +5,7 @@ sealed class ProfileNavigation(
     val objectName: String = "",
     val objectPath: String = ""
 ) {
-    object Profile : AppNavigation(route = "Profile")
+    object Profile : ProfileNavigation(route = "Profile")
 
 
 }

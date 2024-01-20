@@ -3,11 +3,22 @@ package presentation.navigation
 sealed class HomeNavigation(
     val route: String,
     val objectName: String = "",
-    val objectPath: String = ""
+    val objectPath: String = "",
+    val objectName2: String = "",
+    val objectPath2: String = "",
 ) {
-    object Home : AppNavigation(route = "Home")
+    object Search : HomeNavigation(
+        route = "Search",
+        objectName = "category_id",
+        objectPath = "/{category_id}",
+        objectName2 = "sort",
+        objectPath2 = "/{sort}",
+    )
 
-    object Detail : AppNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+    object Home : HomeNavigation(route = "Home")
+    object Categories : HomeNavigation(route = "Categories")
+
+    object Detail : HomeNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
 

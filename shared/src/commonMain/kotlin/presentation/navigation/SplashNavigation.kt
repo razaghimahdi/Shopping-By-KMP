@@ -6,11 +6,11 @@ sealed class SplashNavigation(
     val objectPath: String = ""
 ) {
 
-    object Splash : AppNavigation(route = "Splash")
+    object Splash : SplashNavigation(route = "Splash")
 
-    object Login : AppNavigation(route = "Login")
+    object Login : SplashNavigation(route = "Login")
 
-    object Register : AppNavigation(route = "Register")
+    object Register : SplashNavigation(route = "Register")
 
 
 }

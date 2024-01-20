@@ -5,9 +5,9 @@ sealed class WishlistNavigation(
     val objectName: String = "",
     val objectPath: String = ""
 ) {
-    object Wishlist : AppNavigation(route = "Home")
+    object Wishlist : WishlistNavigation(route = "Home")
 
-    object Detail : AppNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+    object Detail : WishlistNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
 
