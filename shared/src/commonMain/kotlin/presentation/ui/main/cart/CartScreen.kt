@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Basket
 import business.domain.main.Product
@@ -199,11 +200,26 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
             Spacer_16dp()
 
             Column(modifier = Modifier.weight(.4f)) {
-                Text(basket.product.title, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    basket.product.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Spacer_4dp()
-                Text(basket.product.category.name, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    basket.product.category.name,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodySmall
+                )
                 Spacer_4dp()
-                Text(basket.product.getPrice(), style = MaterialTheme.typography.labelMedium)
+                Text(
+                    basket.product.getPrice(),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.labelMedium
+                )
             }
             Row(
                 modifier = Modifier.fillMaxHeight()
@@ -218,9 +234,7 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(
-                            "-",
-                        )
+                        Text("-",)
                     }
                 }
                 Spacer_4dp()
