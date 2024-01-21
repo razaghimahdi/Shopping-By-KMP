@@ -1,6 +1,8 @@
 package presentation.ui.splash
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import common.ChangeStatusBarColors
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
@@ -13,6 +15,7 @@ internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain:
     val navigator = rememberNavigator()
     // val viewModel = koinViewModel(LoginViewModel::class)
 
+    ChangeStatusBarColors(Color.Black)
     NavHost(
         navigator = navigator,
         initialRoute = SplashNavigation.Splash.route,

@@ -121,7 +121,6 @@ fun LoginScreen(
                         events(LoginEvent.OnUpdatePasswordLogin(it))
                         isPasswordError = it.length < 8
                     },
-                    label = "",
                     modifier = Modifier.fillMaxWidth(),
                 )
 
