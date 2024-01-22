@@ -16,7 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import common.ChangeStatusBarColors
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -40,6 +42,7 @@ fun MainNav() {
 
     val navigator = rememberNavigator()
 
+    ChangeStatusBarColors(Color.White)
     Scaffold(bottomBar = {
         BottomNavigationUI(navigator)
     }) { innerPadding ->
