@@ -27,6 +27,7 @@ import business.constants.PAGINATION_PAGE_SIZE
 import business.core.ProgressBarState
 import business.domain.main.Category
 import business.domain.main.product_sample
+import presentation.component.CategoryChipsBox
 import presentation.component.DefaultScreenUI
 import presentation.component.ProductBox
 import presentation.component.Spacer_8dp
@@ -90,39 +91,10 @@ fun WishlistScreen(
                     }
                 }
             )
-/*
-
-            FlowRow(modifier = Modifier.fillMaxWidth().padding(8.dp), maxItemsInEachRow = 2) {
-                state.wishlist.products.forEach {
-                    ProductBox(
-                        product = it,
-                        modifier = Modifier.fillMaxWidth(.5f),
-                        onLikeClick = {
-                            events(WishlistEvent.LikeProduct(it.id))
-                        }) {
-                        navigateToDetail(it.id)
-                    }
-                }
-            }
-
-*/
 
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CategoryChipsBox(category: Category, isSelected: Boolean, onClick: () -> Unit) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier.padding(4.dp),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-            contentColor = if (isSelected) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground
-        )
-    ) {
-        Text(category.name, modifier = Modifier.padding(12.dp))
-    }
-}
+
+
