@@ -12,11 +12,20 @@ import business.interactors.main.LikeInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import presentation.ui.main.wishlist.view_model.WishlistEvent
+import presentation.util.Convertor
 
 class HomeViewModel(
     private val homeInteractor: HomeInteractor,
@@ -28,6 +37,7 @@ class HomeViewModel(
 
 
     val state: MutableState<HomeState> = mutableStateOf(HomeState())
+
 
 
     fun onTriggerEvent(event: HomeEvent) {
@@ -175,7 +185,10 @@ class HomeViewModel(
 
                 is DataState.Data -> {
                     dataState.data?.let {
+                        val currentDateTime =
+                            Instant.parse(it.flashSale.expired_at).toLocalDateTime(TimeZone.UTC)
                         state.value = state.value.copy(home = it)
+                        state.value = state.value.copy(time = currentDateTime)
                     }
                 }
 

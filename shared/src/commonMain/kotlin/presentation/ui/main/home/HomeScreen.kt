@@ -7,8 +7,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,10 +28,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -43,21 +37,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import business.constants.Sort
 import business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.delay
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -67,25 +62,22 @@ import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
+import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
-import presentation.theme.BackgroundContent
 import presentation.theme.BorderColor
-import presentation.theme.IconColorGrey
 import presentation.theme.PagerDotColor
 import presentation.ui.main.home.view_model.HomeEvent
 import presentation.ui.main.home.view_model.HomeState
-import presentation.ui.splash.view_model.LoginEvent
-import presentation.ui.splash.view_model.LoginState
-import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     navigateToDetail: (Int) -> Unit,
     state: HomeState,
-    events: (HomeEvent) -> Unit
+    events: (HomeEvent) -> Unit,
+    navigateToCategories: () -> Unit,
+    navigateToSearch: (Int?, Int?) -> Unit,
 ) {
-
 
 
     val pagerState = rememberPagerState { state.home.banners.size }
@@ -163,6 +155,7 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier.fillMaxWidth(.8f).height(DEFAULT__BUTTON_SIZE)
                             .border(1.dp, BorderColor, MaterialTheme.shapes.small)
+                            .noRippleClickable { navigateToSearch(null, null) }
                     ) {
                         Row(
                             modifier = Modifier.fillMaxSize().padding(8.dp),
@@ -203,14 +196,14 @@ fun HomeScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Text("#SpecialForYou", style = MaterialTheme.typography.titleLarge)
-                    Text(
-                        "See All",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    /* Text(
+                         "See All",
+                         style = MaterialTheme.typography.labelMedium,
+                         color = MaterialTheme.colorScheme.primary
+                     )*/
                 }
 
 
@@ -218,7 +211,7 @@ fun HomeScreen(
                     state = pagerState,
                     verticalAlignment = Alignment.CenterVertically
                 ) { page ->
-                    BannerImage(state.home.banners.getOrNull(page)?.banner?:"")
+                    BannerImage(state.home.banners.getOrNull(page)?.banner ?: "")
                 }
 
 
@@ -228,7 +221,7 @@ fun HomeScreen(
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     DotsIndicator(
                         totalDots = state.home.banners.size,
-                        selectedIndex =  pagerState.currentPage,
+                        selectedIndex = pagerState.currentPage,
                         dotSize = 8.dp
                     )
                 }
@@ -245,17 +238,21 @@ fun HomeScreen(
                     Text(
                         "See All",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.noRippleClickable {
+                            navigateToCategories()
+                        }
                     )
                 }
 
                 LazyRow(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(8.dp)
                 ) {
                     items(state.home.categories) {
-
-                        CategoryBox(category = it)
+                        CategoryBox(category = it) {
+                            navigateToSearch(it.id, null)
+                        }
                     }
                 }
 
@@ -267,25 +264,25 @@ fun HomeScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text("Flash Sale", style = MaterialTheme.typography.titleLarge)
-                        TimerBox()
+                        TimerBox(state = state)
                     }
-                    Text(
-                        "See All",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    /* Text(
+                         "See All",
+                         style = MaterialTheme.typography.labelMedium,
+                         color = MaterialTheme.colorScheme.primary
+                     )*/
                 }
 
                 LazyRow(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(8.dp)
                 ) {
                     items(state.home.flashSale.products) {
                         ProductBox(product = it, onLikeClick = {
@@ -308,14 +305,17 @@ fun HomeScreen(
                     Text(
                         "See All",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.noRippleClickable {
+                            navigateToSearch(null, Sort.MOST_SALE)
+                        }
                     )
                 }
 
 
                 LazyRow(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(8.dp)
                 ) {
                     items(state.home.mostSale) {
                         ProductBox(product = it, onLikeClick = {
@@ -339,14 +339,17 @@ fun HomeScreen(
                     Text(
                         "See All",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.noRippleClickable {
+                            navigateToSearch(null, Sort.NEWEST)
+                        }
                     )
                 }
 
 
                 LazyRow(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(8.dp)
                 ) {
                     items(state.home.newestProduct) {
                         ProductBox(product = it, onLikeClick = {
@@ -362,7 +365,7 @@ fun HomeScreen(
 
 
 @Composable
-fun TimerBox() {
+fun TimerBox(state: HomeState) {
     Row(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -376,7 +379,7 @@ fun TimerBox() {
                 .padding(4.dp)
         ) {
             Text(
-                "02",
+                state.time.hour.toString(),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.labelMedium
             )
@@ -394,7 +397,7 @@ fun TimerBox() {
                 .padding(4.dp)
         ) {
             Text(
-                "13",
+                state.time.minute.toString(),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.labelMedium
             )
@@ -413,7 +416,7 @@ fun TimerBox() {
                 .padding(4.dp)
         ) {
             Text(
-                "54",
+                state.time.second.toString(),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.labelMedium
             )
@@ -422,14 +425,15 @@ fun TimerBox() {
 
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun CategoryBox(category: Category) {
+private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
     Box(modifier = Modifier.padding(horizontal = 8.dp)) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.width(75.dp)
+            modifier = Modifier.width(75.dp).noRippleClickable {
+                onCategoryClick()
+            }
         ) {
             Box(
                 modifier = Modifier.background(
