@@ -11,10 +11,12 @@ import business.interactors.main.AddBasketInteractor
 import business.interactors.main.BasketListInteractor
 import business.interactors.main.DeleteBasketInteractor
 import business.interactors.main.GetProfileInteractor
+import business.interactors.main.GetSearchFilterInteractor
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.MainInteractors
 import business.interactors.main.ProductInteractor
+import business.interactors.main.SearchInteractor
 import business.interactors.main.WishListInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
@@ -38,9 +40,11 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import presentation.ui.main.cart.view_model.CartViewModel
+import presentation.ui.main.categories.view_model.CategoriesViewModel
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
 import presentation.ui.main.profile.view_model.ProfileViewModel
+import presentation.ui.main.search.view_model.SearchViewModel
 import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
@@ -115,13 +119,17 @@ fun appModule(context: Context) = module {
     single { MainInteractors.build(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
+    factory { CategoriesViewModel(get()) }
     factory { ProfileViewModel(get()) }
     factory { WishlistViewModel(get(), get()) }
     factory { CartViewModel(get(), get(), get()) }
     factory { DetailViewModel(get(), get(), get()) }
+    factory { SearchViewModel(get(), get()) }
     single { WishListInteractor(get(), get()) }
     single { BasketListInteractor(get(), get()) }
     single { GetProfileInteractor(get(), get()) }
+    single { GetSearchFilterInteractor(get(), get()) }
+    single { SearchInteractor(get(), get()) }
     single { AddBasketInteractor(get(), get()) }
     single { DeleteBasketInteractor(get(), get()) }
     single { LikeInteractor(get(), get()) }
