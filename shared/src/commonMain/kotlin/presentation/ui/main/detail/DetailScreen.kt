@@ -1,6 +1,7 @@
 package presentation.ui.main.detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,6 +47,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import business.domain.main.Comment
 import business.domain.main.Product
+import presentation.component.CircleButton
 import presentation.component.CircleImage
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
@@ -58,6 +60,7 @@ import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
+import presentation.theme.blue_400
 import presentation.theme.orange_400
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailState
@@ -92,42 +95,19 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                     )
 
                     Box(modifier = Modifier.padding(16.dp).align(Alignment.TopStart)) {
-                        Card(
-                            modifier = Modifier.size(55.dp).padding(4.dp),
-                            shape = CircleShape,
-                            elevation = CardDefaults.cardElevation(8.dp),
-                            onClick = {
-                                popup()
-                            }
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(Icons.Filled.ArrowBack, null)
-                            }
-                        }
+                        CircleButton(
+                            modifier = Modifier.padding(4.dp),
+                            imageVector = Icons.Filled.ArrowBack,
+                            onClick = { popup() })
                     }
 
                     Box(modifier = Modifier.padding(16.dp).align(Alignment.TopEnd)) {
-                        Card(
-                            modifier = Modifier.size(55.dp).padding(4.dp),
-                            shape = CircleShape,
-                            elevation = CardDefaults.cardElevation(8.dp),
+                        CircleButton(
+                            modifier = Modifier.padding(4.dp),
+                            imageVector = if (state.product.isLike) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             onClick = {
                                 events(DetailEvent.Like(state.product.id))
-                            }
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    if (state.product.isLike) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                                    null
-                                )
-                            }
-                        }
+                            })
                     }
 
                     Box(
@@ -156,10 +136,10 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
 
                 Spacer_32dp()
 
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(vertical = 16.dp)) {
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -184,47 +164,74 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                     Spacer_16dp()
 
 
-                    Text(state.product.title, style = MaterialTheme.typography.headlineLarge)
+                    Text(
+                        state.product.title,
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                        style = MaterialTheme.typography.headlineLarge,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
 
                     Spacer_16dp()
 
-                    Text("Product Details", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "Product Details",
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                        style = MaterialTheme.typography.titleLarge
+                    )
 
                     Spacer_8dp()
 
                     ExpandingText(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         text = state.product.description,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                     ) {}
 
 
                     Spacer_16dp()
 
                     Divider(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         thickness = 1.dp,
                         color = BackgroundContent
                     )
 
                     Spacer_16dp()
 
-                    Text(
-                        text = "Read some comments",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Read some comments",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                        Text(
+                            text = "More",
+                            modifier = Modifier
+                                .clickable {
+                                   // navigateToMoreComment()
+                                },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+
+                    }
 
                     Spacer_8dp()
 
                     LazyRow(
                         modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(horizontal = 8.dp)
+                        contentPadding = PaddingValues(horizontal = 24.dp)
                     ) {
-                        items(state.product.comments) {
+                        items(state.product.comments, key = { it.createAt }) {
                             CommentBox(comment = it)
                         }
                     }
 
+                    Spacer_16dp()
 
                 }
             }
