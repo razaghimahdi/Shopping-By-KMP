@@ -29,6 +29,7 @@ interface MainService {
         token: String,
         minPrice: Int?,
         maxPrice: Int?,
+        sort: Int?,
         categoriesId: String?,
         page: Int,
     ): MainGenericResponse<SearchDTO>
