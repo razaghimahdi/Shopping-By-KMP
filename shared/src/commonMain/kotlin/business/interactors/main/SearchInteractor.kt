@@ -33,7 +33,8 @@ class SearchInteractor(
         minPrice: Int? = null,
         maxPrice: Int? = null,
         categories: List<Category>? = null,
-        page: Int
+        sort: Int?,
+        page: Int,
     ): Flow<DataState<Search>> = flow {
 
         try {
@@ -46,6 +47,7 @@ class SearchInteractor(
                 token = token,
                 minPrice = minPrice,
                 maxPrice = maxPrice,
+                sort = sort,
                 categoriesId = categories?.map { it.id }?.joinToString(","),
                 page = page
             )
