@@ -9,6 +9,7 @@ import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.SearchNavigation
+import presentation.ui.main.detail.DetailNav
 import presentation.ui.main.detail.DetailScreen
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel
@@ -46,16 +47,9 @@ fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
         scene(route = SearchNavigation.Detail.route.plus(SearchNavigation.Detail.objectPath)) { backStackEntry ->
             val id: Int? = backStackEntry.path<Int>(SearchNavigation.Detail.objectName)
             id?.let {
-                val viewModel: DetailViewModel = koinInject()
-                LaunchedEffect(id) {
-                    viewModel.onTriggerEvent(DetailEvent.GetProduct(id))
+                DetailNav(it){
+                    navigator.popBackStack()
                 }
-                DetailScreen(
-                    state = viewModel.state.value,
-                    events = viewModel::onTriggerEvent,
-                    popup = {
-                        navigator.popBackStack()
-                    })
             }
         }
     }

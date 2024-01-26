@@ -154,7 +154,8 @@ class SearchViewModel(
             page = state.value.page,
             minPrice = minPrice,
             maxPrice = maxPrice,
-            categories = categories
+            categories = categories,
+            sort = state.value.selectedSort,
         )
             .onEach { dataState ->
                 when (dataState) {
@@ -189,7 +190,8 @@ class SearchViewModel(
             page = state.value.page,
             minPrice = state.value.selectedRange.start.toInt(),
             maxPrice = state.value.selectedRange.endInclusive.toInt(),
-            categories = state.value.selectedCategory
+            categories = state.value.selectedCategory,
+            sort = state.value.selectedSort,
         )
             .onEach { dataState ->
                 when (dataState) {
