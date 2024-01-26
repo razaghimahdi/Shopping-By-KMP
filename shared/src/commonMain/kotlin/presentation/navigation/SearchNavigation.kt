@@ -1,6 +1,6 @@
 package presentation.navigation
 
-import presentation.util.NamedNavArgument
+
 
 sealed class SearchNavigation(
     val route: String,
