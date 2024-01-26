@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CommentDTO(
+    @SerialName("id") val id: Int?,
     @SerialName("comment") val comment: String?,
     @SerialName("create_at") val createAt: String?,
     @SerialName("rate") val rate: Double?,
@@ -15,9 +16,10 @@ data class CommentDTO(
 )
 
 fun CommentDTO.toComment() = Comment(
-    comment = comment?:"",
-    createAt = createAt?:"",
-    rate = rate?:0.0,
-    user = user?.toUser()?: User(),
+    id = id ?: 0,
+    comment = comment ?: "",
+    createAt = createAt ?: "",
+    rate = rate ?: 0.0,
+    user = user?.toUser() ?: User(),
 )
 
