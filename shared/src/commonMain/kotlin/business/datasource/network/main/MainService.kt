@@ -4,6 +4,7 @@ import business.core.KtorHttpClient
 import business.datasource.network.common.JRNothing
 import business.datasource.network.common.MainGenericResponse
 import business.datasource.network.main.responses.BasketDTO
+import business.datasource.network.main.responses.CommentDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
@@ -22,8 +23,21 @@ interface MainService {
         const val PRODUCT = "product"
         const val LIKE = "like"
         const val PROFILE = "profile"
+        const val COMMENT = "comment"
         const val WISHLIST = "product/wishlist"
     }
+
+    suspend fun getComments(
+        token: String,
+        id: Int,
+    ): MainGenericResponse<List<CommentDTO>>
+
+    suspend fun addComment(
+        token: String,
+        productId: Int,
+        rate: Double,
+        comment: String,
+    ): MainGenericResponse<JRNothing>
 
     suspend fun search(
         token: String,

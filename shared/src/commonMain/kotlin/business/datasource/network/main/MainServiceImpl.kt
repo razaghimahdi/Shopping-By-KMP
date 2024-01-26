@@ -6,6 +6,8 @@ import business.datasource.network.common.MainGenericResponse
 import business.datasource.network.main.responses.BasketAddRequestDTO
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.BasketDeleteRequestDTO
+import business.datasource.network.main.responses.CommentDTO
+import business.datasource.network.main.responses.CommentRequestDTO
 import business.datasource.network.main.responses.HomeDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
@@ -28,6 +30,42 @@ import io.ktor.http.takeFrom
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+    override suspend fun getComments(
+        token: String,
+        id: Int
+    ): MainGenericResponse<List<CommentDTO>> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.COMMENT
+                encodedPath += "/$id"
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
+    override suspend fun addComment(
+        token: String,
+        productId: Int,
+        rate: Double,
+        comment: String
+    ): MainGenericResponse<JRNothing> {
+        return httpClient.post {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.COMMENT
+            }
+            contentType(ContentType.Application.Json)
+            setBody(CommentRequestDTO(comment = comment, rate = rate, productId = productId))
+        }.body()
+    }
+
     override suspend fun search(
         token: String,
         minPrice: Int?,
