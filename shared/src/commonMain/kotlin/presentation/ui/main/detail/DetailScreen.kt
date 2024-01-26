@@ -66,6 +66,7 @@ import presentation.theme.orange_400
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailState
 import presentation.ui.main.home.view_model.HomeEvent
+import presentation.util.convertDate
 import kotlin.reflect.KFunction1
 
 
@@ -292,7 +293,7 @@ fun BuyButtonBox(product: Product, onClick: () -> Unit) {
 
 @Composable
 fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
-    Box(modifier = Modifier.padding(horizontal = 8.dp), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.padding(8.dp), contentAlignment = Alignment.Center) {
         Card(
             modifier = modifier.height(160.dp),
             elevation = CardDefaults.cardElevation(8.dp), shape = MaterialTheme.shapes.small
@@ -314,7 +315,7 @@ fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
                         Spacer_4dp()
                         Text(comment.user.fetchName(), style = MaterialTheme.typography.titleSmall)
                     }
-                    Text("2 days ago", style = MaterialTheme.typography.titleSmall)
+                    Text(comment.createAt.convertDate(), style = MaterialTheme.typography.titleSmall)
                 }
                 Spacer_8dp()
                 Column {
