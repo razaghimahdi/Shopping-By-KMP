@@ -7,6 +7,7 @@ import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.WishlistNavigation
+import presentation.ui.main.detail.DetailNav
 import presentation.ui.main.detail.DetailScreen
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel
@@ -32,16 +33,9 @@ fun WishlistNav() {
         scene(route = WishlistNavigation.Detail.route.plus(WishlistNavigation.Detail.objectPath)) { backStackEntry ->
             val id: Int? = backStackEntry.path<Int>(WishlistNavigation.Detail.objectName)
             id?.let {
-                val viewModel: DetailViewModel = koinInject()
-                LaunchedEffect(id) {
-                    viewModel.onTriggerEvent(DetailEvent.GetProduct(id))
+                DetailNav(it){
+                    navigator.popBackStack()
                 }
-                DetailScreen(
-                    state = viewModel.state.value,
-                    events = viewModel::onTriggerEvent,
-                    popup = {
-                        navigator.popBackStack()
-                    })
             }
         }
     }
