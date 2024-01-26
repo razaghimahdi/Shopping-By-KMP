@@ -8,8 +8,10 @@ import business.datasource.network.main.MainServiceImpl
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.SplashServiceImpl
 import business.interactors.main.AddBasketInteractor
+import business.interactors.main.AddCommentInteractor
 import business.interactors.main.BasketListInteractor
 import business.interactors.main.DeleteBasketInteractor
+import business.interactors.main.GetCommentsInteractor
 import business.interactors.main.GetProfileInteractor
 import business.interactors.main.GetSearchFilterInteractor
 import business.interactors.main.HomeInteractor
@@ -41,6 +43,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.categories.view_model.CategoriesViewModel
+import presentation.ui.main.comment.view_model.CommentViewModel
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
 import presentation.ui.main.profile.view_model.ProfileViewModel
@@ -130,6 +133,9 @@ fun appModule(context: Context) = module {
     single { GetProfileInteractor(get(), get()) }
     single { GetSearchFilterInteractor(get(), get()) }
     single { SearchInteractor(get(), get()) }
+    single { AddCommentInteractor(get(), get()) }
+    single { CommentViewModel(get(), get()) }
+    single { GetCommentsInteractor(get(), get()) }
     single { AddBasketInteractor(get(), get()) }
     single { DeleteBasketInteractor(get(), get()) }
     single { LikeInteractor(get(), get()) }
