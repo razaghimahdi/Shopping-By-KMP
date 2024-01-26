@@ -60,6 +60,7 @@ import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
+import presentation.theme.BorderColor
 import presentation.theme.blue_400
 import presentation.theme.orange_400
 import presentation.ui.main.detail.view_model.DetailEvent
@@ -70,7 +71,7 @@ import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) -> Unit) {
+fun DetailScreen(popup: () -> Unit, navigateToMoreComment: (Int) -> Unit, state: DetailState, events: (DetailEvent) -> Unit) {
 
 
     DefaultScreenUI(
@@ -212,7 +213,7 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                             text = "More",
                             modifier = Modifier
                                 .clickable {
-                                   // navigateToMoreComment()
+                                     navigateToMoreComment(state.product.id)
                                 },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.primary
@@ -221,6 +222,15 @@ fun DetailScreen(popup: () -> Unit, state: DetailState, events: (DetailEvent) ->
                     }
 
                     Spacer_8dp()
+
+                    if (state.product.comments.isEmpty()) {
+                        Text(
+                            "No Comments!",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = BorderColor,
+                            modifier = Modifier.padding(horizontal = 32.dp)
+                        )
+                    }
 
                     LazyRow(
                         modifier = Modifier.fillMaxWidth(),
@@ -281,10 +291,10 @@ fun BuyButtonBox(product: Product, onClick: () -> Unit) {
 }
 
 @Composable
-fun CommentBox(comment: Comment) {
+fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
     Box(modifier = Modifier.padding(horizontal = 8.dp), contentAlignment = Alignment.Center) {
         Card(
-            modifier = Modifier.width(300.dp).height(160.dp),
+            modifier = modifier.height(160.dp),
             elevation = CardDefaults.cardElevation(8.dp), shape = MaterialTheme.shapes.small
         ) {
             Column(
