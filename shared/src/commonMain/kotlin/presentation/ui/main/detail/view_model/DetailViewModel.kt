@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.home.view_model.HomeEvent
 
 class DetailViewModel(
@@ -127,7 +128,9 @@ class DetailViewModel(
     private fun getProduct(id: Int) {
         productInteractor.execute(id = id).onEach { dataState ->
             when (dataState) {
-                is DataState.NetworkStatus -> {}
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(DetailEvent.OnUpdateNetworkState(dataState.networkState))
+                }
                 is DataState.Response -> {
                     onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
                 }
