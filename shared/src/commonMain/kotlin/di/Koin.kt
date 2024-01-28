@@ -23,6 +23,7 @@ import business.interactors.main.LogoutInteractor
 import business.interactors.main.MainInteractors
 import business.interactors.main.ProductInteractor
 import business.interactors.main.SearchInteractor
+import business.interactors.main.UpdateProfileInteractor
 import business.interactors.main.WishListInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
@@ -137,7 +138,7 @@ fun appModule(context: Context) = module {
     factory { CategoriesViewModel(get()) }
     factory { ProfileViewModel(get()) }
     factory { SettingsViewModel(get()) }
-    factory { EditProfileViewModel(get(),get()) }
+    factory { EditProfileViewModel(get(),get(),get()) }
     factory { PaymentMethodViewModel() }
     factory { NotificationsViewModel() }
     factory { MyCouponsViewModel() }
@@ -149,6 +150,7 @@ fun appModule(context: Context) = module {
     single { WishListInteractor(get(), get()) }
     single { BasketListInteractor(get(), get()) }
     single { GetProfileInteractor(get(), get()) }
+    single { UpdateProfileInteractor(get(), get()) }
     single { LogoutInteractor(get()) }
     single { GetEmailFromCacheInteractor(get()) }
     single { GetSearchFilterInteractor(get(), get()) }
