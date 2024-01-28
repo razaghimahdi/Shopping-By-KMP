@@ -50,6 +50,10 @@ class LoginInteractor(
                     DataStoreKeys.TOKEN,
                     AUTHORIZATION_BEARER_TOKEN + result
                 )
+                appDataStoreManager.setValue(
+                    DataStoreKeys.EMAIL,
+                    email
+                )
             }
 
 
