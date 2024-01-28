@@ -85,6 +85,7 @@ kotlin {
                 api(libs.coil3.core)
                 api(libs.coil3.video)
                 implementation(libs.system.ui.controller)
+                implementation(libs.accompanist.permissions)
             }
         }
         iosMain {
