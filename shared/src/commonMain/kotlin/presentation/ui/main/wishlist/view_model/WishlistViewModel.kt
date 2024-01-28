@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.address.view_model.AddressEvent
 
 class WishlistViewModel(
     val wishListInteractor: WishListInteractor,
@@ -101,7 +102,9 @@ class WishlistViewModel(
         wishListInteractor.execute(categoryId = state.value.categoryId, page = 1)
             .onEach { dataState ->
                 when (dataState) {
-                    is DataState.NetworkStatus -> {}
+                    is DataState.NetworkStatus -> {
+                        onTriggerEvent(WishlistEvent.OnUpdateNetworkState(dataState.networkState))
+                    }
                     is DataState.Response -> {
                         onTriggerEvent(WishlistEvent.Error(dataState.uiComponent))
                     }
