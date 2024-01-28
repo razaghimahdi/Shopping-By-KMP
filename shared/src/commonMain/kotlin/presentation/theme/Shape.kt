@@ -55,7 +55,10 @@ fun DefaultTextFieldTheme() = textFieldColors(
     cursorColor = MaterialTheme.colorScheme.onBackground,
     // textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Transparent,
-    unfocusedIndicatorColor = Color.Transparent
+    unfocusedIndicatorColor = Color.Transparent,
+    disabledContainerColor = TextFieldColor,
+    disabledTextColor = MaterialTheme.colorScheme.onBackground,
+    disabledIndicatorColor = Color.Transparent,
 )
 
 
