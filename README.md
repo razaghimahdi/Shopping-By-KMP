@@ -31,6 +31,13 @@ If you like or are using this project to learn or start your solution, please gi
 | Profile                     | ✔️ Implemented   |
 | Search                      | ✔️ Implemented   |
 | Category                    | ✔️ Implemented   |
+| Edit Profile                | ✔️ Implemented   |
+| Manage Address              | ✔️ Implemented   |
+| Payment Method              | ✔️ Implemented   |
+| My Orders                   | ✔️ Implemented   |
+| My Coupons                  | ✔️ Implemented   |
+| Notifications               | ✔️ Implemented   |
+| Setting                     | ✔️ Implemented   |
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
