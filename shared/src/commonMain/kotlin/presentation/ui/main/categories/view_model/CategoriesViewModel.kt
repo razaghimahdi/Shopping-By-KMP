@@ -14,6 +14,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.address.view_model.AddressEvent
 
 class CategoriesViewModel(
     private val homeInteractor: HomeInteractor,
@@ -55,7 +56,9 @@ class CategoriesViewModel(
     private fun getCategories() {
         homeInteractor.execute().onEach { dataState ->
             when (dataState) {
-                is DataState.NetworkStatus -> {}
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(CategoriesEvent.OnUpdateNetworkState(dataState.networkState))
+                }
                 is DataState.Response -> {
                     onTriggerEvent(CategoriesEvent.Error(dataState.uiComponent))
                 }
