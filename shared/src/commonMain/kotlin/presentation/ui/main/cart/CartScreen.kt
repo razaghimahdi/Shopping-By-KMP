@@ -59,6 +59,7 @@ import presentation.component.Spacer_16dp
 import presentation.component.Spacer_4dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
+import presentation.theme.BorderColor
 import presentation.ui.main.cart.view_model.CartEvent
 import presentation.ui.main.cart.view_model.CartState
 import presentation.ui.main.detail.BuyButtonBox
@@ -97,6 +98,20 @@ fun CartScreen(
                     ) {
                         navigateToCheckout()
                     }
+                }
+            }
+
+
+            if (state.baskets.isEmpty()) {
+                Box(
+                    modifier = Modifier.align(Alignment.Center).fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Basket is empty!",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = BorderColor,
+                    )
                 }
             }
 
@@ -234,7 +249,7 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("-",)
+                        Text("-")
                     }
                 }
                 Spacer_4dp()
