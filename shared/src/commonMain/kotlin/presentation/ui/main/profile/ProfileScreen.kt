@@ -1,6 +1,5 @@
 package presentation.ui.main.profile
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +30,17 @@ import presentation.ui.main.profile.view_model.ProfileEvent
 import presentation.ui.main.profile.view_model.ProfileState
 
 @Composable
-fun ProfileScreen(state: ProfileState, events: (ProfileEvent) -> Unit) {
+fun ProfileScreen(
+    state: ProfileState,
+    events: (ProfileEvent) -> Unit,
+    navigateToAddress: () -> Unit,
+    navigateToEditProfile: () -> Unit,
+    navigateToPaymentMethod: () -> Unit,
+    navigateToMyOrders: () -> Unit,
+    navigateToMyCoupons: () -> Unit,
+    navigateToMyWallet: () -> Unit,
+    navigateToSettings: () -> Unit,
+) {
 
     DefaultScreenUI(
         queue = state.errorQueue,
@@ -63,13 +72,28 @@ fun ProfileScreen(state: ProfileState, events: (ProfileEvent) -> Unit) {
             Spacer_32dp()
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileItemBox(title = "Edit profile", image = "profile2.xml") {}
-                ProfileItemBox(title = "Manage Address", image = "location2.xml") {}
-                ProfileItemBox(title = "Payment Methods", image = "payment.xml") {}
-                ProfileItemBox(title = "My Orders", image = "order.xml") {}
-                ProfileItemBox(title = "My Coupons", image = "coupon.xml") {}
-                ProfileItemBox(title = "My Wallet", image = "wallet.xml") {}
-                ProfileItemBox(title = "Settings", image = "setting2.xml") {}
+                ProfileItemBox(title = "Edit profile", image = "profile2.xml") {
+                    navigateToEditProfile()
+                }
+                ProfileItemBox(
+                    title = "Manage Address",
+                    image = "location2.xml"
+                ) { navigateToAddress() }
+                ProfileItemBox(title = "Payment Methods", image = "payment.xml") {
+                    navigateToPaymentMethod()
+                }
+                ProfileItemBox(title = "My Orders", image = "order.xml") {
+                    navigateToMyOrders()
+                }
+                ProfileItemBox(title = "My Coupons", image = "coupon.xml") {
+                    navigateToMyCoupons()
+                }
+                /*ProfileItemBox(title = "My Wallet", image = "wallet.xml") {
+                    navigateToMyWallet()
+                }*/
+                ProfileItemBox(title = "Settings", image = "setting2.xml") {
+                    navigateToSettings()
+                }
                 ProfileItemBox(title = "Help Center", image = "warning.xml", isLastItem = true) {}
             }
 

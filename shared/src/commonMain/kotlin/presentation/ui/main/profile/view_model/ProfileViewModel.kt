@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.wishlist.view_model.WishlistEvent
 
 class ProfileViewModel(
@@ -60,7 +61,9 @@ class ProfileViewModel(
     private fun getProfile() {
         getProfileInteractor.execute().onEach { dataState ->
             when (dataState) {
-                is DataState.NetworkStatus -> {}
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(ProfileEvent.OnUpdateNetworkState(dataState.networkState))
+                }
                 is DataState.Response -> {
                     onTriggerEvent(ProfileEvent.Error(dataState.uiComponent))
                 }
