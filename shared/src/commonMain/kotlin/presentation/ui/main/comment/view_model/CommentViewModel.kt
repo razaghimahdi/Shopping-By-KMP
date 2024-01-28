@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.home.view_model.HomeEvent
 
@@ -104,7 +105,9 @@ class CommentViewModel(
     private fun getComments() {
         getCommentsInteractor.execute(state.value.productId).onEach { dataState ->
             when (dataState) {
-                is DataState.NetworkStatus -> {}
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(CommentEvent.OnUpdateNetworkState(dataState.networkState))
+                }
                 is DataState.Response -> {
                     onTriggerEvent(CommentEvent.Error(dataState.uiComponent))
                 }
