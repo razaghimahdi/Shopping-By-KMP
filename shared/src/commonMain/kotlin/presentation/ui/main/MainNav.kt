@@ -38,7 +38,7 @@ import presentation.ui.main.wishlist.WishlistScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainNav() {
+fun MainNav(logout: () -> Unit) {
 
     val navigator = rememberNavigator()
 
@@ -52,7 +52,7 @@ fun MainNav() {
                 initialRoute = MainNavigation.Home.route,
             ) {
                 scene(route = MainNavigation.Home.route) {
-                    HomeNav()
+                    HomeNav(logout = logout)
                 }
                 scene(route = MainNavigation.Wishlist.route) {
                     WishlistNav()
@@ -61,7 +61,7 @@ fun MainNav() {
                     CartNav()
                 }
                 scene(route = MainNavigation.Profile.route) {
-                    ProfileNav()
+                    ProfileNav(logout = logout)
                 }
             }
         }
