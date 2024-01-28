@@ -24,6 +24,7 @@ kotest = "5.8.0"
 turbine = "1.0.0"
 mockk = "1.8.13.kotlin13"
 accompanist-version = "0.33.2-alpha"
+accompanist-permissions = "0.32.0"
 
 
 [libraries]
@@ -86,6 +87,7 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 system-ui-controller = {module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-version"}
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 
 
 coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3-io" }
