@@ -1,5 +1,6 @@
 package presentation.ui.main.wishlist
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import business.constants.PAGINATION_PAGE_SIZE
@@ -31,6 +33,7 @@ import presentation.component.CategoryChipsBox
 import presentation.component.DefaultScreenUI
 import presentation.component.ProductBox
 import presentation.component.Spacer_8dp
+import presentation.theme.BorderColor
 import presentation.ui.main.wishlist.view_model.WishlistEvent
 import presentation.ui.main.wishlist.view_model.WishlistState
 
@@ -63,6 +66,17 @@ fun WishlistScreen(
             }
 
             Spacer_8dp()
+
+
+            if (state.wishlist.products.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        "Wishlist is empty!",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = BorderColor,
+                    )
+                }
+            }
 
 
             LazyVerticalGrid(
