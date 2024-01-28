@@ -12,6 +12,8 @@ import kotlinx.serialization.Serializable
 data class ProfileDTO(
     @SerialName("name") val name: String?,
     @SerialName("profile_url") val profileUrl: String?,
+    @SerialName("age") val age: String?,
 )
 
-fun ProfileDTO.toProfile() = Profile(name = name ?: "", profileUrl = profileUrl ?: "")
+fun ProfileDTO.toProfile() =
+    Profile(name = name ?: "", age = age ?: "", profileUrl = profileUrl ?: "")

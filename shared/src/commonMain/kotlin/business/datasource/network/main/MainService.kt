@@ -68,6 +68,12 @@ interface MainService {
     ): MainGenericResponse<SearchFilterDTO>
 
     suspend fun getProfile(token: String): MainGenericResponse<ProfileDTO>
+    suspend fun updateProfile(
+        token: String,
+        name: String,
+        age: String,
+        image: ByteArray?,
+    ): MainGenericResponse<Boolean>
 
     suspend fun basket(token: String): MainGenericResponse<List<BasketDTO>>
     suspend fun basketAdd(token: String, id: Int, count: Int): MainGenericResponse<JRNothing?>

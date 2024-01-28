@@ -18,16 +18,24 @@ import business.datasource.network.main.responses.SearchFilterDTO
 import business.datasource.network.main.responses.WishlistDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.forms.FormPart
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
+import io.ktor.http.headersOf
 import io.ktor.http.takeFrom
+import io.ktor.util.InternalAPI
+import io.ktor.utils.io.core.buildPacket
+import io.ktor.utils.io.core.writeFully
 
 class MainServiceImpl(
     private val httpClient: HttpClient
@@ -154,6 +162,54 @@ class MainServiceImpl(
                 encodedPath += MainService.PROFILE
             }
             contentType(ContentType.Application.Json)
+        }.body()
+    }
+
+    @OptIn(InternalAPI::class)
+    override suspend fun updateProfile(
+        token: String,
+        name: String,
+        age: String,
+        image: ByteArray?
+    ): MainGenericResponse<Boolean> {
+        return httpClient.post {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                 }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.PROFILE
+            }
+                // contentType(ContentType.MultiPart.FormData)
+            /*body = formData {
+                append("name", name)
+                if (image != null) {
+                    append("image", image)
+                }
+                append("age", age)
+            }*/
+
+            body = MultiPartFormDataContent(
+                formData {
+                    append("name", name)
+                    append("age", age)
+                    this.append(FormPart("image", "image.jpg"))
+                    this.appendInput(
+                        key = "image",
+                        headers = Headers.build {
+                            append(
+                                HttpHeaders.ContentDisposition,
+                                "filename=image.jpg"
+                            )
+                        },
+                    ) { buildPacket {
+                        if (image != null) {
+                            writeFully(image)
+                        }
+                    } }
+                }
+            )
+
         }.body()
     }
 
