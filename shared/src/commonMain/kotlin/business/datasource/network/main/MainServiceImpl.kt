@@ -3,6 +3,8 @@ package business.datasource.network.main
 import business.constants.BASE_URL
 import business.datasource.network.common.JRNothing
 import business.datasource.network.common.MainGenericResponse
+import business.datasource.network.main.responses.AddressDTO
+import business.datasource.network.main.responses.AddressRequestDTO
 import business.datasource.network.main.responses.BasketAddRequestDTO
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.BasketDeleteRequestDTO
@@ -30,6 +32,41 @@ import io.ktor.http.takeFrom
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+
+    override suspend fun getAddresses(token: String): MainGenericResponse<List<AddressDTO>> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.ADDRESS
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
+    override suspend fun addAddress(
+        token: String,
+        address: String,
+        city: String,
+        country: String,
+        state: String,
+        zipCode: String
+    ): MainGenericResponse<JRNothing> {
+        return httpClient.post {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.ADDRESS
+            }
+            contentType(ContentType.Application.Json)
+            setBody(AddressRequestDTO(address = address, city = city, country = country, state = state, zipCode = zipCode))
+        }.body()
+    }
+
     override suspend fun getComments(
         token: String,
         id: Int

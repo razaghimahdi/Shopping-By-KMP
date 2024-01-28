@@ -3,6 +3,7 @@ package business.datasource.network.main
 import business.core.KtorHttpClient
 import business.datasource.network.common.JRNothing
 import business.datasource.network.common.MainGenericResponse
+import business.datasource.network.main.responses.AddressDTO
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.CommentDTO
 import business.datasource.network.main.responses.HomeDTO
@@ -25,7 +26,21 @@ interface MainService {
         const val PROFILE = "profile"
         const val COMMENT = "comment"
         const val WISHLIST = "product/wishlist"
+        const val ADDRESS = "address"
     }
+
+    suspend fun getAddresses(
+        token: String,
+    ): MainGenericResponse<List<AddressDTO>>
+
+    suspend fun addAddress(
+        token: String,
+        address: String,
+        city: String,
+        country: String,
+        state: String,
+        zipCode: String,
+    ): MainGenericResponse<JRNothing>
 
     suspend fun getComments(
         token: String,
