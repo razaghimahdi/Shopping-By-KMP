@@ -54,7 +54,10 @@ internal fun App(context: Context) {
                             })
                         }
                         scene(route = AppNavigation.Main.route) {
-                            MainNav()
+                            MainNav(){
+                                navigator.popBackStack()
+                                navigator.navigate(AppNavigation.Splash.route)
+                            }
                         }
                     }
                 }
