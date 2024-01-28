@@ -75,6 +75,8 @@ fun HomeScreen(
     navigateToDetail: (Int) -> Unit,
     state: HomeState,
     events: (HomeEvent) -> Unit,
+    navigateToNotifications: () -> Unit,
+    navigateToSetting: () -> Unit,
     navigateToCategories: () -> Unit,
     navigateToSearch: (Int?, Int?) -> Unit,
 ) {
@@ -118,7 +120,7 @@ fun HomeScreen(
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Text(
-                                "New York, USA",
+                                state.home.address.getLocation(),
                                 style = MaterialTheme.typography.labelMedium,
                             )
                             Icon(
@@ -133,7 +135,7 @@ fun HomeScreen(
                         modifier = Modifier.background(
                             MaterialTheme.colorScheme.primary.copy(.2f),
                             CircleShape
-                        ).size(45.dp),
+                        ).size(45.dp).noRippleClickable { navigateToNotifications() },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -176,7 +178,7 @@ fun HomeScreen(
                             .background(
                                 MaterialTheme.colorScheme.primary,
                                 MaterialTheme.shapes.small
-                            ),
+                            ).noRippleClickable { navigateToSetting() },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(

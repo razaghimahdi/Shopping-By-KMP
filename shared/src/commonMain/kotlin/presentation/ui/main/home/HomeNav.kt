@@ -13,10 +13,14 @@ import presentation.ui.main.detail.DetailScreen
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
+import presentation.ui.main.notifications.NotificationsScreen
+import presentation.ui.main.notifications.view_model.NotificationsViewModel
 import presentation.ui.main.search.SearchNav
+import presentation.ui.main.settings.SettingsScreen
+import presentation.ui.main.settings.view_model.SettingsViewModel
 
 @Composable
-fun HomeNav() {
+fun HomeNav(logout: () -> Unit) {
     val navigator = rememberNavigator()
     NavHost(
         navigator = navigator,
@@ -27,8 +31,14 @@ fun HomeNav() {
             HomeScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                navigateToNotifications = {
+                    navigator.navigate(HomeNavigation.Notification.route)
+                },
                 navigateToCategories = {
                     navigator.navigate(HomeNavigation.Categories.route)
+                },
+                navigateToSetting = {
+                    navigator.navigate(HomeNavigation.Settings.route)
                 },
                 navigateToDetail = {
                     navigator.popBackStack()
@@ -39,6 +49,19 @@ fun HomeNav() {
                 )
             }
         }
+
+        scene(route = HomeNavigation.Settings.route) {
+            val viewModel: SettingsViewModel = koinInject()
+            SettingsScreen(
+                state = viewModel.state.value,
+                events = viewModel::onTriggerEvent,
+                logout = logout,
+                popup = {
+                    navigator.popBackStack()
+                },
+            )
+        }
+
         scene(
             route = HomeNavigation.Categories.route
         ) {
@@ -60,10 +83,21 @@ fun HomeNav() {
         scene(route = HomeNavigation.Detail.route.plus(HomeNavigation.Detail.objectPath)) { backStackEntry ->
             val id: Int? = backStackEntry.path<Int>(HomeNavigation.Detail.objectName)
             id?.let {
-                DetailNav(it){
+                DetailNav(it) {
                     navigator.popBackStack()
                 }
             }
         }
+        scene(route = HomeNavigation.Notification.route) {
+            val viewModel: NotificationsViewModel = koinInject()
+            NotificationsScreen(
+                state = viewModel.state.value,
+                events = viewModel::onTriggerEvent,
+                popup = {
+                    navigator.popBackStack()
+                },
+            )
+        }
+
     }
 }
