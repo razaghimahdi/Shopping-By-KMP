@@ -2,15 +2,18 @@ package presentation.ui.main.edit_profile.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.ImageBitmap
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
+import business.core.UIComponentState
 import business.domain.main.Home
 import business.interactors.main.GetEmailFromCacheInteractor
 import business.interactors.main.GetProfileInteractor
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
+import business.interactors.main.UpdateProfileInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
@@ -22,6 +25,7 @@ import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.wishlist.view_model.WishlistEvent
 
 class EditProfileViewModel(
+    private val updateProfileInteractor: UpdateProfileInteractor,
     private val getProfileInteractor: GetProfileInteractor,
     private val getEmailFromCacheInteractor: GetEmailFromCacheInteractor,
 ) : ViewModel() {
@@ -36,8 +40,24 @@ class EditProfileViewModel(
     fun onTriggerEvent(event: EditProfileEvent) {
         when (event) {
 
+            is EditProfileEvent.OnUpdateImageOptionDialog -> {
+                onUpdateImageOptionDialog(event.value)
+            }
+
+            is EditProfileEvent.UpdateProfile -> {
+                updateProfile(event.imageBitmap)
+            }
+
+            is EditProfileEvent.OnUpdatePermissionDialog -> {
+                onUpdatePermissionDialog(event.value)
+            }
+
             is EditProfileEvent.OnUpdateName -> {
                 onUpdateName(event.value)
+            }
+
+            is EditProfileEvent.OnUpdateAge -> {
+                onUpdateAge(event.value)
             }
 
             is EditProfileEvent.OnRemoveHeadFromQueue -> {
@@ -58,15 +78,52 @@ class EditProfileViewModel(
         }
     }
 
-    private fun onUpdateName(value: String) {
-        state.value = state.value.copy(name = value)
-    }
 
     init {
         getProfile()
         getEmail()
     }
 
+    private fun updateProfile(imageBitmap: ImageBitmap?) {
+        updateProfileInteractor.execute(
+            name = state.value.name,
+            age = state.value.age,
+            image = imageBitmap
+        ).onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(EditProfileEvent.OnUpdateNetworkState(dataState.networkState))
+                }
+
+                is DataState.Response -> {
+                    onTriggerEvent(EditProfileEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {}
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun onUpdateImageOptionDialog(value: UIComponentState) {
+        state.value = state.value.copy(imageOptionDialog = value)
+    }
+
+    private fun onUpdatePermissionDialog(value: UIComponentState) {
+        state.value = state.value.copy(permissionDialog = value)
+    }
+
+    private fun onUpdateName(value: String) {
+        state.value = state.value.copy(name = value)
+    }
+
+    private fun onUpdateAge(value: String) {
+        state.value = state.value.copy(age = value)
+    }
 
     private fun getProfile() {
         getProfileInteractor.execute().onEach { dataState ->
@@ -83,6 +140,7 @@ class EditProfileViewModel(
                     dataState.data?.let {
                         state.value = state.value.copy(name = it.name)
                         state.value = state.value.copy(image = it.profileUrl)
+                        state.value = state.value.copy(age = it.age)
                     }
                 }
 
