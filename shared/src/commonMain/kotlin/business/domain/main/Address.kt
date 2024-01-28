@@ -10,4 +10,6 @@ data class Address(
 ){
     fun getFullAddress() = "$state, $city, $address"
     fun getLocation() = if(city.isEmpty()) "No Location!" else "$city, $country"
+
+    fun getShippingAddress() = if(address.isEmpty()&&city.isEmpty()) "No Location!" else "$address, $state, $city, $country \n$zipCode"
 }
