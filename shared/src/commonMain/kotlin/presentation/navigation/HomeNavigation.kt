@@ -16,7 +16,12 @@ sealed class HomeNavigation(
     )
 
     object Home : HomeNavigation(route = "Home")
+
+    object Notification : HomeNavigation(route = "Notification")
+
     object Categories : HomeNavigation(route = "Categories")
+
+    object Settings : HomeNavigation(route = "Setting")
 
     object Detail : HomeNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 

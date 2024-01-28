@@ -7,6 +7,10 @@ sealed class CartNavigation(
 ) {
     object Cart : CartNavigation(route = "Cart")
 
+    object Checkout : CartNavigation(route = "Checkout")
+
+    object Address : CartNavigation(route = "Address")
+
     object Detail : CartNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
