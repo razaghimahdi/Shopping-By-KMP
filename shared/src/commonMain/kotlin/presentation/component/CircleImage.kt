@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -42,5 +43,44 @@ fun CircleImage(
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CircleImage(
+    image: ImageBitmap?,
+    modifier: Modifier = Modifier.size(55.dp),
+    onClick: (() -> Unit?)? = null,
+    width: Dp = 1.5.dp,
+    color: Color = Color.White
+) {
+    Card(
+        modifier = modifier,
+        onClick = {
+            if (onClick != null) {
+                onClick()
+            }
+        },
+        border = if (width == 0.dp) null else BorderStroke(width = width, color = color),
+        shape = CircleShape,
+        elevation = CardDefaults.cardElevation(0.dp)
+    ) {
+        if (image == null) {
+            Image(
+                rememberCustomImagePainter(image),
+                null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else {
+            Image(
+                image,
+                null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
