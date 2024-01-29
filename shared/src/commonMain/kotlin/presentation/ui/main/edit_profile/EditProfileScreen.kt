@@ -179,7 +179,11 @@ fun EditProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CircleImage(imageBitmap, modifier = Modifier.size(80.dp))
+                if (imageBitmap==null){
+                    CircleImage(state.image, modifier = Modifier.size(80.dp))
+                }else{
+                    CircleImage(imageBitmap, modifier = Modifier.size(80.dp))
+                }
                 Spacer_8dp()
                 DefaultButton(text = "Select") {
                     events(EditProfileEvent.OnUpdateImageOptionDialog(UIComponentState.Show))
