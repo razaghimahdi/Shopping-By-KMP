@@ -240,7 +240,7 @@ class MainServiceImpl(
                 encodedPath += MainService.BASKET_ADD
             }
             contentType(ContentType.Application.Json)
-            setBody(BasketAddRequestDTO(count = id, product = id))
+            setBody(BasketAddRequestDTO(count = count, product = id))
         }.body()
     }
 
