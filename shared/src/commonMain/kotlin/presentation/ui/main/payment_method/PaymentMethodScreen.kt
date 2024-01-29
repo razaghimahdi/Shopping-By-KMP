@@ -203,7 +203,7 @@ private fun ChipsCardBox(
                 Text(text, style = MaterialTheme.typography.bodyLarge)
             }
 
-            Switch(checked = isSelected, onCheckedChange = {})
+            Switch(checked = isSelected, onCheckedChange = { onSelectExecute() })
 
         }
     }
