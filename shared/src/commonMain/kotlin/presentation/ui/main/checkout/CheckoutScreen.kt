@@ -102,7 +102,7 @@ fun CheckoutScreen(
                 ShippingBox(
                     title = state.selectedShipping.title,
                     image = "shipping.xml",
-                    detail = state.selectedAddress.getShippingAddress(),
+                    detail = state.selectedShipping.getEstimatedDay(),
                 ) {
                     events(CheckoutEvent.OnUpdateSelectShippingDialogState(UIComponentState.Show))
                 }
