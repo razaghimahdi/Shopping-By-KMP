@@ -100,7 +100,7 @@ fun ShippingBox(
             Column(modifier = Modifier.fillMaxWidth(.7f)) {
                 Text(shippingType.title, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Estimated Arrival in ${shippingType.arrivalDay} days",
+                    shippingType.getEstimatedDay(),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
