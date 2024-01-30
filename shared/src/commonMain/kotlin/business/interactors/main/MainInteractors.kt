@@ -2,7 +2,6 @@ package business.interactors.main
 
 import business.core.AppDataStore
 import business.datasource.network.main.MainService
-import business.datasource.network.splash.SplashService
 
 data class MainInteractors(
     val homeInteractor: HomeInteractor,

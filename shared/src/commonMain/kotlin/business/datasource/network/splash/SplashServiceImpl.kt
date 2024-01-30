@@ -12,13 +12,10 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
 import io.ktor.http.takeFrom
-import io.ktor.util.InternalAPI
-import kotlinx.serialization.json.Json
 
 class SplashServiceImpl(
     private val httpClient: HttpClient
 ) : SplashService {
-    @OptIn(InternalAPI::class)
     override suspend fun login(email: String, password: String): MainGenericResponse<String?> {
         return httpClient.post {
             url {

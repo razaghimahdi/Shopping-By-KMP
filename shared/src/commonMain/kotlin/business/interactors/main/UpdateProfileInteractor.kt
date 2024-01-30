@@ -2,7 +2,6 @@ package business.interactors.main
 
 
 import androidx.compose.ui.graphics.ImageBitmap
-import business.constants.AUTHORIZATION_BEARER_TOKEN
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
@@ -40,7 +39,7 @@ class UpdateProfileInteractor(
 
             apiResponse.alert?.let { alert ->
                 emit(
-                    DataState.Response<Boolean>(
+                    DataState.Response(
                         uiComponent = UIComponent.Dialog(
                             alert = alert
                         )

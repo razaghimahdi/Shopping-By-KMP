@@ -16,7 +16,7 @@ fun <T> handleUseCaseException(e: Exception): DataState<T> {
                 alert = JAlertResponse(FAILED_NETWORK_TITLE, FAILED_NETWORK)
             )
         )*/
-        return DataState.Response<T>(
+        return DataState.Response(
             uiComponent = UIComponent.None("")
         )
     }
@@ -28,7 +28,7 @@ fun <T> handleUseCaseException(e: Exception): DataState<T> {
     e.printStackTrace()
 
 
-    return DataState.Response<T>(
+    return DataState.Response(
         uiComponent = UIComponent.Dialog(
             JAlertResponse(
                 title = title,

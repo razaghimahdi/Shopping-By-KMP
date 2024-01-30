@@ -2,15 +2,15 @@ package business.core
 
 sealed class ProgressBarState{
 
-    object ButtonLoading: ProgressBarState()
+   data object ButtonLoading: ProgressBarState()
 
-    object ScreenLoading: ProgressBarState()
+   data object ScreenLoading: ProgressBarState()
 
-    object FullScreenLoading: ProgressBarState()
+   data object FullScreenLoading: ProgressBarState()
 
-    object LoadingWithLogo: ProgressBarState()
+   data object LoadingWithLogo: ProgressBarState()
 
-    object Idle: ProgressBarState()
+   data object Idle: ProgressBarState()
 
 }
 

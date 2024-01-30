@@ -1,12 +1,15 @@
 package business.domain.main
 
+ 
 data class Basket(
-    val count: Int = 0,
-    val createdAt: String = "",
-    val id: Int = 0,
-    val product: Product = Product(),
-    val productId: Int = 0,
-    val status: String = "",
-    val updatedAt: String = "",
-    val userId: Int = 0,
-)
+    val id: Int,
+    val productId: Int,
+    val category: Category,
+    val title: String,
+    val description: String,
+    val image: String,
+    val price: Int,
+    val count: Int,
+){
+    fun getPrice() = "$ $price"
+}

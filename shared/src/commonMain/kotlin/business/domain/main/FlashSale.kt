@@ -2,6 +2,6 @@ package business.domain.main
 
 
 data class FlashSale(
-    val expired_at: String = "",
+    val expiredAt: String = "",
     val products: List<Product> = listOf()
 )

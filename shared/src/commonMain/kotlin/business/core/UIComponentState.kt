@@ -5,9 +5,9 @@ package business.core
  */
 sealed class UIComponentState {
 
-    object Show: UIComponentState()
+   data object Show: UIComponentState()
 
-    object HalfShow: UIComponentState()
+   data object HalfShow: UIComponentState()
 
-    object Hide: UIComponentState()
+   data object Hide: UIComponentState()
 }

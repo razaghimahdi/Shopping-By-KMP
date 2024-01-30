@@ -33,7 +33,7 @@ class LoginInteractor(
 
             apiResponse.alert?.let { alert ->
                 emit(
-                    DataState.Response<String>(
+                    DataState.Response(
                         uiComponent = UIComponent.Dialog(
                             alert = alert
                         )

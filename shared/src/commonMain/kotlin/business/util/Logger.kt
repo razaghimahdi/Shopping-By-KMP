@@ -6,7 +6,7 @@ class Logger(
 ) {
     fun log(msg:String){
         if (!isDebug){
-
+            printLogD(tag,msg)
         }else{
             printLogD(tag,msg)
         }

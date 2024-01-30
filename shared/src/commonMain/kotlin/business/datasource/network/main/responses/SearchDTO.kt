@@ -1,7 +1,6 @@
 package business.datasource.network.main.responses
 
 import business.domain.main.Search
-import business.domain.main.Wishlist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

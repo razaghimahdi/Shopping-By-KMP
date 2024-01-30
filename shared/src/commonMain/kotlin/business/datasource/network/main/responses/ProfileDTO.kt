@@ -1,8 +1,6 @@
 package business.datasource.network.main.responses
 
 
-import business.domain.main.FlashSale
-import business.domain.main.Home
 import business.domain.main.Profile
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

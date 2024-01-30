@@ -34,7 +34,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -42,9 +41,6 @@ import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.KoinApplication
-import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.dsl.module
 import presentation.ui.main.address.view_model.AddressViewModel
 import presentation.ui.main.cart.view_model.CartViewModel
@@ -67,7 +63,7 @@ import presentation.ui.splash.view_model.LoginViewModel
 fun appModule(context: Context) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
-        HttpClient() {
+        HttpClient {
             expectSuccess = false
             install(HttpTimeout) {
                 val timeout = 60000L
@@ -142,7 +138,7 @@ fun appModule(context: Context) = module {
     factory { PaymentMethodViewModel() }
     factory { NotificationsViewModel() }
     factory { MyCouponsViewModel() }
-    factory { CheckoutViewModel(get()) }
+    factory { CheckoutViewModel(get(), get()) }
     factory { WishlistViewModel(get(), get()) }
     factory { CartViewModel(get(), get(), get()) }
     factory { DetailViewModel(get(), get(), get()) }

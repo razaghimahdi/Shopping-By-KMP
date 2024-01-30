@@ -1,7 +1,5 @@
 package business.domain.main
 
-import business.datasource.network.main.responses.CommentDTO
-
 data class Product(
     val description: String = "",
     val id: Int = 0,
