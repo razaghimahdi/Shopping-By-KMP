@@ -350,7 +350,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    items(state.home.newestProduct, key = { it.id },) {
+                    items(state.home.newestProduct, key = { it.id }) {
                         ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }

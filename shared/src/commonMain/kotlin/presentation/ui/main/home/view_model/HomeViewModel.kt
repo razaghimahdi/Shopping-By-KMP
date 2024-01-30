@@ -96,7 +96,7 @@ class HomeViewModel(
         var currentItemFlashSale = tmpFlashSale.find { it.id == id }
         val indexCurrentItemFlashSale = tmpFlashSale.indexOf(currentItemFlashSale)
         val newLikes3 =
-            if (currentItemFlashSale?.isLike == true) currentItemFlashSale.likes?.minus(1) else currentItemFlashSale?.likes?.plus(
+            if (currentItemFlashSale?.isLike == true) currentItemFlashSale.likes.minus(1) else currentItemFlashSale?.likes?.plus(
                 1
             )
         currentItemFlashSale = currentItemFlashSale?.copy(
@@ -123,7 +123,7 @@ class HomeViewModel(
         val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
 
         val newLikes2 =
-            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
+            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct.likes.minus(1) else currentItemNewestProduct?.likes?.plus(
                 1
             )
 
@@ -147,7 +147,7 @@ class HomeViewModel(
         val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)
 
         val newLikes1 =
-            if (currentItemMostSale?.isLike == true) currentItemMostSale.likes?.minus(1) else currentItemMostSale?.likes?.plus(
+            if (currentItemMostSale?.isLike == true) currentItemMostSale.likes.minus(1) else currentItemMostSale?.likes?.plus(
                 1
             )
 
