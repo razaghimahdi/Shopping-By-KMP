@@ -29,12 +29,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Product
 import coil3.compose.AsyncImage
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.theme.BackgroundContent
 import presentation.theme.orange_400
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProductBox(
     modifier: Modifier = Modifier.width(180.dp),

@@ -1,12 +1,10 @@
 package presentation.ui.main.checkout
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,21 +31,15 @@ import presentation.component.CircleButton
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
-import presentation.component.FilterDialog
 import presentation.component.SelectShippingDialog
 import presentation.component.Spacer_12dp
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
-import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
-import presentation.ui.main.checkout.view_model.shippingType
-import presentation.ui.main.detail.BuyButtonBox
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 
 
 @Composable

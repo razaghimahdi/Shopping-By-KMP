@@ -28,15 +28,11 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_16dp
-import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.theme.grey_050
 import presentation.ui.main.notifications.view_model.NotificationsEvent
 import presentation.ui.main.notifications.view_model.NotificationsState
-import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 
 
 @Composable
