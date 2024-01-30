@@ -20,7 +20,6 @@ import business.interactors.main.GetSearchFilterInteractor
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.LogoutInteractor
-import business.interactors.main.MainInteractors
 import business.interactors.main.ProductInteractor
 import business.interactors.main.SearchInteractor
 import business.interactors.main.UpdateProfileInteractor
@@ -28,7 +27,6 @@ import business.interactors.main.WishListInteractor
 import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
-import business.interactors.splash.SplashInteractors
 import common.Context
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpResponseValidator
@@ -40,6 +38,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import presentation.ui.main.address.view_model.AddressViewModel
@@ -60,6 +59,7 @@ import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
 
+@OptIn(ExperimentalSerializationApi::class)
 fun appModule(context: Context) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
@@ -126,8 +126,6 @@ fun appModule(context: Context) = module {
     single<SplashService> { SplashServiceImpl(get()) }
     single<MainService> { MainServiceImpl(get()) }
     single<AppDataStore> { AppDataStoreManager(context) }
-    single { SplashInteractors.build(get()) }
-    single { MainInteractors.build(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
     factory { AddressViewModel(get(), get()) }
