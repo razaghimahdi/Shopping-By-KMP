@@ -5,8 +5,6 @@ import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
-import business.domain.main.Home
-import business.domain.main.Profile
 
 data class EditProfileState(
     val name :String = "",

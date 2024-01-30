@@ -5,10 +5,10 @@ sealed class CategoriesNavigation(
     val objectName: String = "",
     val objectPath: String = "",
 ) {
-    object Categories : CategoriesNavigation(route = "Categories")
+   data object Categories : CategoriesNavigation(route = "Categories")
 
 
-    object Search : CategoriesNavigation(
+   data object Search : CategoriesNavigation(
         route = "Search",
         objectName = "category_id",
         objectPath = "/{category_id}",

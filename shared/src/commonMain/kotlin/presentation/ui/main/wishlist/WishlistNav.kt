@@ -1,16 +1,12 @@
 package presentation.ui.main.wishlist
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.WishlistNavigation
 import presentation.ui.main.detail.DetailNav
-import presentation.ui.main.detail.DetailScreen
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.wishlist.view_model.WishlistViewModel
 
 @Composable

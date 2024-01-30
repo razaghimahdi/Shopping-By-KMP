@@ -22,10 +22,7 @@ import business.core.UIComponentState
 import presentation.component.AddCommentDialog
 import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
-import presentation.component.FilterDialog
-import presentation.component.Spacer_8dp
 import presentation.theme.BorderColor
-import presentation.ui.main.categories.view_model.CategoriesEvent
 import presentation.ui.main.comment.view_model.CommentEvent
 import presentation.ui.main.comment.view_model.CommentState
 import presentation.ui.main.detail.CommentBox

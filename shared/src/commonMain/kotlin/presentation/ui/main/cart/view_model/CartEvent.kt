@@ -7,13 +7,15 @@ sealed class CartEvent {
 
     data class DeleteFromBasket(val id: Int) : CartEvent()
 
-    object OnRemoveHeadFromQueue : CartEvent()
+    data class AddProduct(val id: Int) : CartEvent()
+
+   data object OnRemoveHeadFromQueue : CartEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : CartEvent()
 
-    object OnRetryNetwork : CartEvent()
+   data object OnRetryNetwork : CartEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : CartEvent()

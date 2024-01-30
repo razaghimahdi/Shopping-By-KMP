@@ -2,16 +2,15 @@ package presentation.ui.main.my_coupons.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
 import business.domain.main.Coupons
 import moe.tlaster.precompose.viewmodel.ViewModel
 
-class MyCouponsViewModel() : ViewModel() {
+class MyCouponsViewModel : ViewModel() {
 
-
-    private val TAG = "AppDebug CommentViewModel"
 
 
     val state: MutableState<MyCouponsState> = mutableStateOf(MyCouponsState())
@@ -52,7 +51,7 @@ class MyCouponsViewModel() : ViewModel() {
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -69,7 +68,7 @@ class MyCouponsViewModel() : ViewModel() {
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

@@ -27,7 +27,7 @@ fun ExpandingText(
     var isExpanded by remember { mutableStateOf(false) }
     val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
     var isClickable by remember { mutableStateOf(false) }
-    var finalText= mutableStateOf(text)
+    val finalText= mutableStateOf(text)
 
     val endOfTitle =
         if (isExpanded) "Show Less" else "Read More"
@@ -44,7 +44,7 @@ fun ExpandingText(
 
             !isExpanded && textLayoutResult.hasVisualOverflow -> {
                 val lastCharIndex = textLayoutResult.getLineEnd(MINIMIZED_MAX_LINES - 1)
-                val showMoreString = "... ${endOfTitle}"
+                val showMoreString = "... $endOfTitle"
                 val adjustedText = text
                     .substring(startIndex = 0, endIndex = lastCharIndex)
                     .dropLast(showMoreString.length)

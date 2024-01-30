@@ -6,12 +6,11 @@ import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Address
-import business.domain.main.Comment
-import business.domain.main.Home
-import business.domain.main.Product
 import business.domain.main.ShippingType
 
 data class CheckoutState(
+    val totalCost: Int = 0,
+    val totalBasket: Int = 0,
     val addresses: List<Address> = listOf(),
     val selectedAddress: Address = Address(),
     val selectedShipping: ShippingType = shippingType.first(),

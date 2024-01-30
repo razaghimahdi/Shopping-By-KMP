@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import business.core.UIComponentState
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
@@ -39,7 +40,7 @@ import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 import presentation.ui.main.payment_method.view_model.PaymentMethodState
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun PaymentMethodScreen(
     state: PaymentMethodState,
@@ -118,7 +119,9 @@ fun PaymentMethodScreen(
                             Text("Paypal", style = MaterialTheme.typography.bodyLarge)
                         }
 
-                        Switch(checked = state.selectedPaymentMethod == 2, onCheckedChange = {})
+                        Switch(checked = state.selectedPaymentMethod == 2, onCheckedChange = {
+                            events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(2))
+                        })
 
                     }
                     Divider(color = BorderColor)
@@ -140,7 +143,9 @@ fun PaymentMethodScreen(
                             Text("Apple Pay", style = MaterialTheme.typography.bodyLarge)
                         }
 
-                        Switch(checked = state.selectedPaymentMethod == 3, onCheckedChange = {})
+                        Switch(checked = state.selectedPaymentMethod == 3, onCheckedChange = {
+                            events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(3))
+                        })
 
                     }
                     Divider(color = BorderColor)
@@ -162,7 +167,9 @@ fun PaymentMethodScreen(
                             Text("Google Pay", style = MaterialTheme.typography.bodyLarge)
                         }
 
-                        Switch(checked = state.selectedPaymentMethod == 4, onCheckedChange = {})
+                        Switch(checked = state.selectedPaymentMethod == 4, onCheckedChange = {
+                            events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(4))
+                        })
 
                     }
                 }

@@ -26,7 +26,6 @@ import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
-import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 import presentation.ui.main.settings.view_model.SettingsEvent
 import presentation.ui.main.settings.view_model.SettingsState
 

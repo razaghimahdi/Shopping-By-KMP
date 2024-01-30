@@ -2,11 +2,10 @@ package presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import coil3.ImageLoader
 import coil3.compose.rememberAsyncImagePainter
-import coil3.network.CacheStrategy
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

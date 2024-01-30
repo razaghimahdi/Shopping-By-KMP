@@ -37,7 +37,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,9 +49,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import business.constants.Sort
 import business.domain.main.Category
-import coil3.compose.rememberAsyncImagePainter
-import kotlinx.coroutines.delay
-import kotlinx.datetime.LocalDateTime
+import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -251,7 +248,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    items(state.home.categories) {
+                    items(state.home.categories, key = { it.id }) {
                         CategoryBox(category = it) {
                             navigateToSearch(it.id, null)
                         }
@@ -284,9 +281,9 @@ fun HomeScreen(
 
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(8.dp)
+                    contentPadding = PaddingValues(8.dp),
                 ) {
-                    items(state.home.flashSale.products) {
+                    items(state.home.flashSale.products, key = { it.id }) {
                         ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
@@ -319,7 +316,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    items(state.home.mostSale) {
+                    items(state.home.mostSale, key = { it.id }) {
                         ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
@@ -353,7 +350,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    items(state.home.newestProduct) {
+                    items(state.home.newestProduct, key = { it.id },) {
                         ProductBox(product = it, onLikeClick = {
                             events(HomeEvent.Like(it.id))
                         }) { navigateToDetail(it.id) }
@@ -445,12 +442,15 @@ private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
                     .padding(12.dp)
             ) {
 
-                Image(
+                AsyncImage(category.icon,null,
+                    modifier = Modifier.fillMaxSize().size(55.dp),
+                    contentScale = ContentScale.Crop)
+              /*  Image(
                     painter = rememberAsyncImagePainter(category.icon),
                     null,
                     modifier = Modifier.fillMaxSize().size(55.dp),
                     contentScale = ContentScale.Crop
-                )
+                )*/
             }
             Spacer_8dp()
             Text(
@@ -463,7 +463,6 @@ private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BannerImage(it: String) {
     Box(modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -480,21 +479,6 @@ fun BannerImage(it: String) {
             )
         }
     }
-}
-
-
-@Composable
-private fun IndicatorDot(
-    modifier: Modifier = Modifier,
-    size: Dp,
-    color: Color
-) {
-    Box(
-        modifier = modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(color)
-    )
 }
 
 

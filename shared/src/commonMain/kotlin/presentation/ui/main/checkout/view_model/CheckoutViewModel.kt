@@ -2,6 +2,7 @@ package presentation.ui.main.checkout.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
@@ -9,13 +10,12 @@ import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Address
 import business.domain.main.ShippingType
-import business.interactors.main.AddAddressInteractor
+import business.interactors.main.BasketListInteractor
 import business.interactors.main.GetAddressesInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
-import presentation.ui.main.address.view_model.AddressEvent
 
 val shippingType = listOf(
     ShippingType("Economy", 25, 7),
@@ -26,10 +26,8 @@ val shippingType = listOf(
 
 class CheckoutViewModel(
     private val getAddressesInteractor: GetAddressesInteractor,
+    private val basketListInteractor: BasketListInteractor,
 ) : ViewModel() {
-
-
-    private val TAG = "AppDebug CheckoutViewModel"
 
 
     val state: MutableState<CheckoutState> = mutableStateOf(CheckoutState())
@@ -70,6 +68,38 @@ class CheckoutViewModel(
 
     init {
         getAddresses()
+        getCart()
+    }
+
+
+    private fun getCart() {
+        basketListInteractor.execute().onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(CheckoutEvent.OnUpdateNetworkState(dataState.networkState))
+                }
+
+                is DataState.Response -> {
+                    onTriggerEvent(CheckoutEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    dataState.data?.let {
+                        val totalCost = it.sumOf { basket ->
+                            basket.price
+                        }
+                        state.value = state.value.copy(totalBasket = totalCost)
+                        state.value =
+                            state.value.copy(totalCost = totalCost + state.value.selectedShipping.price)
+                    }
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun getAddresses() {
@@ -86,8 +116,8 @@ class CheckoutViewModel(
                 is DataState.Data -> {
                     dataState.data?.let {
                         state.value = state.value.copy(addresses = it)
-                        it.firstOrNull()?.let {
-                            state.value = state.value.copy(selectedAddress = it)
+                        it.firstOrNull()?.let { address ->
+                            state.value = state.value.copy(selectedAddress = address)
                         }
                     }
                 }
@@ -102,6 +132,9 @@ class CheckoutViewModel(
 
     private fun onUpdateSelectShippingDialogState(value: UIComponentState) {
         state.value = state.value.copy(selectShippingDialogState = value)
+
+        state.value =
+            state.value.copy(totalCost = state.value.totalBasket + state.value.selectedShipping.price)
     }
 
     private fun onUpdateSelectedShipping(value: ShippingType) {
@@ -115,7 +148,7 @@ class CheckoutViewModel(
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -132,7 +165,7 @@ class CheckoutViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

@@ -2,7 +2,6 @@ package presentation.util
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 
 
 fun String.convertDate() :String{
@@ -20,12 +19,11 @@ fun String.convertDate() :String{
         val duration = currentInstant - originalInstant
 
         // Format the time difference in "X days ago" format
-        val daysAgo = duration.inWholeDays.toInt()
 
-        return when {
-            daysAgo == 0 -> "Today"
-            daysAgo == 1 -> "Yesterday"
-            daysAgo in 2..Int.MAX_VALUE -> "$daysAgo days ago"
+        return when (val daysAgo = duration.inWholeDays.toInt()) {
+            0 -> "Today"
+            1 -> "Yesterday"
+            in 2..Int.MAX_VALUE -> "$daysAgo days ago"
             else -> "In the future"
         }
     } catch (e: Exception) {
@@ -36,18 +34,3 @@ fun String.convertDate() :String{
 
 
 
-fun parseDateTime(originalDateString: String): Instant? {
-    val regex = """(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d+)Z""".toRegex()
-    val matchResult = regex.matchEntire(originalDateString)
-
-    return if (matchResult != null) {
-        val (year, month, day, hour, minute, second, fraction) = matchResult.destructured
-        val epochMillis = "${year}-${month}-${day}T${hour}:${minute}:${second}.${fraction}Z"
-            .toInstant()
-            .toEpochMilliseconds()
-
-        Instant.fromEpochMilliseconds(epochMillis)
-    } else {
-        null
-    }
-}

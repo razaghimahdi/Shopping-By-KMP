@@ -41,7 +41,7 @@ fun DefaultScreenUI(
     content: @Composable () -> Unit,
 ) {
 
-    Scaffold() {
+    Scaffold {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -54,8 +54,8 @@ fun DefaultScreenUI(
                  queue.peek()?.let { uiComponent ->
                      if (uiComponent is UIComponent.Dialog) {
                          CreateUIComponentDialog(
-                             title = uiComponent.alert!!.title,
-                             description = uiComponent.alert!!.message,
+                             title = uiComponent.alert.title,
+                             description = uiComponent.alert.message,
                              onRemoveHeadFromQueue = onRemoveHeadFromQueue
                          )
                      }
@@ -127,7 +127,6 @@ fun FailedNetworkScreen(onTryAgain: () -> Unit) {
 
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LoadingWithLogoScreen() {
     Box(

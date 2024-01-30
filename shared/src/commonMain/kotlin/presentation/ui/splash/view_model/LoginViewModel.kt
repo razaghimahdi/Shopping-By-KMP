@@ -2,6 +2,7 @@ package presentation.ui.splash.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
@@ -21,7 +22,6 @@ class LoginViewModel(
 ) : ViewModel() {
 
 
-    private val TAG = "AppDebug LoginViewModel"
 
 
     val state: MutableState<LoginState> = mutableStateOf(LoginState())
@@ -159,7 +159,7 @@ class LoginViewModel(
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -176,7 +176,7 @@ class LoginViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

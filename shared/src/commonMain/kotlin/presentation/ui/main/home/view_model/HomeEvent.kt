@@ -6,13 +6,13 @@ import business.core.UIComponent
 sealed class HomeEvent {
 
 
-    object OnRemoveHeadFromQueue : HomeEvent()
+   data object OnRemoveHeadFromQueue : HomeEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : HomeEvent()
 
-    object OnRetryNetwork : HomeEvent()
+   data object OnRetryNetwork : HomeEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : HomeEvent()

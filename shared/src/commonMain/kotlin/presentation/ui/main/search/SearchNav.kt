@@ -10,9 +10,6 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.SearchNavigation
 import presentation.ui.main.detail.DetailNav
-import presentation.ui.main.detail.DetailScreen
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.search.view_model.SearchEvent
 import presentation.ui.main.search.view_model.SearchViewModel
 

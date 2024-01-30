@@ -5,14 +5,14 @@ sealed class ProfileNavigation(
     val objectName: String = "",
     val objectPath: String = ""
 ) {
-    object Profile : ProfileNavigation(route = "Profile")
-    object Address : ProfileNavigation(route = "Address")
-    object EditProfile : ProfileNavigation(route = "EditProfile")
-    object PaymentMethod : ProfileNavigation(route = "PaymentMethod")
-    object MyOrders : ProfileNavigation(route = "MyOrders")
-    object MyCoupons : ProfileNavigation(route = "MyCoupons")
-    object MyWallet : ProfileNavigation(route = "MyWallet")
-    object Settings : ProfileNavigation(route = "Settings")
+   data object Profile : ProfileNavigation(route = "Profile")
+   data object Address : ProfileNavigation(route = "Address")
+   data object EditProfile : ProfileNavigation(route = "EditProfile")
+   data object PaymentMethod : ProfileNavigation(route = "PaymentMethod")
+   data object MyOrders : ProfileNavigation(route = "MyOrders")
+   data object MyCoupons : ProfileNavigation(route = "MyCoupons")
+   data object MyWallet : ProfileNavigation(route = "MyWallet")
+   data object Settings : ProfileNavigation(route = "Settings")
 
 
 }

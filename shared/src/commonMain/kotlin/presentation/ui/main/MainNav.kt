@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -26,17 +25,12 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.navigation.MainNavigation
-import presentation.navigation.WishlistNavigation
 import presentation.theme.DefaultNavigationBarItemTheme
 import presentation.ui.main.cart.CartNav
-import presentation.ui.main.cart.CartScreen
 import presentation.ui.main.home.HomeNav
 import presentation.ui.main.profile.ProfileNav
-import presentation.ui.main.profile.ProfileScreen
 import presentation.ui.main.wishlist.WishlistNav
-import presentation.ui.main.wishlist.WishlistScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNav(logout: () -> Unit) {
 

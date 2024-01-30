@@ -8,7 +8,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults.textFieldColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -53,7 +52,6 @@ fun DefaultTextFieldTheme() = textFieldColors(
     focusedContainerColor = TextFieldColor,
     unfocusedContainerColor = TextFieldColor,
     cursorColor = MaterialTheme.colorScheme.onBackground,
-    // textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Transparent,
     unfocusedIndicatorColor = Color.Transparent,
     disabledContainerColor = TextFieldColor,

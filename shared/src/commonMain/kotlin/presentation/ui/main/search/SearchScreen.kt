@@ -66,7 +66,7 @@ import presentation.ui.main.search.view_model.SearchState
 import presentation.ui.main.wishlist.view_model.WishlistEvent
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SearchScreen(
     state: SearchState,
@@ -175,7 +175,7 @@ private fun ProductSearchBox(product: Product, isLastItem: Boolean, navigateToDe
     Box(
         modifier = Modifier.fillMaxWidth()
             .noRippleClickable { navigateToDetail() }) {
-        Column() {
+        Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -186,7 +186,7 @@ private fun ProductSearchBox(product: Product, isLastItem: Boolean, navigateToDe
                     contentScale = ContentScale.Crop
                 )
                 Spacer_16dp()
-                Column() {
+                Column {
                     Text(
                         product.title,
                         style = MaterialTheme.typography.bodyLarge,

@@ -12,11 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddComment
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.core.UIComponentState
 import business.domain.main.Address
@@ -33,16 +28,12 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.AddAddressDialog
 import presentation.component.CircleButton
-import presentation.component.CircleImage
 import presentation.component.DefaultScreenUI
-import presentation.component.FilterDialog
 import presentation.component.Spacer_12dp
-import presentation.component.Spacer_16dp
 import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.component.TextWithIcon
 import presentation.theme.BorderColor
-import presentation.theme.orange_400
 import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.address.view_model.AddressState
 

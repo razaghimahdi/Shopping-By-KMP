@@ -4,15 +4,12 @@ package presentation.ui.main.detail
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
-import presentation.navigation.CartNavigation
 import presentation.navigation.DetailNavigation
 import presentation.ui.main.comment.CommentScreen
 import presentation.ui.main.comment.view_model.CommentEvent
-import presentation.ui.main.comment.view_model.CommentState
 import presentation.ui.main.comment.view_model.CommentViewModel
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel

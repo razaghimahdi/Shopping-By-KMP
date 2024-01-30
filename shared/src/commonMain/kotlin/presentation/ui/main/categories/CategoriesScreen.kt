@@ -10,13 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +28,6 @@ import business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
 import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_16dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.ui.main.categories.view_model.CategoriesEvent

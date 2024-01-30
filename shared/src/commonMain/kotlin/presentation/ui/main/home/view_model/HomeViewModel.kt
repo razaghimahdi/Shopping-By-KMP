@@ -2,6 +2,7 @@ package presentation.ui.main.home.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
@@ -15,15 +16,12 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
-import presentation.ui.main.address.view_model.AddressEvent
 
 class HomeViewModel(
     private val homeInteractor: HomeInteractor,
     private val likeInteractor: LikeInteractor,
 ) : ViewModel() {
 
-
-    private val TAG = "AppDebug HomeViewModel"
 
 
     val state: MutableState<HomeState> = mutableStateOf(HomeState())
@@ -98,7 +96,7 @@ class HomeViewModel(
         var currentItemFlashSale = tmpFlashSale.find { it.id == id }
         val indexCurrentItemFlashSale = tmpFlashSale.indexOf(currentItemFlashSale)
         val newLikes3 =
-            if (currentItemFlashSale?.isLike == true) currentItemFlashSale?.likes?.minus(1) else currentItemFlashSale?.likes?.plus(
+            if (currentItemFlashSale?.isLike == true) currentItemFlashSale.likes?.minus(1) else currentItemFlashSale?.likes?.plus(
                 1
             )
         currentItemFlashSale = currentItemFlashSale?.copy(
@@ -125,7 +123,7 @@ class HomeViewModel(
         val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
 
         val newLikes2 =
-            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct?.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
+            if (currentItemNewestProduct?.isLike == true) currentItemNewestProduct.likes?.minus(1) else currentItemNewestProduct?.likes?.plus(
                 1
             )
 
@@ -149,7 +147,7 @@ class HomeViewModel(
         val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)
 
         val newLikes1 =
-            if (currentItemMostSale?.isLike == true) currentItemMostSale?.likes?.minus(1) else currentItemMostSale?.likes?.plus(
+            if (currentItemMostSale?.isLike == true) currentItemMostSale.likes?.minus(1) else currentItemMostSale?.likes?.plus(
                 1
             )
 
@@ -178,7 +176,7 @@ class HomeViewModel(
                 is DataState.Data -> {
                     dataState.data?.let {
                         val currentDateTime =
-                            Instant.parse(it.flashSale.expired_at).toLocalDateTime(TimeZone.UTC)
+                            Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
                         state.value = state.value.copy(home = it)
                         state.value = state.value.copy(time = currentDateTime)
                     }
@@ -195,7 +193,7 @@ class HomeViewModel(
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -212,7 +210,7 @@ class HomeViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

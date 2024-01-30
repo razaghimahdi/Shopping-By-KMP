@@ -6,11 +6,8 @@ import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Category
-import business.domain.main.Home
 import business.domain.main.Search
 import business.domain.main.SearchFilter
-import business.domain.main.Wishlist
-import business.domain.main.category_all
 
 data class SearchState(
     val selectedCategory: List<Category> = listOf(),

@@ -5,9 +5,9 @@ sealed class DetailNavigation(
     val objectName: String = "",
     val objectPath: String = ""
 ) {
-    object Comment : DetailNavigation(route = "Comment", objectName = "id", objectPath = "/{id}")
+   data object Comment : DetailNavigation(route = "Comment", objectName = "id", objectPath = "/{id}")
 
-    object Detail : DetailNavigation(route = "Detail")
+   data object Detail : DetailNavigation(route = "Detail")
 
 }
 

@@ -1,20 +1,20 @@
 package presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 
-private val DarkColorPalette = darkColorScheme(
+private val darkColorPalette = darkColorScheme(
     primary = PrimaryColor,
     primaryContainer = PrimaryVariantColor,
     secondary = AccentColor,
 )
 
-private val LightColorPalette = lightColorScheme(
+private val lightColorPalette = lightColorScheme(
     primary = PrimaryColor,
     primaryContainer = PrimaryVariantColor,
     secondary = AccentColor,
@@ -38,13 +38,13 @@ fun AppTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        darkColorPalette
     } else {
-        LightColorPalette
+        lightColorPalette
     }
 
     MaterialTheme(
-        colorScheme = LightColorPalette,
+        colorScheme = lightColorPalette,
         typography = LatoTypography(),
         shapes = Shapes,
         content = content

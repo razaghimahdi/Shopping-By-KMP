@@ -21,12 +21,12 @@ sealed class EditProfileEvent {
         val uiComponent: UIComponent
     ) : EditProfileEvent()
 
-    object OnRetryNetwork : EditProfileEvent()
+   data object OnRetryNetwork : EditProfileEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : EditProfileEvent()
 
 
-    object OnRemoveHeadFromQueue : EditProfileEvent()
+   data object OnRemoveHeadFromQueue : EditProfileEvent()
 
 }

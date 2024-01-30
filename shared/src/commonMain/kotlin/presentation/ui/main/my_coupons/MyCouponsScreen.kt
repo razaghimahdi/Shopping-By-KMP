@@ -20,6 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import business.domain.main.Coupons
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -28,6 +31,7 @@ import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
+import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.theme.grey_050
 import presentation.ui.main.my_coupons.view_model.MyCouponsEvent
@@ -36,6 +40,7 @@ import presentation.ui.main.my_coupons.view_model.MyCouponsState
 
 @Composable
 fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, popup: () -> Unit) {
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
     DefaultScreenUI(queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(MyCouponsEvent.OnRemoveHeadFromQueue) },
@@ -45,7 +50,7 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -63,7 +68,9 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(state.couponsList) {
-                    Coupon(it)
+                    Coupon(it) {
+                        clipboardManager.setText(AnnotatedString(it.code))
+                    }
                 }
             }
 
@@ -73,7 +80,8 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun Coupon(coupons: Coupons) {
+fun Coupon(coupons: Coupons, onExecuteCopyCode: () -> Unit) {
+
     Box(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
         Box(
             modifier = Modifier.fillMaxWidth().height(180.dp)
@@ -101,9 +109,12 @@ fun Coupon(coupons: Coupons) {
                 }
             }
 
+
             Box(
                 modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
-                    .background(grey_050),
+                    .background(grey_050).noRippleClickable {
+                        onExecuteCopyCode()
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Text(

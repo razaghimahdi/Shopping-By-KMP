@@ -1,7 +1,6 @@
 package presentation.ui.main.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
@@ -9,9 +8,6 @@ import org.koin.compose.koinInject
 import presentation.navigation.HomeNavigation
 import presentation.ui.main.categories.CategoriesNav
 import presentation.ui.main.detail.DetailNav
-import presentation.ui.main.detail.DetailScreen
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
 import presentation.ui.main.notifications.NotificationsScreen
 import presentation.ui.main.notifications.view_model.NotificationsViewModel
@@ -43,9 +39,9 @@ fun HomeNav(logout: () -> Unit) {
                 navigateToDetail = {
                     navigator.popBackStack()
                     navigator.navigate(HomeNavigation.Detail.route.plus("/$it"))
-                }) { category_id, sort ->
+                }) { categoryId, sort ->
                 navigator.navigate(
-                    HomeNavigation.Search.route.plus("/${category_id}").plus("/${sort}")
+                    HomeNavigation.Search.route.plus("/${categoryId}").plus("/${sort}")
                 )
             }
         }

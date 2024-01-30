@@ -1,40 +1,28 @@
 package presentation.ui.splash
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import presentation.component.MultiStateAnimationCircleFilledCanvas
-import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.theme.grey_700
 import presentation.theme.splashBackground
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun SplashScreen(
     state: LoginState,
@@ -44,14 +32,16 @@ internal fun SplashScreen(
 ) {
 
 
-        LaunchedEffect(state.navigateToMain) {
-            delay(3000L)
-            if (state.navigateToMain) {
-                navigateToMain()
-            } else {
-                navigateToLogin()
-            }
+
+    LaunchedEffect(state.navigateToMain) {
+        delay(3000L)
+        if (state.navigateToMain) {
+            navigateToMain()
+        } else {
+            navigateToLogin()
         }
+    }
+
 
 
     Box(
@@ -117,24 +107,4 @@ internal fun SplashScreen(
 
     }
 
-    /*
-        Column(
-            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Box(modifier = Modifier.background(Color.White, CircleShape)) {
-
-                Image(
-                    painterResource("logo.xml"),
-                    null,
-                    modifier = Modifier.size(75.dp).padding(16.dp)
-                )
-            }
-            Text(
-                "Shop By KMP",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
-            )
-        }*/
 }

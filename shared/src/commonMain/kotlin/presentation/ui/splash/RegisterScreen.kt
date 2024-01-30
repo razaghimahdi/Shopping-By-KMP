@@ -48,7 +48,6 @@ import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     state: LoginState,

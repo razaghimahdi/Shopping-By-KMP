@@ -35,6 +35,7 @@ import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
 import presentation.component.FilterDialog
 import presentation.component.SelectShippingDialog
+import presentation.component.Spacer_12dp
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
@@ -85,7 +86,7 @@ fun CheckoutScreen(
                 Spacer_32dp()
 
                 Text("Shipping Address", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
+                Spacer_12dp()
                 ShippingBox(
                     title = "Home",
                     image = "location2.xml", detail = state.selectedAddress.getShippingAddress()
@@ -98,7 +99,7 @@ fun CheckoutScreen(
                 Spacer_16dp()
 
                 Text("Choose Shipping Type", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
+                Spacer_12dp()
                 ShippingBox(
                     title = state.selectedShipping.title,
                     image = "shipping.xml",
@@ -111,7 +112,10 @@ fun CheckoutScreen(
             }
 
             Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
-                CheckoutButtonBox() {
+                CheckoutButtonBox(
+                    "$ ${state.totalCost}",
+                    "$ ${state.selectedShipping.price}"
+                ) {
                     popup()
                 }
             }
@@ -122,7 +126,7 @@ fun CheckoutScreen(
 
 
 @Composable
-fun CheckoutButtonBox(onClick: () -> Unit) {
+fun CheckoutButtonBox(totalCost: String, shippingCost: String, onClick: () -> Unit) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -132,7 +136,29 @@ fun CheckoutButtonBox(onClick: () -> Unit) {
             topEnd = 8.dp
         )
     ) {
-        Box(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Shipping Cost", style = MaterialTheme.typography.titleMedium)
+                Text(shippingCost, style = MaterialTheme.typography.titleLarge)
+            }
+            Spacer_8dp()
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Total Cost", style = MaterialTheme.typography.titleMedium)
+                Text(totalCost, style = MaterialTheme.typography.titleLarge)
+            }
+
+            Spacer_16dp()
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().height(DEFAULT__BUTTON_SIZE),
                 text = "Submit"
@@ -153,13 +179,13 @@ fun ShippingBox(title: String, image: String, detail: String, onClick: () -> Uni
             modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.primary
         )
-        Spacer_4dp()
+        Spacer_8dp()
         Column(modifier = Modifier.fillMaxWidth(.7f)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
             Text(detail, style = MaterialTheme.typography.bodyMedium)
         }
-        Spacer_4dp()
-        Box(modifier = Modifier.wrapContentHeight(), contentAlignment = Alignment.Center) {
+        Spacer_8dp()
+        Box(modifier = Modifier.wrapContentHeight(), contentAlignment = Alignment.CenterEnd) {
             Box(
                 modifier = Modifier.border(
                     1.dp,

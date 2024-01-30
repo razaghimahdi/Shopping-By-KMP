@@ -3,7 +3,6 @@ package presentation.ui.splash
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import common.ChangeStatusBarColors
-import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
@@ -13,7 +12,6 @@ import presentation.ui.splash.view_model.LoginViewModel
 @Composable
 internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain: () -> Unit) {
     val navigator = rememberNavigator()
-    // val viewModel = koinViewModel(LoginViewModel::class)
 
     ChangeStatusBarColors(Color.Black)
     NavHost(

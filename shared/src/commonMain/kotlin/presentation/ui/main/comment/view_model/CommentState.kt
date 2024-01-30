@@ -6,8 +6,6 @@ import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Comment
-import business.domain.main.Home
-import business.domain.main.Product
 
 data class CommentState(
     val productId: Int = 0,

@@ -14,7 +14,7 @@ sealed class SearchEvent {
         val categories: List<Category>? = null,
     ) : SearchEvent()
 
-    object GetNextPage : SearchEvent()
+   data object GetNextPage : SearchEvent()
 
     data class OnUpdateSelectedSort(val value: Int) : SearchEvent()
 
@@ -28,13 +28,13 @@ sealed class SearchEvent {
 
     data class OnUpdateFilterDialogState(val value: UIComponentState) : SearchEvent()
 
-    object OnRemoveHeadFromQueue : SearchEvent()
+   data object OnRemoveHeadFromQueue : SearchEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : SearchEvent()
 
-    object OnRetryNetwork : SearchEvent()
+   data object OnRetryNetwork : SearchEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : SearchEvent()

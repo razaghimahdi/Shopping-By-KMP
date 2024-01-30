@@ -1,7 +1,6 @@
 package presentation.ui.main.edit_profile
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -50,10 +48,8 @@ import presentation.component.Spacer_32dp
 import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.theme.DefaultTextFieldTheme
-import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.edit_profile.view_model.EditProfileEvent
 import presentation.ui.main.edit_profile.view_model.EditProfileState
-import presentation.ui.splash.view_model.LoginEvent
 
 
 @Composable
@@ -122,7 +118,7 @@ fun EditProfileScreen(
         if (permissionsManager.isPermissionGranted(PermissionType.GALLERY)) {
             galleryManager.launch()
         } else {
-            permissionsManager.askPermission(PermissionType.GALLERY)
+            permissionsManager.AskPermission(PermissionType.GALLERY)
         }
         launchGallery = false
     }
@@ -130,12 +126,12 @@ fun EditProfileScreen(
         if (permissionsManager.isPermissionGranted(PermissionType.CAMERA)) {
             cameraManager.launch()
         } else {
-            permissionsManager.askPermission(PermissionType.CAMERA)
+            permissionsManager.AskPermission(PermissionType.CAMERA)
         }
         launchCamera = false
     }
     if (launchSetting) {
-        permissionsManager.launchSettings()
+        permissionsManager.LaunchSettings()
         launchSetting = false
     }
     if (state.permissionDialog == UIComponentState.Show) {
@@ -180,9 +176,9 @@ fun EditProfileScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (imageBitmap==null){
-                    CircleImage(state.image, modifier = Modifier.size(80.dp))
+                    CircleImage(state.image, modifier = Modifier.size(120.dp))
                 }else{
-                    CircleImage(imageBitmap, modifier = Modifier.size(80.dp))
+                    CircleImage(imageBitmap, modifier = Modifier.size(120.dp))
                 }
                 Spacer_8dp()
                 DefaultButton(text = "Select") {

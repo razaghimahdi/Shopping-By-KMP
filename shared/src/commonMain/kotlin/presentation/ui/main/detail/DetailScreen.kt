@@ -70,7 +70,6 @@ import presentation.util.convertDate
 import kotlin.reflect.KFunction1
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(popup: () -> Unit, navigateToMoreComment: (Int) -> Unit, state: DetailState, events: (DetailEvent) -> Unit) {
 

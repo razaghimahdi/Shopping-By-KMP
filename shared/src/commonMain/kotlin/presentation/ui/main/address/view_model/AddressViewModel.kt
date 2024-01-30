@@ -2,6 +2,7 @@ package presentation.ui.main.address.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
@@ -20,7 +21,6 @@ class AddressViewModel(
 ) : ViewModel() {
 
 
-    private val TAG = "AppDebug CommentViewModel"
 
 
     val state: MutableState<AddressState> = mutableStateOf(AddressState())
@@ -131,7 +131,7 @@ class AddressViewModel(
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -148,7 +148,7 @@ class AddressViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

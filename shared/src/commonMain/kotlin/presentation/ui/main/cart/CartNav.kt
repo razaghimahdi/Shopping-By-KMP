@@ -1,7 +1,6 @@
 package presentation.ui.main.cart
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
@@ -13,9 +12,6 @@ import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.checkout.CheckoutScreen
 import presentation.ui.main.checkout.view_model.CheckoutViewModel
 import presentation.ui.main.detail.DetailNav
-import presentation.ui.main.detail.DetailScreen
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.detail.view_model.DetailViewModel
 
 @Composable
 fun CartNav() {

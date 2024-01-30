@@ -5,13 +5,13 @@ sealed class CartNavigation(
     val objectName: String = "",
     val objectPath: String = ""
 ) {
-    object Cart : CartNavigation(route = "Cart")
+   data object Cart : CartNavigation(route = "Cart")
 
-    object Checkout : CartNavigation(route = "Checkout")
+   data object Checkout : CartNavigation(route = "Checkout")
 
-    object Address : CartNavigation(route = "Address")
+   data object Address : CartNavigation(route = "Address")
 
-    object Detail : CartNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+   data object Detail : CartNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
 

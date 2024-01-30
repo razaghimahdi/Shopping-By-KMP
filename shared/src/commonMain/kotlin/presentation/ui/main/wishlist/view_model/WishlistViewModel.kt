@@ -2,31 +2,26 @@ package presentation.ui.main.wishlist.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
 import business.domain.main.Category
 import business.domain.main.category_all
-import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.WishListInteractor
-import business.interactors.splash.CheckTokenInteractor
-import business.interactors.splash.LoginInteractor
-import business.interactors.splash.RegisterInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
-import presentation.ui.main.address.view_model.AddressEvent
 
 class WishlistViewModel(
-    val wishListInteractor: WishListInteractor,
-    val likeInteractor: LikeInteractor,
+    private val wishListInteractor: WishListInteractor,
+    private val likeInteractor: LikeInteractor,
 ) : ViewModel() {
 
 
-    private val TAG = "AppDebug LoginViewModel"
 
 
     val state: MutableState<WishlistState> = mutableStateOf(WishlistState())
@@ -82,7 +77,8 @@ class WishlistViewModel(
                         dataState.data?.let {
                             if (it) {
                                 val currentList = state.value.wishlist.products.toMutableList()
-                                val item = currentList.find { it.id == id }
+                                val item = currentList.find {product->
+                                    product.id == id }
                                 currentList.remove(item)
                                 state.value =
                                     state.value.copy(wishlist = state.value.wishlist.copy(products = currentList))
@@ -164,7 +160,7 @@ class WishlistViewModel(
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -181,7 +177,7 @@ class WishlistViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

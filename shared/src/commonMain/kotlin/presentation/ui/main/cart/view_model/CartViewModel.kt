@@ -2,6 +2,7 @@ package presentation.ui.main.cart.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
-import presentation.ui.main.address.view_model.AddressEvent
 
 class CartViewModel(
     private val basketListInteractor: BasketListInteractor,
@@ -22,14 +22,15 @@ class CartViewModel(
 ) : ViewModel() {
 
 
-    private val TAG = "AppDebug CartViewModel"
-
-
     val state: MutableState<CartState> = mutableStateOf(CartState())
 
 
     fun onTriggerEvent(event: CartEvent) {
         when (event) {
+
+            is CartEvent.AddProduct -> {
+                addProduct(id = event.id)
+            }
 
             is CartEvent.DeleteFromBasket -> {
                 deleteFromBasket(id = event.id)
@@ -63,6 +64,7 @@ class CartViewModel(
                 is DataState.NetworkStatus -> {
                     onTriggerEvent(CartEvent.OnUpdateNetworkState(dataState.networkState))
                 }
+
                 is DataState.Response -> {
                     onTriggerEvent(CartEvent.Error(dataState.uiComponent))
                 }
@@ -70,7 +72,9 @@ class CartViewModel(
                 is DataState.Data -> {
                     dataState.data?.let {
                         state.value = state.value.copy(baskets = it)
-                        val totalCost = state.value.baskets.map { it.product }.sumOf { it.price }
+                        val totalCost = state.value.baskets.sumOf { basket ->
+                            basket.price
+                        }
                         state.value = state.value.copy(totalCost = "$ $totalCost")
                     }
                 }
@@ -104,9 +108,30 @@ class CartViewModel(
     }
 
 
+    private fun addProduct(id: Int) {
+        addBasketInteractor.execute(id = id, count = 1).onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {}
+                is DataState.Response -> {
+                    onTriggerEvent(CartEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    if (dataState.data == true) onTriggerEvent(CartEvent.OnRetryNetwork)
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         if (uiComponent is UIComponent.None) {
-            println("${TAG}: onTriggerEvent:  ${(uiComponent as UIComponent.None).message}")
+            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
             return
         }
 
@@ -123,7 +148,7 @@ class CartViewModel(
             state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
-            println("${TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
+            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
         }
     }
 

@@ -85,8 +85,14 @@ fun CartScreen(
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(modifier = Modifier.fillMaxSize().align(Alignment.Center)) {
                 items(state.baskets) {
-                    CartBox(it, navigateToDetail = navigateToDetail) {
-                        events(CartEvent.DeleteFromBasket(it.id))
+                    CartBox(
+                        it,
+                        addMoreProduct = {
+                            events(CartEvent.AddProduct(it.productId))
+                        },
+                        navigateToDetail = navigateToDetail
+                    ) {
+                        events(CartEvent.DeleteFromBasket(it.productId))
                     }
                 }
             }
@@ -157,7 +163,12 @@ fun ProceedButtonBox(totalCost: String, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartBox(basket: Basket, navigateToDetail: (Int) -> Unit, deleteFromBasket: () -> Unit) {
+fun CartBox(
+    basket: Basket,
+    navigateToDetail: (Int) -> Unit,
+    addMoreProduct: () -> Unit,
+    deleteFromBasket: () -> Unit
+) {
     var show by remember { mutableStateOf(true) }
 
     val dismissState = rememberDismissState(
@@ -180,14 +191,14 @@ fun CartBox(basket: Basket, navigateToDetail: (Int) -> Unit, deleteFromBasket: (
                 DismissBackground(dismissState)
             },
             dismissContent = {
-                DismissCartContent(basket, navigateToDetail = navigateToDetail)
+                DismissCartContent(basket, addMoreProduct = addMoreProduct, navigateToDetail = navigateToDetail)
             })
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
+fun DismissCartContent(basket: Basket, addMoreProduct: () -> Unit, navigateToDetail: (Int) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
@@ -201,11 +212,11 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
                     .weight(.3f)
                     .clip(MaterialTheme.shapes.small)
                     .noRippleClickable {
-                        navigateToDetail(basket.product.id)
+                        navigateToDetail(basket.productId)
                     }
             ) {
                 Image(
-                    painter = rememberCustomImagePainter(basket.product.image),
+                    painter = rememberCustomImagePainter(basket.image),
                     null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -216,21 +227,21 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
 
             Column(modifier = Modifier.weight(.4f)) {
                 Text(
-                    basket.product.title,
+                    basket.title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer_4dp()
                 Text(
-                    basket.product.category.name,
+                    basket.category.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer_4dp()
                 Text(
-                    basket.product.getPrice(),
+                    basket.getPrice(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.labelMedium
@@ -258,7 +269,9 @@ fun DismissCartContent(basket: Basket, navigateToDetail: (Int) -> Unit) {
                 Card(
                     modifier = Modifier.size(25.dp),
                     shape = MaterialTheme.shapes.small,
-                    onClick = {},
+                    onClick = {
+                        addMoreProduct()
+                    },
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.background

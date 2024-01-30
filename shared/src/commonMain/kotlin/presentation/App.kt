@@ -5,13 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import coil3.ImageLoader
-import coil3.PlatformContext
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.fetch.NetworkFetcher
-import coil3.memory.MemoryCache
-import coil3.request.crossfade
-import coil3.util.DebugLogger
 import common.Context
 import di.appModule
 import moe.tlaster.precompose.PreComposeApp
@@ -54,7 +50,7 @@ internal fun App(context: Context) {
                             })
                         }
                         scene(route = AppNavigation.Main.route) {
-                            MainNav(){
+                            MainNav {
                                 navigator.popBackStack()
                                 navigator.navigate(AppNavigation.Splash.route)
                             }

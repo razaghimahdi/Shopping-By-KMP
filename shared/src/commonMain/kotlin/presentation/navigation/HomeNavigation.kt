@@ -7,7 +7,7 @@ sealed class HomeNavigation(
     val objectName2: String = "",
     val objectPath2: String = "",
 ) {
-    object Search : HomeNavigation(
+   data object Search : HomeNavigation(
         route = "Search",
         objectName = "category_id",
         objectPath = "/{category_id}",
@@ -15,15 +15,15 @@ sealed class HomeNavigation(
         objectPath2 = "/{sort}",
     )
 
-    object Home : HomeNavigation(route = "Home")
+   data object Home : HomeNavigation(route = "Home")
 
-    object Notification : HomeNavigation(route = "Notification")
+   data object Notification : HomeNavigation(route = "Notification")
 
-    object Categories : HomeNavigation(route = "Categories")
+   data object Categories : HomeNavigation(route = "Categories")
 
-    object Settings : HomeNavigation(route = "Setting")
+   data object Settings : HomeNavigation(route = "Setting")
 
-    object Detail : HomeNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+   data object Detail : HomeNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 }
 

@@ -6,8 +6,6 @@ import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.CategoriesNavigation
-import presentation.ui.main.categories.view_model.CategoriesEvent
-import presentation.ui.main.categories.view_model.CategoriesState
 import presentation.ui.main.categories.view_model.CategoriesViewModel
 import presentation.ui.main.search.SearchNav
 
@@ -26,9 +24,9 @@ fun CategoriesNav(popup: () -> Unit) {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 popup = popup,
-            ) { category_id ->
+            ) { categoryId ->
                 navigator.navigate(
-                    CategoriesNavigation.Search.route.plus("/${category_id}")
+                    CategoriesNavigation.Search.route.plus("/${categoryId}")
                 )
             }
         }

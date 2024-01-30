@@ -9,11 +9,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -37,7 +34,6 @@ import business.core.ProgressBarState
 import presentation.theme.BorderColor
 import presentation.theme.DefaultButtonTheme
 import presentation.theme.DefaultButtonWithBorderPrimaryTheme
-import presentation.theme.Grey
 
 val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp

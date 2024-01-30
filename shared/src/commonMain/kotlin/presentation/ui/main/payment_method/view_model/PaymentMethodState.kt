@@ -4,11 +4,6 @@ import business.core.NetworkState
 import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
-import business.core.UIComponentState
-import business.domain.main.Address
-import business.domain.main.Comment
-import business.domain.main.Home
-import business.domain.main.Product
 
 data class PaymentMethodState(
     val selectedPaymentMethod: Int = 0,

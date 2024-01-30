@@ -3,7 +3,6 @@ package presentation.ui.main.address.view_model
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
-import presentation.ui.main.home.view_model.HomeEvent
 
 sealed class AddressEvent {
 
@@ -17,13 +16,14 @@ sealed class AddressEvent {
         val zipCode: String,
     ) : AddressEvent()
 
-    object OnRemoveHeadFromQueue : AddressEvent()
+   data object OnRemoveHeadFromQueue : AddressEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : AddressEvent()
 
-    object OnRetryNetwork : AddressEvent()
+   data object OnRetryNetwork : AddressEvent()
+
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : AddressEvent()

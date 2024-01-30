@@ -7,9 +7,9 @@ sealed class SearchNavigation(
     val objectName: String = "",
     val objectPath: String = "",
 ) {
-    object Search : SearchNavigation(route = "Search",)
+   data object Search : SearchNavigation(route = "Search")
 
-    object Detail : SearchNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+   data object Detail : SearchNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
 
 
 }

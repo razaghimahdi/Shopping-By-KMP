@@ -7,19 +7,19 @@ import business.domain.main.Category
 sealed class WishlistEvent {
 
 
-    object GetNextPage : WishlistEvent()
+   data object GetNextPage : WishlistEvent()
 
     data class OnUpdateSelectedCategory(val category: Category): WishlistEvent()
 
     data class LikeProduct(val id: Int) : WishlistEvent()
 
-    object OnRemoveHeadFromQueue : WishlistEvent()
+   data object OnRemoveHeadFromQueue : WishlistEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : WishlistEvent()
 
-    object OnRetryNetwork : WishlistEvent()
+   data object OnRetryNetwork : WishlistEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : WishlistEvent()
