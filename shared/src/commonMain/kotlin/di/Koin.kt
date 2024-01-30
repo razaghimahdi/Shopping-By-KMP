@@ -29,7 +29,6 @@ import business.interactors.splash.CheckTokenInteractor
 import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
 import common.Context
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import presentation.ui.main.address.view_model.AddressViewModel
@@ -50,7 +49,6 @@ import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
 
-@OptIn(ExperimentalSerializationApi::class)
 fun appModule(context: Context) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {

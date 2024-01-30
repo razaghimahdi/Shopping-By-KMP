@@ -31,7 +31,6 @@ import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
-import io.ktor.http.headersOf
 import io.ktor.http.takeFrom
 import io.ktor.util.InternalAPI
 import io.ktor.utils.io.core.buildPacket
