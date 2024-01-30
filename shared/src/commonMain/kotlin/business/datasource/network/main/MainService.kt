@@ -1,6 +1,5 @@
 package business.datasource.network.main
 
-import business.core.KtorHttpClient
 import business.datasource.network.common.JRNothing
 import business.datasource.network.common.MainGenericResponse
 import business.datasource.network.main.responses.AddressDTO
@@ -88,13 +87,6 @@ interface MainService {
     ): MainGenericResponse<WishlistDTO>
 
 
-    object Factory {
-        fun build(): MainService {
-            return MainServiceImpl(
-                httpClient = KtorHttpClient.httpClient()
-            )
-        }
-    }
 
 
 }

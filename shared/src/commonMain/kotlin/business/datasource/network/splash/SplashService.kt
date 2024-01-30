@@ -1,6 +1,5 @@
 package business.datasource.network.splash
 
-import business.core.KtorHttpClient
 import business.datasource.network.common.MainGenericResponse
 
 interface SplashService {
@@ -13,13 +12,7 @@ interface SplashService {
 
     suspend fun register(name: String, email: String, password: String): MainGenericResponse<String?>
 
-    object Factory {
-        fun build(): SplashService {
-            return SplashServiceImpl(
-                httpClient = KtorHttpClient.httpClient()
-            )
-        }
-    }
+
 
 
 }
