@@ -25,7 +25,7 @@ actual class PermissionsManager actual constructor(private val callback: Permiss
     PermissionHandler {
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
-    override fun askPermission(permission: PermissionType) {
+    override fun AskPermission(permission: PermissionType) {
         val lifecycleOwner = LocalLifecycleOwner.current
 
         when (permission) {
@@ -80,7 +80,7 @@ actual class PermissionsManager actual constructor(private val callback: Permiss
     }
 
     @Composable
-    override fun launchSettings() {
+    override fun LaunchSettings() {
         val context = LocalContext.current
         Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,

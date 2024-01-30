@@ -10,7 +10,6 @@ import androidx.compose.ui.text.font.FontWeight
 @SuppressLint("DiscouragedApi")
 @Composable
 actual fun font(
-    name: String,
     res: String,
     weight: FontWeight,
     style: FontStyle,

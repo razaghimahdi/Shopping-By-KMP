@@ -8,16 +8,16 @@ import java.io.InputStream
 object BitmapUtils {
     fun getBitmapFromUri(uri: Uri, contentResolver: ContentResolver): android.graphics.Bitmap? {
         var inputStream: InputStream? = null
-        try {
+        return try {
             inputStream = contentResolver.openInputStream(uri)
             val s = BitmapFactory.decodeStream(inputStream)
             inputStream?.close()
-            return s
+            s
         } catch (e: Exception) {
             e.printStackTrace()
             println("getBitmapFromUri Exception: ${e.message}")
             println("getBitmapFromUri Exception: ${e.localizedMessage}")
-            return null
+            null
         }
     }
 }
