@@ -40,6 +40,7 @@ import presentation.ui.main.detail.view_model.DetailViewModel
 import presentation.ui.main.edit_profile.view_model.EditProfileViewModel
 import presentation.ui.main.home.view_model.HomeViewModel
 import presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
+import presentation.ui.main.my_orders.view_model.MyOrdersViewModel
 import presentation.ui.main.notifications.view_model.NotificationsViewModel
 import presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
 import presentation.ui.main.profile.view_model.ProfileViewModel
@@ -67,6 +68,7 @@ fun appModule(context: Context) = module {
     factory { PaymentMethodViewModel() }
     factory { NotificationsViewModel() }
     factory { MyCouponsViewModel() }
+    factory { MyOrdersViewModel() }
     factory { CheckoutViewModel(get(), get()) }
     factory { WishlistViewModel(get(), get()) }
     factory { CartViewModel(get(), get(), get()) }
