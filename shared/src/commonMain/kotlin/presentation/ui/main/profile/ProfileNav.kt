@@ -11,6 +11,8 @@ import presentation.ui.main.edit_profile.EditProfileScreen
 import presentation.ui.main.edit_profile.view_model.EditProfileViewModel
 import presentation.ui.main.my_coupons.MyCouponsScreen
 import presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
+import presentation.ui.main.my_orders.MyOrdersScreen
+import presentation.ui.main.my_orders.view_model.MyOrdersViewModel
 import presentation.ui.main.payment_method.PaymentMethodScreen
 import presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
 import presentation.ui.main.profile.view_model.ProfileViewModel
@@ -82,13 +84,13 @@ fun ProfileNav(logout: () -> Unit) {
             }*/
         }
         scene(route = ProfileNavigation.MyOrders.route) {
-            /* val viewModel: MyOrdersViewModel = koinInject()
-             MyOrdersScreen(
-                 state = viewModel.state.value,
-                 events = viewModel::onTriggerEvent,
-             ) {
-                 navigator.popBackStack()
-             }*/
+            val viewModel: MyOrdersViewModel = koinInject()
+            MyOrdersScreen(
+                state = viewModel.state.value,
+                events = viewModel::onTriggerEvent,
+            ) {
+                navigator.popBackStack()
+            }
         }
         scene(route = ProfileNavigation.PaymentMethod.route) {
             val viewModel: PaymentMethodViewModel = koinInject()
@@ -119,5 +121,6 @@ fun ProfileNav(logout: () -> Unit) {
         }
     }
 }
+
 
 
