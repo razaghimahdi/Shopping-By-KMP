@@ -17,6 +17,7 @@ interface MainService {
         const val SEARCH_FILTER = "search/filter"
         const val SEARCH = "search"
         const val BASKET = "basket"
+        const val BUY = "basket/buy"
         const val BASKET_ADD = "basket/add"
         const val BASKET_DELETE = "basket/delete"
         const val HOME = "home"
@@ -27,6 +28,12 @@ interface MainService {
         const val WISHLIST = "product/wishlist"
         const val ADDRESS = "address"
     }
+
+    suspend fun buyProduct(
+        token: String,
+        addressId: Int,
+        shippingType: Int,
+    ): MainGenericResponse<JRNothing>
 
     suspend fun getAddresses(
         token: String,

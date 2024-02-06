@@ -8,6 +8,7 @@ import business.datasource.network.main.responses.AddressRequestDTO
 import business.datasource.network.main.responses.BasketAddRequestDTO
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.BasketDeleteRequestDTO
+import business.datasource.network.main.responses.BuyRequestDTO
 import business.datasource.network.main.responses.CommentDTO
 import business.datasource.network.main.responses.CommentRequestDTO
 import business.datasource.network.main.responses.HomeDTO
@@ -39,6 +40,28 @@ import io.ktor.utils.io.core.writeFully
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+    override suspend fun buyProduct(
+        token: String,
+        addressId: Int,
+        shippingType: Int
+    ): MainGenericResponse<JRNothing> {
+        return httpClient.post {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.BUY
+            }
+            contentType(ContentType.Application.Json)
+            setBody(
+                BuyRequestDTO(
+                    addressId = addressId,
+                    shippingType = shippingType
+                )
+            )
+        }.body()
+    }
 
     override suspend fun getAddresses(token: String): MainGenericResponse<List<AddressDTO>> {
         return httpClient.get {
@@ -70,7 +93,15 @@ class MainServiceImpl(
                 encodedPath += MainService.ADDRESS
             }
             contentType(ContentType.Application.Json)
-            setBody(AddressRequestDTO(address = address, city = city, country = country, state = state, zipCode = zipCode))
+            setBody(
+                AddressRequestDTO(
+                    address = address,
+                    city = city,
+                    country = country,
+                    state = state,
+                    zipCode = zipCode
+                )
+            )
         }.body()
     }
 
@@ -175,11 +206,11 @@ class MainServiceImpl(
             url {
                 headers {
                     append(HttpHeaders.Authorization, token)
-                 }
+                }
                 takeFrom(BASE_URL)
                 encodedPath += MainService.PROFILE
             }
-                // contentType(ContentType.MultiPart.FormData)
+            // contentType(ContentType.MultiPart.FormData)
             /*body = formData {
                 append("name", name)
                 if (image != null) {
@@ -201,11 +232,13 @@ class MainServiceImpl(
                                 "filename=image.jpg"
                             )
                         },
-                    ) { buildPacket {
-                        if (image != null) {
-                            writeFully(image)
+                    ) {
+                        buildPacket {
+                            if (image != null) {
+                                writeFully(image)
+                            }
                         }
-                    } }
+                    }
                 }
             )
 
