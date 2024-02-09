@@ -12,6 +12,7 @@ import business.interactors.main.AddAddressInteractor
 import business.interactors.main.AddBasketInteractor
 import business.interactors.main.AddCommentInteractor
 import business.interactors.main.BasketListInteractor
+import business.interactors.main.BuyProductInteractor
 import business.interactors.main.DeleteBasketInteractor
 import business.interactors.main.GetAddressesInteractor
 import business.interactors.main.GetCommentsInteractor
@@ -69,7 +70,7 @@ fun appModule(context: Context) = module {
     factory { NotificationsViewModel() }
     factory { MyCouponsViewModel() }
     factory { MyOrdersViewModel() }
-    factory { CheckoutViewModel(get(), get()) }
+    factory { CheckoutViewModel(get(), get(), get()) }
     factory { WishlistViewModel(get(), get()) }
     factory { CartViewModel(get(), get(), get()) }
     factory { DetailViewModel(get(), get(), get()) }
@@ -83,6 +84,7 @@ fun appModule(context: Context) = module {
     single { GetSearchFilterInteractor(get(), get()) }
     single { SearchInteractor(get(), get()) }
     single { AddCommentInteractor(get(), get()) }
+    single { BuyProductInteractor(get(), get()) }
     single { CommentViewModel(get(), get()) }
     single { GetCommentsInteractor(get(), get()) }
     single { GetAddressesInteractor(get(), get()) }
