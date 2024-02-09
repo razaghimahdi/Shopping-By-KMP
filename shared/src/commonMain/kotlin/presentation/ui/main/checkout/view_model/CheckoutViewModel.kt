@@ -11,6 +11,7 @@ import business.core.UIComponentState
 import business.domain.main.Address
 import business.domain.main.ShippingType
 import business.interactors.main.BasketListInteractor
+import business.interactors.main.BuyProductInteractor
 import business.interactors.main.GetAddressesInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +28,7 @@ val shippingType = listOf(
 class CheckoutViewModel(
     private val getAddressesInteractor: GetAddressesInteractor,
     private val basketListInteractor: BasketListInteractor,
+    private val buyProductInteractor: BuyProductInteractor,
 ) : ViewModel() {
 
 
@@ -35,6 +37,10 @@ class CheckoutViewModel(
 
     fun onTriggerEvent(event: CheckoutEvent) {
         when (event) {
+
+            is CheckoutEvent.BuyProduct -> {
+                buyProduct()
+            }
 
             is CheckoutEvent.OnUpdateSelectedShipping -> {
                 onUpdateSelectedShipping(event.value)
@@ -66,11 +72,39 @@ class CheckoutViewModel(
         }
     }
 
+
     init {
         getAddresses()
         getCart()
     }
 
+    private fun buyProduct() {
+        buyProductInteractor.execute(
+            addressId = state.value.selectedAddress.id,
+            shippingType = shippingType.indexOf(state.value.selectedShipping)
+        ).onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(CheckoutEvent.OnUpdateNetworkState(dataState.networkState))
+                }
+
+                is DataState.Response -> {
+                    onTriggerEvent(CheckoutEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    dataState.data?.let {
+                        state.value = state.value.copy(buyingSuccess = it)
+                    }
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private fun getCart() {
         basketListInteractor.execute().onEach { dataState ->

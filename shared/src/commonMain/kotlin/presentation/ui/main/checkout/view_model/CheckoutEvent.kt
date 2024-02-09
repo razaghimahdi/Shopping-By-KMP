@@ -14,13 +14,15 @@ sealed class CheckoutEvent {
 
     data class OnUpdateSelectedAddress(val value: Address) : CheckoutEvent()
 
-   data object OnRemoveHeadFromQueue : CheckoutEvent()
+    data object BuyProduct : CheckoutEvent()
+
+    data object OnRemoveHeadFromQueue : CheckoutEvent()
 
     data class Error(
         val uiComponent: UIComponent
     ) : CheckoutEvent()
 
-   data object OnRetryNetwork : CheckoutEvent()
+    data object OnRetryNetwork : CheckoutEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : CheckoutEvent()
