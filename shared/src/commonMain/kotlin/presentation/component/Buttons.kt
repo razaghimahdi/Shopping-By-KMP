@@ -37,7 +37,6 @@ import presentation.theme.DefaultButtonWithBorderPrimaryTheme
 
 val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
-val DEFAULT__BUTTON_SIZE_45 = 50.dp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
