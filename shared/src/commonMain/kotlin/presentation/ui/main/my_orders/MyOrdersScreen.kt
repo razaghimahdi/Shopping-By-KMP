@@ -97,9 +97,10 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
             }
 
 
-            TabRow(modifier = Modifier.height(50.dp).fillMaxWidth().background(Color.Transparent),
+            TabRow(modifier = Modifier.height(50.dp).fillMaxWidth(),
                 selectedTabIndex = pagerState.currentPage,
                 contentColor = Color.Transparent,
+                containerColor = Color.Transparent,
                 divider = {},
                 indicator = { tabPositions ->
                     Box(
