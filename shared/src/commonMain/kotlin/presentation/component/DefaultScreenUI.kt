@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import business.core.NetworkState
@@ -38,39 +40,71 @@ fun DefaultScreenUI(
     progressBarState: ProgressBarState = ProgressBarState.Idle,
     networkState: NetworkState = NetworkState.Good,
     onTryAgain: () -> Unit = {},
+    titleToolbar: String? = null,
+    startIconToolbar: ImageVector? = null,
+    endIconToolbar: ImageVector? = null,
+    onClickStartIconToolbar: () -> Unit = {},
+    onClickEndIconToolbar: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
 
-    Scaffold {
+    Scaffold(
+        topBar = {
+            if (titleToolbar != null) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    if (startIconToolbar != null) {
+                        CircleButton(
+                            imageVector = startIconToolbar,
+                            onClick = { onClickStartIconToolbar() })
+                    } else {
+                        Spacer_16dp()
+                    }
+                    Text(titleToolbar, style = MaterialTheme.typography.titleLarge)
+
+                    if (endIconToolbar != null) {
+                        CircleButton(
+                            imageVector = endIconToolbar,
+                            onClick = { onClickEndIconToolbar() })
+                    } else {
+                        Spacer_16dp()
+                    }
+                }
+            }
+        }
+    ) {
         Box(
-            modifier = Modifier
+            modifier = Modifier.padding(it)
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             content()
             // process the queue
-             if (!queue.isEmpty()) {
-                 queue.peek()?.let { uiComponent ->
-                     if (uiComponent is UIComponent.Dialog) {
-                         CreateUIComponentDialog(
-                             title = uiComponent.alert.title,
-                             description = uiComponent.alert.message,
-                             onRemoveHeadFromQueue = onRemoveHeadFromQueue
-                         )
-                     }
-                     if (uiComponent is UIComponent.ToastSimple) {
-                         ShowSnackbar(
-                             title = uiComponent.title,
-                             snackbarVisibleState = true,
-                             onDismiss = onRemoveHeadFromQueue,
-                             modifier = Modifier.align(Alignment.BottomCenter)
-                         )
-                     }
-                 }
-             }
+            if (!queue.isEmpty()) {
+                queue.peek()?.let { uiComponent ->
+                    if (uiComponent is UIComponent.Dialog) {
+                        CreateUIComponentDialog(
+                            title = uiComponent.alert.title,
+                            description = uiComponent.alert.message,
+                            onRemoveHeadFromQueue = onRemoveHeadFromQueue
+                        )
+                    }
+                    if (uiComponent is UIComponent.ToastSimple) {
+                        ShowSnackbar(
+                            title = uiComponent.title,
+                            snackbarVisibleState = true,
+                            onDismiss = onRemoveHeadFromQueue,
+                            modifier = Modifier.align(Alignment.BottomCenter)
+                        )
+                    }
+                }
+            }
             if (networkState == NetworkState.Failed && progressBarState == ProgressBarState.Idle) {
-                  FailedNetworkScreen(onTryAgain = onTryAgain)
+                FailedNetworkScreen(onTryAgain = onTryAgain)
             }
 
             if (progressBarState is ProgressBarState.LoadingWithLogo) {
