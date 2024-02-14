@@ -27,7 +27,6 @@ import business.domain.main.Address
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.AddAddressDialog
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_12dp
 import presentation.component.Spacer_4dp
@@ -45,7 +44,7 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
         AddAddressDialog(onDismissRequest = {
             events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Hide))
         },
-            onExecute = { address,country, city, state, zipCode ->
+            onExecute = { address, country, city, state, zipCode ->
                 events(
                     AddressEvent.AddAddress(
                         country = country,
@@ -62,20 +61,14 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
         onRemoveHeadFromQueue = { events(AddressEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(AddressEvent.OnRetryNetwork) }) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        onTryAgain = { events(AddressEvent.OnRetryNetwork) },
+        titleToolbar = "Address",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup,
+        endIconToolbar = Icons.Filled.Add,
+        onClickEndIconToolbar = { events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Show)) }) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("Address", style = MaterialTheme.typography.titleLarge)
-                CircleButton(
-                    imageVector = Icons.Filled.Add,
-                    onClick = { events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Show)) })
-            }
+        Column(modifier = Modifier.fillMaxSize()) {
 
 
             if (state.addresses.isEmpty()) {
@@ -128,9 +121,9 @@ private fun AddressBox(address: Address, modifier: Modifier) {
 
             TextWithIcon(text = address.country, icon = "earth.xml")
             Spacer_4dp()
-            TextWithIcon(text = address.getFullAddress(), icon ="location2.xml")
+            TextWithIcon(text = address.getFullAddress(), icon = "location2.xml")
             Spacer_4dp()
-            TextWithIcon(text = address.zipCode, icon ="mail.xml")
+            TextWithIcon(text = address.zipCode, icon = "mail.xml")
 
 
             Spacer_8dp()
