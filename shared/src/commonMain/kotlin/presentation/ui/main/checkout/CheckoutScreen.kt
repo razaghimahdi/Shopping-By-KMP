@@ -26,9 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import business.core.UIComponentState
+import business.domain.main.Address
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
@@ -51,8 +51,8 @@ fun CheckoutScreen(
     popup: () -> Unit
 ) {
 
-    LaunchedEffect(key1 = state.buyingSuccess){
-        if (state.buyingSuccess){
+    LaunchedEffect(key1 = state.buyingSuccess) {
+        if (state.buyingSuccess) {
             popup()
         }
     }
@@ -63,24 +63,20 @@ fun CheckoutScreen(
     }
 
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(CheckoutEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(CheckoutEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(CheckoutEvent.OnRetryNetwork) },
+        titleToolbar = "Checkout",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
 
         Box(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.fillMaxSize().padding(16.dp).align(Alignment.TopCenter)) {
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                    Text("Checkout", style = MaterialTheme.typography.titleLarge)
-                    Spacer_8dp()
-                }
 
                 Spacer_32dp()
 
@@ -113,7 +109,8 @@ fun CheckoutScreen(
             Box(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
                 CheckoutButtonBox(
                     "$ ${state.totalCost}",
-                    "$ ${state.selectedShipping.price}"
+                    "$ ${state.selectedShipping.price}",
+                    selectedAddress = state.selectedAddress,
                 ) {
                     events(CheckoutEvent.BuyProduct)
                 }
@@ -125,7 +122,12 @@ fun CheckoutScreen(
 
 
 @Composable
-fun CheckoutButtonBox(totalCost: String, shippingCost: String, onClick: () -> Unit) {
+fun CheckoutButtonBox(
+    totalCost: String,
+    shippingCost: String,
+    selectedAddress: Address,
+    onClick: () -> Unit
+) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -160,7 +162,8 @@ fun CheckoutButtonBox(totalCost: String, shippingCost: String, onClick: () -> Un
             Spacer_16dp()
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().height(DEFAULT__BUTTON_SIZE),
-                text = "Submit"
+                text = "Submit",
+                enabled = selectedAddress != Address()
             ) {
                 onClick()
             }

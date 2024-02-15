@@ -2,15 +2,15 @@ package business.datasoruce.network.splash
 
 sealed class LoginServiceResponseType {
 
-    object Empty : LoginServiceResponseType()
+   data object Empty : LoginServiceResponseType()
 
-    object MalformedData : LoginServiceResponseType()
+   data object MalformedData : LoginServiceResponseType()
 
-    object FillDataCurrently : LoginServiceResponseType()
+   data object FillDataCurrently : LoginServiceResponseType()
 
-    object GoodData : LoginServiceResponseType()
+   data object GoodData : LoginServiceResponseType()
 
-    object TimeOut : LoginServiceResponseType()
+   data object TimeOut : LoginServiceResponseType()
 
 
 }

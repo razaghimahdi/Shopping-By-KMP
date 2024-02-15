@@ -42,7 +42,7 @@ class LoginInteractorTest {
 
 
         // First emission should be loading
-        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+        assertEquals(result[0], DataState.Loading(ProgressBarState.ButtonLoading))
 
         // Confirm entered email is not empty
         assertTrue(email.isNotEmpty())
@@ -52,11 +52,11 @@ class LoginInteractorTest {
 
         // Confirm second emission is dialog
         assertTrue(result[1] is DataState.Response)
-        assertEquals(result[1], DataState.Response<String>(uiComponent = UIComponent.None("")))
+        assertEquals(result[1], DataState.Response(uiComponent = UIComponent.None("")))
 
 
         // Confirm loading state is IDLE
-        assertEquals(result[2], DataState.Loading<String>(ProgressBarState.Idle))
+        assertEquals(result[2], DataState.Loading(ProgressBarState.Idle))
 
     }
 
@@ -78,7 +78,7 @@ class LoginInteractorTest {
 
 
         // First emission should be loading
-        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+        assertEquals(result[0], DataState.Loading(ProgressBarState.ButtonLoading))
 
         // Confirm second emission is dialog
         assertTrue(result[1] is DataState.Response)
@@ -93,7 +93,7 @@ class LoginInteractorTest {
         assertTrue(password.isEmpty())
 
         // Confirm loading state is IDLE
-        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+        assertEquals(result[3], DataState.Loading(ProgressBarState.Idle))
 
     }
 
@@ -115,7 +115,7 @@ class LoginInteractorTest {
 
 
         // First emission should be loading
-        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+        assertEquals(result[0], DataState.Loading(ProgressBarState.ButtonLoading))
 
 
         // Confirm entered email is not empty
@@ -134,7 +134,7 @@ class LoginInteractorTest {
         assertEquals(result[2], DataState.Data<String>(null, false))
 
         // Confirm loading state is IDLE
-        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+        assertEquals(result[3], DataState.Loading(ProgressBarState.Idle))
 
     }
 
@@ -156,7 +156,7 @@ class LoginInteractorTest {
 
 
         // First emission should be loading
-        assertEquals(result[0], DataState.Loading<String>(ProgressBarState.ButtonLoading))
+        assertEquals(result[0], DataState.Loading(ProgressBarState.ButtonLoading))
 
 
         // Confirm entered email is not empty
@@ -173,7 +173,7 @@ class LoginInteractorTest {
 
 
         // Confirm loading state is IDLE
-        assertEquals(result[3], DataState.Loading<String>(ProgressBarState.Idle))
+        assertEquals(result[3], DataState.Loading(ProgressBarState.Idle))
 
 
     }
