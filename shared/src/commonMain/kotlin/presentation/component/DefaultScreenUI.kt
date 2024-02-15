@@ -77,7 +77,7 @@ fun DefaultScreenUI(
         }
     ) {
         Box(
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(top = it.calculateTopPadding())
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
