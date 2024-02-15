@@ -1,6 +1,5 @@
 package presentation.ui.main.settings
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
@@ -44,22 +42,18 @@ fun SettingsScreen(
         }
     }
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(SettingsEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(SettingsEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(SettingsEvent.OnRetryNetwork) },
+        titleToolbar = "Setting",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("Setting", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
 
             Spacer_32dp()
 

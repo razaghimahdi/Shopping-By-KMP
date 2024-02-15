@@ -51,7 +51,6 @@ import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
@@ -79,22 +78,17 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
 
     val pagerState = rememberPagerState { tabList.size }
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(MyOrdersEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(MyOrdersEvent.OnRetryNetwork) }) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        onTryAgain = { events(MyOrdersEvent.OnRetryNetwork) },
+        titleToolbar = "My Orders",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("My Orders", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
+        Column(modifier = Modifier.fillMaxSize()) {
 
 
             TabRow(modifier = Modifier.height(50.dp).fillMaxWidth(),

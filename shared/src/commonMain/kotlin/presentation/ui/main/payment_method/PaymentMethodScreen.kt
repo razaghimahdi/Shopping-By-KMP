@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
@@ -45,18 +44,13 @@ fun PaymentMethodScreen(
         onRemoveHeadFromQueue = { events(PaymentMethodEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(PaymentMethodEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(PaymentMethodEvent.OnRetryNetwork) },
+        titleToolbar = "Payment Method",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("Payment Method", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
+
 
             Spacer_32dp()
 

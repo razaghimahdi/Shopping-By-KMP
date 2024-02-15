@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import business.domain.main.Coupons
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
@@ -46,18 +45,11 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
         onRemoveHeadFromQueue = { events(MyCouponsEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(MyCouponsEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(MyCouponsEvent.OnRetryNetwork) },
+        titleToolbar = "My Coupons",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup) {
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("My Coupons", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
 
             Spacer_32dp()
 

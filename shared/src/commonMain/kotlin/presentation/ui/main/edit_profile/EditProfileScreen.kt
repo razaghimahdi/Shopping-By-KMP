@@ -1,8 +1,6 @@
 package presentation.ui.main.edit_profile
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,7 +34,6 @@ import common.rememberGalleryManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import presentation.component.CircleButton
 import presentation.component.CircleImage
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
@@ -45,7 +42,6 @@ import presentation.component.GeneralAlertDialog
 import presentation.component.ImageOptionDialog
 import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
-import presentation.component.Spacer_4dp
 import presentation.component.Spacer_8dp
 import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.main.edit_profile.view_model.EditProfileEvent
@@ -153,31 +149,27 @@ fun EditProfileScreen(
 
 
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(EditProfileEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(EditProfileEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(EditProfileEvent.OnRetryNetwork) },
+        titleToolbar = "Edit Profile",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("Edit Profile", style = MaterialTheme.typography.titleLarge)
-                Spacer_4dp()
-            }
             Spacer_32dp()
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (imageBitmap==null){
+                if (imageBitmap == null) {
                     CircleImage(state.image, modifier = Modifier.size(120.dp))
-                }else{
+                } else {
                     CircleImage(imageBitmap, modifier = Modifier.size(120.dp))
                 }
                 Spacer_8dp()

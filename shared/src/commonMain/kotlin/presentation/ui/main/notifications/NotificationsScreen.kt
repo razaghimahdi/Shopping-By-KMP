@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import business.domain.main.Notification
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.theme.BorderColor
@@ -46,18 +45,11 @@ fun NotificationsScreen(
         onRemoveHeadFromQueue = { events(NotificationsEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(NotificationsEvent.OnRetryNetwork) }) {
+        onTryAgain = { events(NotificationsEvent.OnRetryNetwork) },
+        titleToolbar = "notifications",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup) {
         Column(modifier = Modifier.fillMaxSize()) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(imageVector = Icons.Filled.ArrowBack, onClick = { popup() })
-                Text("notifications", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
 
 
             Text(
