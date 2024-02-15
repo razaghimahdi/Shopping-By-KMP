@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -26,7 +24,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
-import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
@@ -46,22 +43,12 @@ fun CategoriesScreen(
         onRemoveHeadFromQueue = { events(CategoriesEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(CategoriesEvent.OnRetryNetwork) }
+        onTryAgain = { events(CategoriesEvent.OnRetryNetwork)},
+        titleToolbar = "Categories",
+        startIconToolbar = Icons.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                CircleButton(
-                    imageVector = Icons.Filled.ArrowBack,
-                    onClick = { popup() }
-                )
-                Text("Categories", style = MaterialTheme.typography.titleLarge)
-                Spacer_8dp()
-            }
 
 
             LazyVerticalGrid(
