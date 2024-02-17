@@ -34,6 +34,7 @@ fun DefaultImageButtonTheme() = buttonColors(
 fun DefaultButtonWithBorderPrimaryTheme() = buttonColors(
     containerColor = MaterialTheme.colorScheme.background,
     contentColor = MaterialTheme.colorScheme.primary,
+    disabledContainerColor =  MaterialTheme.colorScheme.background,
     // disabledBackgroundColor = MaterialTheme.colorScheme.background,
     disabledContentColor = MaterialTheme.colorScheme.primary
 )
