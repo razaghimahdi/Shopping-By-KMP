@@ -1,3 +1,5 @@
+![Wallpaper](screenshots/banner.png)
+
 # Shopping-By-KMP (Compose Multiplatform application)
 
 Welcome to the documentation for the Jetpack Compose Multiplatform Shopping Application! 
@@ -5,7 +7,6 @@ This is a cross-platform application that is built using Jetpack Compose Multipl
 The application allows users to browse, search, and purchase products from a shopping catalog on Android, iOS.
 
 
-![Wallpaper](screenshots/banner.png)
 ![Wallpaper](screenshots/banner2.png)
 
 
