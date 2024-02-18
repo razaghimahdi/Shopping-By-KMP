@@ -4,10 +4,9 @@ Welcome to the documentation for the Jetpack Compose Multiplatform Shopping Appl
 This is a cross-platform application that is built using Jetpack Compose Multiplatform, a declarative framework for sharing UIs across multiple platforms with Kotlin. 
 The application allows users to browse, search, and purchase products from a shopping catalog on Android, iOS.
 
+![Wallpaper](screenshots/banner.png)
+![Wallpaper](screenshots/banner2.png)
 
-
-<img src="screenshots/banner.png"/> 
-<img src="screenshots/banner2.png"/> 
 
 
 https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48b0-88f1-bcb9c42d273e
