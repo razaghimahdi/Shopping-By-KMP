@@ -182,14 +182,22 @@ fun CartBox(
                 DismissBackground(dismissState)
             },
             dismissContent = {
-                DismissCartContent(basket, addMoreProduct = addMoreProduct, navigateToDetail = navigateToDetail)
+                DismissCartContent(
+                    basket,
+                    addMoreProduct = addMoreProduct,
+                    navigateToDetail = navigateToDetail
+                )
             })
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissCartContent(basket: Basket, addMoreProduct: () -> Unit, navigateToDetail: (Int) -> Unit) {
+fun DismissCartContent(
+    basket: Basket,
+    addMoreProduct: () -> Unit,
+    navigateToDetail: (Int) -> Unit
+) {
     Column(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
