@@ -58,7 +58,12 @@ import presentation.util.convertDate
 
 
 @Composable
-fun DetailScreen(popup: () -> Unit, navigateToMoreComment: (Int) -> Unit, state: DetailState, events: (DetailEvent) -> Unit) {
+fun DetailScreen(
+    popup: () -> Unit,
+    navigateToMoreComment: (Int) -> Unit,
+    state: DetailState,
+    events: (DetailEvent) -> Unit
+) {
 
 
     DefaultScreenUI(
@@ -200,7 +205,7 @@ fun DetailScreen(popup: () -> Unit, navigateToMoreComment: (Int) -> Unit, state:
                             text = "More",
                             modifier = Modifier
                                 .clickable {
-                                     navigateToMoreComment(state.product.id)
+                                    navigateToMoreComment(state.product.id)
                                 },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.primary
@@ -301,7 +306,10 @@ fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
                         Spacer_4dp()
                         Text(comment.user.fetchName(), style = MaterialTheme.typography.titleSmall)
                     }
-                    Text(comment.createAt.convertDate(), style = MaterialTheme.typography.titleSmall)
+                    Text(
+                        comment.createAt.convertDate(),
+                        style = MaterialTheme.typography.titleSmall
+                    )
                 }
                 Spacer_8dp()
                 Column {
