@@ -69,7 +69,7 @@ fun AddCommentDialog(onDismissRequest: () -> Unit, onExecute: (Double, String) -
                 value = rate.toFloat(),
                 onValueChange = { rate = it.toDouble() },
                 valueRange = 0f..5f,
-                steps = 1,
+                steps = 4,
                 modifier = Modifier.fillMaxWidth()
             )
             Row(
