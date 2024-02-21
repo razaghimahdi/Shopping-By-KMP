@@ -312,14 +312,17 @@ fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
                     )
                 }
                 Spacer_8dp()
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         comment.comment,
                         style = MaterialTheme.typography.bodyMedium,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer_4dp()
+
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
