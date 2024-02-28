@@ -69,7 +69,6 @@ Together, we can create a great shopping application that meets the needs of use
 
 ## Architecture 🏢
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
-The application is divided into the following layers:
 
 ## Testing 🧪
 Testing is a crucial aspect of software development to ensure the reliability and functionality of the application. 
