@@ -22,8 +22,6 @@ class LoginViewModel(
 ) : ViewModel() {
 
 
-
-
     val state: MutableState<LoginState> = mutableStateOf(LoginState())
 
 
