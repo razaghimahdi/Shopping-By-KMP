@@ -32,6 +32,8 @@ import business.interactors.splash.RegisterInteractor
 import common.Context
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
+import presentation.SharedViewModel
+import presentation.token_manager.TokenManager
 import presentation.ui.main.address.view_model.AddressViewModel
 import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.categories.view_model.CategoriesViewModel
@@ -54,18 +56,19 @@ import presentation.ui.splash.view_model.LoginViewModel
 fun appModule(context: Context) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
-        KtorHttpClient.httpClient()
+        KtorHttpClient.httpClient(get())
     }
     single<SplashService> { SplashServiceImpl(get()) }
     single<MainService> { MainServiceImpl(get()) }
     single<AppDataStore> { AppDataStoreManager(context) }
+    factory { SharedViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
     factory { AddressViewModel(get(), get()) }
     factory { CategoriesViewModel(get()) }
     factory { ProfileViewModel(get()) }
     factory { SettingsViewModel(get()) }
-    factory { EditProfileViewModel(get(),get(),get()) }
+    factory { EditProfileViewModel(get(), get(), get()) }
     factory { PaymentMethodViewModel() }
     factory { NotificationsViewModel() }
     factory { MyCouponsViewModel() }
@@ -79,6 +82,7 @@ fun appModule(context: Context) = module {
     single { BasketListInteractor(get(), get()) }
     single { GetProfileInteractor(get(), get()) }
     single { UpdateProfileInteractor(get(), get()) }
+    single { TokenManager(get(), get()) }
     single { LogoutInteractor(get()) }
     single { GetEmailFromCacheInteractor(get()) }
     single { GetSearchFilterInteractor(get(), get()) }
