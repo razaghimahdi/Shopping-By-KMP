@@ -2,7 +2,8 @@ package presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
@@ -14,6 +15,7 @@ import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.KoinApplication
+import org.koin.compose.koinInject
 import presentation.navigation.AppNavigation
 import presentation.theme.AppTheme
 import presentation.ui.main.MainNav
@@ -28,6 +30,7 @@ internal fun App(context: Context) {
     }) {
         PreComposeApp {
 
+
             setSingletonImageLoaderFactory { context ->
                 ImageLoader.Builder(context)
                     .components {
@@ -38,6 +41,15 @@ internal fun App(context: Context) {
 
             AppTheme {
                 val navigator = rememberNavigator()
+                val viewModel: SharedViewModel = koinInject()
+
+                LaunchedEffect(key1 = viewModel.tokenManager.state.value.isTokenAvailable) {
+                    if (!viewModel.tokenManager.state.value.isTokenAvailable) {
+                        navigator.popBackStack()
+                        navigator.navigate(AppNavigation.Splash.route)
+                    }
+                }
+
                 Box(modifier = Modifier.fillMaxSize()) {
                     NavHost(
                         navigator = navigator,
