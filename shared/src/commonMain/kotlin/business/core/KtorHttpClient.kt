@@ -12,13 +12,14 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import presentation.token_manager.TokenEvent
+import presentation.token_manager.TokenManager
 
 object KtorHttpClient {
 
 
-
     @OptIn(ExperimentalSerializationApi::class)
-    fun httpClient() = HttpClient {
+    fun httpClient(tokenManager: TokenManager) = HttpClient {
         expectSuccess = false
         install(HttpTimeout) {
             val timeout = 60000L
@@ -37,6 +38,10 @@ object KtorHttpClient {
         HttpResponseValidator {
             validateResponse { response: HttpResponse ->
                 val statusCode = response.status.value
+
+                if (statusCode == 401) {
+                    tokenManager.onTriggerEvent(TokenEvent.Logout)
+                }
 
                 /*
                                     when (statusCode) {
