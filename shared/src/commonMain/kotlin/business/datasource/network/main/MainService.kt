@@ -6,6 +6,7 @@ import business.datasource.network.main.responses.AddressDTO
 import business.datasource.network.main.responses.BasketDTO
 import business.datasource.network.main.responses.CommentDTO
 import business.datasource.network.main.responses.HomeDTO
+import business.datasource.network.main.responses.OrderDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
 import business.datasource.network.main.responses.SearchDTO
@@ -21,6 +22,7 @@ interface MainService {
         const val BASKET_ADD = "basket/add"
         const val BASKET_DELETE = "basket/delete"
         const val HOME = "home"
+        const val ORDERS = "orders"
         const val PRODUCT = "product"
         const val LIKE = "like"
         const val PROFILE = "profile"
@@ -28,6 +30,10 @@ interface MainService {
         const val WISHLIST = "product/wishlist"
         const val ADDRESS = "address"
     }
+
+    suspend fun getOrders(
+        token: String,
+    ): MainGenericResponse<List<OrderDTO>>
 
     suspend fun buyProduct(
         token: String,
