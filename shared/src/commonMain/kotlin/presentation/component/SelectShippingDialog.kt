@@ -30,14 +30,14 @@ import org.jetbrains.compose.resources.painterResource
 import presentation.theme.BorderColor
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
-import presentation.ui.main.checkout.view_model.shippingType
+import presentation.ui.main.checkout.view_model.shippingType_global
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectShippingDialog(state: CheckoutState, events: (CheckoutEvent) -> Unit) {
 
-    val shippingList = mutableStateOf(shippingType)
+    val shippingList = mutableStateOf(shippingType_global)
 
     AlertDialog(
         modifier = Modifier
