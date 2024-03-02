@@ -14,7 +14,7 @@ data class CheckoutState(
     val totalBasket: Int = 0,
     val addresses: List<Address> = listOf(),
     val selectedAddress: Address = Address(),
-    val selectedShipping: ShippingType = shippingType.first(),
+    val selectedShipping: ShippingType = shippingType_global.first(),
     val selectShippingDialogState: UIComponentState = UIComponentState.Hide,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
