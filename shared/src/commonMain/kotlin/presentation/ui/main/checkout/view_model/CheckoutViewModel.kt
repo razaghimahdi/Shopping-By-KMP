@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
-val shippingType = listOf(
+val shippingType_global = listOf(
     ShippingType("Economy", 25, 7),
     ShippingType("Regular", 35, 6),
     ShippingType("Cargo", 45, 5),
@@ -81,7 +81,7 @@ class CheckoutViewModel(
     private fun buyProduct() {
         buyProductInteractor.execute(
             addressId = state.value.selectedAddress.id,
-            shippingType = shippingType.indexOf(state.value.selectedShipping)
+            shippingType = shippingType_global.indexOf(state.value.selectedShipping)
         ).onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {
