@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -42,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import business.constants.SHIPPING_ACTIVE
 import business.constants.SHIPPING_FAILED
@@ -57,6 +57,7 @@ import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.ui.main.my_orders.view_model.MyOrdersEvent
 import presentation.ui.main.my_orders.view_model.MyOrdersState
+import presentation.util.convertDate
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -86,7 +87,8 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
         onTryAgain = { events(MyOrdersEvent.OnRetryNetwork) },
         titleToolbar = "My Orders",
         startIconToolbar = Icons.Filled.ArrowBack,
-        onClickStartIconToolbar = popup) {
+        onClickStartIconToolbar = popup
+    ) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -131,8 +133,7 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
             ) { index ->
                 Box(
                     contentAlignment = Alignment.TopCenter,
-                    modifier = Modifier.wrapContentHeight() //and this
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxSize()
                 ) {
 
 
@@ -160,9 +161,18 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
 
 @Composable
 private fun MyOrdersList(list: List<Order>) {
+    if (list.isEmpty()) {
+        Text(
+            "Nothing yet!",
+            style = MaterialTheme.typography.titleLarge,
+            color = BorderColor,
+            modifier = Modifier.fillMaxSize().padding(top = 64.dp),
+            textAlign = TextAlign.Center
+        )
+    }
 
     LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp)) {
-        items(list, key = { it.id }) {
+        items(list, key = { it.createdAt }) {
             OrderBox(it)
         }
     }
@@ -191,7 +201,7 @@ private fun OrderBox(order: Order) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(order.createAt, style = MaterialTheme.typography.bodyLarge)
+                Text(order.createdAt.convertDate(), style = MaterialTheme.typography.bodyLarge)
                 Icon(
                     painter = painterResource("arrow_down.xml"),
                     null,
@@ -234,7 +244,7 @@ private fun OrderBox(order: Order) {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text("Amount", style = MaterialTheme.typography.bodyLarge)
-                            Text(order.amount, style = MaterialTheme.typography.bodyMedium)
+                            Text(order.getAmount(), style = MaterialTheme.typography.bodyMedium)
                         }
                         Spacer_8dp()
 
