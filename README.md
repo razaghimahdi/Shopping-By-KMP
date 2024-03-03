@@ -66,6 +66,41 @@ Our goal is to create a high-quality, multiplatform shopping application that de
 Please stay tuned for updates and feel free to contribute to the project by submitting pull requests or opening issues. 
 Together, we can create a great shopping application that meets the needs of users across multiple platforms.
 
+## Challenges Faced 👨‍💻
+During the development of this project, 
+i encountered several challenges that required creative solutions. 
+Some of the key challenges we addressed include:
+
+#### Changing Font
+Implementing font changes across different platforms while maintaining consistency and performance posed a significant challenge. 
+I explored various approaches to ensure seamless font rendering on both Android and iOS.
+
+#### Image Selection and Capture
+Facilitating image selection from the gallery and capturing images from the device's camera presented technical hurdles, 
+especially in a multiplatform environment. I devised strategies to handle image acquisition efficiently across platforms.
+
+#### Image Upload via Ktor
+Integrating image upload functionality using Ktor required careful consideration of network communication and server-side handling. 
+I optimized the process to ensure smooth and reliable image uploads.
+
+#### User Session Management
+Managing user sessions securely across platforms demanded robust authentication mechanisms and session handling. 
+I implemented strategies to maintain session integrity while prioritizing user privacy and security.
+
+#### UI/UX Design
+Crafting an intuitive and visually appealing user interface (UI) across different devices and screen sizes posed a creative challenge. 
+I iterated on design concepts to deliver a cohesive and delightful user experience (UX) for our audience.
+
+#### Permission Management for Camera Access
+Implementing a permission manager to request access to the device's camera was crucial for enabling image capture functionality. 
+I navigated platform-specific permission models to ensure a seamless and secure user experience.
+
+#### Modifying Color of Status Bar
+Customizing the color of the status bar to match the application's theme across platforms presented design and implementation challenges. 
+I explored platform-specific APIs and styling techniques to achieve consistent and aesthetically pleasing status bar coloration.
+
+These challenges underscored the complexity of developing a cross-platform shopping application and pushed us to innovate and refine our solutions continually.
+
 
 ## Architecture 🏢
 The Jetpack Compose Multiplatform Shopping Application is built using the Clean Architecture and the MVI (Model-View-Intent) pattern. 
