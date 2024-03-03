@@ -3,19 +3,19 @@ package presentation.ui.main.my_orders.view_model
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import business.constants.CUSTOM_TAG
-import business.constants.SHIPPING_ACTIVE
-import business.constants.SHIPPING_FAILED
-import business.constants.SHIPPING_SUCCESS
+import business.core.DataState
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
-import business.domain.main.Address
-import business.domain.main.Order
-import business.domain.main.product_sample
+import business.interactors.main.GetOrdersInteractor
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.viewmodel.ViewModel
-import presentation.ui.main.checkout.view_model.shippingType
+import moe.tlaster.precompose.viewmodel.viewModelScope
 
-class MyOrdersViewModel : ViewModel() {
+class MyOrdersViewModel(
+    private val getOrdersInteractor: GetOrdersInteractor
+) : ViewModel() {
 
 
     val state: MutableState<MyOrdersState> = mutableStateOf(MyOrdersState())
@@ -44,110 +44,31 @@ class MyOrdersViewModel : ViewModel() {
     }
 
     init {
-        state.value = state.value.copy(
-            orders = listOf(
-                Order(
-                    id = 0,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_ACTIVE,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-                Order(
-                    id = 3,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_ACTIVE,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-                Order(
-                    id = 1,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_SUCCESS,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-                Order(
-                    id = 4,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_SUCCESS,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-                Order(
-                    id = 2,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_FAILED,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-                Order(
-                    id = 5,
-                    products = listOf(product_sample, product_sample),
-                    status = SHIPPING_FAILED,
-                    code = "SFwfsSFSFWS",
-                    createAt = "1h",
-                    amount = "$ 512",
-                    
-                    address = Address(
-                        address = "Alison Ave, Holly St",
-                        country = "USA",
-                        state = "NC",
-                        city = "NC",
-                        zipCode = "53543"
-                    ),
-                    shippingType = shippingType.first()
-                ),
-            )
-        )
+        getOrders()
+    }
+
+    private fun getOrders() {
+
+        getOrdersInteractor.execute().onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(MyOrdersEvent.OnUpdateNetworkState(dataState.networkState))
+                }
+
+                is DataState.Response -> {
+                    onTriggerEvent(MyOrdersEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    state.value = state.value.copy(orders = dataState.data ?: listOf())
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
@@ -175,7 +96,7 @@ class MyOrdersViewModel : ViewModel() {
 
 
     private fun onRetryNetwork() {
-
+        getOrders()
     }
 
 
