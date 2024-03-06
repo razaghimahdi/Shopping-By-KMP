@@ -13,6 +13,9 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    task("testClasses")
+
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -40,6 +43,8 @@ kotlin {
                 implementation(libs.turbine.turbine)
                 implementation(libs.mockk.io)
 
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.uiTest)
 
             }
         }
@@ -103,8 +108,8 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
-    sourceSets["main"].res.srcDirs("src/commonMain/resources", "src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
+    sourceSets["main"].res.srcDirs("src/commonMain/composeResources", "src/androidMain/res")
 
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
