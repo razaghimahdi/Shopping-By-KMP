@@ -71,13 +71,15 @@ During the development of this project,
 i encountered several challenges that required creative solutions. 
 Some of the key challenges I addressed include:
 
-- **Changing Font:** Ensuring consistent font rendering across platforms posed a significant challenge. I explored various approaches for seamless integration on Android and iOS.
 - **Image Selection and Capture:** Handling image selection from the gallery and camera capture across platforms required strategic solutions for efficient implementation.
 - **Image Upload via Ktor:** Integrating image upload functionality with Ktor demanded careful optimization for smooth and reliable server communication.
+- **UI Testing:** Developing comprehensive UI tests across multiple platforms presented challenges in ensuring consistent behavior and visual presentation.
+- **Unit Testing:** Writing unit tests for shared code and platform-specific implementations required careful consideration of differences in testing frameworks and environments.
 - **User Session Management:** Securely managing user sessions across platforms involved implementing robust authentication mechanisms while prioritizing privacy and security.
 - **UI/UX Design:** Crafting an intuitive and visually appealing UI/UX for diverse devices presented creative challenges, driving iterative design processes.
 - **Permission Management for Camera Access:** Implementing a permission manager for camera access was crucial, necessitating seamless integration with platform-specific permission models.
 - **Modifying Color of Status Bar:** Customizing the status bar color to match the application's theme required exploring platform-specific APIs and styling techniques for consistency.
+<!-- - **Changing Font:** Ensuring consistent font rendering across platforms posed a significant challenge. I explored various approaches for seamless integration on Android and iOS. -->
 
 These challenges underscored the complexity of developing a cross-platform shopping application and pushed us to innovate and refine our solutions continually.
 
