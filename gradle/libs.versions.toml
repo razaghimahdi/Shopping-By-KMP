@@ -1,9 +1,11 @@
 [versions]
-agp = "8.0.2"
-kotlin = "1.9.20"
+agp = "8.2.2"
+kotlin = "1.9.22"
 ktor = "2.3.5"
 compose = "1.6.0"
 compose-material3 = "1.2.0"
+compose-compiler = "1.5.8"
+compose-plugin = "1.5.11"
 androidx-activityCompose = "1.8.0"
 kotlinx-serialization-json-ver = "1.6.0"
 kotlinx-components-resources-ver = "1.6.0"
@@ -12,7 +14,7 @@ image-loader-qdsfdhvh = "1.6.8"
 mokoVersion = "0.16.1"
 precompose-tlaster = "1.5.10"
 precompose-viewmodel-tlaster = "1.5.10"
-androidx-appcompat = "1.6.0-rc01"
+androidx-appcompat = "1.6.1"
 androidx-core = "1.9.0"
 androidx-datastore = "1.1.0-alpha03"
 sqldelight = "2.0.0-alpha05"
@@ -110,3 +112,4 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 sqldelightApp = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
