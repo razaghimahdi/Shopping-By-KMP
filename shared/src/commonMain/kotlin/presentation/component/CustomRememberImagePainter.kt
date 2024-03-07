@@ -6,6 +6,8 @@ import coil3.ImageLoader
 import coil3.compose.rememberAsyncImagePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.default_image_loader
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -15,8 +17,8 @@ fun rememberCustomImagePainter(
     contentScale: ContentScale = ContentScale.Fit,
 ) = rememberAsyncImagePainter(
     model, imageLoader,
-    error = painterResource("default_image_loader.png"),
-    placeholder = painterResource("default_image_loader.png"),
+    error = painterResource(Res.drawable.default_image_loader),
+    placeholder = painterResource(Res.drawable.default_image_loader),
     contentScale = contentScale
 )
 
@@ -27,7 +29,7 @@ fun rememberCustomImagePainter(
     contentScale: ContentScale = ContentScale.Fit,
 ) = rememberAsyncImagePainter(
     model,
-    error = painterResource("default_image_loader.png"),
-    placeholder = painterResource("default_image_loader.png"),
+    error = painterResource(Res.drawable.default_image_loader),
+    placeholder = painterResource(Res.drawable.default_image_loader),
     contentScale = contentScale,
 )

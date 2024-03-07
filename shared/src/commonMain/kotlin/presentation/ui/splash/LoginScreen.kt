@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.component.DEFAULT__BUTTON_SIZE_EXTRA
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
@@ -40,7 +41,12 @@ import presentation.component.Spacer_8dp
 import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.apple
+import shoping_by_kmp.shared.generated.resources.facebook
+import shoping_by_kmp.shared.generated.resources.google
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LoginScreen(
     state: LoginState,
@@ -184,9 +190,9 @@ fun LoginScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    SimpleImageButton("facebook.xml")
-                    SimpleImageButton("apple.xml")
-                    SimpleImageButton("google.xml")
+                    SimpleImageButton(Res.drawable.facebook)
+                    SimpleImageButton(Res.drawable.apple)
+                    SimpleImageButton(Res.drawable.google)
                 }
 
             }

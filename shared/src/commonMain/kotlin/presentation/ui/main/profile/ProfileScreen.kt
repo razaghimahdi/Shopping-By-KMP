@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.CircleImage
@@ -28,7 +29,17 @@ import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.ui.main.profile.view_model.ProfileEvent
 import presentation.ui.main.profile.view_model.ProfileState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.arrow_right
+import shoping_by_kmp.shared.generated.resources.coupon
+import shoping_by_kmp.shared.generated.resources.location2
+import shoping_by_kmp.shared.generated.resources.order
+import shoping_by_kmp.shared.generated.resources.payment
+import shoping_by_kmp.shared.generated.resources.profile2
+import shoping_by_kmp.shared.generated.resources.setting2
+import shoping_by_kmp.shared.generated.resources.warning
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProfileScreen(
     state: ProfileState,
@@ -72,29 +83,29 @@ fun ProfileScreen(
             Spacer_32dp()
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileItemBox(title = "Edit profile", image = "profile2.xml") {
+                ProfileItemBox(title = "Edit profile", image = Res.drawable.profile2) {
                     navigateToEditProfile()
                 }
                 ProfileItemBox(
                     title = "Manage Address",
-                    image = "location2.xml"
+                    image = Res.drawable.location2
                 ) { navigateToAddress() }
-                ProfileItemBox(title = "Payment Methods", image = "payment.xml") {
+                ProfileItemBox(title = "Payment Methods", image = Res.drawable.payment) {
                     navigateToPaymentMethod()
                 }
-                ProfileItemBox(title = "My Orders", image = "order.xml") {
+                ProfileItemBox(title = "My Orders", image = Res.drawable.order) {
                     navigateToMyOrders()
                 }
-                ProfileItemBox(title = "My Coupons", image = "coupon.xml") {
+                ProfileItemBox(title = "My Coupons", image = Res.drawable.coupon) {
                     navigateToMyCoupons()
                 }
                 /*ProfileItemBox(title = "My Wallet", image = "wallet.xml") {
                     navigateToMyWallet()
                 }*/
-                ProfileItemBox(title = "Settings", image = "setting2.xml") {
+                ProfileItemBox(title = "Settings", image = Res.drawable.setting2) {
                     navigateToSettings()
                 }
-                ProfileItemBox(title = "Help Center", image = "warning.xml", isLastItem = true) {}
+                ProfileItemBox(title = "Help Center", image = Res.drawable.warning, isLastItem = true) {}
             }
 
         }
@@ -105,7 +116,7 @@ fun ProfileScreen(
 @Composable
 private fun ProfileItemBox(
     title: String,
-    image: String,
+    image: DrawableResource,
     isLastItem: Boolean = false,
     onClick: () -> Unit
 ) {
@@ -132,7 +143,7 @@ private fun ProfileItemBox(
             }
 
             Icon(
-                painterResource("arrow_right.xml"),
+                painterResource(Res.drawable.arrow_right),
                 null,
                 tint = MaterialTheme.colorScheme.primary.copy(alpha = .7f),
                 modifier = Modifier.size(30.dp)

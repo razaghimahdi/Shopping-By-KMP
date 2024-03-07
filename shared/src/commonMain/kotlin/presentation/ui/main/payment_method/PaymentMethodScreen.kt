@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DefaultScreenUI
@@ -31,6 +32,12 @@ import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 import presentation.ui.main.payment_method.view_model.PaymentMethodState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.apple
+import shoping_by_kmp.shared.generated.resources.cash
+import shoping_by_kmp.shared.generated.resources.google
+import shoping_by_kmp.shared.generated.resources.paypal
+import shoping_by_kmp.shared.generated.resources.wallet
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -58,7 +65,7 @@ fun PaymentMethodScreen(
             Spacer_8dp()
             ChipsCardBox(
                 text = "Cash",
-                image = "cash.xml",
+                image = Res.drawable.cash,
                 isSelected = state.selectedPaymentMethod == 0,
                 onSelectExecute = { events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(0)) })
 
@@ -70,7 +77,7 @@ fun PaymentMethodScreen(
             Spacer_8dp()
             ChipsCardBox(
                 text = "Wallet",
-                image = "wallet.xml",
+                image = Res.drawable.wallet,
                 isSelected = state.selectedPaymentMethod == 1,
                 onSelectExecute = { events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(1)) })
 
@@ -100,7 +107,7 @@ fun PaymentMethodScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Image(
-                                painter = painterResource("paypal.xml"),
+                                painter = painterResource(Res.drawable.paypal),
                                 null,
                                 modifier = Modifier.size(24.dp)
                             )
@@ -125,7 +132,7 @@ fun PaymentMethodScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Image(
-                                painter = painterResource("apple.xml"), null,
+                                painter = painterResource(Res.drawable.apple), null,
                                 modifier = Modifier.size(24.dp)
                             )
                             Text("Apple Pay", style = MaterialTheme.typography.bodyLarge)
@@ -149,7 +156,7 @@ fun PaymentMethodScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Image(
-                                painter = painterResource("google.xml"), null,
+                                painter = painterResource(Res.drawable.google), null,
                                 modifier = Modifier.size(24.dp)
                             )
                             Text("Google Pay", style = MaterialTheme.typography.bodyLarge)
@@ -170,7 +177,7 @@ fun PaymentMethodScreen(
 @Composable
 private fun ChipsCardBox(
     text: String,
-    image: String,
+    image: DrawableResource,
     isSelected: Boolean,
     onSelectExecute: () -> Unit
 ) {

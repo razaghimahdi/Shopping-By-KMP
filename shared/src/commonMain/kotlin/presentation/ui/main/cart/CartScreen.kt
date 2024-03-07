@@ -23,16 +23,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.DismissState
-import androidx.compose.material3.DismissValue
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxState
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -162,9 +161,9 @@ fun CartBox(
 ) {
     var show by remember { mutableStateOf(true) }
 
-    val dismissState = rememberDismissState(
+    val dismissState = rememberSwipeToDismissBoxState (
         confirmValueChange = {
-            if (it == DismissValue.DismissedToStart) {
+            if (it == SwipeToDismissBoxValue.EndToStart) {
                 deleteFromBasket()
                 show = false
                 true
@@ -175,13 +174,13 @@ fun CartBox(
     AnimatedVisibility(
         show, exit = fadeOut(spring())
     ) {
-        SwipeToDismiss(
+        SwipeToDismissBox(
             state = dismissState,
             modifier = Modifier,
-            background = {
+            backgroundContent = {
                 DismissBackground(dismissState)
             },
-            dismissContent = {
+            content = {
                 DismissCartContent(
                     basket,
                     addMoreProduct = addMoreProduct,
@@ -285,14 +284,15 @@ fun DismissCartContent(
 
             }
         }
-        Divider(modifier = Modifier.fillMaxWidth())
+        HorizontalDivider(modifier = Modifier.fillMaxWidth())
     }
 }
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissBackground(dismissState: DismissState) {
+fun DismissBackground(dismissState: SwipeToDismissBoxState) {
     val color = MaterialTheme.colorScheme.primary.copy(alpha = .2f)
     val direction = dismissState.dismissDirection
 
@@ -304,7 +304,7 @@ fun DismissBackground(dismissState: DismissState) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {
-        if (direction == DismissDirection.EndToStart) Icon(
+        if (direction == SwipeToDismissBoxValue.EndToStart) Icon(
             Icons.Default.Delete,
             tint = MaterialTheme.colorScheme.primary,
             contentDescription = "delete"
@@ -312,4 +312,5 @@ fun DismissBackground(dismissState: DismissState) {
         Spacer(modifier = Modifier)
     }
 }
+
 

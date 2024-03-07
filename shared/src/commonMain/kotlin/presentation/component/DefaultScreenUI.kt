@@ -28,6 +28,8 @@ import business.core.Queue
 import business.core.UIComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.no_wifi
 
 /**
  * @param queue: Dialogs
@@ -136,7 +138,7 @@ fun FailedNetworkScreen(onTryAgain: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        Image(painterResource("no_wifi.xml"), null)
+        Image(painterResource(Res.drawable.no_wifi), null)
         Spacer(modifier = Modifier.size(32.dp))
         Text(
             text = "You are currently offline, please reconnect and try again.",

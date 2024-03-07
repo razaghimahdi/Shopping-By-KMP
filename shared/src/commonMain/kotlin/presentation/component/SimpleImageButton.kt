@@ -9,6 +9,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.theme.BorderColor
@@ -17,7 +18,7 @@ import presentation.theme.DefaultImageButtonTheme
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun SimpleImageButton(image: String, onClick: () -> Unit = {}) {
+fun SimpleImageButton(image: DrawableResource, onClick: () -> Unit = {}) {
     Button(
         modifier = Modifier.size(70.dp),
         onClick = onClick,

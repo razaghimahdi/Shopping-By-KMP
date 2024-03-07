@@ -19,6 +19,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.theme.DefaultTextFieldTheme
 import presentation.theme.IconColorGrey
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.ic_password_hide
+import shoping_by_kmp.shared.generated.resources.ic_password_show
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -52,13 +55,13 @@ fun PasswordTextField(
             }) {
                 when (isPasswordVisible.value) {
                     true -> Icon(
-                        painter = painterResource("ic_password_hide.xml"),
+                        painter = painterResource(Res.drawable.ic_password_hide),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                     )
 
                     false -> Icon(
-                        painter = painterResource("ic_password_show.xml"),
+                        painter = painterResource(Res.drawable.ic_password_show),
                         contentDescription = null,
                         tint = IconColorGrey,
                     )

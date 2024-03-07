@@ -32,6 +32,8 @@ import presentation.theme.BorderColor
 import presentation.theme.grey_050
 import presentation.ui.main.notifications.view_model.NotificationsEvent
 import presentation.ui.main.notifications.view_model.NotificationsState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.bell
 
 
 @Composable
@@ -92,7 +94,7 @@ fun NotificationBox(notification: Notification) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource("bell.xml"),
+                    painterResource(Res.drawable.bell),
                     null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(35.dp)

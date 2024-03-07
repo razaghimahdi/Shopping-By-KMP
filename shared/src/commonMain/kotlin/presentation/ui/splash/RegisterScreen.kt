@@ -33,6 +33,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.component.DEFAULT__BUTTON_SIZE_EXTRA
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
@@ -46,7 +47,12 @@ import presentation.theme.DefaultCheckBoxTheme
 import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.apple
+import shoping_by_kmp.shared.generated.resources.facebook
+import shoping_by_kmp.shared.generated.resources.google
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RegisterScreen(
     state: LoginState,
@@ -221,9 +227,9 @@ fun RegisterScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    SimpleImageButton("facebook.xml")
-                    SimpleImageButton("apple.xml")
-                    SimpleImageButton("google.xml")
+                    SimpleImageButton(Res.drawable.facebook)
+                    SimpleImageButton(Res.drawable.apple)
+                    SimpleImageButton(Res.drawable.google)
                 }
 
             }

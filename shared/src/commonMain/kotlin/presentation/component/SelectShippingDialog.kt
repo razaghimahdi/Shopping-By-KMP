@@ -31,6 +31,8 @@ import presentation.theme.BorderColor
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
 import presentation.ui.main.checkout.view_model.shippingType_global
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.shipping
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,7 +88,7 @@ fun ShippingBox(
 
         Row(modifier = Modifier.fillMaxWidth().noRippleClickable { onClick() }) {
             Icon(
-                painter = painterResource("shipping.xml"),
+                painter = painterResource(Res.drawable.shipping),
                 null,
                 modifier = Modifier.size(24.dp),
                 tint = MaterialTheme.colorScheme.primary

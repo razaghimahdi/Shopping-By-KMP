@@ -53,6 +53,11 @@ import presentation.component.rememberCustomImagePainter
 import presentation.theme.TextFieldWithTransparentTheme
 import presentation.ui.main.search.view_model.SearchEvent
 import presentation.ui.main.search.view_model.SearchState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.close
+import shoping_by_kmp.shared.generated.resources.filter
+import shoping_by_kmp.shared.generated.resources.search
+import shoping_by_kmp.shared.generated.resources.sort
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -108,7 +113,7 @@ fun SearchScreen(
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Icon(
-                            painterResource("sort.xml"),
+                            painterResource(Res.drawable.sort),
                             null,
                             modifier = Modifier.size(24.dp)
                         )
@@ -128,7 +133,7 @@ fun SearchScreen(
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Icon(
-                            painterResource("filter.xml"),
+                            painterResource(Res.drawable.filter),
                             null,
                             modifier = Modifier.size(24.dp)
                         )
@@ -225,7 +230,7 @@ private fun SearchBox(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(
-                painterResource("search.xml"),
+                painterResource(Res.drawable.search),
                 null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(8.dp).size(30.dp)
@@ -256,7 +261,7 @@ private fun SearchBox(
             )
 
             Icon(
-                painterResource("close.xml"),
+                painterResource(Res.drawable.close),
                 null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(8.dp).size(30.dp).noRippleClickable {

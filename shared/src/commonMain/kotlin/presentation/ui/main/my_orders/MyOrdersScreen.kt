@@ -58,6 +58,8 @@ import presentation.theme.BorderColor
 import presentation.ui.main.my_orders.view_model.MyOrdersEvent
 import presentation.ui.main.my_orders.view_model.MyOrdersState
 import presentation.util.convertDate
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.arrow_down
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -203,7 +205,7 @@ private fun OrderBox(order: Order) {
             ) {
                 Text(order.createdAt.convertDate(), style = MaterialTheme.typography.bodyLarge)
                 Icon(
-                    painter = painterResource("arrow_down.xml"),
+                    painter = painterResource(Res.drawable.arrow_down),
                     null,
                     modifier = Modifier.size(35.dp).padding(4.dp).rotate(rotationState)
                         .noRippleClickable { isExpanded = !isExpanded })

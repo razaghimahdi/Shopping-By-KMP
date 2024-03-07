@@ -65,6 +65,11 @@ import presentation.theme.BorderColor
 import presentation.theme.PagerDotColor
 import presentation.ui.main.home.view_model.HomeEvent
 import presentation.ui.main.home.view_model.HomeState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.bell
+import shoping_by_kmp.shared.generated.resources.location
+import shoping_by_kmp.shared.generated.resources.search
+import shoping_by_kmp.shared.generated.resources.setting
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
@@ -112,7 +117,7 @@ fun HomeScreen(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Icon(
-                                painterResource("location.xml"),
+                                painterResource(Res.drawable.location),
                                 null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -136,7 +141,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painterResource("bell.xml"),
+                            painterResource(Res.drawable.bell),
                             null,
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -162,7 +167,7 @@ fun HomeScreen(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             Icon(
-                                painterResource("search.xml"),
+                                painterResource(Res.drawable.search),
                                 null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -179,7 +184,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painterResource("setting.xml"),
+                            painterResource(Res.drawable.setting),
                             null,
                             tint = MaterialTheme.colorScheme.background
                         )

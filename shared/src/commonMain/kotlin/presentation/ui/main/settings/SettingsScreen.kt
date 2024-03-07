@@ -26,6 +26,9 @@ import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.ui.main.settings.view_model.SettingsEvent
 import presentation.ui.main.settings.view_model.SettingsState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.arrow_right
+import shoping_by_kmp.shared.generated.resources.exit
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -61,7 +64,7 @@ fun SettingsScreen(
                 events(SettingsEvent.Logout)
             }, verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    painter = painterResource("exit.xml"),
+                    painter = painterResource(Res.drawable.exit),
                     null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(32.dp),
@@ -73,7 +76,7 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(.9f)
                 )
                 Icon(
-                    painter = painterResource("arrow_right.xml"),
+                    painter = painterResource(Res.drawable.arrow_right),
                     null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(32.dp),

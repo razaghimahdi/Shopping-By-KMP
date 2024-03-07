@@ -7,65 +7,76 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import common.font
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.Font
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.lato_black_italic
+import shoping_by_kmp.shared.generated.resources.lato_bold
+import shoping_by_kmp.shared.generated.resources.lato_bold_italic
+import shoping_by_kmp.shared.generated.resources.lato_italic
+import shoping_by_kmp.shared.generated.resources.lato_light
+import shoping_by_kmp.shared.generated.resources.lato_light_italic
+import shoping_by_kmp.shared.generated.resources.lato_regular
+import shoping_by_kmp.shared.generated.resources.lato_thin
+import shoping_by_kmp.shared.generated.resources.lato_thin_italic
 
 
-
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LatoTypography(): Typography {
     val lato = FontFamily(
-        font(
-            res = "lato_regular",
+        Font(
+            resource = Res.font.lato_regular,
             weight = FontWeight.Normal,
             style = FontStyle.Normal
         ),
-        font(
-            res = "lato_thin",
+        Font(
+            resource = Res.font.lato_thin,
             weight = FontWeight.Thin,
             style = FontStyle.Normal
         ),
-        font(
-            res = "lato_italic",
+        Font(
+            resource = Res.font.lato_italic,
             weight = FontWeight.Normal,
             style = FontStyle.Italic
         ),
-        font(
-            res = "lato_light_italic",
+        Font(
+            resource = Res.font.lato_light_italic,
             weight = FontWeight.Light,
             style = FontStyle.Italic
         ),
-        font(
-            res = "lato_thin_italic",
+        Font(
+            resource = Res.font.lato_thin_italic,
             weight = FontWeight.Thin,
             style = FontStyle.Italic
         ),
-        font(
-            res = "lato_bold_italic",
+        Font(
+            resource = Res.font.lato_bold_italic,
             weight = FontWeight.Bold,
             style = FontStyle.Italic
         ),
-        font(
-            res = "lato_black_italic",
+        Font(
+            resource = Res.font.lato_black_italic,
             weight = FontWeight.Black,
             style = FontStyle.Italic
         ),
-        font(
-            res = "lato_bold",
+        Font(
+            resource = Res.font.lato_bold,
             weight = FontWeight.Bold,
             style = FontStyle.Normal
         ),
-        font(
-            res = "lato_black",
+        Font(
+            resource = Res.font.lato_bold,
             weight = FontWeight.Black,
             style = FontStyle.Normal
         ),
-        font(
-            res = "lato_light",
+        Font(
+            resource = Res.font.lato_light,
             weight = FontWeight.Light,
             style = FontStyle.Normal
         ),
-        font(
-            res = "lato_thin",
+        Font(
+            resource = Res.font.lato_thin,
             weight = FontWeight.Thin,
             style = FontStyle.Normal
         ),
@@ -97,15 +108,5 @@ fun LatoTypography(): Typography {
             fontSize = 12.sp,
             fontFamily = lato
         ),
-        /*labelLarge = TextStyle(fontFamily = Lato),
-        labelSmall = TextStyle(fontFamily = Lato),
-        bodySmall = TextStyle(fontFamily = Lato),
-        titleMedium = TextStyle(fontFamily = Lato),
-        titleSmall = TextStyle(fontFamily = Lato),
-        headlineLarge = TextStyle(fontFamily = Lato),
-        headlineMedium = TextStyle(fontFamily = Lato),
-        displayLarge = TextStyle(fontFamily = Lato),
-        displayMedium = TextStyle(fontFamily = Lato),
-        displaySmall = TextStyle(fontFamily = Lato),*/
     )
 }

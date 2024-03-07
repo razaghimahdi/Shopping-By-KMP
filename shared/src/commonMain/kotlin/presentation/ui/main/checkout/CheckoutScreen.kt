@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import business.core.UIComponentState
 import business.domain.main.Address
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -41,8 +42,12 @@ import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.location2
+import shoping_by_kmp.shared.generated.resources.shipping
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun CheckoutScreen(
     state: CheckoutState,
@@ -84,7 +89,7 @@ fun CheckoutScreen(
                 Spacer_12dp()
                 ShippingBox(
                     title = "Home",
-                    image = "location2.xml", detail = state.selectedAddress.getShippingAddress()
+                    image = Res.drawable.location2, detail = state.selectedAddress.getShippingAddress()
                 ) {
                     navigateToAddress()
                 }
@@ -97,7 +102,7 @@ fun CheckoutScreen(
                 Spacer_12dp()
                 ShippingBox(
                     title = state.selectedShipping.title,
-                    image = "shipping.xml",
+                    image = Res.drawable.shipping,
                     detail = state.selectedShipping.getEstimatedDay(),
                 ) {
                     events(CheckoutEvent.OnUpdateSelectShippingDialogState(UIComponentState.Show))
@@ -173,7 +178,7 @@ fun CheckoutButtonBox(
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun ShippingBox(title: String, image: String, detail: String, onClick: () -> Unit) {
+fun ShippingBox(title: String, image: DrawableResource, detail: String, onClick: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Icon(
             painter = painterResource(image),

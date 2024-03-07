@@ -35,6 +35,11 @@ import presentation.component.TextWithIcon
 import presentation.theme.BorderColor
 import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.address.view_model.AddressState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.delete
+import shoping_by_kmp.shared.generated.resources.earth
+import shoping_by_kmp.shared.generated.resources.location2
+import shoping_by_kmp.shared.generated.resources.mail
 
 
 @Composable
@@ -112,18 +117,18 @@ private fun AddressBox(address: Address, modifier: Modifier) {
                     modifier = Modifier.fillMaxWidth(.9f)
                 )
                 Icon(
-                    painterResource("delete.xml"),
+                    painterResource(Res.drawable.delete),
                     null,
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
             Spacer_12dp()
 
-            TextWithIcon(text = address.country, icon = "earth.xml")
+            TextWithIcon(text = address.country, icon = Res.drawable.earth)
             Spacer_4dp()
-            TextWithIcon(text = address.getFullAddress(), icon = "location2.xml")
+            TextWithIcon(text = address.getFullAddress(), icon = Res.drawable.location2)
             Spacer_4dp()
-            TextWithIcon(text = address.zipCode, icon = "mail.xml")
+            TextWithIcon(text = address.zipCode, icon = Res.drawable.mail)
 
 
             Spacer_8dp()

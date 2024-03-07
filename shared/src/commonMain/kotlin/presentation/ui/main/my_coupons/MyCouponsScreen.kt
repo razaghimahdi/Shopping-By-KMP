@@ -35,6 +35,8 @@ import presentation.theme.BorderColor
 import presentation.theme.grey_050
 import presentation.ui.main.my_coupons.view_model.MyCouponsEvent
 import presentation.ui.main.my_coupons.view_model.MyCouponsState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.offer
 
 
 @Composable
@@ -90,7 +92,7 @@ fun Coupon(coupons: Coupons, onExecuteCopyCode: () -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Icon(
-                        painter = painterResource("offer.xml"),
+                        painter = painterResource(Res.drawable.offer),
                         null,
                         tint = MaterialTheme.colorScheme.primary,
                     )

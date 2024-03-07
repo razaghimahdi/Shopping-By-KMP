@@ -1,34 +1,47 @@
 package presentation.navigation
 
-sealed class MainNavigation(
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.cart
+import shoping_by_kmp.shared.generated.resources.cart_border
+import shoping_by_kmp.shared.generated.resources.heart2
+import shoping_by_kmp.shared.generated.resources.heart_border2
+import shoping_by_kmp.shared.generated.resources.home
+import shoping_by_kmp.shared.generated.resources.home_border
+import shoping_by_kmp.shared.generated.resources.profile
+import shoping_by_kmp.shared.generated.resources.profile_border
+
+@OptIn(ExperimentalResourceApi::class)
+sealed class MainNavigation (
     val route: String,
     val title: String,
-    val selectedIcon: String,
-    val unSelectedIcon: String,
+    val selectedIcon: DrawableResource,
+    val unSelectedIcon: DrawableResource,
 ) {
 
    data object Home : MainNavigation(
         route = "Home", title = "Home",
-        selectedIcon = "home.xml",
-        unSelectedIcon = "home_border.xml"
+        selectedIcon = Res.drawable.home,
+        unSelectedIcon = Res.drawable.home_border
     )
 
    data object Wishlist : MainNavigation(
         route = "Wishlist", title = "Wishlist",
-        selectedIcon = "heart2.xml",
-        unSelectedIcon = "heart_border2.xml"
+        selectedIcon = Res.drawable.heart2,
+        unSelectedIcon = Res.drawable.heart_border2
     )
 
    data object Cart : MainNavigation(
         route = "Cart", title = "Cart",
-        selectedIcon = "cart.xml",
-        unSelectedIcon = "cart_border.xml"
+        selectedIcon = Res.drawable.cart,
+        unSelectedIcon = Res.drawable.cart_border
     )
 
    data object Profile : MainNavigation(
         route = "Profile", title = "Profile",
-        selectedIcon = "profile.xml",
-        unSelectedIcon = "profile_border.xml"
+        selectedIcon = Res.drawable.profile,
+        unSelectedIcon = Res.drawable.profile_border
     )
 
 
