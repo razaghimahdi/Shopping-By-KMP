@@ -13,8 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,14 +43,16 @@ fun NotificationsScreen(
     popup: () -> Unit
 ) {
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(NotificationsEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(NotificationsEvent.OnRetryNetwork) },
         titleToolbar = "notifications",
-        startIconToolbar = Icons.Filled.ArrowBack,
-        onClickStartIconToolbar = popup) {
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
 
@@ -118,7 +120,7 @@ fun NotificationBox(notification: Notification) {
             Text(notification.createAt, style = MaterialTheme.typography.labelMedium)
         }
         Spacer_8dp()
-        Divider(color = BorderColor)
+        HorizontalDivider(color = BorderColor)
     }
 
 }

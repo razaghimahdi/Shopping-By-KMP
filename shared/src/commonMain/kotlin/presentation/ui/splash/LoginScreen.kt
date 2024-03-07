@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -179,9 +179,9 @@ fun LoginScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Divider(modifier = Modifier.width(75.dp))
+                    HorizontalDivider(modifier = Modifier.width(75.dp))
                     Text(text = "Or sign in with")
-                    Divider(modifier = Modifier.width(75.dp))
+                    HorizontalDivider(modifier = Modifier.width(75.dp))
                 }
                 Spacer_32dp()
 

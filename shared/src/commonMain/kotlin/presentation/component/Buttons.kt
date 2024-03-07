@@ -39,7 +39,6 @@ val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CircleButton(
     modifier : Modifier = Modifier,

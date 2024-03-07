@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CircleImage(
     image: String,
@@ -47,7 +46,6 @@ fun CircleImage(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CircleImage(
     image: ImageBitmap?,

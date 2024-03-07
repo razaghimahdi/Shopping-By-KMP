@@ -19,8 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -90,7 +90,7 @@ fun SearchScreen(
 
             Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 CircleButton(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     onClick = { popUp() }
                 )
                 Spacer_8dp()
@@ -204,12 +204,12 @@ private fun ProductSearchBox(product: Product, isLastItem: Boolean, navigateToDe
                 }
             }
 
-            if (!isLastItem) Divider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp))
+            if (!isLastItem) HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp))
         }
     }
 }
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun SearchBox(
     value: String,

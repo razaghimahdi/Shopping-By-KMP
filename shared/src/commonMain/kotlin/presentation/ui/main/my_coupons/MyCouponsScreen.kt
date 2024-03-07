@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,14 +43,16 @@ import shoping_by_kmp.shared.generated.resources.offer
 fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, popup: () -> Unit) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(MyCouponsEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(MyCouponsEvent.OnRetryNetwork) },
         titleToolbar = "My Coupons",
-        startIconToolbar = Icons.Filled.ArrowBack,
-        onClickStartIconToolbar = popup) {
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
 
             Spacer_32dp()

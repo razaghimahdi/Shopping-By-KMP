@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,10 +42,10 @@ fun AddAddressDialog(
     var zipCode by remember { mutableStateOf("") }
 
 
-    AlertDialog(
-        modifier = Modifier
-            .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background),
+    BasicAlertDialog(
         onDismissRequest = onDismissRequest,
+        modifier = Modifier
+            .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background)
     ) {
 
         Column(

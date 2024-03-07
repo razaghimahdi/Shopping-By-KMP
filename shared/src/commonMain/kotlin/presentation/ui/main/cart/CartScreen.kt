@@ -190,7 +190,6 @@ fun CartBox(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DismissCartContent(
     basket: Basket,

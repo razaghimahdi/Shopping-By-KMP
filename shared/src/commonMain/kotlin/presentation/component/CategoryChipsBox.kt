@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import business.domain.main.Category
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryChipsBox(category: Category, isSelected: Boolean, onClick: () -> Unit) {
     Card(

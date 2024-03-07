@@ -13,7 +13,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +45,7 @@ fun CategoriesScreen(
         networkState = state.networkState,
         onTryAgain = { events(CategoriesEvent.OnRetryNetwork)},
         titleToolbar = "Categories",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
         Column(modifier = Modifier.fillMaxSize()) {

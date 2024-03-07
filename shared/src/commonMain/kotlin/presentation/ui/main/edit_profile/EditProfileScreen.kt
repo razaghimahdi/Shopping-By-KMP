@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -156,7 +156,7 @@ fun EditProfileScreen(
         networkState = state.networkState,
         onTryAgain = { events(EditProfileEvent.OnRetryNetwork) },
         titleToolbar = "Edit Profile",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {

@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -47,16 +47,17 @@ fun PaymentMethodScreen(
     events: (PaymentMethodEvent) -> Unit,
     popup: () -> Unit
 ) {
-    DefaultScreenUI(queue = state.errorQueue,
+    DefaultScreenUI(
+        queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(PaymentMethodEvent.OnRemoveHeadFromQueue) },
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(PaymentMethodEvent.OnRetryNetwork) },
         titleToolbar = "Payment Method",
-        startIconToolbar = Icons.Filled.ArrowBack,
-        onClickStartIconToolbar = popup) {
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
+        onClickStartIconToolbar = popup
+    ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-
 
 
             Spacer_32dp()
@@ -119,7 +120,7 @@ fun PaymentMethodScreen(
                         })
 
                     }
-                    Divider(color = BorderColor)
+                    HorizontalDivider(color = BorderColor)
                     Row(
                         modifier = Modifier.padding(12.dp).fillMaxWidth().noRippleClickable {
                             events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(3))
@@ -143,7 +144,7 @@ fun PaymentMethodScreen(
                         })
 
                     }
-                    Divider(color = BorderColor)
+                    HorizontalDivider(color = BorderColor)
                     Row(
                         modifier = Modifier.padding(12.dp).fillMaxWidth().noRippleClickable {
                             events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(4))
@@ -173,7 +174,7 @@ fun PaymentMethodScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun ChipsCardBox(
     text: String,

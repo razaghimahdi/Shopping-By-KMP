@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -52,7 +52,7 @@ fun SettingsScreen(
         networkState = state.networkState,
         onTryAgain = { events(SettingsEvent.OnRetryNetwork) },
         titleToolbar = "Setting",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
@@ -82,7 +82,7 @@ fun SettingsScreen(
                     modifier = Modifier.size(32.dp),
                 )
             }
-            Divider(color = BorderColor)
+            HorizontalDivider(color = BorderColor)
         }
     }
 }

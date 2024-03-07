@@ -5,5 +5,4 @@ import presentation.token_manager.TokenManager
 
 class SharedViewModel(
     val tokenManager: TokenManager,
-) : ViewModel() {
-}
+) : ViewModel()

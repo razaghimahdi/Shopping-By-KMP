@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AddComment
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ fun CommentScreen(state: CommentState, events: (CommentEvent) -> Unit, popup: ()
         networkState = state.networkState,
         onTryAgain = { events(CommentEvent.OnRetryNetwork) },
         titleToolbar = "Comments",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup,
         endIconToolbar = Icons.Filled.AddComment,
         onClickEndIconToolbar = { events(CommentEvent.OnUpdateAddCommentDialogState(UIComponentState.Show)) }) {

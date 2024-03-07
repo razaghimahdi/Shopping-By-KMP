@@ -8,12 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -37,12 +42,12 @@ fun FilterDialog(
     val selectedCategories = state.selectedCategory.toMutableStateList()
 
 
-    AlertDialog(
-        modifier = Modifier
-            .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background),
+    BasicAlertDialog(
         onDismissRequest = {
             events(SearchEvent.OnUpdateFilterDialogState(UIComponentState.Hide))
         },
+        modifier = Modifier
+            .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background)
     ) {
 
         Column(

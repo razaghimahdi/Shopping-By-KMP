@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -75,7 +75,7 @@ fun CheckoutScreen(
         networkState = state.networkState,
         onTryAgain = { events(CheckoutEvent.OnRetryNetwork) },
         titleToolbar = "Checkout",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
 
@@ -95,7 +95,7 @@ fun CheckoutScreen(
                 }
 
                 Spacer_16dp()
-                Divider(color = BorderColor)
+                HorizontalDivider(color = BorderColor)
                 Spacer_16dp()
 
                 Text("Choose Shipping Type", style = MaterialTheme.typography.titleLarge)

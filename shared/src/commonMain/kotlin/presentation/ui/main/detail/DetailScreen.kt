@@ -19,13 +19,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -90,7 +90,7 @@ fun DetailScreen(
                     Box(modifier = Modifier.padding(16.dp).align(Alignment.TopStart)) {
                         CircleButton(
                             modifier = Modifier.padding(4.dp),
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             onClick = { popup() })
                     }
 
@@ -184,7 +184,7 @@ fun DetailScreen(
 
                     Spacer_16dp()
 
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         thickness = 1.dp,
                         color = BackgroundContent

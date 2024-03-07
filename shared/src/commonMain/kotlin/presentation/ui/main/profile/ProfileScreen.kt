@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -151,7 +151,7 @@ private fun ProfileItemBox(
         }
         if (!isLastItem) {
             Spacer_12dp()
-            Divider()
+            HorizontalDivider()
             Spacer_12dp()
         }
     }

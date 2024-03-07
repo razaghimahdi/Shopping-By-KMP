@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -68,7 +68,7 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
         networkState = state.networkState,
         onTryAgain = { events(AddressEvent.OnRetryNetwork) },
         titleToolbar = "Address",
-        startIconToolbar = Icons.Filled.ArrowBack,
+        startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup,
         endIconToolbar = Icons.Filled.Add,
         onClickEndIconToolbar = { events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Show)) }) {
@@ -132,7 +132,7 @@ private fun AddressBox(address: Address, modifier: Modifier) {
 
 
             Spacer_8dp()
-            Divider()
+            HorizontalDivider()
         }
     }
 }
