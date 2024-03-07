@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
 plugins {
     kotlin("multiplatform")
     id("com.android.application")
@@ -5,6 +8,17 @@ plugins {
 }
 kotlin {
     androidTarget()
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+
+            dependencies {
+                implementation("androidx.compose.ui:ui-test-junit4-android:1.5.4")
+                debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
+            }
+        }
+    }
     sourceSets {
         val androidMain by getting {
             dependencies {
@@ -22,6 +36,7 @@ android {
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
