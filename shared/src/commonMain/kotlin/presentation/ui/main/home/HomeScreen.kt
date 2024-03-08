@@ -74,13 +74,13 @@ import shoping_by_kmp.shared.generated.resources.setting
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (Int) -> Unit = {},
     state: HomeState,
-    events: (HomeEvent) -> Unit,
-    navigateToNotifications: () -> Unit,
-    navigateToSetting: () -> Unit,
-    navigateToCategories: () -> Unit,
-    navigateToSearch: (Int?, Int?) -> Unit,
+    events: (HomeEvent) -> Unit= {},
+    navigateToNotifications: () -> Unit= {},
+    navigateToSetting: () -> Unit= {},
+    navigateToCategories: () -> Unit= {},
+    navigateToSearch: (Int?, Int?) -> Unit= {_,_->},
 ) {
 
 
