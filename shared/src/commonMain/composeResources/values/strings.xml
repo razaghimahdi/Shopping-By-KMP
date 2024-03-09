@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Shopping By KMP</string>
+    <string name="location">Location</string>
+    <string name="search">Search</string>
+    <string name="category">Category</string>
+    <string name="flash_sale">Flash Sale</string>
+    <string name="most_sale">Most Sale</string>
+    <string name="newest_products">Newest Products</string>
+    <string name="see_all">See All</string>
+    <string name="special_for_you">#SpecialForYou</string>
+
+</resources>
