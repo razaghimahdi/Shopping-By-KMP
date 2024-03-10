@@ -52,6 +52,7 @@ import business.domain.main.Category
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultScreenUI
 import presentation.component.ProductBox
@@ -67,20 +68,26 @@ import presentation.ui.main.home.view_model.HomeEvent
 import presentation.ui.main.home.view_model.HomeState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.bell
+import shoping_by_kmp.shared.generated.resources.category
+import shoping_by_kmp.shared.generated.resources.flash_sale
 import shoping_by_kmp.shared.generated.resources.location
+import shoping_by_kmp.shared.generated.resources.most_sale
+import shoping_by_kmp.shared.generated.resources.newest_products
 import shoping_by_kmp.shared.generated.resources.search
+import shoping_by_kmp.shared.generated.resources.see_all
 import shoping_by_kmp.shared.generated.resources.setting
+import shoping_by_kmp.shared.generated.resources.special_for_you
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     navigateToDetail: (Int) -> Unit = {},
     state: HomeState,
-    events: (HomeEvent) -> Unit= {},
-    navigateToNotifications: () -> Unit= {},
-    navigateToSetting: () -> Unit= {},
-    navigateToCategories: () -> Unit= {},
-    navigateToSearch: (Int?, Int?) -> Unit= {_,_->},
+    events: (HomeEvent) -> Unit = {},
+    navigateToNotifications: () -> Unit = {},
+    navigateToSetting: () -> Unit = {},
+    navigateToCategories: () -> Unit = {},
+    navigateToSearch: (Int?, Int?) -> Unit = { _, _ -> },
 ) {
 
 
@@ -108,7 +115,7 @@ fun HomeScreen(
                 ) {
                     Column {
                         Text(
-                            "Location",
+                            stringResource(Res.string.location),
                             style = MaterialTheme.typography.labelSmall,
                         )
                         Spacer_4dp()
@@ -172,7 +179,10 @@ fun HomeScreen(
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Spacer_4dp()
-                            Text("Search", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                stringResource(Res.string.search),
+                                style = MaterialTheme.typography.titleMedium
+                            )
                         }
                     }
                     Box(
@@ -202,7 +212,10 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Text("#SpecialForYou", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        stringResource(Res.string.special_for_you),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                     /* Text(
                          "See All",
                          style = MaterialTheme.typography.labelMedium,
@@ -238,9 +251,12 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Category", style = MaterialTheme.typography.titleLarge)
                     Text(
-                        "See All",
+                        stringResource(Res.string.category),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        stringResource(Res.string.see_all),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.noRippleClickable {
@@ -274,7 +290,10 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text("Flash Sale", style = MaterialTheme.typography.titleLarge)
+                        Text(
+                            stringResource(Res.string.flash_sale),
+                            style = MaterialTheme.typography.titleLarge
+                        )
                         TimerBox(state = state)
                     }
                     /* Text(
@@ -305,9 +324,12 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Most Sale", style = MaterialTheme.typography.titleLarge)
                     Text(
-                        "See All",
+                        stringResource(Res.string.most_sale),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        stringResource(Res.string.see_all),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.noRippleClickable {
@@ -339,9 +361,12 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Newest Products", style = MaterialTheme.typography.titleLarge)
                     Text(
-                        "See All",
+                        stringResource(Res.string.newest_products),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        stringResource(Res.string.see_all),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.noRippleClickable {
@@ -447,15 +472,17 @@ private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
                     .padding(12.dp)
             ) {
 
-                AsyncImage(category.icon,null,
-                    modifier = Modifier.fillMaxSize().size(55.dp),
-                    contentScale = ContentScale.Crop)
-              /*  Image(
-                    painter = rememberAsyncImagePainter(category.icon),
-                    null,
+                AsyncImage(
+                    category.icon, null,
                     modifier = Modifier.fillMaxSize().size(55.dp),
                     contentScale = ContentScale.Crop
-                )*/
+                )
+                /*  Image(
+                      painter = rememberAsyncImagePainter(category.icon),
+                      null,
+                      modifier = Modifier.fillMaxSize().size(55.dp),
+                      contentScale = ContentScale.Crop
+                  )*/
             }
             Spacer_8dp()
             Text(
