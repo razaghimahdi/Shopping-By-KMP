@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DEFAULT__BUTTON_SIZE_EXTRA
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
@@ -43,8 +44,18 @@ import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.apple
+import shoping_by_kmp.shared.generated.resources.dont_have_an_account
+import shoping_by_kmp.shared.generated.resources.email
+import shoping_by_kmp.shared.generated.resources.enter_valid_email
+import shoping_by_kmp.shared.generated.resources.enter_valid_password
 import shoping_by_kmp.shared.generated.resources.facebook
+import shoping_by_kmp.shared.generated.resources.forget_password
 import shoping_by_kmp.shared.generated.resources.google
+import shoping_by_kmp.shared.generated.resources.or_sign_in_with
+import shoping_by_kmp.shared.generated.resources.password
+import shoping_by_kmp.shared.generated.resources.sign_in
+import shoping_by_kmp.shared.generated.resources.sign_up
+import shoping_by_kmp.shared.generated.resources.welcome_title
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -74,10 +85,10 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Sign In", style = MaterialTheme.typography.displaySmall)
+            Text(stringResource(Res.string.sign_in), style = MaterialTheme.typography.displaySmall)
             Spacer_16dp()
             Text(
-                "Hi! Welcome back, you've been missed",
+                stringResource(Res.string.welcome_title),
                 style = MaterialTheme.typography.labelMedium
             )
             Spacer_32dp()
@@ -85,7 +96,7 @@ fun LoginScreen(
             Column(
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Email")
+                Text(stringResource(Res.string.email))
                 Spacer_4dp()
                 TextField(
                     isError = isUsernameError,
@@ -107,14 +118,14 @@ fun LoginScreen(
                 )
                 AnimatedVisibility(visible = isUsernameError) {
                     Text(
-                        "Enter valid email",
+                        stringResource(Res.string.enter_valid_email),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
                 }
                 Spacer_8dp()
 
-                Text("Password")
+                Text(stringResource(Res.string.password))
                 Spacer_4dp()
                 PasswordTextField(
                    // isError = isPasswordError,
@@ -128,7 +139,7 @@ fun LoginScreen(
 
                 AnimatedVisibility(visible = isPasswordError) {
                     Text(
-                        "Enter valid password",
+                        stringResource(Res.string.enter_valid_password),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -143,7 +154,7 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    "Forget Password?",
+                    stringResource(Res.string.forget_password),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                     textDecoration = TextDecoration.Underline
@@ -158,7 +169,7 @@ fun LoginScreen(
             ) {
                 DefaultButton(
                     progressBarState = state.progressBarState,
-                    text = "Sign In",
+                    text = stringResource(Res.string.sign_in),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(DEFAULT__BUTTON_SIZE_EXTRA),
@@ -180,7 +191,7 @@ fun LoginScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     HorizontalDivider(modifier = Modifier.width(75.dp))
-                    Text(text = "Or sign in with")
+                    Text(text = stringResource(Res.string.or_sign_in_with))
                     HorizontalDivider(modifier = Modifier.width(75.dp))
                 }
                 Spacer_32dp()
@@ -203,14 +214,14 @@ fun LoginScreen(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Don't have an account?",
+                    text = stringResource(Res.string.dont_have_an_account),
                 )
                 Spacer_4dp()
                 Text(
                     modifier = Modifier.clickable {
                         navigateToRegister()
                     },
-                    text = "Sign Up",
+                    text = stringResource(Res.string.sign_up),
                     color = MaterialTheme.colorScheme.primary,
                     textDecoration = TextDecoration.Underline
                 )
