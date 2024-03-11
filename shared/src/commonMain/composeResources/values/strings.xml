@@ -8,5 +8,15 @@
     <string name="newest_products">Newest Products</string>
     <string name="see_all">See All</string>
     <string name="special_for_you">#SpecialForYou</string>
+    <string name="email">Email</string>
+    <string name="or_sign_in_with">Or sign in with</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dont_have_an_account">Don't have an account?</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="enter_valid_password">Enter valid password</string>
+    <string name="enter_valid_email">Enter valid email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="welcome_title">Hi! Welcome back, you've been missed</string>
 
 </resources>
