@@ -10,7 +10,14 @@
     <string name="special_for_you">#SpecialForYou</string>
     <string name="email">Email</string>
     <string name="or_sign_in_with">Or sign in with</string>
+    <string name="or_sign_up_with">Or sign up with</string>
+    <string name="already_have_account">Already have an account?</string>
     <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="terms_condition">Terms &amp; Condition</string>
+    <string name="agree_with">Agree with </string>
+    <string name="register_title">Fill your information below or register with your social account.</string>
+    <string name="create_account">Create Account</string>
     <string name="sign_up">Sign Up</string>
     <string name="dont_have_an_account">Don't have an account?</string>
     <string name="forget_password">Forget Password?</string>
