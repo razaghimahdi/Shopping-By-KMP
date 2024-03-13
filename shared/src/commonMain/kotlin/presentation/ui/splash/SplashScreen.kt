@@ -16,13 +16,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.MultiStateAnimationCircleFilledCanvas
 import presentation.component.Spacer_32dp
 import presentation.theme.grey_700
 import presentation.theme.splashBackground
 import presentation.ui.splash.view_model.LoginEvent
 import presentation.ui.splash.view_model.LoginState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.discover
+import shoping_by_kmp.shared.generated.resources.enjoy
+import shoping_by_kmp.shared.generated.resources.getting_start
+import shoping_by_kmp.shared.generated.resources.live_your_perfect
+import shoping_by_kmp.shared.generated.resources.shop
+import shoping_by_kmp.shared.generated.resources.splash_title
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun SplashScreen(
     state: LoginState,
@@ -61,19 +71,19 @@ internal fun SplashScreen(
         ) {
             Spacer_32dp()
             Text(
-                "Shop", style = MaterialTheme.typography.displayLarge,
+                stringResource(Res.string.shop), style = MaterialTheme.typography.displayLarge,
                 color = grey_700,
                 fontWeight = FontWeight.Bold,
             )
             Spacer_32dp()
             Text(
-                "Discover", style = MaterialTheme.typography.displayLarge,
+                stringResource(Res.string.discover), style = MaterialTheme.typography.displayLarge,
                 color = grey_700,
                 fontWeight = FontWeight.Bold,
             )
             Spacer_32dp()
             Text(
-                "Enjoy", style = MaterialTheme.typography.displayLarge,
+                stringResource(Res.string.enjoy), style = MaterialTheme.typography.displayLarge,
                 color = grey_700,
                 fontWeight = FontWeight.Bold,
             )
@@ -84,14 +94,14 @@ internal fun SplashScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                "LIVE YOUR\nPERFECT",
+                stringResource(Res.string.live_your_perfect),
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onSecondary,
                 textAlign = TextAlign.Center
             )
             Spacer_32dp()
             Text(
-                "Smart, gorgeous & fashionable collection make you cool",
+                stringResource(Res.string.splash_title),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 32.dp),
                 textAlign = TextAlign.Center,
@@ -99,7 +109,7 @@ internal fun SplashScreen(
             )
             Spacer_32dp()
             Text(
-                "Getting Start...",
+                stringResource(Res.string.getting_start),
                 color = MaterialTheme.colorScheme.onSecondary,
                 style = MaterialTheme.typography.bodyMedium
             )
