@@ -26,6 +26,7 @@ import business.core.UIComponentState
 import business.domain.main.Address
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.AddAddressDialog
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_12dp
@@ -36,12 +37,15 @@ import presentation.theme.BorderColor
 import presentation.ui.main.address.view_model.AddressEvent
 import presentation.ui.main.address.view_model.AddressState
 import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.address
 import shoping_by_kmp.shared.generated.resources.delete
 import shoping_by_kmp.shared.generated.resources.earth
 import shoping_by_kmp.shared.generated.resources.location2
 import shoping_by_kmp.shared.generated.resources.mail
+import shoping_by_kmp.shared.generated.resources.no_address
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: () -> Unit) {
 
@@ -67,7 +71,7 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(AddressEvent.OnRetryNetwork) },
-        titleToolbar = "Address",
+        titleToolbar = stringResource(Res.string.address),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup,
         endIconToolbar = Icons.Filled.Add,
@@ -78,7 +82,7 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
 
             if (state.addresses.isEmpty()) {
                 Text(
-                    "No Addresses!",
+                    stringResource(Res.string.no_address),
                     style = MaterialTheme.typography.titleLarge,
                     color = BorderColor,
                     modifier = Modifier.fillMaxSize(),
