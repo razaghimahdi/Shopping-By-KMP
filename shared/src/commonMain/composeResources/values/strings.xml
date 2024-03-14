@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Shopping By KMP</string>
     <string name="location">Location</string>
+    <string name="address">Address</string>
+    <string name="no_address">No Addresses!</string>
     <string name="shop">Shop</string>
     <string name="discover">Discover</string>
     <string name="enjoy">Enjoy</string>
