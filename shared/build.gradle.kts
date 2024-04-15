@@ -63,15 +63,17 @@ kotlin {
                 implementation(libs.ktor.negotiation)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.datastore.preferences)
+                implementation(libs.compose.navigation)
                 // implementation(libs.image.loader)
                 api(libs.koin.core)
                 api(libs.koin.compose)
                 api(libs.coil3)
                 api(libs.coil3.network)
-                api(libs.precompose)
-                api(libs.precompose.viewmodel)
-                api(libs.precompose.koin)
+             //   api(libs.precompose)
+             //   api(libs.precompose.viewmodel)
+             //   api(libs.precompose.koin)
 
 
             }
