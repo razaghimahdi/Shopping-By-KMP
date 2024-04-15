@@ -1,10 +1,12 @@
 [versions]
 agp = "8.2.2"
 kotlin = "1.9.22"
+kotlinxCoroutinesCore = "1.8.1-Beta"
 ktor = "2.3.5"
 compose = "1.6.0"
 compose-material3 = "1.2.0"
 compose-compiler = "1.5.8"
+compose-navigation-ver = "0.0.0-nav-dev1535"
 compose-plugin = "1.5.11"
 androidx-activityCompose = "1.8.0"
 kotlinx-serialization-json-ver = "1.6.0"
@@ -33,11 +35,14 @@ accompanist-permissions = "0.32.0"
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 
+compose-navigation = { module = "org.jetbrains.compose.navigation-internal:navigation-compose", version.ref = "compose-navigation-ver" }
+
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
 
 
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 ktor-darwin-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
