@@ -23,6 +23,13 @@
     <string name="already_have_account">Already have an account?</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
+    <string name="checkout">Checkout</string>
+    <string name="home">Home</string>
+    <string name="submit">Submit</string>
+    <string name="change">CHANGE</string>
+    <string name="shipping_cost">Shipping Cost</string>
+    <string name="choose_shipping_type">Choose Shipping Type</string>
+    <string name="shipping_address">Shipping Address</string>
     <string name="terms_condition">Terms &amp; Condition</string>
     <string name="agree_with">Agree with </string>
     <string name="register_title">Fill your information below or register with your social account.</string>
