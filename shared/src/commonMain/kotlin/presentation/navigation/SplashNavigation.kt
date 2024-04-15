@@ -1,16 +1,16 @@
 package presentation.navigation
 
+import androidx.navigation.NamedNavArgument
+
 sealed class SplashNavigation(
-    val route: String,
-    val objectName: String = "",
-    val objectPath: String = ""
+    val route: String, val arguments: List<NamedNavArgument>
 ) {
 
-   data object Splash : SplashNavigation(route = "Splash")
+    data object Splash : SplashNavigation(route = "Splash", arguments = emptyList())
 
-   data object Login : SplashNavigation(route = "Login")
+    data object Login : SplashNavigation(route = "Login", arguments = emptyList())
 
-   data object Register : SplashNavigation(route = "Register")
+    data object Register : SplashNavigation(route = "Register", arguments = emptyList())
 
 
 }

@@ -1,9 +1,11 @@
 package presentation.ui.main.categories
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.path
-import moe.tlaster.precompose.navigation.rememberNavigator
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import presentation.navigation.CategoriesNavigation
 import presentation.ui.main.categories.view_model.CategoriesViewModel
@@ -12,13 +14,14 @@ import presentation.ui.main.search.SearchNav
 @Composable
 fun CategoriesNav(popup: () -> Unit) {
 
-    val navigator = rememberNavigator()
+    val navigator = rememberNavController()
     NavHost(
-        navigator = navigator,
-        initialRoute = CategoriesNavigation.Categories.route,
+        startDestination = CategoriesNavigation.Categories.route,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
     ) {
 
-        scene(route = CategoriesNavigation.Categories.route) {
+        composable(route = CategoriesNavigation.Categories.route) {
             val viewModel: CategoriesViewModel = koinInject()
             CategoriesScreen(
                 state = viewModel.state.value,
@@ -31,11 +34,13 @@ fun CategoriesNav(popup: () -> Unit) {
             }
         }
 
-        scene(
+        composable(
             route = CategoriesNavigation.Search.route
-                .plus(CategoriesNavigation.Search.objectPath)
+                .plus("/{category_id}")
         ) { backStackEntry ->
-            val categoryId: Int? = backStackEntry.path<Int>(CategoriesNavigation.Search.objectName)
+
+            val argument = backStackEntry.arguments
+            val categoryId = argument?.getInt("category_id")
             SearchNav(categoryId = categoryId, sort = null) {
                 navigator.popBackStack()
             }

@@ -7,7 +7,7 @@ import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
 import business.domain.main.Coupons
-import moe.tlaster.precompose.viewmodel.ViewModel
+import androidx.lifecycle.ViewModel
 
 class MyCouponsViewModel : ViewModel() {
 

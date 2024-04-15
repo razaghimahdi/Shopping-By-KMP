@@ -2,6 +2,7 @@ package presentation.ui.main.search.view_model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+
 import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
@@ -13,8 +14,8 @@ import business.interactors.main.GetSearchFilterInteractor
 import business.interactors.main.SearchInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import moe.tlaster.precompose.viewmodel.ViewModel
-import moe.tlaster.precompose.viewmodel.viewModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,

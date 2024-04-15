@@ -1,9 +1,11 @@
 package presentation.ui.main.cart
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.path
-import moe.tlaster.precompose.navigation.rememberNavigator
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import presentation.navigation.CartNavigation
 import presentation.ui.main.address.AddressScreen
@@ -15,12 +17,13 @@ import presentation.ui.main.detail.DetailNav
 
 @Composable
 fun CartNav() {
-    val navigator = rememberNavigator()
+    val navigator = rememberNavController()
     NavHost(
-        navigator = navigator,
-        initialRoute = CartNavigation.Cart.route,
+        startDestination = CartNavigation.Cart.route,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
     ) {
-        scene(route = CartNavigation.Cart.route) {
+        composable(route = CartNavigation.Cart.route) {
             val viewModel: CartViewModel = koinInject()
             CartScreen(
                 state = viewModel.state.value,
@@ -32,7 +35,7 @@ fun CartNav() {
                     navigator.navigate(CartNavigation.Checkout.route)
                 })
         }
-        scene(route = CartNavigation.Checkout.route) {
+        composable(route = CartNavigation.Checkout.route) {
             val viewModel: CheckoutViewModel = koinInject()
             CheckoutScreen(
                 state = viewModel.state.value,
@@ -43,7 +46,7 @@ fun CartNav() {
                 popup = { navigator.popBackStack() },
             )
         }
-        scene(route = CartNavigation.Address.route) {
+        composable(route = CartNavigation.Address.route) {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
                 state = viewModel.state.value,
@@ -51,8 +54,12 @@ fun CartNav() {
                 popup = { navigator.popBackStack() },
             )
         }
-        scene(route = CartNavigation.Detail.route.plus(CartNavigation.Detail.objectPath)) { backStackEntry ->
-            val id: Int? = backStackEntry.path<Int>(CartNavigation.Detail.objectName)
+        composable(
+            route = CartNavigation.Detail.route.plus("/{id}"),
+            arguments = CartNavigation.Detail.arguments,
+        ) { backStackEntry ->
+            val argument = backStackEntry.arguments
+            val id = argument?.getInt("id")
             id?.let {
                 DetailNav(it) {
                     navigator.popBackStack()

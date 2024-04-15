@@ -12,8 +12,8 @@ import business.interactors.splash.LoginInteractor
 import business.interactors.splash.RegisterInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import moe.tlaster.precompose.viewmodel.ViewModel
-import moe.tlaster.precompose.viewmodel.viewModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 class LoginViewModel(
     private val loginInteractor: LoginInteractor,

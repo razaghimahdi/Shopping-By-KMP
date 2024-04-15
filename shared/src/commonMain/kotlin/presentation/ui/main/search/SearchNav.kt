@@ -1,12 +1,14 @@
 package presentation.ui.main.search
 
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import business.domain.main.Category
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.path
-import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.navigation.SearchNavigation
 import presentation.ui.main.detail.DetailNav
@@ -15,12 +17,13 @@ import presentation.ui.main.search.view_model.SearchViewModel
 
 @Composable
 fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
-    val navigator = rememberNavigator()
+    val navigator = rememberNavController()
     NavHost(
-        navigator = navigator,
-        initialRoute = SearchNavigation.Search.route,
+        startDestination = SearchNavigation.Search.route,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
     ) {
-        scene(route = SearchNavigation.Search.route) {
+        composable(route = SearchNavigation.Search.route) {
             val viewModel: SearchViewModel = koinInject()
             LaunchedEffect(sort, categoryId) {
                 val categories = if (categoryId != null) listOf(Category(id = categoryId)) else null
@@ -41,10 +44,12 @@ fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
                 popUp = { popUp() }
             )
         }
-        scene(route = SearchNavigation.Detail.route.plus(SearchNavigation.Detail.objectPath)) { backStackEntry ->
-            val id: Int? = backStackEntry.path<Int>(SearchNavigation.Detail.objectName)
+        composable(route = SearchNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
+
+            val argument = backStackEntry.arguments
+            val id = argument?.getInt("id")
             id?.let {
-                DetailNav(it){
+                DetailNav(it) {
                     navigator.popBackStack()
                 }
             }

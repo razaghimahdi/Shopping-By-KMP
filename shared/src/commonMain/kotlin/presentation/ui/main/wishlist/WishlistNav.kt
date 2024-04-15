@@ -1,9 +1,11 @@
 package presentation.ui.main.wishlist
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.path
-import moe.tlaster.precompose.navigation.rememberNavigator
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import presentation.navigation.WishlistNavigation
 import presentation.ui.main.detail.DetailNav
@@ -11,12 +13,13 @@ import presentation.ui.main.wishlist.view_model.WishlistViewModel
 
 @Composable
 fun WishlistNav() {
-    val navigator = rememberNavigator()
+    val navigator = rememberNavController()
     NavHost(
-        navigator = navigator,
-        initialRoute = WishlistNavigation.Wishlist.route,
+        startDestination = WishlistNavigation.Wishlist.route,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
     ) {
-        scene(route = WishlistNavigation.Wishlist.route) {
+        composable(route = WishlistNavigation.Wishlist.route) {
             val viewModel: WishlistViewModel = koinInject()
             WishlistScreen(
                 state = viewModel.state.value,
@@ -26,10 +29,12 @@ fun WishlistNav() {
                 navigator.navigate(WishlistNavigation.Detail.route.plus("/$it"))
             }
         }
-        scene(route = WishlistNavigation.Detail.route.plus(WishlistNavigation.Detail.objectPath)) { backStackEntry ->
-            val id: Int? = backStackEntry.path<Int>(WishlistNavigation.Detail.objectName)
+        composable(route = WishlistNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
+
+            val argument = backStackEntry.arguments
+            val id = argument?.getInt("id")
             id?.let {
-                DetailNav(it){
+                DetailNav(it) {
                     navigator.popBackStack()
                 }
             }

@@ -1,9 +1,13 @@
 package presentation.ui.main.profile
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.rememberNavigator
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
+import presentation.navigation.CategoriesNavigation
 import presentation.navigation.ProfileNavigation
 import presentation.ui.main.address.AddressScreen
 import presentation.ui.main.address.view_model.AddressViewModel
@@ -21,12 +25,13 @@ import presentation.ui.main.settings.view_model.SettingsViewModel
 
 @Composable
 fun ProfileNav(logout: () -> Unit) {
-    val navigator = rememberNavigator()
-    NavHost(
-        navigator = navigator,
-        initialRoute = ProfileNavigation.Profile.route,
+    val navigator = rememberNavController()
+    NavHost( 
+        startDestination = CategoriesNavigation.Categories.route,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
     ) {
-        scene(route = ProfileNavigation.Profile.route) {
+        composable(route = ProfileNavigation.Profile.route) {
             val viewModel: ProfileViewModel = koinInject()
             ProfileScreen(
                 state = viewModel.state.value,
@@ -54,7 +59,7 @@ fun ProfileNav(logout: () -> Unit) {
                 },
             )
         }
-        scene(route = ProfileNavigation.Settings.route) {
+        composable(route = ProfileNavigation.Settings.route) {
             val viewModel: SettingsViewModel = koinInject()
             SettingsScreen(
                 state = viewModel.state.value,
@@ -65,7 +70,7 @@ fun ProfileNav(logout: () -> Unit) {
                 },
             )
         }
-        scene(route = ProfileNavigation.MyCoupons.route) {
+        composable(route = ProfileNavigation.MyCoupons.route) {
             val viewModel: MyCouponsViewModel = koinInject()
             MyCouponsScreen(
                 state = viewModel.state.value,
@@ -74,7 +79,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        scene(route = ProfileNavigation.MyWallet.route) {
+        composable(route = ProfileNavigation.MyWallet.route) {
             /*val viewModel: MyWalletViewModel = koinInject()
             MyWalletScreen(
                 state = viewModel.state.value,
@@ -83,7 +88,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }*/
         }
-        scene(route = ProfileNavigation.MyOrders.route) {
+        composable(route = ProfileNavigation.MyOrders.route) {
             val viewModel: MyOrdersViewModel = koinInject()
             MyOrdersScreen(
                 state = viewModel.state.value,
@@ -92,7 +97,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        scene(route = ProfileNavigation.PaymentMethod.route) {
+        composable(route = ProfileNavigation.PaymentMethod.route) {
             val viewModel: PaymentMethodViewModel = koinInject()
             PaymentMethodScreen(
                 state = viewModel.state.value,
@@ -101,7 +106,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        scene(route = ProfileNavigation.EditProfile.route) {
+        composable(route = ProfileNavigation.EditProfile.route) {
             val viewModel: EditProfileViewModel = koinInject()
             EditProfileScreen(
                 state = viewModel.state.value,
@@ -110,7 +115,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        scene(route = ProfileNavigation.Address.route) {
+        composable(route = ProfileNavigation.Address.route) {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
                 state = viewModel.state.value,

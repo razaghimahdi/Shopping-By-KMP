@@ -1,13 +1,19 @@
 package presentation.navigation
 
-sealed class WishlistNavigation(
-    val route: String,
-    val objectName: String = "",
-    val objectPath: String = ""
-) {
-   data object Wishlist : WishlistNavigation(route = "Home")
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
-   data object Detail : WishlistNavigation(route = "Detail", objectName = "id", objectPath = "/{id}")
+sealed class WishlistNavigation(
+    val route: String, val arguments: List<NamedNavArgument>
+) {
+    data object Wishlist : WishlistNavigation(route = "Home", arguments = emptyList())
+
+    data object Detail : WishlistNavigation(route = "Detail",
+        arguments = listOf(navArgument("id") {
+            type = NavType.IntType
+        })
+    )
 
 }
 

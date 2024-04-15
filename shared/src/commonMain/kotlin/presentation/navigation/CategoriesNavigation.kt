@@ -1,17 +1,20 @@
 package presentation.navigation
 
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+
 sealed class CategoriesNavigation(
-    val route: String,
-    val objectName: String = "",
-    val objectPath: String = "",
+    val route: String, val arguments: List<NamedNavArgument>
 ) {
-   data object Categories : CategoriesNavigation(route = "Categories")
+    data object Categories : CategoriesNavigation(route = "Categories", arguments = emptyList())
 
 
-   data object Search : CategoriesNavigation(
+    data object Search : CategoriesNavigation(
         route = "Search",
-        objectName = "category_id",
-        objectPath = "/{category_id}",
+        arguments = listOf(navArgument("category_id") {
+            type = NavType.IntType
+        })
     )
 
 }

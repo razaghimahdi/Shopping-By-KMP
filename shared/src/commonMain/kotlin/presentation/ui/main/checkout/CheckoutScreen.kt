@@ -30,6 +30,7 @@ import business.domain.main.Address
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
 import presentation.component.DefaultScreenUI
@@ -43,8 +44,16 @@ import presentation.theme.BorderColor
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
 import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.change
+import shoping_by_kmp.shared.generated.resources.checkout
+import shoping_by_kmp.shared.generated.resources.choose_shipping_type
+import shoping_by_kmp.shared.generated.resources.home
 import shoping_by_kmp.shared.generated.resources.location2
 import shoping_by_kmp.shared.generated.resources.shipping
+import shoping_by_kmp.shared.generated.resources.shipping_address
+import shoping_by_kmp.shared.generated.resources.shipping_cost
+import shoping_by_kmp.shared.generated.resources.submit
+import shoping_by_kmp.shared.generated.resources.total_cost
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -74,7 +83,7 @@ fun CheckoutScreen(
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CheckoutEvent.OnRetryNetwork) },
-        titleToolbar = "Checkout",
+        titleToolbar = stringResource(Res.string.checkout),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
@@ -85,10 +94,10 @@ fun CheckoutScreen(
 
                 Spacer_32dp()
 
-                Text("Shipping Address", style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(Res.string.shipping_address), style = MaterialTheme.typography.titleLarge)
                 Spacer_12dp()
                 ShippingBox(
-                    title = "Home",
+                    title = stringResource(Res.string.home),
                     image = Res.drawable.location2, detail = state.selectedAddress.getShippingAddress()
                 ) {
                     navigateToAddress()
@@ -98,7 +107,7 @@ fun CheckoutScreen(
                 HorizontalDivider(color = BorderColor)
                 Spacer_16dp()
 
-                Text("Choose Shipping Type", style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(Res.string.choose_shipping_type), style = MaterialTheme.typography.titleLarge)
                 Spacer_12dp()
                 ShippingBox(
                     title = state.selectedShipping.title,
@@ -126,6 +135,7 @@ fun CheckoutScreen(
 }
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun CheckoutButtonBox(
     totalCost: String,
@@ -150,7 +160,7 @@ fun CheckoutButtonBox(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Shipping Cost", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(Res.string.shipping_cost), style = MaterialTheme.typography.titleMedium)
                 Text(shippingCost, style = MaterialTheme.typography.titleLarge)
             }
             Spacer_8dp()
@@ -160,14 +170,14 @@ fun CheckoutButtonBox(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Total Cost", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(Res.string.total_cost), style = MaterialTheme.typography.titleMedium)
                 Text(totalCost, style = MaterialTheme.typography.titleLarge)
             }
 
             Spacer_16dp()
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().height(DEFAULT__BUTTON_SIZE),
-                text = "Submit",
+                text = stringResource(Res.string.submit),
                 enabled = selectedAddress != Address()
             ) {
                 onClick()
@@ -201,7 +211,7 @@ fun ShippingBox(title: String, image: DrawableResource, detail: String, onClick:
                 ).noRippleClickable { onClick() }
             ) {
                 Text(
-                    "CHANGE",
+                    stringResource(Res.string.change),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(4.dp)

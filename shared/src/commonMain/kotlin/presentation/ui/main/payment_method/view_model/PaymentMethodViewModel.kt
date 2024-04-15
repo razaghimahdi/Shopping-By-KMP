@@ -6,7 +6,7 @@ import business.constants.CUSTOM_TAG
 import business.core.NetworkState
 import business.core.Queue
 import business.core.UIComponent
-import moe.tlaster.precompose.viewmodel.ViewModel
+import androidx.lifecycle.ViewModel
 
 class PaymentMethodViewModel : ViewModel() {
 

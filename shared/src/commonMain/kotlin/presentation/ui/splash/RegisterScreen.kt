@@ -96,7 +96,10 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(stringResource(Res.string.create_account), style = MaterialTheme.typography.displaySmall)
+            Text(
+                stringResource(Res.string.create_account),
+                style = MaterialTheme.typography.displaySmall
+            )
             Spacer_16dp()
             Text(
                 stringResource(Res.string.register_title),
@@ -158,7 +161,7 @@ fun RegisterScreen(
                 Text(stringResource(Res.string.password))
                 Spacer_4dp()
                 PasswordTextField(
-                   // isError = isPasswordError,
+                    // isError = isPasswordError,
                     value = state.passwordLogin,
                     onValueChange = {
                         events(LoginEvent.OnUpdatePasswordLogin(it))
