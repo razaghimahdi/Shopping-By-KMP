@@ -66,6 +66,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.datastore.preferences)
                 implementation(libs.compose.navigation)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
                 // implementation(libs.image.loader)
                 api(libs.koin.core)
                 api(libs.koin.compose)

@@ -1,13 +1,14 @@
 [versions]
 agp = "8.2.2"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinxCoroutinesCore = "1.8.1-Beta"
 ktor = "2.3.5"
 compose = "1.6.10-beta01"
-compose-multiplatform = "1.6.2"
-compose-material3 = "1.2.0"
+compose-multiplatform = "1.6.10-beta02"
+compose-material3 = "1.2.1"
 compose-compiler = "1.5.8"
-compose-navigation-ver = "2.8.0-alpha01"
+androidx-lifecycle = "2.8.0-alpha01"
+compose-navigation-ver = "2.8.0-alpha02"
 compose-plugin = "1.5.11"
 androidx-activityCompose = "1.8.0"
 kotlinx-serialization-json-ver = "1.6.0"
@@ -35,8 +36,8 @@ accompanist-permissions = "0.32.0"
 [libraries]
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
-
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation-ver" }
+androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
