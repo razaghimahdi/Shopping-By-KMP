@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
-import presentation.navigation.CategoriesNavigation
 import presentation.navigation.ProfileNavigation
 import presentation.ui.main.address.AddressScreen
 import presentation.ui.main.address.view_model.AddressViewModel
@@ -27,7 +26,7 @@ import presentation.ui.main.settings.view_model.SettingsViewModel
 fun ProfileNav(logout: () -> Unit) {
     val navigator = rememberNavController()
     NavHost( 
-        startDestination = CategoriesNavigation.Categories.route,
+        startDestination = ProfileNavigation.Profile.route,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
