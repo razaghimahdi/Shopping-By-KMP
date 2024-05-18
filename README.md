@@ -55,7 +55,7 @@ If you like or are using this project to learn or start your solution, please gi
 
 ## Development 💻
 
-Firs, let me say the backend is also in progress. You can find the backend source code [here](https://github.com/soheilkhaledabdi/shop).
+Firs, let me say the backend is also in progress. You can find the backend source code [here](https://github.com/aydenGill/shop-admin-panel).
 
 We appreciate any feedback or suggestions that you may have to help us improve the project.
 
