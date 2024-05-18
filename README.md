@@ -111,7 +111,7 @@ You can use the same APIs to build user interfaces for both Android and iOS.
 -->
 
 ## Backend 🌐
-[This project](https://github.com/soheilkhaledabdi/shop) involves building a robust admin panel for managing an e-commerce platform. 
+[This project](https://github.com/aydenGill/shop-admin-panel) involves building a robust admin panel for managing an e-commerce platform. 
 It utilizes **Laravel** for the backend structure and **Livewire** for dynamic frontend interactions. 
 The panel comes with a comprehensive **API**, ensuring scalability and flexibility.
 
