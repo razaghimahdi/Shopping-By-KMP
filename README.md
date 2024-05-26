@@ -38,6 +38,12 @@ If you like or are using this project to learn or start your solution, please gi
 | Notifications               | ✔️ Implemented   |
 | Setting                     | ✔️ Implemented   |
 
+### Next Features 🏄‍♂️
+Obviously it would be more updates, What we are working on these days?
+- **Notifications:** Getting Notifications when any updates come from app for both Android & IOS
+##### **Future Plans:**
+- **Web platfrom:** Soon we gonna have release for web
+
 ## Tech Stack 📚
 - Kotlin Multiplatform 
 - Kotlin Coroutines 
@@ -120,12 +126,7 @@ The panel comes with a comprehensive **API**, ensuring scalability and flexibili
 - **Laravel & Livewire:** Leverage the power of Laravel's backend with Livewire for reactive UI.
 - **Full API:** Enables external integrations and interactions with the shopping platform.
 
-### Next Features
-Obviously it would be more updates, some of future plans:
-- **Notifications:** Getting Notifications when any updates come from app for both Android & IOS
 
-##### Massive updates:
-- **Web platfrom:** Soon we gonna have release for web
 
 ## Contributing
 Contributions are welcome! If you have any feedback or suggestions, please don't hesitate to let us know. 
