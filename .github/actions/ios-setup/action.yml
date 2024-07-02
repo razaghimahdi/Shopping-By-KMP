@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-java@v4
       with:
-        distribution: "adopt"
+        distribution: "temurin"
         java-version: "17"
         cache: 'gradle'
 
