@@ -1,6 +1,18 @@
 package business.interactors.splash
 
-/*class RegisterInteractorTest {
+import business.core.AppDataStore
+import business.core.DataState
+import business.core.ProgressBarState
+import business.datasoruce.network.splash.LoginFakeDataGenerator
+import business.datasource.network.splash.SplashService
+import io.mockk.mockk
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+class RegisterInteractorTest {
 
     private lateinit var registerInteractor: RegisterInteractor
     private lateinit var service: SplashService
@@ -56,4 +68,4 @@ package business.interactors.splash
     }
 
 
-}*/
+}
