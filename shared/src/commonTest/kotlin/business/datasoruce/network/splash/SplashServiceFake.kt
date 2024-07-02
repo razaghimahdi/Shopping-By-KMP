@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package business.datasoruce.network.splash
 
 import business.constants.BASE_URL
@@ -14,10 +16,10 @@ import io.ktor.http.fullPath
 import io.ktor.http.headersOf
 import io.ktor.http.hostWithPort
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 class SplashServiceFake {
-
 
 
     companion object Factory {
@@ -54,6 +56,7 @@ class SplashServiceFake {
                                             headers = responseHeaders,
                                         )
                                     }
+
                                     is LoginServiceResponseType.MalformedData -> {
                                         respond(
                                             LoginFakeDataGenerator.malformedData,
@@ -61,6 +64,7 @@ class SplashServiceFake {
                                             headers = responseHeaders
                                         )
                                     }
+
                                     is LoginServiceResponseType.FillDataCurrently -> {
                                         respond(
                                             LoginFakeDataGenerator.fillDataCurrently,
@@ -68,6 +72,7 @@ class SplashServiceFake {
                                             headers = responseHeaders
                                         )
                                     }
+
                                     is LoginServiceResponseType.GoodData -> {
                                         respond(
                                             LoginFakeDataGenerator.goodData,
@@ -75,21 +80,20 @@ class SplashServiceFake {
                                             headers = responseHeaders
                                         )
                                     }
+
                                     is LoginServiceResponseType.TimeOut -> {
                                         throw ConnectTimeoutException(request)
                                     }
                                 }
                             }
+
                             else -> error("Unhandled ${request.url.fullUrl}")
                         }
                     }
                 }
             }
-
             return SplashServiceImpl(client)
         }
-
-
     }
 
 
