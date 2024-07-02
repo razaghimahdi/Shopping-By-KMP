@@ -61,7 +61,6 @@ class LoginInteractorTest {
     }
 
 
-
     @Test
     fun `Test if email or password is empty`() = runBlocking {
 
@@ -171,12 +170,7 @@ class LoginInteractorTest {
         // Confirm third emission is data
         assertTrue(result[2] is DataState.Data)
 
-
         // Confirm loading state is IDLE
         assertEquals(result[3], DataState.Loading(ProgressBarState.Idle))
-
-
     }
-
-
 }
