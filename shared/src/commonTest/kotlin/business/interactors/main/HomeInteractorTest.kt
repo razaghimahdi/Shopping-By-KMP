@@ -37,10 +37,6 @@ class HomeInteractorTest {
         // Confirm token is not empty
         assertTrue(!appDataStoreManager.readValue("token").isNullOrEmpty())
 
-
-
-
-
     }
 
 
