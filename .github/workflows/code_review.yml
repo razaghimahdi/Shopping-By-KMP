@@ -42,7 +42,6 @@ jobs:
       shouldRunKmp: ${{ steps.setVariables.outputs.shouldRunKmp }}
       shouldRunAndroid: ${{ steps.setVariables.outputs.shouldRunAndroid }}
       shouldRunIos: ${{ steps.setVariables.outputs.shouldRunIos }}
-      shouldRunDesktop: ${{ steps.setVariables.outputs.shouldRunDesktop }}
 
   Build:
     needs: SetUp
@@ -51,7 +50,6 @@ jobs:
       shouldRunKmp: ${{ needs.SetUp.outputs.shouldRunKmp }}
       shouldRunAndroid: ${{ needs.SetUp.outputs.shouldRunAndroid }}
       shouldRunIos: ${{ needs.SetUp.outputs.shouldRunIos }}
-      shouldRunDesktop: ${{ needs.SetUp.outputs.shouldRunDesktop }}
 
   UnitTests:
     needs: SetUp
@@ -60,7 +58,6 @@ jobs:
       shouldRunKmp: ${{ needs.SetUp.outputs.shouldRunKmp }}
       shouldRunAndroid: ${{ needs.SetUp.outputs.shouldRunAndroid }}
       shouldRunIos: ${{ needs.SetUp.outputs.shouldRunIos }}
-      shouldRunDesktop: ${{ needs.SetUp.outputs.shouldRunDesktop }}
 
   AllowMerge:
     if: always()
