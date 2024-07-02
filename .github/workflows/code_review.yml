@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [opened, ready_for_review, synchronize]
     branches:
-      - main
+      - master
 
 jobs:
   Build:
