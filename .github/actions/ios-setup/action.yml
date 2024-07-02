@@ -1,0 +1,12 @@
+name: Job set up
+description: Sets up the Java and Gradle
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-java@v3
+      with:
+        distribution: "adopt"
+        java-version: "11"
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2

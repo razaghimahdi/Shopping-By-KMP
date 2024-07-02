@@ -34,9 +34,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Job set up
-        uses: ./.github/actions/job-set-up
+        uses: ./.github/actions/job-setup
 
       - name: iOS set up
-        uses: ./.github/actions/ios-set-up
+        uses: ./.github/actions/ios-setup
 
       - run: xcodebuild build -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose
