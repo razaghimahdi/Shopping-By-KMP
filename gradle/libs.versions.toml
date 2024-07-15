@@ -1,31 +1,36 @@
 [versions]
-agp = "8.2.2"
-kotlin = "1.9.23"
+android-compileSdk = "34"
+android-minSdk = "24"
+android-targetSdk = "34"
+android-version-code = "1"
+android-version-name = "1.0"
+agp = "8.5.1"
+kotlin = "2.0.0"
 kotlinxCoroutinesCore = "1.8.1-Beta"
-ktor = "2.3.5"
+ktor = "2.3.7"
 compose = "1.6.10-beta01"
-compose-multiplatform = "1.6.10-beta02"
+compose-multiplatform = "1.7.0-alpha01"
 compose-material3 = "1.2.1"
 compose-compiler = "1.5.8"
-androidx-lifecycle = "2.8.0-alpha01"
+androidx-lifecycle = "2.8.0-beta01"
 compose-navigation-ver = "2.8.0-alpha02"
 compose-plugin = "1.5.11"
-androidx-activityCompose = "1.8.0"
+androidx-activityCompose = "1.9.0"
 kotlinx-serialization-json-ver = "1.6.0"
 kotlinx-components-resources-ver = "1.6.0"
-kotlinx-datetime = "0.4.0"
+kotlinx-datetime = "0.6.0"
 image-loader-qdsfdhvh = "1.6.8"
 mokoVersion = "0.16.1"
 precompose-tlaster = "1.5.10"
 precompose-viewmodel-tlaster = "1.5.10"
-androidx-appcompat = "1.6.1"
-androidx-core = "1.9.0"
-androidx-datastore = "1.1.0-alpha03"
-sqldelight = "2.0.0-alpha05"
-koin = "3.4.3"
-koin-compose = "1.0.4"
+androidx-appcompat = "1.7.0"
+androidx-core = "1.13.1"
+androidx-datastore = "1.1.1"
+sqldelight = "2.0.1"
+koin = "3.6.0-Beta4"
+koin-compose = "1.2.0-Beta4"
 coil3-io = "3.0.0-alpha01"
-coroutines-test-ver = "1.7.1"
+coroutines-test-ver = "1.8.0"
 kotest = "5.8.0"
 turbine = "1.0.0"
 mockk = "1.8.13.kotlin13"
@@ -120,3 +125,12 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 sqldelightApp = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+
+
+# Plugins defined by this project
+shopping-shared = { id = "com.razzaghi.shopingbykmp.shared", version = "unspecified" }
+shopping-kotlinMultiplatform = { id = "com.razzaghi.shopingbykmp.kotlinMultiplatform", version = "unspecified" }
+shopping-androidApp = { id = "com.razzaghi.shopingbykmp.androidApp", version = "unspecified" }
