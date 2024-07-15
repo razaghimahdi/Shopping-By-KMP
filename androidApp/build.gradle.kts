@@ -2,9 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.application")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.shopping.androidApp)
 }
 kotlin {
     androidTarget()
@@ -29,14 +27,14 @@ kotlin {
     }
 }
 android {
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     namespace = "com.razzaghi.shopingbykmp.android"
     defaultConfig {
         applicationId = "com.razzaghi.shopingbykmp.android"
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = libs.versions.android.version.code.get().toInt()
+        versionName = libs.versions.android.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
