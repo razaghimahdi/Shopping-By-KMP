@@ -16,6 +16,7 @@ internal fun Project.configureKotlinAndroid(
 ) {
     commonExtension.apply {
         compileSdk =  libs.findVersion("android.compileSdk").get().toString().toInt()
+        namespace ="com.razzaghi.shopingbykmp.android"
 
         defaultConfig {
             minSdk = libs.findVersion("android.minSdk").get().toString().toInt()
