@@ -36,6 +36,7 @@ turbine = "1.0.0"
 mockk = "1.8.13.kotlin13"
 accompanist-version = "0.33.2-alpha"
 accompanist-permissions = "0.32.0"
+jetbrainsKotlinJvm = "1.9.22"
 
 
 [libraries]
@@ -134,3 +135,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 shopping-shared = { id = "com.razzaghi.shopingbykmp.shared", version = "unspecified" }
 shopping-kotlinMultiplatform = { id = "com.razzaghi.shopingbykmp.kotlinMultiplatform", version = "unspecified" }
 shopping-androidApp = { id = "com.razzaghi.shopingbykmp.androidApp", version = "unspecified" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

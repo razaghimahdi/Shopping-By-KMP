@@ -33,3 +33,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "Shoping_By_KMP"
 include(":androidApp")
 include(":shared")
+include(":core")
+include(":domain")
+include(":datasource")
+include(":interactor")
