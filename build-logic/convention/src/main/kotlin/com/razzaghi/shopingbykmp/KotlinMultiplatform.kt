@@ -23,8 +23,10 @@ internal fun Project.configureKotlinMultiplatform(
         }
     }
 
-    applyDefaultHierarchyTemplate()
 
+    listOf(iosArm64(), iosSimulatorArm64())
+
+    applyDefaultHierarchyTemplate()
 
     sourceSets.apply {
 
