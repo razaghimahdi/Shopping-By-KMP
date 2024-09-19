@@ -5,7 +5,9 @@ import business.core.DataState
 import business.datasoruce.datastore.AppDataStoreFake
 import business.datasoruce.network.main.MainServiceFake
 import business.datasoruce.network.main.MainServiceResponseType
-import business.datasource.network.main.MainService
+import com.razzaghi.datasource.network.main.MainService
+import business.core.ProgressBarState
+import business.core.UIComponent
 import io.kotest.common.runBlocking
 import kotlinx.coroutines.flow.toList
 import kotlin.test.Test

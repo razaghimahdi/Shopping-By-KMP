@@ -1,8 +1,8 @@
 package business.datasoruce.network.splash
 
 import business.constants.BASE_URL
-import business.datasource.network.splash.SplashService
-import business.datasource.network.splash.SplashServiceImpl
+import com.razzaghi.datasource.network.splash.SplashService
+import com.razzaghi.datasource.network.splash.SplashServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond

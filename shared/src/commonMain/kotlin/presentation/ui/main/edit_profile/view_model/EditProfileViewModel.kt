@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import common.toBytes
 
 class EditProfileViewModel(
     private val updateProfileInteractor: UpdateProfileInteractor,
@@ -80,7 +81,7 @@ class EditProfileViewModel(
         updateProfileInteractor.execute(
             name = state.value.name,
             age = state.value.age,
-            image = imageBitmap
+            image = imageBitmap?.toBytes()
         ).onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {

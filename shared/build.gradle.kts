@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.shopping.shared)
 }
 
-
 kotlin {
 
     listOf(
@@ -18,31 +17,37 @@ kotlin {
     }
 
     sourceSets {
-
         commonTest {
             dependencies {
-
+                implementation(projects.core)
+                implementation(projects.domain)
+                implementation(projects.datasource)
+                implementation(projects.interactor)
             }
         }
         commonMain {
             dependencies {
-
+                implementation(projects.core)
+                implementation(projects.domain)
+                implementation(projects.datasource)
+                implementation(projects.interactor)
             }
         }
-
         androidMain {
             dependencies {
-
-
+                implementation(projects.core)
+                implementation(projects.domain)
+                implementation(projects.datasource)
+                implementation(projects.interactor)
             }
         }
         iosMain {
             dependencies {
-                
+                implementation(projects.core)
+                implementation(projects.domain)
+                implementation(projects.datasource)
+                implementation(projects.interactor)
             }
         }
-
     }
 }
-
-

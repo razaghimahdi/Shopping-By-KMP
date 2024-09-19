@@ -8,7 +8,7 @@ import business.datasoruce.datastore.AppDataStoreFake
 import business.datasoruce.network.splash.LoginServiceResponseType
 import business.datasoruce.network.splash.LoginFakeDataGenerator
 import business.datasoruce.network.splash.SplashServiceFake
-import business.datasource.network.splash.SplashService
+import com.razzaghi.datasource.network.splash.SplashService
 import io.kotest.common.runBlocking
 import kotlinx.coroutines.flow.toList
 import kotlin.test.Test

@@ -1,8 +1,12 @@
 package business.datasoruce.network.main
 
 import business.constants.BASE_URL
-import business.datasource.network.main.MainService
-import business.datasource.network.main.MainServiceImpl
+import com.razzaghi.datasource.network.main.MainService
+import business.core.ProgressBarState
+import business.core.UIComponent
+import com.razzaghi.datasource.network.main.MainService
+import business.core.ProgressBarState
+import business.core.UIComponentImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.MockRequestHandleScope
