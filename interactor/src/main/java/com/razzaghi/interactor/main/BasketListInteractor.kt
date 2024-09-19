@@ -1,26 +1,27 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toHome
-import business.domain.main.Home
-import business.util.createException
-import business.util.handleUseCaseException
+import business.core.UIComponent
+import business.domain.main.Basket
+import com.razzaghi.datasource.network.main.responses.toBasket
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class HomeInteractor(
+class BasketListInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
- ) {
+) {
 
 
-    fun execute(): Flow<DataState<Home>> = flow {
+    fun execute(): Flow<DataState<List<Basket>>> = flow {
 
         try {
 
@@ -29,18 +30,20 @@ class HomeInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.home(token = token)
+            val apiResponse = service.basket(
+                token = token
+            )
 
 
 
-            if (apiResponse.status == false || apiResponse.result == null) {
+            if (apiResponse.status == false) {
                 throw Exception(
                     apiResponse.alert?.createException()
                 )
             }
 
 
-            val result = apiResponse.result?.toHome()
+            val result = apiResponse.result?.map { it.toBasket() }
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

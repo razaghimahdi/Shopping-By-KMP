@@ -1,40 +1,46 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
-import androidx.compose.ui.graphics.ImageBitmap
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
-import common.toBytes
+
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class UpdateProfileInteractor(
+class AddAddressInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
     fun execute(
-        name: String,
-        age: String,
-        image: ImageBitmap?,
+        address: String,
+        country: String,
+        city: String,
+        state: String,
+        zipCode: String,
     ): Flow<DataState<Boolean>> = flow {
 
         try {
 
-            emit(DataState.Loading(progressBarState = ProgressBarState.ButtonLoading))
+            emit(DataState.Loading(progressBarState = ProgressBarState.FullScreenLoading))
 
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse =
-                service.updateProfile(token = token, name = name, age = age, image = image?.toBytes())
-
+            val apiResponse = service.addAddress(
+                token = token,
+                address = address,
+                city = city,
+                state = state,
+                zipCode = zipCode,
+                country = country,
+            )
 
 
             apiResponse.alert?.let { alert ->
@@ -48,8 +54,7 @@ class UpdateProfileInteractor(
             }
 
 
-
-            emit(DataState.Data( apiResponse.status))
+            emit(DataState.Data(apiResponse.status))
 
         } catch (e: Exception) {
             e.printStackTrace()

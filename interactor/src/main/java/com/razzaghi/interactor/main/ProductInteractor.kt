@@ -1,26 +1,26 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toSearchFilter
-import business.domain.main.SearchFilter
-import business.util.createException
-import business.util.handleUseCaseException
+import business.domain.main.Product
+import com.razzaghi.datasource.network.main.responses.toProduct
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetSearchFilterInteractor(
+class ProductInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(): Flow<DataState<SearchFilter>> = flow {
+    fun execute(id: Int): Flow<DataState<Product>> = flow {
 
         try {
 
@@ -29,20 +29,18 @@ class GetSearchFilterInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.getSearchFilter(
-                token = token,
-            )
+            val apiResponse = service.product(token = token, id = id)
 
 
 
-            if (apiResponse.status == false) {
+            if (apiResponse.status == false || apiResponse.result == null) {
                 throw Exception(
                     apiResponse.alert?.createException()
                 )
             }
 
 
-            val result = apiResponse.result?.toSearchFilter()
+            val result = apiResponse.result?.toProduct()
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

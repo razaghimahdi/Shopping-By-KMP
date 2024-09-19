@@ -1,27 +1,23 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AddCommentInteractor(
+class AddBasketInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(
-        productId: Int,
-        rate: Double,
-        comment: String,
-    ): Flow<DataState<Boolean>> = flow {
+    fun execute(id: Int, count: Int): Flow<DataState<Boolean>> = flow {
 
         try {
 
@@ -30,11 +26,10 @@ class AddCommentInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.addComment(
+            val apiResponse = service.basketAdd(
                 token = token,
-                productId = productId,
-                rate = rate,
-                comment = comment,
+                id = id,
+                count = count,
             )
 
 

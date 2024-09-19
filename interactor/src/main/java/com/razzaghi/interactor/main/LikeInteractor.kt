@@ -1,35 +1,34 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AddBasketInteractor(
+class LikeInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(id: Int, count: Int): Flow<DataState<Boolean>> = flow {
+    fun execute(id: Int): Flow<DataState<Boolean>> = flow {
 
         try {
 
-            emit(DataState.Loading(progressBarState = ProgressBarState.FullScreenLoading))
+           // emit(DataState.Loading(progressBarState = ProgressBarState.LoadingWithLogo))
 
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.basketAdd(
+            val apiResponse = service.like(
                 token = token,
-                id = id,
-                count = count,
+                id = id
             )
 
 
@@ -44,14 +43,14 @@ class AddBasketInteractor(
             }
 
 
-            emit(DataState.Data(apiResponse.status))
+             emit(DataState.Data(apiResponse.status))
 
         } catch (e: Exception) {
             e.printStackTrace()
-            emit(handleUseCaseException(e))
+             emit(handleUseCaseException(e))
 
         } finally {
-            emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
+         //   emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
 
 

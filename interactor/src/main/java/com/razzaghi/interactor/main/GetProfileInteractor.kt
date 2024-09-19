@@ -1,26 +1,26 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toProduct
-import business.domain.main.Product
-import business.util.createException
-import business.util.handleUseCaseException
+import business.domain.main.Profile
+import com.razzaghi.datasource.network.main.responses.toProfile
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class ProductInteractor(
+class GetProfileInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(id: Int): Flow<DataState<Product>> = flow {
+    fun execute(): Flow<DataState<Profile>> = flow {
 
         try {
 
@@ -29,18 +29,20 @@ class ProductInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.product(token = token, id = id)
+            val apiResponse = service.getProfile(
+                token = token
+            )
 
 
 
-            if (apiResponse.status == false || apiResponse.result == null) {
+            if (apiResponse.status == false) {
                 throw Exception(
                     apiResponse.alert?.createException()
                 )
             }
 
 
-            val result = apiResponse.result?.toProduct()
+            val result = apiResponse.result?.toProfile()
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

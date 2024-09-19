@@ -1,15 +1,15 @@
-package business.interactors.main
+package com.razzaghi.interactor.splash
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.ProgressBarState
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LogoutInteractor(
+class CheckTokenInteractor(
     private val appDataStoreManager: AppDataStore,
 ) {
 
@@ -20,14 +20,16 @@ class LogoutInteractor(
 
             emit(DataState.Loading(progressBarState = ProgressBarState.ButtonLoading))
 
-            appDataStoreManager.setValue(
-                DataStoreKeys.TOKEN,
-                ""
-            )
+
+            val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
 
-            emit(DataState.Data(true))
+
+            val isTokenValid = token.isNotEmpty()
+
+
+            emit(DataState.Data(isTokenValid))
 
         } catch (e: Exception) {
             e.printStackTrace()

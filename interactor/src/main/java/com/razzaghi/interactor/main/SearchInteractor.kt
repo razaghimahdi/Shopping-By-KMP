@@ -1,44 +1,46 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
+import business.domain.main.Category
+import business.domain.main.Search
+import com.razzaghi.datasource.network.main.responses.toSearch
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AddAddressInteractor(
+class SearchInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
     fun execute(
-        address: String,
-        country: String,
-        city: String,
-        state: String,
-        zipCode: String,
-    ): Flow<DataState<Boolean>> = flow {
+        minPrice: Int? = null,
+        maxPrice: Int? = null,
+        categories: List<Category>? = null,
+        sort: Int?,
+        page: Int,
+    ): Flow<DataState<Search>> = flow {
 
         try {
 
-            emit(DataState.Loading(progressBarState = ProgressBarState.FullScreenLoading))
+            emit(DataState.Loading(progressBarState = ProgressBarState.ScreenLoading))
 
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
-
-            val apiResponse = service.addAddress(
+            val apiResponse = service.search(
                 token = token,
-                address = address,
-                city = city,
-                state = state,
-                zipCode = zipCode,
-                country = country,
+                minPrice = minPrice,
+                maxPrice = maxPrice,
+                sort = sort,
+                categoriesId = categories?.map { it.id }?.joinToString(","),
+                page = page
             )
 
 
@@ -52,8 +54,10 @@ class AddAddressInteractor(
                 )
             }
 
+            val result = apiResponse.result?.toSearch()
 
-            emit(DataState.Data(apiResponse.status))
+
+            emit(DataState.Data(result))
 
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,47 +1,38 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toSearch
-import business.domain.main.Category
-import business.domain.main.Search
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class SearchInteractor(
+class UpdateProfileInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
     fun execute(
-        minPrice: Int? = null,
-        maxPrice: Int? = null,
-        categories: List<Category>? = null,
-        sort: Int?,
-        page: Int,
-    ): Flow<DataState<Search>> = flow {
+        name: String,
+        age: String,
+        image: ByteArray?,
+    ): Flow<DataState<Boolean>> = flow {
 
         try {
 
-            emit(DataState.Loading(progressBarState = ProgressBarState.ScreenLoading))
+            emit(DataState.Loading(progressBarState = ProgressBarState.ButtonLoading))
 
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
-            val apiResponse = service.search(
-                token = token,
-                minPrice = minPrice,
-                maxPrice = maxPrice,
-                sort = sort,
-                categoriesId = categories?.map { it.id }?.joinToString(","),
-                page = page
-            )
+
+            val apiResponse =
+                service.updateProfile(token = token, name = name, age = age, image = image)
+
 
 
             apiResponse.alert?.let { alert ->
@@ -54,10 +45,9 @@ class SearchInteractor(
                 )
             }
 
-            val result = apiResponse.result?.toSearch()
 
 
-            emit(DataState.Data(result))
+            emit(DataState.Data( apiResponse.status))
 
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,23 +1,26 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class DeleteBasketInteractor(
+class BuyProductInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(id: Int): Flow<DataState<Boolean>> = flow {
+    fun execute(
+        addressId: Int,
+        shippingType: Int,
+    ): Flow<DataState<Boolean>> = flow {
 
         try {
 
@@ -26,9 +29,10 @@ class DeleteBasketInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.basketDelete(
+            val apiResponse = service.buyProduct(
                 token = token,
-                id = id,
+                addressId = addressId,
+                shippingType = shippingType
             )
 
 

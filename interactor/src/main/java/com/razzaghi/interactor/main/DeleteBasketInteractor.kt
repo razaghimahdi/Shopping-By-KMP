@@ -1,16 +1,17 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
+import com.razzaghi.datasource.network.main.MainService
+import business.core.ProgressBarState
 import business.core.UIComponent
-import business.datasource.network.main.MainService
-import business.util.handleUseCaseException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LikeInteractor(
+class DeleteBasketInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
@@ -20,14 +21,14 @@ class LikeInteractor(
 
         try {
 
-           // emit(DataState.Loading(progressBarState = ProgressBarState.LoadingWithLogo))
+            emit(DataState.Loading(progressBarState = ProgressBarState.FullScreenLoading))
 
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.like(
+            val apiResponse = service.basketDelete(
                 token = token,
-                id = id
+                id = id,
             )
 
 
@@ -42,14 +43,14 @@ class LikeInteractor(
             }
 
 
-             emit(DataState.Data(apiResponse.status))
+            emit(DataState.Data(apiResponse.status))
 
         } catch (e: Exception) {
             e.printStackTrace()
-             emit(handleUseCaseException(e))
+            emit(handleUseCaseException(e))
 
         } finally {
-         //   emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
+            emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
 
 

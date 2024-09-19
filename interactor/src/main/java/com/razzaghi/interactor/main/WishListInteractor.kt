@@ -1,4 +1,4 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
@@ -6,21 +6,22 @@ import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toComment
-import business.domain.main.Comment
-import business.util.createException
-import business.util.handleUseCaseException
+import business.core.UIComponent
+import business.domain.main.Wishlist
+import com.razzaghi.datasource.network.main.MainService
+import com.razzaghi.datasource.network.main.responses.toWishlist
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetCommentsInteractor(
+class WishListInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(id: Int): Flow<DataState<List<Comment>>> = flow {
+    fun execute(categoryId: Int?, page: Int): Flow<DataState<Wishlist>> = flow {
 
         try {
 
@@ -29,9 +30,10 @@ class GetCommentsInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.getComments(
+            val apiResponse = service.wishlist(
                 token = token,
-                id = id
+                categoryId = if (categoryId != -1) categoryId else null,
+                page = page
             )
 
 
@@ -43,7 +45,7 @@ class GetCommentsInteractor(
             }
 
 
-            val result = apiResponse.result?.map { it.toComment() }
+            val result = apiResponse.result?.toWishlist()
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

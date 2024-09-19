@@ -1,8 +1,8 @@
-package business.util
+package com.razzaghi.interactor
 
 import business.core.DataState
 import business.core.UIComponent
-import business.datasource.network.common.JAlertResponse
+import com.razzaghi.datasource.network.common.JAlertResponse
 
 
 fun <T> handleUseCaseException(e: Exception): DataState<T> {

@@ -1,26 +1,27 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toProfile
-import business.domain.main.Profile
-import business.util.createException
-import business.util.handleUseCaseException
+import business.core.UIComponent
+import business.domain.main.SearchFilter
+import com.razzaghi.datasource.network.main.responses.toSearchFilter
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetProfileInteractor(
+class GetSearchFilterInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(): Flow<DataState<Profile>> = flow {
+    fun execute(): Flow<DataState<SearchFilter>> = flow {
 
         try {
 
@@ -29,8 +30,8 @@ class GetProfileInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.getProfile(
-                token = token
+            val apiResponse = service.getSearchFilter(
+                token = token,
             )
 
 
@@ -42,7 +43,7 @@ class GetProfileInteractor(
             }
 
 
-            val result = apiResponse.result?.toProfile()
+            val result = apiResponse.result?.toSearchFilter()
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

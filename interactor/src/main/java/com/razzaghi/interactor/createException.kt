@@ -1,6 +1,6 @@
-package business.util
+package com.razzaghi.interactor
 
-import business.datasource.network.common.JAlertResponse
+import com.razzaghi.datasource.network.common.JAlertResponse
 
 
 const val THROWABLE_DIVIDER = "THROWABLE_DIVIDER"

@@ -1,26 +1,27 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toWishlist
-import business.domain.main.Wishlist
-import business.util.createException
-import business.util.handleUseCaseException
+import business.core.UIComponent
+import business.domain.main.Address
+import com.razzaghi.datasource.network.main.responses.toAddress
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class WishListInteractor(
+class GetAddressesInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(categoryId: Int?, page: Int): Flow<DataState<Wishlist>> = flow {
+    fun execute(): Flow<DataState<List<Address>>> = flow {
 
         try {
 
@@ -29,11 +30,7 @@ class WishListInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.wishlist(
-                token = token,
-                categoryId = if (categoryId != -1) categoryId else null,
-                page = page
-            )
+            val apiResponse = service.getAddresses(token = token)
 
 
 
@@ -44,7 +41,7 @@ class WishListInteractor(
             }
 
 
-            val result = apiResponse.result?.toWishlist()
+            val result = apiResponse.result?.map { it.toAddress() }
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

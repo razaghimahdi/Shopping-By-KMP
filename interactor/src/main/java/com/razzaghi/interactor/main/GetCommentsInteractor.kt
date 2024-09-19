@@ -1,26 +1,27 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toOrder
-import business.domain.main.Order
-import business.util.createException
-import business.util.handleUseCaseException
+import business.core.UIComponent
+import business.domain.main.Comment
+import com.razzaghi.datasource.network.main.responses.toComment
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetOrdersInteractor(
+class GetCommentsInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(): Flow<DataState<List<Order>>> = flow {
+    fun execute(id: Int): Flow<DataState<List<Comment>>> = flow {
 
         try {
 
@@ -29,7 +30,10 @@ class GetOrdersInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.getOrders(token = token)
+            val apiResponse = service.getComments(
+                token = token,
+                id = id
+            )
 
 
 
@@ -40,7 +44,7 @@ class GetOrdersInteractor(
             }
 
 
-            val result = apiResponse.result?.map { it.toOrder() }
+            val result = apiResponse.result?.map { it.toComment() }
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))

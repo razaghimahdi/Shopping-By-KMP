@@ -1,26 +1,26 @@
-package business.interactors.main
+package com.razzaghi.interactor.main
 
 
 import business.constants.DataStoreKeys
 import business.core.AppDataStore
 import business.core.DataState
 import business.core.NetworkState
+import com.razzaghi.datasource.network.main.MainService
 import business.core.ProgressBarState
-import business.datasource.network.main.MainService
-import business.datasource.network.main.responses.toBasket
-import business.domain.main.Basket
-import business.util.createException
-import business.util.handleUseCaseException
+import business.domain.main.Order
+import com.razzaghi.datasource.network.main.responses.toOrder
+import com.razzaghi.interactor.createException
+import com.razzaghi.interactor.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class BasketListInteractor(
+class GetOrdersInteractor(
     private val service: MainService,
     private val appDataStoreManager: AppDataStore,
 ) {
 
 
-    fun execute(): Flow<DataState<List<Basket>>> = flow {
+    fun execute(): Flow<DataState<List<Order>>> = flow {
 
         try {
 
@@ -29,9 +29,7 @@ class BasketListInteractor(
             val token = appDataStoreManager.readValue(DataStoreKeys.TOKEN) ?: ""
 
 
-            val apiResponse = service.basket(
-                token = token
-            )
+            val apiResponse = service.getOrders(token = token)
 
 
 
@@ -42,7 +40,7 @@ class BasketListInteractor(
             }
 
 
-            val result = apiResponse.result?.map { it.toBasket() }
+            val result = apiResponse.result?.map { it.toOrder() }
 
 
             emit(DataState.NetworkStatus(NetworkState.Good))
