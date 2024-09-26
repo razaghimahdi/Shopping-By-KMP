@@ -40,6 +40,9 @@
     <string name="enter_valid_password">Enter valid password</string>
     <string name="enter_valid_email">Enter valid email</string>
     <string name="sign_in">Sign In</string>
+    <string name="nothing_yet">Nothing yet!</string>
+    <string name="notifications">Notifications</string>
+    <string name="mark_all_as_read">Mark all as read</string>
     <string name="basket_is_empty">Basket is empty!</string>
     <string name="total_cost">Total Cost</string>
     <string name="proceed_to_checkout">Proceed to Checkout</string>
