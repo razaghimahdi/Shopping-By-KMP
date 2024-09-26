@@ -17,6 +17,7 @@ import business.interactors.main.DeleteBasketInteractor
 import business.interactors.main.GetAddressesInteractor
 import business.interactors.main.GetCommentsInteractor
 import business.interactors.main.GetEmailFromCacheInteractor
+import business.interactors.main.GetNotificationsInteractor
 import business.interactors.main.GetOrdersInteractor
 import business.interactors.main.GetProfileInteractor
 import business.interactors.main.GetSearchFilterInteractor
@@ -71,7 +72,7 @@ fun appModule(context: Context) = module {
     factory { SettingsViewModel(get()) }
     factory { EditProfileViewModel(get(), get(), get()) }
     factory { PaymentMethodViewModel() }
-    factory { NotificationsViewModel() }
+    factory { NotificationsViewModel(get()) }
     factory { MyCouponsViewModel() }
     factory { MyOrdersViewModel(get()) }
     factory { CheckoutViewModel(get(), get(), get()) }
@@ -94,6 +95,7 @@ fun appModule(context: Context) = module {
     single { GetCommentsInteractor(get(), get()) }
     single { GetAddressesInteractor(get(), get()) }
     single { GetOrdersInteractor(get(), get()) }
+    single { GetNotificationsInteractor(get(), get()) }
     single { AddAddressInteractor(get(), get()) }
     single { AddBasketInteractor(get(), get()) }
     single { DeleteBasketInteractor(get(), get()) }
