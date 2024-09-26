@@ -2,8 +2,9 @@ package presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults.buttonColors
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
+ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults.textFieldColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -11,6 +12,7 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
@@ -34,7 +36,7 @@ fun DefaultImageButtonTheme() = buttonColors(
 fun DefaultButtonWithBorderPrimaryTheme() = buttonColors(
     containerColor = MaterialTheme.colorScheme.background,
     contentColor = MaterialTheme.colorScheme.primary,
-    disabledContainerColor =  MaterialTheme.colorScheme.background,
+    disabledContainerColor = MaterialTheme.colorScheme.background,
     // disabledBackgroundColor = MaterialTheme.colorScheme.background,
     disabledContentColor = MaterialTheme.colorScheme.primary
 )
@@ -70,6 +72,15 @@ fun DefaultCheckBoxTheme() = CheckboxDefaults.colors(
 
 
 @Composable
+fun DefaultCardColorsTheme() = CardColors(
+    containerColor = MaterialTheme.colorScheme.background,
+    contentColor = MaterialTheme.colorScheme.onBackground,
+    disabledContainerColor = MaterialTheme.colorScheme.background,
+    disabledContentColor = MaterialTheme.colorScheme.onBackground,
+)
+
+
+@Composable
 fun DefaultNavigationBarItemTheme() = NavigationBarItemDefaults.colors(
     selectedIconColor = MaterialTheme.colorScheme.primary,
     unselectedIconColor = MaterialTheme.colorScheme.primary,
@@ -79,10 +90,9 @@ fun DefaultNavigationBarItemTheme() = NavigationBarItemDefaults.colors(
 )
 
 
-
 @Composable
 fun TextFieldWithTransparentTheme() = TextFieldDefaults.colors(
-   // cursorColor = Color.Transparent,
+    // cursorColor = Color.Transparent,
     focusedIndicatorColor = Color.Transparent,
     unfocusedIndicatorColor = Color.Transparent,
     disabledIndicatorColor = Color.Transparent,
