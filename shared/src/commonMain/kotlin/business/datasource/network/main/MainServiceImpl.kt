@@ -12,6 +12,7 @@ import business.datasource.network.main.responses.BuyRequestDTO
 import business.datasource.network.main.responses.CommentDTO
 import business.datasource.network.main.responses.CommentRequestDTO
 import business.datasource.network.main.responses.HomeDTO
+import business.datasource.network.main.responses.NotificationDTO
 import business.datasource.network.main.responses.OrderDTO
 import business.datasource.network.main.responses.ProductDTO
 import business.datasource.network.main.responses.ProfileDTO
@@ -41,6 +42,19 @@ import io.ktor.utils.io.core.writeFully
 class MainServiceImpl(
     private val httpClient: HttpClient
 ) : MainService {
+    override suspend fun getNotifications(token: String): MainGenericResponse<List<NotificationDTO>> {
+        return httpClient.get {
+            url {
+                headers {
+                    append(HttpHeaders.Authorization, token)
+                }
+                takeFrom(BASE_URL)
+                encodedPath += MainService.NOTIFICATIONS
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
     override suspend fun getOrders(token: String): MainGenericResponse<List<OrderDTO>> {
         return httpClient.get {
             url {
