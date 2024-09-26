@@ -91,7 +91,7 @@ fun appModule(context: Context) = module {
     single { SearchInteractor(get(), get()) }
     single { AddCommentInteractor(get(), get()) }
     single { BuyProductInteractor(get(), get()) }
-    single { CommentViewModel(get(), get(), get()) }
+    single { CommentViewModel(get(), get() ) }
     single { GetCommentsInteractor(get(), get()) }
     single { GetAddressesInteractor(get(), get()) }
     single { GetOrdersInteractor(get(), get()) }
