@@ -21,11 +21,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Notification
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.theme.BorderColor
@@ -34,6 +36,9 @@ import presentation.ui.main.notifications.view_model.NotificationsEvent
 import presentation.ui.main.notifications.view_model.NotificationsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.bell
+import shoping_by_kmp.shared.generated.resources.mark_all_as_read
+import shoping_by_kmp.shared.generated.resources.nothing_yet
+import shoping_by_kmp.shared.generated.resources.notifications
 
 
 @Composable
@@ -49,27 +54,38 @@ fun NotificationsScreen(
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(NotificationsEvent.OnRetryNetwork) },
-        titleToolbar = "notifications",
+        titleToolbar = stringResource(Res.string.notifications),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-
+        if (state.notifications.isEmpty()) {
 
             Text(
-                "Mark all as read",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(16.dp),
+                stringResource(Res.string.nothing_yet),
+                style = MaterialTheme.typography.titleLarge,
+                color = BorderColor,
+                modifier = Modifier.fillMaxSize().padding(top = 64.dp),
+                textAlign = TextAlign.Center
             )
 
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.notifications) {
-                    NotificationBox(notification = it)
-                }
-            }
+        } else {
+            Column(modifier = Modifier.fillMaxSize()) {
 
+                Text(
+                    stringResource(Res.string.mark_all_as_read),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(16.dp),
+                )
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.notifications) {
+                        NotificationBox(notification = it)
+                    }
+                }
+
+            }
         }
     }
 }
@@ -109,7 +125,7 @@ fun NotificationBox(notification: Notification) {
             ) {
                 Text(notification.title, style = MaterialTheme.typography.titleLarge)
                 Text(
-                    notification.desc,
+                    notification.description,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,

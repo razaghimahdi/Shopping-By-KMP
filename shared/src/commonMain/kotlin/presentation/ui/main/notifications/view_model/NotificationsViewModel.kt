@@ -9,9 +9,17 @@ import business.core.Queue
 import business.core.UIComponent
 import business.domain.main.Notification
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import business.core.DataState
+import business.interactors.main.GetNotificationsInteractor
+import business.interactors.main.GetOrdersInteractor
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import presentation.ui.main.my_orders.view_model.MyOrdersEvent
 
-class NotificationsViewModel : ViewModel() {
-
+class NotificationsViewModel(
+    private val getNotificationsInteractor: GetNotificationsInteractor
+) : ViewModel() {
 
 
     val state: MutableState<NotificationsState> = mutableStateOf(NotificationsState())
@@ -20,7 +28,7 @@ class NotificationsViewModel : ViewModel() {
     fun onTriggerEvent(event: NotificationsEvent) {
         when (event) {
 
- 
+
             is NotificationsEvent.OnRemoveHeadFromQueue -> {
                 removeHeadMessage()
             }
@@ -40,13 +48,32 @@ class NotificationsViewModel : ViewModel() {
     }
 
     init {
-        state.value = state.value.copy(notifications = listOf(
-            Notification(title = "Order Shipped",desc = LOREM, createAt = "1h", isRead = false),
-            Notification(title = "Flash Sale Alert",desc = LOREM, createAt = "3h", isRead = true),
-            Notification(title = "Product Review Request",desc = LOREM, createAt = "5h", isRead = true),
-            Notification(title = "New Paypal Added",desc = LOREM, createAt = "5h", isRead = true),
-        ))
+        getNotifications()
+    }
 
+
+    private fun getNotifications() {
+
+        getNotificationsInteractor.execute().onEach { dataState ->
+            when (dataState) {
+                is DataState.NetworkStatus -> {
+                    onTriggerEvent(NotificationsEvent.OnUpdateNetworkState(dataState.networkState))
+                }
+
+                is DataState.Response -> {
+                    onTriggerEvent(NotificationsEvent.Error(dataState.uiComponent))
+                }
+
+                is DataState.Data -> {
+                    state.value = state.value.copy(notifications = dataState.data ?: listOf())
+                }
+
+                is DataState.Loading -> {
+                    state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
@@ -74,7 +101,7 @@ class NotificationsViewModel : ViewModel() {
 
 
     private fun onRetryNetwork() {
-
+        getNotifications()
     }
 
 
