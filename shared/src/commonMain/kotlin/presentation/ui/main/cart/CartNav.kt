@@ -29,7 +29,6 @@ fun CartNav() {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToDetail = {
-                    navigator.popBackStack()
                     navigator.navigate(CartNavigation.Detail.route.plus("/$it"))
                 }, navigateToCheckout = {
                     navigator.navigate(CartNavigation.Checkout.route)
@@ -59,7 +58,7 @@ fun CartNav() {
             arguments = CartNavigation.Detail.arguments,
         ) { backStackEntry ->
             val argument = backStackEntry.arguments
-            val id = argument?.getInt("id")
+            val id = argument?.getString("id")?.toIntOrNull()
             id?.let {
                 DetailNav(it) {
                     navigator.popBackStack()

@@ -51,6 +51,7 @@ import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BackgroundContent
 import presentation.theme.BorderColor
+import presentation.theme.DefaultCardColorsTheme
 import presentation.theme.orange_400
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailState
@@ -108,6 +109,7 @@ fun DetailScreen(
                             .padding(16.dp)
                     ) {
                         Card(
+                            colors = DefaultCardColorsTheme(),
                             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                             shape = MaterialTheme.shapes.small
                         ) {
@@ -251,6 +253,7 @@ fun DetailScreen(
 @Composable
 fun BuyButtonBox(product: Product, onClick: () -> Unit) {
     Card(
+        colors = DefaultCardColorsTheme(),
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
         shape = RoundedCornerShape(
@@ -286,6 +289,7 @@ fun BuyButtonBox(product: Product, onClick: () -> Unit) {
 fun CommentBox(comment: Comment, modifier: Modifier = Modifier.width(300.dp)) {
     Box(modifier = Modifier.padding(8.dp), contentAlignment = Alignment.Center) {
         Card(
+            colors = DefaultCardColorsTheme(),
             modifier = modifier.height(160.dp),
             elevation = CardDefaults.cardElevation(8.dp), shape = MaterialTheme.shapes.small
         ) {

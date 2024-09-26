@@ -38,7 +38,6 @@ fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToDetailScreen = {
-                    navigator.popBackStack()
                     navigator.navigate(SearchNavigation.Detail.route.plus("/$it"))
                 },
                 popUp = { popUp() }
@@ -47,7 +46,7 @@ fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
         composable(route = SearchNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
 
             val argument = backStackEntry.arguments
-            val id = argument?.getInt("id")
+            val id = argument?.getString("id")?.toIntOrNull()
             id?.let {
                 DetailNav(it) {
                     navigator.popBackStack()

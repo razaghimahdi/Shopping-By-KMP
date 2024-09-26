@@ -41,6 +41,7 @@ import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
+import presentation.theme.DefaultCardColorsTheme
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
 import shoping_by_kmp.shared.generated.resources.Res
@@ -147,6 +148,7 @@ fun CheckoutButtonBox(
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
+        colors = DefaultCardColorsTheme(),
         shape = RoundedCornerShape(
             topStart = 8.dp,
             topEnd = 8.dp

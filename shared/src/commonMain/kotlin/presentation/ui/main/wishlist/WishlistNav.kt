@@ -25,14 +25,13 @@ fun WishlistNav() {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent
             ) {
-                navigator.popBackStack()
                 navigator.navigate(WishlistNavigation.Detail.route.plus("/$it"))
             }
         }
         composable(route = WishlistNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
 
             val argument = backStackEntry.arguments
-            val id = argument?.getInt("id")
+            val id = argument?.getString("id")?.toIntOrNull()
             id?.let {
                 DetailNav(it) {
                     navigator.popBackStack()

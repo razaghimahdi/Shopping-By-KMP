@@ -40,7 +40,6 @@ fun HomeNav(logout: () -> Unit) {
                     navigator.navigate(HomeNavigation.Settings.route)
                 },
                 navigateToDetail = {
-                    navigator.popBackStack()
                     navigator.navigate(HomeNavigation.Detail.route.plus("/$it"))
                 }) { categoryId, sort ->
                 navigator.navigate(
@@ -82,7 +81,7 @@ fun HomeNav(logout: () -> Unit) {
         }
         composable(route = HomeNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
             val argument = backStackEntry.arguments
-            val id = argument?.getInt("id")
+            val id = argument?.getString("id")?.toIntOrNull()
             id?.let {
                 DetailNav(it) {
                     navigator.popBackStack()

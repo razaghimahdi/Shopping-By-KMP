@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import presentation.navigation.DetailNavigation
 import presentation.ui.main.comment.CommentScreen
+import presentation.ui.main.comment.view_model.CommentEvent
 import presentation.ui.main.comment.view_model.CommentViewModel
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel
@@ -19,8 +20,8 @@ import presentation.ui.main.detail.view_model.DetailViewModel
 fun DetailNav(id: Int, popUp: () -> Unit) {
     val navigator = rememberNavController()
     NavHost(
-         startDestination = DetailNavigation.Detail.route,
-         navController = navigator,
+        startDestination = DetailNavigation.Detail.route,
+        navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(route = DetailNavigation.Detail.route) {
@@ -40,6 +41,16 @@ fun DetailNav(id: Int, popUp: () -> Unit) {
         composable(route = DetailNavigation.Comment.route.plus("/{id}")) { backStackEntry ->
 
             val viewModel: CommentViewModel = koinInject()
+            val argument = backStackEntry.arguments
+            val id = argument?.getString("id")?.toIntOrNull()
+
+            LaunchedEffect(id) {
+                id?.let {
+                    viewModel.onTriggerEvent(CommentEvent.OnUpdateProductId(id))
+                    viewModel.onTriggerEvent(CommentEvent.GetComments)
+                }
+            }
+
             CommentScreen(state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 popup = {

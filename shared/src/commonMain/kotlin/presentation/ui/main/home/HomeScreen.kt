@@ -63,6 +63,7 @@ import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BorderColor
+import presentation.theme.DefaultCardColorsTheme
 import presentation.theme.PagerDotColor
 import presentation.ui.main.home.view_model.HomeEvent
 import presentation.ui.main.home.view_model.HomeState
@@ -499,6 +500,7 @@ private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
 fun BannerImage(it: String) {
     Box(modifier = Modifier.padding(horizontal = 8.dp)) {
         Card(
+            colors = DefaultCardColorsTheme(),
             modifier = Modifier.height(160.dp).fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,
             elevation = CardDefaults.cardElevation(8.dp)

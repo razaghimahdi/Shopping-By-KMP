@@ -30,6 +30,7 @@ import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
+import presentation.theme.DefaultCardColorsTheme
 import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
 import presentation.ui.main.payment_method.view_model.PaymentMethodState
 import shoping_by_kmp.shared.generated.resources.Res
@@ -91,6 +92,7 @@ fun PaymentMethodScreen(
 
 
             Card(
+                colors = DefaultCardColorsTheme(),
                 modifier = Modifier,
                 border = BorderStroke(1.dp, BorderColor),
                 shape = MaterialTheme.shapes.small
@@ -188,6 +190,7 @@ private fun ChipsCardBox(
         onClick = onSelectExecute,
         modifier = Modifier,
         border = BorderStroke(1.dp, BorderColor),
+        colors = DefaultCardColorsTheme(),
         shape = MaterialTheme.shapes.small
     ) {
         Row(

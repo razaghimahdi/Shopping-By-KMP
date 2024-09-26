@@ -54,6 +54,7 @@ import presentation.component.Spacer_4dp
 import presentation.component.noRippleClickable
 import presentation.component.rememberCustomImagePainter
 import presentation.theme.BorderColor
+import presentation.theme.DefaultCardColorsTheme
 import presentation.ui.main.cart.view_model.CartEvent
 import presentation.ui.main.cart.view_model.CartState
 import shoping_by_kmp.shared.generated.resources.Res
@@ -128,6 +129,7 @@ fun CartScreen(
 fun ProceedButtonBox(totalCost: String, onClick: () -> Unit) {
 
     Card(
+        colors = DefaultCardColorsTheme(),
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
         shape = RoundedCornerShape(

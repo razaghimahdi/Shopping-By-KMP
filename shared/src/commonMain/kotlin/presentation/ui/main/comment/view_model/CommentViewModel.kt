@@ -19,10 +19,7 @@ import kotlinx.coroutines.flow.onEach
 class CommentViewModel(
     private val getCommentsInteractor: GetCommentsInteractor,
     private val addCommentInteractor: AddCommentInteractor,
-    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-
 
 
     val state: MutableState<CommentState> = mutableStateOf(CommentState())
@@ -62,14 +59,6 @@ class CommentViewModel(
             is CommentEvent.OnUpdateNetworkState -> {
                 onUpdateNetworkState(event.networkState)
             }
-        }
-    }
-
-
-    init {
-        savedStateHandle.get<Int>("id")?.let { id ->
-            onTriggerEvent(CommentEvent.OnUpdateProductId(id))
-            onTriggerEvent(CommentEvent.GetComments)
         }
     }
 

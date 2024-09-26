@@ -27,6 +27,7 @@ import common.ChangeStatusBarColors
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.navigation.MainNavigation
+import presentation.theme.DefaultCardColorsTheme
 import presentation.theme.DefaultNavigationBarItemTheme
 import presentation.ui.main.cart.CartNav
 import presentation.ui.main.home.HomeNav
@@ -77,6 +78,7 @@ fun BottomNavigationUI(
     val currentRoute = navBackStackEntry?.destination?.route
 
     Card(
+        colors = DefaultCardColorsTheme(),
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(10.dp),
         shape = RoundedCornerShape(
