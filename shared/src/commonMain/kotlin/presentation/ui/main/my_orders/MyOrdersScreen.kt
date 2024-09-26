@@ -51,6 +51,7 @@ import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
@@ -60,6 +61,7 @@ import presentation.ui.main.my_orders.view_model.MyOrdersState
 import presentation.util.convertDate
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.arrow_down
+import shoping_by_kmp.shared.generated.resources.nothing_yet
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -165,7 +167,7 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
 private fun MyOrdersList(list: List<Order>) {
     if (list.isEmpty()) {
         Text(
-            "Nothing yet!",
+            stringResource(Res.string.nothing_yet),
             style = MaterialTheme.typography.titleLarge,
             color = BorderColor,
             modifier = Modifier.fillMaxSize().padding(top = 64.dp),
