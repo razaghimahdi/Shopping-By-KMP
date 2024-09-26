@@ -2,7 +2,6 @@ package presentation.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +34,7 @@ import business.core.ProgressBarState
 import presentation.theme.BorderColor
 import presentation.theme.DefaultButtonTheme
 import presentation.theme.DefaultButtonWithBorderPrimaryTheme
+import presentation.theme.DefaultCardColorsTheme
 
 val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
@@ -43,15 +42,19 @@ val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
 
 @Composable
 fun CircleButton(
-    modifier: Modifier = Modifier,
+    modifier : Modifier = Modifier,
     imageVector: ImageVector,
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier.size(50.dp).border(BorderStroke(1.dp, BorderColor), CircleShape)
-            .noRippleClickable {
-                onClick()
-            },
+    Card(
+        modifier = modifier.size(50.dp),
+        shape = CircleShape,
+        colors = DefaultCardColorsTheme(),
+        elevation = CardDefaults.cardElevation(0.dp),
+        border = BorderStroke(1.dp, BorderColor),
+        onClick = {
+            onClick()
+        }
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

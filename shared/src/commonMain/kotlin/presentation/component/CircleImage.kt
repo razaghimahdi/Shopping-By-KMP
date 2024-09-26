@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import presentation.theme.DefaultCardColorsTheme
 
 
 @Composable
@@ -34,6 +35,7 @@ fun CircleImage(
         },
         border = if (width == 0.dp) null else BorderStroke(width = width, color = color),
         shape = CircleShape,
+        colors = DefaultCardColorsTheme(),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Image(
@@ -63,6 +65,7 @@ fun CircleImage(
         },
         border = if (width == 0.dp) null else BorderStroke(width = width, color = color),
         shape = CircleShape,
+        colors = DefaultCardColorsTheme(),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         if (image == null) {

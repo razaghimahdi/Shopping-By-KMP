@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import presentation.theme.DefaultCardColorsTheme
 
 
 @Composable
@@ -45,7 +46,9 @@ fun GenericDialog(
         modifier = modifier
     ) {
 
-        Card(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            colors = DefaultCardColorsTheme(), modifier = Modifier.fillMaxWidth()
+        ) {
             Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(
                     text = title
