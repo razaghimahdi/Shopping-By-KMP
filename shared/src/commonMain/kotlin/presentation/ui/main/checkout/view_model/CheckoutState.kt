@@ -10,8 +10,8 @@ import business.domain.main.ShippingType
 
 data class CheckoutState(
     val buyingSuccess: Boolean = false,
-    val totalCost: Int = 0,
-    val totalBasket: Int = 0,
+    val totalCost: Long = 0L,
+    val totalBasket: Long = 0L,
     val addresses: List<Address> = listOf(),
     val selectedAddress: Address = Address(),
     val selectedShipping: ShippingType = shippingType_global.first(),

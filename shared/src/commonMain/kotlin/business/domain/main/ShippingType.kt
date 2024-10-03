@@ -1,6 +1,8 @@
 package business.domain.main
 
-data class ShippingType(val title: String, val price: Int, val arrivalDay: Int){
+import common.Format
+
+data class ShippingType(val title: String, val price: Long, val arrivalDay: Int){
     fun getEstimatedDay() = "Estimated Arrival in $arrivalDay days"
-    fun getPrice() = "$ $price"
+    fun getPrice() = "$ ${Format(price.toInt())}"
 }

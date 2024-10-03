@@ -1,19 +1,21 @@
 package business.domain.main
 
+import common.Format
+
 data class Product(
     val description: String = "",
     val id: Int = 0,
     val image: String = "",
     val isLike: Boolean = false,
     val likes: Int = 0,
-    val price: Int = 0,
+    val price: Long = 0L,
     val rate: Double = 0.0,
     val title: String = "",
     val category: Category = Category(),
     val comments: List<Comment> = listOf(),
     val gallery: List<String> = listOf(),
 ) {
-    fun getPrice() = "$ $price"
+    fun getPrice() = "$ ${Format(price.toInt())}"
 }
 
 val product_sample = Product(

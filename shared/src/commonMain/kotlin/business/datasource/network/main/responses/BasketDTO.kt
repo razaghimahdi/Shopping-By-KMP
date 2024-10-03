@@ -13,7 +13,7 @@ data class BasketDTO(
     @SerialName("title") val title: String?,
     @SerialName("description") val description: String?,
     @SerialName("image") val image: String?,
-    @SerialName("price") val price: Int?,
+    @SerialName("price") val price: Long?,
     @SerialName("count") val count: Int?,
 )
 
@@ -25,5 +25,5 @@ fun BasketDTO.toBasket() = Basket(
     title = title ?: "",
     description = description ?: "",
     image = image ?: "",
-    price = price ?: 0,
+    price = price ?: 0L,
 )

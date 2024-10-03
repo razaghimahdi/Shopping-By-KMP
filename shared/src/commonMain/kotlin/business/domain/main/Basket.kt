@@ -1,6 +1,8 @@
 package business.domain.main
 
- 
+import common.Format
+
+
 data class Basket(
     val id: Int,
     val productId: Int,
@@ -8,8 +10,8 @@ data class Basket(
     val title: String,
     val description: String,
     val image: String,
-    val price: Int,
+    val price: Long,
     val count: Int,
 ){
-    fun getPrice() = "$ $price"
+    fun getPrice() = "$ ${Format(price.toInt())}"
 }
