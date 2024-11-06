@@ -38,10 +38,10 @@ If you like or are using this project to learn or start your solution, please gi
 | Notifications               | ✔️ Implemented   |
 | Setting                     | ✔️ Implemented   |
 
--## Next Features 🏄‍♂️
+## **Next Features 🏄‍♂️**
 Obviously it would be more updates, What we are working on these days?
 - **Product Comparison:** Easily compare features, prices, and reviews of two products side by side for a smarter shopping choice.
-- 
+  
 #### **Future Plans:**
 - **Web platfrom:** Soon we gonna have release for web
 
