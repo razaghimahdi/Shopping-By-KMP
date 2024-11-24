@@ -42,7 +42,7 @@ fun FilterDialog(
     val selectedCategories = state.selectedCategory.toMutableStateList()
 
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = {
             events(SearchEvent.OnUpdateFilterDialogState(UIComponentState.Hide))
         },

@@ -35,7 +35,7 @@ fun SortDialog(
     val selectedSort = mutableStateOf(state.selectedSort)
 
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = {
             events(SearchEvent.OnUpdateSortDialogState(UIComponentState.Hide))
         },

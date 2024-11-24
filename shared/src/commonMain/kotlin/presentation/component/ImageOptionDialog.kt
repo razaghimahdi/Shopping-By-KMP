@@ -23,7 +23,7 @@ fun ImageOptionDialog(
     onCameraRequest: () -> Unit = {}
 ) {
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = onDismissRequest,
         modifier = Modifier
             .fillMaxWidth().background(MaterialTheme.colorScheme.background)

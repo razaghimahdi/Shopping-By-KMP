@@ -39,7 +39,7 @@ fun GenericDialog(
     description: String,
     onRemoveHeadFromQueue: () -> Unit,
 ) {
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = {
             onRemoveHeadFromQueue()
         },

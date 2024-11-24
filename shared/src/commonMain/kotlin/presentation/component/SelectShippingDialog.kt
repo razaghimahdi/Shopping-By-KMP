@@ -41,7 +41,7 @@ fun SelectShippingDialog(state: CheckoutState, events: (CheckoutEvent) -> Unit) 
 
     val shippingList = mutableStateOf(shippingType_global)
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = {
             events(CheckoutEvent.OnUpdateSelectShippingDialogState(UIComponentState.Hide))
         },

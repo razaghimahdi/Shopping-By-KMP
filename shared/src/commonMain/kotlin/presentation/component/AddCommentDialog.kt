@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -38,7 +39,7 @@ fun AddCommentDialog(onDismissRequest: () -> Unit, onExecute: (Double, String) -
     var rate by remember { mutableStateOf(5.0) }
 
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = onDismissRequest,
         modifier = Modifier
             .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background).padding(16.dp)
@@ -121,7 +122,6 @@ fun AddCommentDialog(onDismissRequest: () -> Unit, onExecute: (Double, String) -
 
             Spacer_16dp()
         }
-
     }
 
 

@@ -42,7 +42,7 @@ fun AddAddressDialog(
     var zipCode by remember { mutableStateOf("") }
 
 
-    BasicAlertDialog(
+    CustomAlertDialog(
         onDismissRequest = onDismissRequest,
         modifier = Modifier
             .fillMaxWidth(0.9f).background(MaterialTheme.colorScheme.background)
