@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BasketDTO(
-    @SerialName("id") val id: Int?,
-    @SerialName("product_id") val productId: Int?,
+    @SerialName("id") val id: Long?,
+    @SerialName("product_id") val productId: Long?,
     @SerialName("category") val category: CategoryDTO?,
     @SerialName("title") val title: String?,
     @SerialName("description") val description: String?,

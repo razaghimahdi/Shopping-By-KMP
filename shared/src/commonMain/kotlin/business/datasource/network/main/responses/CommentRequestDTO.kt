@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 data class CommentRequestDTO(
     @SerialName("comment") val comment: String,
     @SerialName("rate") val rate: Double,
-    @SerialName("product_id") val productId: Int,
+    @SerialName("product_id") val productId: Long,
 )

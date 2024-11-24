@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BannerDTO(
     @SerialName("banner") val banner: String?,
-    @SerialName("id") val id: Int?
+    @SerialName("id") val id: Long?
 )
 
 fun BannerDTO.toBanner() = Banner(banner = banner ?: "", id = id ?: 0)

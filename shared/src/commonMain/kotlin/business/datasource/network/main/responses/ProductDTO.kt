@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProductDTO(
     @SerialName("description") val description: String?,
-    @SerialName("id") val id: Int?,
+    @SerialName("id") val id: Long?,
     @SerialName("image") val image: String?,
     @SerialName("isLike") val isLike: Boolean?,
     @SerialName("likes") val likes: Int?,

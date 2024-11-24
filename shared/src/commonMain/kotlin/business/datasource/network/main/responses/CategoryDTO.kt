@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CategoryDTO(
     @SerialName("icon") val icon: String?,
-    @SerialName("id") val id: Int?,
+    @SerialName("id") val id: Long?,
     @SerialName("name") val name: String?,
     @SerialName("parent") val parent: Int?,
 )

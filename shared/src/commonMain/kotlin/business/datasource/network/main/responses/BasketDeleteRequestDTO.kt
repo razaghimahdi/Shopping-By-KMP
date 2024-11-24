@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BasketDeleteRequestDTO(
-    @SerialName("product") val product: Int,
+    @SerialName("product") val product: Long,
 )
