@@ -1,21 +1,15 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
 
-sealed class CategoriesNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
-    data object Categories : CategoriesNavigation(route = "Categories", arguments = emptyList())
+@Serializable
+sealed interface CategoriesNavigation {
 
+    @Serializable
+    data object Categories : CategoriesNavigation
 
-    data object Search : CategoriesNavigation(
-        route = "Search",
-        arguments = listOf(navArgument("category_id") {
-            type = NavType.IntType
-        })
-    )
+    @Serializable
+    data class Search(val categoryId: Long) : CategoriesNavigation
 
 }
 

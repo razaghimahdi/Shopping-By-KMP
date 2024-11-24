@@ -1,38 +1,27 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
 
-sealed class HomeNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
-    data object Search : HomeNavigation(
-        route = "Search",
-        arguments = listOf(
-            navArgument("category_id") {
-                type = NavType.IntType
-            },
-            navArgument("sort") {
-                type = NavType.IntType
-            },
-        )
-    )
+@Serializable
+sealed interface HomeNavigation {
 
-    data object Home : HomeNavigation(route = "Home", arguments = emptyList())
+    @Serializable
+    data class Search(val categoryId: Long?, val sort: Int?) : HomeNavigation
 
-    data object Notification : HomeNavigation(route = "Notification", arguments = emptyList())
+    @Serializable
+    data object Home : HomeNavigation
 
-    data object Categories : HomeNavigation(route = "Categories", arguments = emptyList())
+    @Serializable
+    data object Notification : HomeNavigation
 
-    data object Settings : HomeNavigation(route = "Setting", arguments = emptyList())
+    @Serializable
+    data object Categories : HomeNavigation
 
-    data object Detail : HomeNavigation(
-        route = "Detail",
-        arguments = listOf(navArgument("id") {
-            type = NavType.IntType
-        })
-    )
+    @Serializable
+    data object Settings : HomeNavigation
+
+    @Serializable
+    data class Detail(val id: Long) : HomeNavigation
 
 }
 

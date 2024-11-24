@@ -1,23 +1,21 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
 
-sealed class CartNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
-    data object Cart : CartNavigation(route = "Cart", arguments = emptyList())
+@Serializable
+sealed interface CartNavigation {
 
-    data object Checkout : CartNavigation(route = "Checkout", arguments = emptyList())
+    @Serializable
+    data object Cart : CartNavigation
 
-    data object Address : CartNavigation(route = "Address", arguments = emptyList())
+    @Serializable
+    data object Checkout : CartNavigation
 
-    data object Detail : CartNavigation(route = "Detail",
-        arguments = listOf(navArgument("id") {
-            type = NavType.IntType
-        })
-    )
+    @Serializable
+    data object Address : CartNavigation
+
+    @Serializable
+    data class Detail(val id: Long) : CartNavigation
 
 }
 

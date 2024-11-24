@@ -1,19 +1,15 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
 
-sealed class DetailNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
-    data object Comment : DetailNavigation(route = "Comment",
-        arguments = listOf(navArgument("id") {
-            type = NavType.IntType
-        })
-    )
+@Serializable
+sealed interface DetailNavigation {
 
-    data object Detail : DetailNavigation(route = "Detail", arguments = emptyList())
+    @Serializable
+    data class Comment(val id: Long) : DetailNavigation
+
+    @Serializable
+    data object Detail : DetailNavigation
 
 }
 

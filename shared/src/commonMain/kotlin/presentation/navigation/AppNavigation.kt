@@ -1,14 +1,14 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
+import kotlinx.serialization.Serializable
 
-sealed class AppNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
+@Serializable
+sealed interface AppNavigation {
 
-   data object Splash : AppNavigation(route = "Splash", arguments = emptyList())
+    @Serializable
+    data object Splash : AppNavigation
 
-   data object Main : AppNavigation(route = "Main", arguments = emptyList())
-
+    @Serializable
+    data object Main : AppNavigation
 
 }

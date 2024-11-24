@@ -1,19 +1,15 @@
 package presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlinx.serialization.Serializable
 
-sealed class WishlistNavigation(
-    val route: String, val arguments: List<NamedNavArgument>
-) {
-    data object Wishlist : WishlistNavigation(route = "Home", arguments = emptyList())
+@Serializable
+sealed interface WishlistNavigation {
 
-    data object Detail : WishlistNavigation(route = "Detail",
-        arguments = listOf(navArgument("id") {
-            type = NavType.IntType
-        })
-    )
+    @Serializable
+    data object Wishlist : WishlistNavigation
+
+    @Serializable
+    data class Detail(val id: Long) : WishlistNavigation
 
 }
 
