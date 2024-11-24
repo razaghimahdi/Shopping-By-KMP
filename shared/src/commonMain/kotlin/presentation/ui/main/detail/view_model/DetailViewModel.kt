@@ -69,7 +69,7 @@ class DetailViewModel(
     }
 
 
-    private fun likeProduct(id: Int) {
+    private fun likeProduct(id: Long) {
         likeInteractor.execute(id = id)
             .onEach { dataState ->
                 when (dataState) {
@@ -93,7 +93,7 @@ class DetailViewModel(
     }
 
 
-    private fun addBasket(id: Int) {
+    private fun addBasket(id: Long) {
         addBasketInteractor.execute(id = id, 1)
             .onEach { dataState ->
                 when (dataState) {
@@ -119,7 +119,7 @@ class DetailViewModel(
     }
 
 
-    private fun getProduct(id: Int) {
+    private fun getProduct(id: Long) {
         productInteractor.execute(id = id).onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {

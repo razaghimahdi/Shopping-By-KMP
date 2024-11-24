@@ -8,7 +8,7 @@ import business.core.UIComponentState
 import business.domain.main.Comment
 
 data class CommentState(
-    val productId: Int = 0,
+    val productId: Long = 0,
     val comments: List<Comment> = listOf(),
     val addCommentDialogState: UIComponentState = UIComponentState.Hide,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,

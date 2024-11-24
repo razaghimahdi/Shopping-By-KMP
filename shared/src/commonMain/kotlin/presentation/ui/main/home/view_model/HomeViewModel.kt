@@ -58,7 +58,7 @@ class HomeViewModel(
     }
 
 
-    private fun likeProduct(id: Int) {
+    private fun likeProduct(id: Long) {
         likeInteractor.execute(id = id)
             .onEach { dataState ->
                 when (dataState) {
@@ -82,7 +82,7 @@ class HomeViewModel(
     }
 
 
-    private fun updateLike(id: Int) {
+    private fun updateLike(id: Long) {
 
         updateMostSaleProductLike(id = id)
         updateNewestProductLike(id = id)
@@ -90,7 +90,7 @@ class HomeViewModel(
 
     }
 
-    private fun updateFlashSaleProductLike(id: Int) {
+    private fun updateFlashSaleProductLike(id: Long) {
 
         val tmpFlashSale = state.value.home.flashSale.products.toMutableList()
         var currentItemFlashSale = tmpFlashSale.find { it.id == id }
@@ -117,7 +117,7 @@ class HomeViewModel(
             )
     }
 
-    private fun updateNewestProductLike(id: Int) {
+    private fun updateNewestProductLike(id: Long) {
         val tmpNewestProduct = state.value.home.newestProduct.toMutableList()
         var currentItemNewestProduct = tmpNewestProduct.find { it.id == id }
         val indexCurrentItemNewestProduct = tmpNewestProduct.indexOf(currentItemNewestProduct)
@@ -141,7 +141,7 @@ class HomeViewModel(
             state.value.copy(home = state.value.home.copy(newestProduct = tmpNewestProduct))
     }
 
-    private fun updateMostSaleProductLike(id: Int) {
+    private fun updateMostSaleProductLike(id: Long) {
         val tmpMostSale = state.value.home.mostSale.toMutableList()
         var currentItemMostSale = tmpMostSale.find { it.id == id }
         val indexCurrentItemMostSale = tmpMostSale.indexOf(currentItemMostSale)

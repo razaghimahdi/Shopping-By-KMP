@@ -87,7 +87,7 @@ class CartViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private fun deleteFromBasket(id: Int) {
+    private fun deleteFromBasket(id: Long) {
         deleteBasketInteractor.execute(id = id).onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {}
@@ -108,7 +108,7 @@ class CartViewModel(
     }
 
 
-    private fun addProduct(id: Int) {
+    private fun addProduct(id: Long) {
         addBasketInteractor.execute(id = id, count = 1).onEach { dataState ->
             when (dataState) {
                 is DataState.NetworkStatus -> {}

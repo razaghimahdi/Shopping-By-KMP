@@ -64,7 +64,7 @@ class WishlistViewModel(
         getWishlist()
     }
 
-    private fun likeProduct(id: Int) {
+    private fun likeProduct(id: Long) {
         likeInteractor.execute(id = id)
             .onEach { dataState ->
                 when (dataState) {

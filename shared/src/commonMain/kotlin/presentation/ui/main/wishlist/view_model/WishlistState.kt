@@ -9,7 +9,7 @@ import business.domain.main.Wishlist
 import business.domain.main.category_all
 
 data class WishlistState(
-    val categoryId: Int? = null,
+    val categoryId: Long? = null,
     val page: Int = 1,
     val hasNextPage: Boolean = true,
     val wishlist: Wishlist = Wishlist(),

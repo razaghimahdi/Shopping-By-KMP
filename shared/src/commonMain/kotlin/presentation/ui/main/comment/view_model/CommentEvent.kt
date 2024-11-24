@@ -10,7 +10,7 @@ sealed class CommentEvent {
 
    data object GetComments : CommentEvent()
 
-    data class OnUpdateProductId(val id: Int) : CommentEvent()
+    data class OnUpdateProductId(val id: Long) : CommentEvent()
 
     data class AddComment(
         val rate: Double,

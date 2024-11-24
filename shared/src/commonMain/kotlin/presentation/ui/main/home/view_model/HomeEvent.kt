@@ -17,6 +17,6 @@ sealed class HomeEvent {
         val networkState: NetworkState
     ) : HomeEvent()
 
-    data class Like(val id: Int) : HomeEvent()
+    data class Like(val id: Long) : HomeEvent()
 
 }

@@ -63,7 +63,7 @@ class CommentViewModel(
     }
 
 
-    private fun onUpdateProductId(id: Int) {
+    private fun onUpdateProductId(id: Long) {
         state.value = state.value.copy(productId = id)
     }
 

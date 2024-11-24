@@ -11,7 +11,7 @@ sealed class WishlistEvent {
 
     data class OnUpdateSelectedCategory(val category: Category): WishlistEvent()
 
-    data class LikeProduct(val id: Int) : WishlistEvent()
+    data class LikeProduct(val id: Long) : WishlistEvent()
 
    data object OnRemoveHeadFromQueue : WishlistEvent()
 
