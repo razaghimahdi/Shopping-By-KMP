@@ -21,7 +21,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":shared"))
-                implementation("androidx.compose.material:material-ripple:1.7.0-alpha05")
+              //  implementation("androidx.compose.material:material-ripple:1.7.0-alpha05")
             }
         }
     }
