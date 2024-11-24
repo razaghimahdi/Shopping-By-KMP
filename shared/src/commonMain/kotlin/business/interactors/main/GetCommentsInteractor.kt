@@ -20,7 +20,7 @@ class GetCommentsInteractor(
 ) {
 
 
-    fun execute(id: Int): Flow<DataState<List<Comment>>> = flow {
+    fun execute(id: Long): Flow<DataState<List<Comment>>> = flow {
 
         try {
 

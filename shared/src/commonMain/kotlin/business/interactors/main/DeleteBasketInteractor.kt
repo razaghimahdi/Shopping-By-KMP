@@ -17,7 +17,7 @@ class DeleteBasketInteractor(
 ) {
 
 
-    fun execute(id: Int): Flow<DataState<Boolean>> = flow {
+    fun execute(id: Long): Flow<DataState<Boolean>> = flow {
 
         try {
 

@@ -20,7 +20,7 @@ class WishListInteractor(
 ) {
 
 
-    fun execute(categoryId: Int?, page: Int): Flow<DataState<Wishlist>> = flow {
+    fun execute(categoryId: Long?, page: Int): Flow<DataState<Wishlist>> = flow {
 
         try {
 
@@ -31,7 +31,7 @@ class WishListInteractor(
 
             val apiResponse = service.wishlist(
                 token = token,
-                categoryId = if (categoryId != -1) categoryId else null,
+                categoryId = if (categoryId != -1L) categoryId else null,
                 page = page
             )
 

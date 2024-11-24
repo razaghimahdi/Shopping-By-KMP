@@ -18,7 +18,7 @@ class BuyProductInteractor(
 
 
     fun execute(
-        addressId: Int,
+        addressId: Long,
         shippingType: Int,
     ): Flow<DataState<Boolean>> = flow {
 

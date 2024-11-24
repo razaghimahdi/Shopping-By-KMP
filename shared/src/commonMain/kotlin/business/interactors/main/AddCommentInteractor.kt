@@ -18,7 +18,7 @@ class AddCommentInteractor(
 
 
     fun execute(
-        productId: Int,
+        productId: Long,
         rate: Double,
         comment: String,
     ): Flow<DataState<Boolean>> = flow {

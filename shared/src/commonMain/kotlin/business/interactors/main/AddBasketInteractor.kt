@@ -17,7 +17,7 @@ class AddBasketInteractor(
 ) {
 
 
-    fun execute(id: Int, count: Int): Flow<DataState<Boolean>> = flow {
+    fun execute(id: Long, count: Int): Flow<DataState<Boolean>> = flow {
 
         try {
 
