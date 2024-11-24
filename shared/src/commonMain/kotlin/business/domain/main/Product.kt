@@ -4,7 +4,7 @@ import common.Format
 
 data class Product(
     val description: String = "",
-    val id: Int = 0,
+    val id: Long = 0,
     val image: String = "",
     val isLike: Boolean = false,
     val likes: Int = 0,

@@ -1,7 +1,7 @@
 package business.domain.main
 
 data class Address(
-    val id: Int = 0,
+    val id: Long = 0,
     val address: String = "",
     val country: String = "",
     val city: String = "",

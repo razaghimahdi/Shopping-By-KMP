@@ -4,8 +4,8 @@ import common.Format
 
 
 data class Basket(
-    val id: Int,
-    val productId: Int,
+    val id: Long,
+    val productId: Long,
     val category: Category,
     val title: String,
     val description: String,

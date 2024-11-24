@@ -2,7 +2,7 @@ package business.domain.main
 
 data class Category(
     val icon: String = "",
-    val id: Int = 0,
+    val id: Long = 0L,
     val name: String = "",
     val parent: Int = 0
 )

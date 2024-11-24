@@ -2,7 +2,7 @@ package business.domain.main
 
 
 data class Comment(
-    val id: Int,
+    val id: Long,
     val comment: String,
     val createAt: String,
     val rate: Double,
