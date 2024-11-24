@@ -45,26 +45,26 @@ internal fun App(context: Context) {
             LaunchedEffect(key1 = viewModel.tokenManager.state.value.isTokenAvailable) {
                 if (!viewModel.tokenManager.state.value.isTokenAvailable) {
                     navigator.popBackStack()
-                    navigator.navigate(AppNavigation.Splash.route)
+                    navigator.navigate(AppNavigation.Splash)
                 }
             }
 
             Box(modifier = Modifier.fillMaxSize()) {
                 NavHost(
                     navController = navigator,
-                    startDestination = AppNavigation.Splash.route,
+                    startDestination = AppNavigation.Splash,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    composable(route = AppNavigation.Splash.route) {
+                    composable<AppNavigation.Splash> {
                         SplashNav(navigateToMain = {
                             navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Main.route)
+                            navigator.navigate(AppNavigation.Main)
                         })
                     }
-                    composable(route = AppNavigation.Main.route) {
+                    composable<AppNavigation.Main> {
                         MainNav {
                             navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Splash.route)
+                            navigator.navigate(AppNavigation.Splash)
                         }
                     }
                 }
