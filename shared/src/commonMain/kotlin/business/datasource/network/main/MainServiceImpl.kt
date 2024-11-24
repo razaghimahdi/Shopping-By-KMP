@@ -70,7 +70,7 @@ class MainServiceImpl(
 
     override suspend fun buyProduct(
         token: String,
-        addressId: Int,
+        addressId: Long,
         shippingType: Int
     ): MainGenericResponse<JRNothing> {
         return httpClient.post {
@@ -135,7 +135,7 @@ class MainServiceImpl(
 
     override suspend fun getComments(
         token: String,
-        id: Int
+        id: Long
     ): MainGenericResponse<List<CommentDTO>> {
         return httpClient.get {
             url {
@@ -152,7 +152,7 @@ class MainServiceImpl(
 
     override suspend fun addComment(
         token: String,
-        productId: Int,
+        productId: Long,
         rate: Double,
         comment: String
     ): MainGenericResponse<JRNothing> {
@@ -288,7 +288,7 @@ class MainServiceImpl(
 
     override suspend fun basketAdd(
         token: String,
-        id: Int,
+        id: Long,
         count: Int
     ): MainGenericResponse<JRNothing?> {
         return httpClient.post {
@@ -304,7 +304,7 @@ class MainServiceImpl(
         }.body()
     }
 
-    override suspend fun basketDelete(token: String, id: Int): MainGenericResponse<JRNothing?> {
+    override suspend fun basketDelete(token: String, id: Long): MainGenericResponse<JRNothing?> {
         return httpClient.post {
             url {
                 headers {
@@ -331,7 +331,7 @@ class MainServiceImpl(
         }.body()
     }
 
-    override suspend fun product(token: String, id: Int): MainGenericResponse<ProductDTO> {
+    override suspend fun product(token: String, id: Long): MainGenericResponse<ProductDTO> {
         return httpClient.get {
             url {
                 headers {
@@ -345,7 +345,7 @@ class MainServiceImpl(
         }.body()
     }
 
-    override suspend fun like(token: String, id: Int): MainGenericResponse<JRNothing?> {
+    override suspend fun like(token: String, id: Long): MainGenericResponse<JRNothing?> {
         return httpClient.get {
             url {
                 headers {
@@ -362,7 +362,7 @@ class MainServiceImpl(
 
     override suspend fun wishlist(
         token: String,
-        categoryId: Int?,
+        categoryId: Long?,
         page: Int
     ): MainGenericResponse<WishlistDTO> {
         return httpClient.get {

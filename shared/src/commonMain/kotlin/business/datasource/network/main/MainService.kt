@@ -43,7 +43,7 @@ interface MainService {
 
     suspend fun buyProduct(
         token: String,
-        addressId: Int,
+        addressId: Long,
         shippingType: Int,
     ): MainGenericResponse<JRNothing>
 
@@ -62,12 +62,12 @@ interface MainService {
 
     suspend fun getComments(
         token: String,
-        id: Int,
+        id: Long,
     ): MainGenericResponse<List<CommentDTO>>
 
     suspend fun addComment(
         token: String,
-        productId: Int,
+        productId: Long,
         rate: Double,
         comment: String,
     ): MainGenericResponse<JRNothing>
@@ -94,14 +94,14 @@ interface MainService {
     ): MainGenericResponse<Boolean>
 
     suspend fun basket(token: String): MainGenericResponse<List<BasketDTO>>
-    suspend fun basketAdd(token: String, id: Int, count: Int): MainGenericResponse<JRNothing?>
-    suspend fun basketDelete(token: String, id: Int): MainGenericResponse<JRNothing?>
+    suspend fun basketAdd(token: String, id: Long, count: Int): MainGenericResponse<JRNothing?>
+    suspend fun basketDelete(token: String, id: Long): MainGenericResponse<JRNothing?>
     suspend fun home(token: String): MainGenericResponse<HomeDTO>
-    suspend fun product(token: String, id: Int): MainGenericResponse<ProductDTO>
-    suspend fun like(token: String, id: Int): MainGenericResponse<JRNothing?>
+    suspend fun product(token: String, id: Long): MainGenericResponse<ProductDTO>
+    suspend fun like(token: String, id: Long): MainGenericResponse<JRNothing?>
     suspend fun wishlist(
         token: String,
-        categoryId: Int?,
+        categoryId: Long?,
         page: Int
     ): MainGenericResponse<WishlistDTO>
 
