@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import business.domain.main.Category
 import org.koin.compose.koinInject
 import presentation.navigation.SearchNavigation
@@ -16,14 +17,14 @@ import presentation.ui.main.search.view_model.SearchEvent
 import presentation.ui.main.search.view_model.SearchViewModel
 
 @Composable
-fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
+fun SearchNav(categoryId: Long?, sort: Int?, popUp: () -> Unit) {
     val navigator = rememberNavController()
     NavHost(
-        startDestination = SearchNavigation.Search.route,
+        startDestination = SearchNavigation.Search,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable(route = SearchNavigation.Search.route) {
+        composable<SearchNavigation.Search> {
             val viewModel: SearchViewModel = koinInject()
             LaunchedEffect(sort, categoryId) {
                 val categories = if (categoryId != null) listOf(Category(id = categoryId)) else null
@@ -38,19 +39,17 @@ fun SearchNav(categoryId: Int?, sort: Int?, popUp: () -> Unit) {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToDetailScreen = {
-                    navigator.navigate(SearchNavigation.Detail.route.plus("/$it"))
+                    navigator.navigate(SearchNavigation.Detail(it))
                 },
                 popUp = { popUp() }
             )
         }
-        composable(route = SearchNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
+        composable<SearchNavigation.Detail> { backStackEntry ->
 
-            val argument = backStackEntry.arguments
-            val id = argument?.getString("id")?.toIntOrNull()
-            id?.let {
-                DetailNav(it) {
-                    navigator.popBackStack()
-                }
+            val argument = backStackEntry.toRoute<SearchNavigation.Detail>()
+            val id = argument.id
+            DetailNav(id) {
+                navigator.popBackStack()
             }
         }
     }

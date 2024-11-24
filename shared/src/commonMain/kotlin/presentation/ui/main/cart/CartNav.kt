@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import presentation.navigation.CartNavigation
 import presentation.ui.main.address.AddressScreen
@@ -19,33 +20,33 @@ import presentation.ui.main.detail.DetailNav
 fun CartNav() {
     val navigator = rememberNavController()
     NavHost(
-        startDestination = CartNavigation.Cart.route,
+        startDestination = CartNavigation.Cart,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable(route = CartNavigation.Cart.route) {
+        composable<CartNavigation.Cart> {
             val viewModel: CartViewModel = koinInject()
             CartScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToDetail = {
-                    navigator.navigate(CartNavigation.Detail.route.plus("/$it"))
+                    navigator.navigate(CartNavigation.Detail(it))
                 }, navigateToCheckout = {
-                    navigator.navigate(CartNavigation.Checkout.route)
+                    navigator.navigate(CartNavigation.Checkout)
                 })
         }
-        composable(route = CartNavigation.Checkout.route) {
+        composable<CartNavigation.Checkout> {
             val viewModel: CheckoutViewModel = koinInject()
             CheckoutScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToAddress = {
-                    navigator.navigate(CartNavigation.Address.route)
+                    navigator.navigate(CartNavigation.Address)
                 },
                 popup = { navigator.popBackStack() },
             )
         }
-        composable(route = CartNavigation.Address.route) {
+        composable<CartNavigation.Address> {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
                 state = viewModel.state.value,
@@ -53,16 +54,11 @@ fun CartNav() {
                 popup = { navigator.popBackStack() },
             )
         }
-        composable(
-            route = CartNavigation.Detail.route.plus("/{id}"),
-            arguments = CartNavigation.Detail.arguments,
-        ) { backStackEntry ->
-            val argument = backStackEntry.arguments
-            val id = argument?.getString("id")?.toIntOrNull()
-            id?.let {
-                DetailNav(it) {
-                    navigator.popBackStack()
-                }
+        composable<CartNavigation.Detail> { backStackEntry ->
+            val argument = backStackEntry.toRoute<CartNavigation.Detail>()
+            val id = argument.id
+            DetailNav(id) {
+                navigator.popBackStack()
             }
         }
     }

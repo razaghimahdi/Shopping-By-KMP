@@ -61,7 +61,7 @@ import presentation.util.convertDate
 @Composable
 fun DetailScreen(
     popup: () -> Unit,
-    navigateToMoreComment: (Int) -> Unit,
+    navigateToMoreComment: (Long) -> Unit,
     state: DetailState,
     events: (DetailEvent) -> Unit
 ) {

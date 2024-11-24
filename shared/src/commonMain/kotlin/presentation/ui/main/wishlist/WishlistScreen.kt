@@ -31,7 +31,7 @@ import presentation.ui.main.wishlist.view_model.WishlistState
 fun WishlistScreen(
     state: WishlistState,
     events: (WishlistEvent) -> Unit,
-    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Long) -> Unit
 ) {
 
 
@@ -73,7 +73,7 @@ fun WishlistScreen(
                 modifier = Modifier.fillMaxWidth().padding(8.dp),
                 contentPadding = PaddingValues(8.dp),
                 content = {
-                    itemsIndexed(state.wishlist.products){index, product ->
+                    itemsIndexed(state.wishlist.products) { index, product ->
 
                         if ((index + 1) >= (state.page * PAGINATION_PAGE_SIZE) &&
                             state.progressBarState == ProgressBarState.Idle &&

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import presentation.navigation.CategoriesNavigation
 import presentation.ui.main.categories.view_model.CategoriesViewModel
@@ -16,12 +17,12 @@ fun CategoriesNav(popup: () -> Unit) {
 
     val navigator = rememberNavController()
     NavHost(
-        startDestination = CategoriesNavigation.Categories.route,
+        startDestination = CategoriesNavigation.Categories,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
 
-        composable(route = CategoriesNavigation.Categories.route) {
+        composable<CategoriesNavigation.Categories> {
             val viewModel: CategoriesViewModel = koinInject()
             CategoriesScreen(
                 state = viewModel.state.value,
@@ -29,18 +30,15 @@ fun CategoriesNav(popup: () -> Unit) {
                 popup = popup,
             ) { categoryId ->
                 navigator.navigate(
-                    CategoriesNavigation.Search.route.plus("/${categoryId}")
+                    CategoriesNavigation.Search(categoryId)
                 )
             }
         }
 
-        composable(
-            route = CategoriesNavigation.Search.route
-                .plus("/{category_id}")
-        ) { backStackEntry ->
+        composable<CategoriesNavigation.Search>{ backStackEntry ->
 
-            val argument = backStackEntry.arguments
-            val categoryId = argument?.getInt("category_id")
+            val argument = backStackEntry.toRoute<CategoriesNavigation.Search>()
+            val categoryId = argument.categoryId
             SearchNav(categoryId = categoryId, sort = null) {
                 navigator.popBackStack()
             }

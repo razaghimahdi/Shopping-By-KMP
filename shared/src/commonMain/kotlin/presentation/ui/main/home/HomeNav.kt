@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import presentation.navigation.HomeNavigation
 import presentation.ui.main.categories.CategoriesNav
@@ -21,34 +22,34 @@ import presentation.ui.main.settings.view_model.SettingsViewModel
 fun HomeNav(logout: () -> Unit) {
     val navigator = rememberNavController()
     NavHost(
-        startDestination = HomeNavigation.Home.route,
+        startDestination = HomeNavigation.Home,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable(route = HomeNavigation.Home.route) {
+        composable<HomeNavigation.Home> {
             val viewModel: HomeViewModel = koinInject()
             HomeScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToNotifications = {
-                    navigator.navigate(HomeNavigation.Notification.route)
+                    navigator.navigate(HomeNavigation.Notification)
                 },
                 navigateToCategories = {
-                    navigator.navigate(HomeNavigation.Categories.route)
+                    navigator.navigate(HomeNavigation.Categories)
                 },
                 navigateToSetting = {
-                    navigator.navigate(HomeNavigation.Settings.route)
+                    navigator.navigate(HomeNavigation.Settings)
                 },
                 navigateToDetail = {
-                    navigator.navigate(HomeNavigation.Detail.route.plus("/$it"))
+                    navigator.navigate(HomeNavigation.Detail(id = it))
                 }) { categoryId, sort ->
                 navigator.navigate(
-                    HomeNavigation.Search.route.plus("/${categoryId}").plus("/${sort}")
+                    HomeNavigation.Search(categoryId = categoryId, sort = sort)
                 )
             }
         }
 
-        composable(route = HomeNavigation.Settings.route) {
+        composable<HomeNavigation.Settings>{
             val viewModel: SettingsViewModel = koinInject()
             SettingsScreen(
                 state = viewModel.state.value,
@@ -60,35 +61,27 @@ fun HomeNav(logout: () -> Unit) {
             )
         }
 
-        composable(
-            route = HomeNavigation.Categories.route
-        ) {
+        composable<HomeNavigation.Categories> {
             CategoriesNav {
                 navigator.popBackStack()
             }
         }
-        composable(
-            route = HomeNavigation.Search.route
-                .plus("/{category_id}")
-                .plus("/{sort}")
-        ) { backStackEntry ->
-            val argument = backStackEntry.arguments
-            val categoryId = argument?.getInt("category_id")
-            val sort = argument?.getInt("sort")
+        composable<HomeNavigation.Search>{ backStackEntry ->
+            val argument = backStackEntry.toRoute<HomeNavigation.Search>()
+            val categoryId = argument.categoryId
+            val sort = argument.sort
             SearchNav(categoryId = categoryId, sort = sort) {
                 navigator.popBackStack()
             }
         }
-        composable(route = HomeNavigation.Detail.route.plus("/{id}")) { backStackEntry ->
-            val argument = backStackEntry.arguments
-            val id = argument?.getString("id")?.toIntOrNull()
-            id?.let {
-                DetailNav(it) {
+        composable<HomeNavigation.Detail>{ backStackEntry ->
+            val argument = backStackEntry.toRoute<HomeNavigation.Detail>()
+            val id = argument.id
+                DetailNav(id) {
                     navigator.popBackStack()
                 }
-            }
         }
-        composable(route = HomeNavigation.Notification.route) {
+        composable<HomeNavigation.Notification>{
             val viewModel: NotificationsViewModel = koinInject()
             NotificationsScreen(
                 state = viewModel.state.value,

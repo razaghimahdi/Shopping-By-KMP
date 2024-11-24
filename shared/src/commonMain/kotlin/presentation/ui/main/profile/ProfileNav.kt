@@ -25,40 +25,40 @@ import presentation.ui.main.settings.view_model.SettingsViewModel
 @Composable
 fun ProfileNav(logout: () -> Unit) {
     val navigator = rememberNavController()
-    NavHost( 
-        startDestination = ProfileNavigation.Profile.route,
+    NavHost(
+        startDestination = ProfileNavigation.Profile,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable(route = ProfileNavigation.Profile.route) {
+        composable<ProfileNavigation.Profile> {
             val viewModel: ProfileViewModel = koinInject()
             ProfileScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToAddress = {
-                    navigator.navigate(ProfileNavigation.Address.route)
+                    navigator.navigate(ProfileNavigation.Address)
                 },
                 navigateToEditProfile = {
-                    navigator.navigate(ProfileNavigation.EditProfile.route)
+                    navigator.navigate(ProfileNavigation.EditProfile)
                 },
                 navigateToPaymentMethod = {
-                    navigator.navigate(ProfileNavigation.PaymentMethod.route)
+                    navigator.navigate(ProfileNavigation.PaymentMethod)
                 },
                 navigateToMyOrders = {
-                    navigator.navigate(ProfileNavigation.MyOrders.route)
+                    navigator.navigate(ProfileNavigation.MyOrders)
                 },
                 navigateToMyCoupons = {
-                    navigator.navigate(ProfileNavigation.MyCoupons.route)
+                    navigator.navigate(ProfileNavigation.MyCoupons)
                 },
                 navigateToMyWallet = {
-                    navigator.navigate(ProfileNavigation.MyWallet.route)
+                    navigator.navigate(ProfileNavigation.MyWallet)
                 },
                 navigateToSettings = {
-                    navigator.navigate(ProfileNavigation.Settings.route)
+                    navigator.navigate(ProfileNavigation.Settings)
                 },
             )
         }
-        composable(route = ProfileNavigation.Settings.route) {
+        composable<ProfileNavigation.Settings> {
             val viewModel: SettingsViewModel = koinInject()
             SettingsScreen(
                 state = viewModel.state.value,
@@ -69,7 +69,7 @@ fun ProfileNav(logout: () -> Unit) {
                 },
             )
         }
-        composable(route = ProfileNavigation.MyCoupons.route) {
+        composable<ProfileNavigation.MyCoupons> {
             val viewModel: MyCouponsViewModel = koinInject()
             MyCouponsScreen(
                 state = viewModel.state.value,
@@ -78,7 +78,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        composable(route = ProfileNavigation.MyWallet.route) {
+        composable<ProfileNavigation.MyWallet> {
             /*val viewModel: MyWalletViewModel = koinInject()
             MyWalletScreen(
                 state = viewModel.state.value,
@@ -87,7 +87,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }*/
         }
-        composable(route = ProfileNavigation.MyOrders.route) {
+        composable<ProfileNavigation.MyOrders> {
             val viewModel: MyOrdersViewModel = koinInject()
             MyOrdersScreen(
                 state = viewModel.state.value,
@@ -96,7 +96,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        composable(route = ProfileNavigation.PaymentMethod.route) {
+        composable<ProfileNavigation.PaymentMethod> {
             val viewModel: PaymentMethodViewModel = koinInject()
             PaymentMethodScreen(
                 state = viewModel.state.value,
@@ -105,7 +105,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        composable(route = ProfileNavigation.EditProfile.route) {
+        composable<ProfileNavigation.EditProfile> {
             val viewModel: EditProfileViewModel = koinInject()
             EditProfileScreen(
                 state = viewModel.state.value,
@@ -114,7 +114,7 @@ fun ProfileNav(logout: () -> Unit) {
                 navigator.popBackStack()
             }
         }
-        composable(route = ProfileNavigation.Address.route) {
+        composable<ProfileNavigation.Address> {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
                 state = viewModel.state.value,

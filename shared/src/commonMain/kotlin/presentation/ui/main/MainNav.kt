@@ -26,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import common.ChangeStatusBarColors
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.navigation.MainNavigation
+import presentation.navigation.BottomNavigation
 import presentation.theme.DefaultCardColorsTheme
 import presentation.theme.DefaultNavigationBarItemTheme
 import presentation.ui.main.cart.CartNav
@@ -45,20 +45,20 @@ fun MainNav(logout: () -> Unit) {
     }) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             NavHost(
-                startDestination = MainNavigation.Home.route,
+                startDestination = BottomNavigation.Home.route,
                 navController = navBottomBarController,
                 modifier = Modifier.fillMaxSize()
             ) {
-                composable(route = MainNavigation.Home.route) {
+                composable(route = BottomNavigation.Home.route) {
                     HomeNav(logout = logout)
                 }
-                composable(route = MainNavigation.Wishlist.route) {
+                composable(route = BottomNavigation.Wishlist.route) {
                     WishlistNav()
                 }
-                composable(route = MainNavigation.Cart.route) {
+                composable(route = BottomNavigation.Cart.route) {
                     CartNav()
                 }
-                composable(route = MainNavigation.Profile.route) {
+                composable(route = BottomNavigation.Profile.route) {
                     ProfileNav(logout = logout)
                 }
             }
@@ -93,10 +93,10 @@ fun BottomNavigationUI(
         ) {
 
             val items = listOf(
-                MainNavigation.Home,
-                MainNavigation.Wishlist,
-                MainNavigation.Cart,
-                MainNavigation.Profile,
+                BottomNavigation.Home,
+                BottomNavigation.Wishlist,
+                BottomNavigation.Cart,
+                BottomNavigation.Profile,
             )
             items.forEach {
                 NavigationBarItem(label = { Text(text = it.title) },

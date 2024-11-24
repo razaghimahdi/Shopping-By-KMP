@@ -65,7 +65,7 @@ import shoping_by_kmp.shared.generated.resources.sort
 fun SearchScreen(
     state: SearchState,
     events: (SearchEvent) -> Unit,
-    navigateToDetailScreen: (Int) -> Unit,
+    navigateToDetailScreen: (Long) -> Unit,
     popUp: () -> Unit
 ) {
 

@@ -35,7 +35,7 @@ fun CategoriesScreen(
     state: CategoriesState,
     events: (CategoriesEvent) -> Unit,
     popup: () -> Unit,
-    navigateToSearch: (Int) -> Unit,
+    navigateToSearch: (Long) -> Unit,
 ) {
 
     DefaultScreenUI(

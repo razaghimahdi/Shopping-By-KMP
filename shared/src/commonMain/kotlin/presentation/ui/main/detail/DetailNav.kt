@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import presentation.navigation.DetailNavigation
 import presentation.ui.main.comment.CommentScreen
@@ -17,14 +18,14 @@ import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailViewModel
 
 @Composable
-fun DetailNav(id: Int, popUp: () -> Unit) {
+fun DetailNav(id: Long, popUp: () -> Unit) {
     val navigator = rememberNavController()
     NavHost(
-        startDestination = DetailNavigation.Detail.route,
+        startDestination = DetailNavigation.Detail,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable(route = DetailNavigation.Detail.route) {
+        composable<DetailNavigation.Detail> {
 
             val viewModel: DetailViewModel = koinInject()
             LaunchedEffect(id) {
@@ -35,20 +36,18 @@ fun DetailNav(id: Int, popUp: () -> Unit) {
                 popup = {
                     popUp()
                 }, navigateToMoreComment = {
-                    navigator.navigate(DetailNavigation.Comment.route.plus("/$it"))
+                    navigator.navigate(DetailNavigation.Comment(it))
                 })
         }
-        composable(route = DetailNavigation.Comment.route.plus("/{id}")) { backStackEntry ->
+        composable<DetailNavigation.Comment> { backStackEntry ->
 
             val viewModel: CommentViewModel = koinInject()
-            val argument = backStackEntry.arguments
-            val id = argument?.getString("id")?.toIntOrNull()
+            val argument = backStackEntry.toRoute<DetailNavigation.Comment>()
+            val id = argument.id
 
             LaunchedEffect(id) {
-                id?.let {
-                    viewModel.onTriggerEvent(CommentEvent.OnUpdateProductId(id))
-                    viewModel.onTriggerEvent(CommentEvent.GetComments)
-                }
+                viewModel.onTriggerEvent(CommentEvent.OnUpdateProductId(id))
+                viewModel.onTriggerEvent(CommentEvent.GetComments)
             }
 
             CommentScreen(state = viewModel.state.value,

@@ -68,7 +68,7 @@ import shoping_by_kmp.shared.generated.resources.total_cost
 fun CartScreen(
     state: CartState,
     events: (CartEvent) -> Unit,
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (Long) -> Unit,
     navigateToCheckout: () -> Unit,
 ) {
 
@@ -145,7 +145,10 @@ fun ProceedButtonBox(totalCost: String, onClick: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(stringResource(Res.string.total_cost), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(Res.string.total_cost),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Text(totalCost, style = MaterialTheme.typography.titleLarge)
             }
 
@@ -161,17 +164,16 @@ fun ProceedButtonBox(totalCost: String, onClick: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartBox(
     basket: Basket,
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (Long) -> Unit,
     addMoreProduct: () -> Unit,
     deleteFromBasket: () -> Unit
 ) {
     var show by remember { mutableStateOf(true) }
 
-    val dismissState = rememberSwipeToDismissBoxState (
+    val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             if (it == SwipeToDismissBoxValue.EndToStart) {
                 deleteFromBasket()
@@ -204,7 +206,7 @@ fun CartBox(
 fun DismissCartContent(
     basket: Basket,
     addMoreProduct: () -> Unit,
-    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Long) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
         Row(
@@ -296,7 +298,6 @@ fun DismissCartContent(
         HorizontalDivider(modifier = Modifier.fillMaxWidth())
     }
 }
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
