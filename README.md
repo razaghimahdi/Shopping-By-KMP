@@ -52,7 +52,7 @@ Obviously it would be more updates, What we are working on these days?
 - Material3 
 - Ktor 
 - Datastore 
-- Compose Navigation 
+- Compose Navigation and Type safety
 - Koin
 - Coil
 - Kotest
