@@ -21,7 +21,6 @@ import shoping_by_kmp.shared.generated.resources.lato_thin
 import shoping_by_kmp.shared.generated.resources.lato_thin_italic
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LatoTypography(): Typography {
     val lato = FontFamily(
