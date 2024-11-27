@@ -73,12 +73,7 @@ fun LatoTypography(): Typography {
             resource = Res.font.lato_light,
             weight = FontWeight.Light,
             style = FontStyle.Normal
-        ),
-        Font(
-            resource = Res.font.lato_thin,
-            weight = FontWeight.Thin,
-            style = FontStyle.Normal
-        ),
+        )
     )
 
     return Typography(
