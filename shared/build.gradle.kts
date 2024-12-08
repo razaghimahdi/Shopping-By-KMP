@@ -1,8 +1,13 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+
 plugins {
     alias(libs.plugins.shopping.kotlinMultiplatform)
     alias(libs.plugins.shopping.shared)
 }
 
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
 
 kotlin {
 

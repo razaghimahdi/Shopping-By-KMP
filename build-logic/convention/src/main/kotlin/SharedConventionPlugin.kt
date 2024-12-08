@@ -13,6 +13,7 @@ class SharedConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply(libs.findPlugin("composeMultiplatform").get().get().pluginId)
+            apply(libs.findPlugin("hotReload").get().get().pluginId)
             apply(libs.findPlugin("compose.compiler").get().get().pluginId)
         }
 
