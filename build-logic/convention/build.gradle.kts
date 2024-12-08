@@ -5,12 +5,10 @@ plugins {
 group = "com.razzaghi.shopingbykmp.buildlogic"
 
 dependencies {
-    compileOnly(libs.plugins.kotlin.serialization.toDep())
     compileOnly(libs.plugins.androidApplication.toDep())
     compileOnly(libs.plugins.androidLibrary.toDep())
     compileOnly(libs.plugins.composeMultiplatform.toDep())
-    compileOnly(libs.plugins.kotlinMultiplatform.toDep())
-    compileOnly(libs.plugins.compose.compiler.toDep())
+    compileOnly("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.1.0")
 }
 
 fun Provider<PluginDependency>.toDep() = map {
