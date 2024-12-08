@@ -1,5 +1,6 @@
 dependencyResolutionManagement {
     repositories {
+        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         google()
         mavenCentral()
     }

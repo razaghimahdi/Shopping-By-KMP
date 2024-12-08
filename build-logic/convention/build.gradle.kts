@@ -8,7 +8,7 @@ dependencies {
     compileOnly(libs.plugins.androidApplication.toDep())
     compileOnly(libs.plugins.androidLibrary.toDep())
     compileOnly(libs.plugins.composeMultiplatform.toDep())
-    compileOnly("org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.1.0")
+    compileOnly(libs.plugins.kotlinMultiplatform.toDep())
 }
 
 fun Provider<PluginDependency>.toDep() = map {
