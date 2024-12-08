@@ -14,6 +14,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.fetch.NetworkFetcher
 import common.Context
 import di.appModule
+import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import presentation.navigation.AppNavigation
@@ -37,39 +38,40 @@ internal fun App(context: Context) {
                 }
                 .build()
         }
+        DevelopmentEntryPoint {
+            AppTheme {
+                val navigator = rememberNavController()
+                val viewModel: SharedViewModel = koinInject()
 
-        AppTheme {
-            val navigator = rememberNavController()
-            val viewModel: SharedViewModel = koinInject()
-
-            LaunchedEffect(key1 = viewModel.tokenManager.state.value.isTokenAvailable) {
-                if (!viewModel.tokenManager.state.value.isTokenAvailable) {
-                    navigator.popBackStack()
-                    navigator.navigate(AppNavigation.Splash)
-                }
-            }
-
-            Box(modifier = Modifier.fillMaxSize()) {
-                NavHost(
-                    navController = navigator,
-                    startDestination = AppNavigation.Splash,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    composable<AppNavigation.Splash> {
-                        SplashNav(navigateToMain = {
-                            navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Main)
-                        })
+                LaunchedEffect(key1 = viewModel.tokenManager.state.value.isTokenAvailable) {
+                    if (!viewModel.tokenManager.state.value.isTokenAvailable) {
+                        navigator.popBackStack()
+                        navigator.navigate(AppNavigation.Splash)
                     }
-                    composable<AppNavigation.Main> {
-                        MainNav {
-                            navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Splash)
+                }
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    NavHost(
+                        navController = navigator,
+                        startDestination = AppNavigation.Splash,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        composable<AppNavigation.Splash> {
+                            SplashNav(navigateToMain = {
+                                navigator.popBackStack()
+                                navigator.navigate(AppNavigation.Main)
+                            })
+                        }
+                        composable<AppNavigation.Main> {
+                            MainNav {
+                                navigator.popBackStack()
+                                navigator.navigate(AppNavigation.Splash)
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
     }
 }
