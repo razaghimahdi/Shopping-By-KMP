@@ -31,7 +31,6 @@ fun CreateUIComponentDialog(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenericDialog(
     modifier: Modifier = Modifier,
