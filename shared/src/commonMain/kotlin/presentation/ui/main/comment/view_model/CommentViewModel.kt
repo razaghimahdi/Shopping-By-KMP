@@ -134,9 +134,9 @@ class CommentViewModel(
 
     private fun removeHeadMessage() {
         try {
+            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             val queue = state.value.errorQueue
             queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
             println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
