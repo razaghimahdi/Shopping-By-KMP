@@ -7,8 +7,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
+import shoping_by_kmp.shared.generated.resources.*
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.lato_black_italic
 import shoping_by_kmp.shared.generated.resources.lato_bold
@@ -21,7 +21,6 @@ import shoping_by_kmp.shared.generated.resources.lato_thin
 import shoping_by_kmp.shared.generated.resources.lato_thin_italic
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LatoTypography(): Typography {
     val lato = FontFamily(
@@ -66,7 +65,7 @@ fun LatoTypography(): Typography {
             style = FontStyle.Normal
         ),
         Font(
-            resource = Res.font.lato_bold,
+            resource = Res.font.lato_black,
             weight = FontWeight.Black,
             style = FontStyle.Normal
         ),
@@ -74,12 +73,7 @@ fun LatoTypography(): Typography {
             resource = Res.font.lato_light,
             weight = FontWeight.Light,
             style = FontStyle.Normal
-        ),
-        Font(
-            resource = Res.font.lato_thin,
-            weight = FontWeight.Thin,
-            style = FontStyle.Normal
-        ),
+        )
     )
 
     return Typography(
