@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
@@ -22,6 +23,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     sourceSets {
 
         commonTest {
@@ -43,11 +46,29 @@ kotlin {
         }
         iosMain {
             dependencies {
-                
+
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation(compose.desktop.common)
+                implementation(compose.desktop.currentOs)
+                implementation(libs.ktor.okhttp)
+                implementation(libs.kotlinx.coroutines.swing)
             }
         }
 
     }
 }
 
-
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg)
+            packageName = "com.razzaghi.shopingbykmp"
+            packageVersion = "1.0.0"
+        }
+    }
+}
