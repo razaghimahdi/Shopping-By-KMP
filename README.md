@@ -54,7 +54,7 @@ Obviously it would be more updates, What we are working on these days?
 - Datastore 
 - Compose Navigation and Type safety
 - Koin
-- Coil
+- Coil3
 - Kotest
 - Fake Data
 <!-- - Mockk -->
