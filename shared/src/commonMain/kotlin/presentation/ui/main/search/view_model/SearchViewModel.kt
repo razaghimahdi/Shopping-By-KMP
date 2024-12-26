@@ -23,7 +23,6 @@ class SearchViewModel(
 ) : ViewModel() {
 
 
-
     val state: MutableState<SearchState> = mutableStateOf(SearchState())
 
 

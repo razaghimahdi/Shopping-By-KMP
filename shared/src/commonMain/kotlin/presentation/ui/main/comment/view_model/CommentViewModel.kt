@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import business.constants.CUSTOM_TAG
 import business.core.DataState
 import business.core.NetworkState
@@ -15,6 +16,7 @@ import business.interactors.main.AddCommentInteractor
 import business.interactors.main.GetCommentsInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import presentation.navigation.DetailNavigation
 
 class CommentViewModel(
     private val getCommentsInteractor: GetCommentsInteractor,
@@ -98,6 +100,7 @@ class CommentViewModel(
                 is DataState.NetworkStatus -> {
                     onTriggerEvent(CommentEvent.OnUpdateNetworkState(dataState.networkState))
                 }
+
                 is DataState.Response -> {
                     onTriggerEvent(CommentEvent.Error(dataState.uiComponent))
                 }
