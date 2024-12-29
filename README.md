@@ -127,6 +127,10 @@ The panel comes with a comprehensive **API**, ensuring scalability and flexibili
 - **Laravel & Livewire:** Leverage the power of Laravel's backend with Livewire for reactive UI.
 - **Full API:** Enables external integrations and interactions with the shopping platform.
 
+## Related Articles📄
+[How to set up Convention Gradle Plugin in CMP](https://medium.com/@razaghimahdi78/creating-convention-gradle-plugin-for-compose-multiplatform-1b4051e98f61)
+
+[How to create custom Number Formatting in CMP](https://medium.com/@razaghimahdi78/number-formatting-in-jetpack-compose-multiplatform-b3fd01308f6c)
 
 
 ## Contributing
@@ -139,7 +143,6 @@ This library is licensed under the MIT License. See [LICENSE.txt](https://github
 
 ### more ideas:
 https://github.com/JetBrains/compose-multiplatform-ios-android-template
-
 https://github.com/JetBrains/compose-multiplatform
 
 Developed by Mahdi Razzaghi Ghaleh
