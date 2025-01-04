@@ -19,6 +19,12 @@ https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48
 ## Give a Star! ⭐
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
+## Related Articles📄
+[How to set up Convention Gradle Plugin in CMP](https://medium.com/@razaghimahdi78/creating-convention-gradle-plugin-for-compose-multiplatform-1b4051e98f61)
+
+[How to create custom Number Formatting in CMP](https://medium.com/@razaghimahdi78/number-formatting-in-jetpack-compose-multiplatform-b3fd01308f6c)
+
+
 ## Features ✨
 | Feature                     | Status           |
 |-----------------------------|------------------|
@@ -126,11 +132,6 @@ The panel comes with a comprehensive **API**, ensuring scalability and flexibili
 - **Admin Dashboard:** Manage products, categories, orders, and customers seamlessly.
 - **Laravel & Livewire:** Leverage the power of Laravel's backend with Livewire for reactive UI.
 - **Full API:** Enables external integrations and interactions with the shopping platform.
-
-## Related Articles📄
-[How to set up Convention Gradle Plugin in CMP](https://medium.com/@razaghimahdi78/creating-convention-gradle-plugin-for-compose-multiplatform-1b4051e98f61)
-
-[How to create custom Number Formatting in CMP](https://medium.com/@razaghimahdi78/number-formatting-in-jetpack-compose-multiplatform-b3fd01308f6c)
 
 
 ## Contributing
