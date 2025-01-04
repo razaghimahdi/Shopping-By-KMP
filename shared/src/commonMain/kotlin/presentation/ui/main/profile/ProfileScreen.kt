@@ -38,8 +38,16 @@ import shoping_by_kmp.shared.generated.resources.payment
 import shoping_by_kmp.shared.generated.resources.profile2
 import shoping_by_kmp.shared.generated.resources.setting2
 import shoping_by_kmp.shared.generated.resources.warning
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.profile
+import shoping_by_kmp.shared.generated.resources.payment_methods
+import shoping_by_kmp.shared.generated.resources.edit_profile
+import shoping_by_kmp.shared.generated.resources.my_coupons
+import shoping_by_kmp.shared.generated.resources.manage_address
+import shoping_by_kmp.shared.generated.resources.settings
+import shoping_by_kmp.shared.generated.resources.help_center
+import shoping_by_kmp.shared.generated.resources.my_orders
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProfileScreen(
     state: ProfileState,
@@ -67,7 +75,7 @@ fun ProfileScreen(
 
             Spacer_16dp()
 
-            Text("Profile", style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(Res.string.profile), style = MaterialTheme.typography.titleLarge)
 
             Spacer_16dp()
 
@@ -83,29 +91,29 @@ fun ProfileScreen(
             Spacer_32dp()
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileItemBox(title = "Edit profile", image = Res.drawable.profile2) {
+                ProfileItemBox(title = stringResource(Res.string.edit_profile), image = Res.drawable.profile2) {
                     navigateToEditProfile()
                 }
                 ProfileItemBox(
-                    title = "Manage Address",
+                    title = stringResource(Res.string.manage_address),
                     image = Res.drawable.location2
                 ) { navigateToAddress() }
-                ProfileItemBox(title = "Payment Methods", image = Res.drawable.payment) {
+                ProfileItemBox(title = stringResource(Res.string.payment_methods), image = Res.drawable.payment) {
                     navigateToPaymentMethod()
                 }
-                ProfileItemBox(title = "My Orders", image = Res.drawable.order) {
+                ProfileItemBox(title = stringResource(Res.string.my_orders), image = Res.drawable.order) {
                     navigateToMyOrders()
                 }
-                ProfileItemBox(title = "My Coupons", image = Res.drawable.coupon) {
+                ProfileItemBox(title = stringResource(Res.string.my_coupons), image = Res.drawable.coupon) {
                     navigateToMyCoupons()
                 }
                 /*ProfileItemBox(title = "My Wallet", image = "wallet.xml") {
                     navigateToMyWallet()
                 }*/
-                ProfileItemBox(title = "Settings", image = Res.drawable.setting2) {
+                ProfileItemBox(title = stringResource(Res.string.settings), image = Res.drawable.setting2) {
                     navigateToSettings()
                 }
-                ProfileItemBox(title = "Help Center", image = Res.drawable.warning, isLastItem = true) {}
+                ProfileItemBox(title = stringResource(Res.string.help_center), image = Res.drawable.warning, isLastItem = true) {}
             }
 
         }

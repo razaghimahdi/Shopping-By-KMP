@@ -24,11 +24,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.ui.main.categories.view_model.CategoriesEvent
 import presentation.ui.main.categories.view_model.CategoriesState
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.categories
 
 @Composable
 fun CategoriesScreen(
@@ -44,7 +47,7 @@ fun CategoriesScreen(
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CategoriesEvent.OnRetryNetwork)},
-        titleToolbar = "Categories",
+        titleToolbar = stringResource(Res.string.categories),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {

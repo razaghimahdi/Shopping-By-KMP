@@ -56,6 +56,14 @@ import presentation.theme.orange_400
 import presentation.ui.main.detail.view_model.DetailEvent
 import presentation.ui.main.detail.view_model.DetailState
 import presentation.util.convertDate
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.product_details
+import shoping_by_kmp.shared.generated.resources.read_some_comments
+import shoping_by_kmp.shared.generated.resources.total_price
+import shoping_by_kmp.shared.generated.resources.add_to_cart
+import shoping_by_kmp.shared.generated.resources.more
+import shoping_by_kmp.shared.generated.resources.no_comments
 
 
 @Composable
@@ -170,7 +178,7 @@ fun DetailScreen(
                     Spacer_16dp()
 
                     Text(
-                        "Product Details",
+                        stringResource(Res.string.product_details),
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         style = MaterialTheme.typography.titleLarge
                     )
@@ -200,11 +208,11 @@ fun DetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Read some comments",
+                            text = stringResource(Res.string.read_some_comments),
                             style = MaterialTheme.typography.titleLarge,
                         )
                         Text(
-                            text = "More",
+                            text = stringResource(Res.string.more),
                             modifier = Modifier
                                 .clickable {
                                     navigateToMoreComment(state.product.id)
@@ -219,7 +227,7 @@ fun DetailScreen(
 
                     if (state.product.comments.isEmpty()) {
                         Text(
-                            "No Comments!",
+                            stringResource(Res.string.no_comments),
                             style = MaterialTheme.typography.titleLarge,
                             color = BorderColor,
                             modifier = Modifier.padding(horizontal = 32.dp)
@@ -271,13 +279,13 @@ fun BuyButtonBox(product: Product, onClick: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("Total Price", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(Res.string.total_price), style = MaterialTheme.typography.titleMedium)
                 Text(product.getPrice(), style = MaterialTheme.typography.titleLarge)
             }
 
             DefaultButton(
                 modifier = Modifier.fillMaxWidth(.7f).height(DEFAULT__BUTTON_SIZE),
-                text = "Add to Cart"
+                text = stringResource(Res.string.add_to_cart)
             ) {
                 onClick()
             }

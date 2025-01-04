@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -39,9 +38,16 @@ import shoping_by_kmp.shared.generated.resources.cash
 import shoping_by_kmp.shared.generated.resources.google
 import shoping_by_kmp.shared.generated.resources.paypal
 import shoping_by_kmp.shared.generated.resources.wallet
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.google_pay
+import shoping_by_kmp.shared.generated.resources.payment_method
+import shoping_by_kmp.shared.generated.resources.cash
+import shoping_by_kmp.shared.generated.resources.wallet
+import shoping_by_kmp.shared.generated.resources.paypal
+import shoping_by_kmp.shared.generated.resources.more_payment_options
+import shoping_by_kmp.shared.generated.resources.apple_pay
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun PaymentMethodScreen(
     state: PaymentMethodState,
@@ -54,7 +60,7 @@ fun PaymentMethodScreen(
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(PaymentMethodEvent.OnRetryNetwork) },
-        titleToolbar = "Payment Method",
+        titleToolbar = stringResource(Res.string.payment_method),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
@@ -63,10 +69,10 @@ fun PaymentMethodScreen(
 
             Spacer_32dp()
 
-            Text("Cash", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(Res.string.cash), style = MaterialTheme.typography.titleMedium)
             Spacer_8dp()
             ChipsCardBox(
-                text = "Cash",
+                text =  stringResource(Res.string.cash),
                 image = Res.drawable.cash,
                 isSelected = state.selectedPaymentMethod == 0,
                 onSelectExecute = { events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(0)) })
@@ -75,10 +81,10 @@ fun PaymentMethodScreen(
 
             Spacer_16dp()
 
-            Text("Wallet", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(Res.string.wallet), style = MaterialTheme.typography.titleMedium)
             Spacer_8dp()
             ChipsCardBox(
-                text = "Wallet",
+                text = stringResource(Res.string.wallet),
                 image = Res.drawable.wallet,
                 isSelected = state.selectedPaymentMethod == 1,
                 onSelectExecute = { events(PaymentMethodEvent.OnUpdateSelectedPaymentMethod(1)) })
@@ -87,7 +93,7 @@ fun PaymentMethodScreen(
 
             Spacer_16dp()
 
-            Text("More Payment Options", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(Res.string.more_payment_options), style = MaterialTheme.typography.titleMedium)
             Spacer_8dp()
 
 
@@ -114,7 +120,7 @@ fun PaymentMethodScreen(
                                 null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            Text("Paypal", style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(Res.string.paypal), style = MaterialTheme.typography.bodyLarge)
                         }
 
                         Switch(checked = state.selectedPaymentMethod == 2, onCheckedChange = {
@@ -138,7 +144,7 @@ fun PaymentMethodScreen(
                                 painter = painterResource(Res.drawable.apple), null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            Text("Apple Pay", style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(Res.string.apple_pay), style = MaterialTheme.typography.bodyLarge)
                         }
 
                         Switch(checked = state.selectedPaymentMethod == 3, onCheckedChange = {
@@ -162,7 +168,7 @@ fun PaymentMethodScreen(
                                 painter = painterResource(Res.drawable.google), null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            Text("Google Pay", style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(Res.string.google_pay), style = MaterialTheme.typography.bodyLarge)
                         }
 
                         Switch(checked = state.selectedPaymentMethod == 4, onCheckedChange = {

@@ -26,6 +26,9 @@ import presentation.component.Spacer_8dp
 import presentation.theme.BorderColor
 import presentation.ui.main.wishlist.view_model.WishlistEvent
 import presentation.ui.main.wishlist.view_model.WishlistState
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.wishlist_is_empty
 
 @Composable
 fun WishlistScreen(
@@ -60,7 +63,7 @@ fun WishlistScreen(
             if (state.wishlist.products.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
-                        "Wishlist is empty!",
+                        stringResource(Res.string.wishlist_is_empty),
                         style = MaterialTheme.typography.labelLarge,
                         color = BorderColor,
                     )

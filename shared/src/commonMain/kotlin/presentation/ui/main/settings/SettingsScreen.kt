@@ -17,7 +17,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
@@ -29,9 +28,11 @@ import presentation.ui.main.settings.view_model.SettingsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.arrow_right
 import shoping_by_kmp.shared.generated.resources.exit
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.setting
+import shoping_by_kmp.shared.generated.resources.logout
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SettingsScreen(
     state: SettingsState,
@@ -51,7 +52,7 @@ fun SettingsScreen(
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(SettingsEvent.OnRetryNetwork) },
-        titleToolbar = "Setting",
+        titleToolbar = stringResource(Res.string.setting),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
@@ -71,7 +72,7 @@ fun SettingsScreen(
                 )
                 Spacer_8dp()
                 Text(
-                    "Logout",
+                    stringResource(Res.string.logout),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth(.9f)
                 )

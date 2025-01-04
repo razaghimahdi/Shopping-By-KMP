@@ -28,7 +28,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -39,8 +38,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.core.UIComponentState
 import business.domain.main.Product
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.CircleButton
 import presentation.component.DefaultScreenUI
 import presentation.component.FilterDialog
@@ -57,10 +56,10 @@ import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.close
 import shoping_by_kmp.shared.generated.resources.filter
 import shoping_by_kmp.shared.generated.resources.search
+import shoping_by_kmp.shared.generated.resources.search_with_dots
 import shoping_by_kmp.shared.generated.resources.sort
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SearchScreen(
     state: SearchState,
@@ -117,7 +116,7 @@ fun SearchScreen(
                             null,
                             modifier = Modifier.size(24.dp)
                         )
-                        Text("Sort")
+                        Text(stringResource(Res.string.sort))
                     }
                 }
                 TextButton(onClick = {
@@ -137,7 +136,7 @@ fun SearchScreen(
                             null,
                             modifier = Modifier.size(24.dp)
                         )
-                        Text("Filter")
+                        Text(stringResource(Res.string.filter))
                     }
                 }
             }
@@ -209,7 +208,6 @@ private fun ProductSearchBox(product: Product, isLastItem: Boolean, navigateToDe
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun SearchBox(
     value: String,
@@ -241,7 +239,7 @@ private fun SearchBox(
             )
             TextField(
                 placeholder = {
-                    Text("Search...")
+                    Text(stringResource(Res.string.search_with_dots))
                 },
                 value = value,
                 onValueChange = onValueChange,

@@ -20,6 +20,10 @@ import presentation.theme.BorderColor
 import presentation.ui.main.comment.view_model.CommentEvent
 import presentation.ui.main.comment.view_model.CommentState
 import presentation.ui.main.detail.CommentBox
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.Res
+import shoping_by_kmp.shared.generated.resources.comments
+import shoping_by_kmp.shared.generated.resources.no_comments
 
 
 @Composable
@@ -39,7 +43,7 @@ fun CommentScreen(state: CommentState, events: (CommentEvent) -> Unit, popup: ()
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CommentEvent.OnRetryNetwork) },
-        titleToolbar = "Comments",
+        titleToolbar = stringResource(Res.string.comments),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup,
         endIconToolbar = Icons.Filled.AddComment,
@@ -49,7 +53,7 @@ fun CommentScreen(state: CommentState, events: (CommentEvent) -> Unit, popup: ()
 
             if (state.comments.isEmpty()) {
                 Text(
-                    "No Comments!",
+                    stringResource(Res.string.no_comments),
                     style = MaterialTheme.typography.titleLarge,
                     color = BorderColor,
                     modifier = Modifier.fillMaxSize(),

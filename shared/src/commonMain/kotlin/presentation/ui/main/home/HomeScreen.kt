@@ -79,7 +79,6 @@ import shoping_by_kmp.shared.generated.resources.see_all
 import shoping_by_kmp.shared.generated.resources.setting
 import shoping_by_kmp.shared.generated.resources.special_for_you
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     navigateToDetail: (Long) -> Unit = {},

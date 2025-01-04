@@ -37,6 +37,11 @@ import presentation.ui.main.my_coupons.view_model.MyCouponsEvent
 import presentation.ui.main.my_coupons.view_model.MyCouponsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.offer
+import org.jetbrains.compose.resources.stringResource
+import shoping_by_kmp.shared.generated.resources.best_offer_for_you
+import shoping_by_kmp.shared.generated.resources.get_off
+import shoping_by_kmp.shared.generated.resources.copy_code
+import shoping_by_kmp.shared.generated.resources.my_coupons
 
 
 @Composable
@@ -49,7 +54,7 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(MyCouponsEvent.OnRetryNetwork) },
-        titleToolbar = "My Coupons",
+        titleToolbar = stringResource(Res.string.my_coupons),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
     ) {
@@ -57,7 +62,10 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
 
             Spacer_32dp()
 
-            Text("Best offer for you", style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(Res.string.best_offer_for_you),
+                style = MaterialTheme.typography.titleLarge
+            )
             Spacer_8dp()
 
             LazyColumn(
@@ -74,7 +82,6 @@ fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, pop
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Coupon(coupons: Coupons, onExecuteCopyCode: () -> Unit) {
 
@@ -99,7 +106,7 @@ fun Coupon(coupons: Coupons, onExecuteCopyCode: () -> Unit) {
                         tint = MaterialTheme.colorScheme.primary,
                     )
                     Text(
-                        "Get ${coupons.offPercent}% OFF",
+                        stringResource(Res.string.get_off, coupons.offPercent),
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
@@ -114,7 +121,7 @@ fun Coupon(coupons: Coupons, onExecuteCopyCode: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "COPY CODE",
+                    stringResource(Res.string.copy_code),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(16.dp)

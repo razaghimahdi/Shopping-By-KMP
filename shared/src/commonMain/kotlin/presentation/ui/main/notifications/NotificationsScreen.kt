@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import business.domain.main.Notification
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
@@ -90,7 +89,6 @@ fun NotificationsScreen(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun NotificationBox(notification: Notification) {
 
