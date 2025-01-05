@@ -65,7 +65,7 @@
     <string name="filter">Filter</string>
     <string name="sort">Sort</string>
     <string name="copy_code">COPY CODE</string>
-    <string name="get_off">Get s$1%% OFF</string>
+    <string name="get_off">Get %s% OFF</string>
     <string name="best_offer_for_you">Best offer for you</string>
     <string name="my_coupons">My Coupons</string>
     <string name="submit">Submit</string>
