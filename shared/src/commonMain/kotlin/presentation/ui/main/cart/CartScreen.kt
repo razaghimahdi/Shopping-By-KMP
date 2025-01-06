@@ -43,7 +43,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.domain.main.Basket
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -63,19 +65,18 @@ import shoping_by_kmp.shared.generated.resources.proceed_to_checkout
 import shoping_by_kmp.shared.generated.resources.total_cost
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun CartScreen(
     state: CartState,
     events: (CartEvent) -> Unit,
+    errors: Flow<UIComponent>,
     navigateToDetail: (Long) -> Unit,
     navigateToCheckout: () -> Unit,
 ) {
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(CartEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CartEvent.OnRetryNetwork) }

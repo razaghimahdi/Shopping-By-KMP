@@ -29,6 +29,7 @@ fun CartNav() {
             CartScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
                 navigateToDetail = {
                     navigator.navigate(CartNavigation.Detail(it))
                 }, navigateToCheckout = {
@@ -38,6 +39,8 @@ fun CartNav() {
         composable<CartNavigation.Checkout> {
             val viewModel: CheckoutViewModel = koinInject()
             CheckoutScreen(
+                errors = viewModel.errors,
+                action = viewModel.action,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToAddress = {
@@ -49,6 +52,7 @@ fun CartNav() {
         composable<CartNavigation.Address> {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 popup = { navigator.popBackStack() },

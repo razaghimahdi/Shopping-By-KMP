@@ -1,14 +1,9 @@
 package presentation.ui.main.cart.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import business.constants.CUSTOM_TAG
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.interactors.main.AddBasketInteractor
 import business.interactors.main.BasketListInteractor
 import business.interactors.main.DeleteBasketInteractor
@@ -19,13 +14,11 @@ class CartViewModel(
     private val basketListInteractor: BasketListInteractor,
     private val addBasketInteractor: AddBasketInteractor,
     private val deleteBasketInteractor: DeleteBasketInteractor,
-) : ViewModel() {
+) : BaseViewModel<CartEvent, CartState, Nothing>() {
 
+    override fun setInitialState() = CartState()
 
-    val state: MutableState<CartState> = mutableStateOf(CartState())
-
-
-    fun onTriggerEvent(event: CartEvent) {
+    override fun onTriggerEvent(event: CartEvent) {
         when (event) {
 
             is CartEvent.AddProduct -> {
@@ -34,14 +27,6 @@ class CartViewModel(
 
             is CartEvent.DeleteFromBasket -> {
                 deleteFromBasket(id = event.id)
-            }
-
-            is CartEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is CartEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
             }
 
             is CartEvent.OnRetryNetwork -> {
@@ -66,22 +51,21 @@ class CartViewModel(
                 }
 
                 is DataState.Response -> {
-                    onTriggerEvent(CartEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
                     dataState.data?.let {
-                        state.value = state.value.copy(baskets = it)
+                        setState { copy(baskets = it) }
                         val totalCost = state.value.baskets.sumOf { basket ->
                             basket.price
                         }
-                        state.value = state.value.copy(totalCost = "$ $totalCost")
+                        setState { copy(totalCost = "$ $totalCost") }
                     }
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
@@ -92,7 +76,7 @@ class CartViewModel(
             when (dataState) {
                 is DataState.NetworkStatus -> {}
                 is DataState.Response -> {
-                    onTriggerEvent(CartEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
@@ -100,8 +84,7 @@ class CartViewModel(
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
@@ -113,7 +96,7 @@ class CartViewModel(
             when (dataState) {
                 is DataState.NetworkStatus -> {}
                 is DataState.Response -> {
-                    onTriggerEvent(CartEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
@@ -121,35 +104,10 @@ class CartViewModel(
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
     }
 
 
@@ -159,7 +117,7 @@ class CartViewModel(
 
 
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 
