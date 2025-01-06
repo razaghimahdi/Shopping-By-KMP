@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -46,10 +45,11 @@ import androidx.compose.ui.unit.dp
 import business.constants.SHIPPING_ACTIVE
 import business.constants.SHIPPING_FAILED
 import business.constants.SHIPPING_SUCCESS
+import business.core.UIComponent
 import business.domain.main.Order
 import coil3.compose.AsyncImage
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
@@ -59,23 +59,27 @@ import presentation.theme.BorderColor
 import presentation.ui.main.my_orders.view_model.MyOrdersEvent
 import presentation.ui.main.my_orders.view_model.MyOrdersState
 import presentation.util.convertDate
-import shoping_by_kmp.shared.generated.resources.arrow_down
-import shoping_by_kmp.shared.generated.resources.nothing_yet
-import org.jetbrains.compose.resources.stringResource
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.active
 import shoping_by_kmp.shared.generated.resources.address
-import shoping_by_kmp.shared.generated.resources.failed
-import shoping_by_kmp.shared.generated.resources.success
-import shoping_by_kmp.shared.generated.resources.my_orders
 import shoping_by_kmp.shared.generated.resources.amount
-import shoping_by_kmp.shared.generated.resources.promo_code
+import shoping_by_kmp.shared.generated.resources.arrow_down
 import shoping_by_kmp.shared.generated.resources.delivery_cost
 import shoping_by_kmp.shared.generated.resources.delivery_type
+import shoping_by_kmp.shared.generated.resources.failed
+import shoping_by_kmp.shared.generated.resources.my_orders
+import shoping_by_kmp.shared.generated.resources.nothing_yet
+import shoping_by_kmp.shared.generated.resources.promo_code
+import shoping_by_kmp.shared.generated.resources.success
 
 
 @Composable
-fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup: () -> Unit) {
+fun MyOrdersScreen(
+    state: MyOrdersState,
+    errors: Flow<UIComponent>,
+    events: (MyOrdersEvent) -> Unit,
+    popup: () -> Unit
+) {
 
     val scope = rememberCoroutineScope()
 
@@ -93,8 +97,7 @@ fun MyOrdersScreen(state: MyOrdersState, events: (MyOrdersEvent) -> Unit, popup:
     val pagerState = rememberPagerState { tabList.size }
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(MyOrdersEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(MyOrdersEvent.OnRetryNetwork) },
@@ -226,7 +229,10 @@ private fun OrderBox(order: Order) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(stringResource(Res.string.promo_code), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    stringResource(Res.string.promo_code),
+                    style = MaterialTheme.typography.bodyLarge
+                )
                 Text(order.code, style = MaterialTheme.typography.bodyMedium)
             }
             Spacer_8dp()
@@ -255,7 +261,10 @@ private fun OrderBox(order: Order) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(stringResource(Res.string.amount), style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                stringResource(Res.string.amount),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                             Text(order.getAmount(), style = MaterialTheme.typography.bodyMedium)
                         }
                         Spacer_8dp()
@@ -265,7 +274,10 @@ private fun OrderBox(order: Order) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(stringResource(Res.string.delivery_cost), style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                stringResource(Res.string.delivery_cost),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                             Text(
                                 order.shippingType.getPrice(),
                                 style = MaterialTheme.typography.bodyMedium
@@ -278,7 +290,10 @@ private fun OrderBox(order: Order) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(stringResource(Res.string.delivery_type), style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                stringResource(Res.string.delivery_type),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                             Text(
                                 order.shippingType.title,
                                 style = MaterialTheme.typography.bodyMedium
@@ -292,7 +307,10 @@ private fun OrderBox(order: Order) {
                             horizontalAlignment = Alignment.Start,
                             verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Text(stringResource(Res.string.address), style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                stringResource(Res.string.address),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                             Text(
                                 order.address.getShippingAddress(),
                                 style = MaterialTheme.typography.bodyMedium

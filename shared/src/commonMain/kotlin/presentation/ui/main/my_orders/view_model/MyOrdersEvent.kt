@@ -2,16 +2,12 @@ package presentation.ui.main.my_orders.view_model
 
 import business.core.NetworkState
 import business.core.UIComponent
+import business.core.ViewEvent
 
-sealed class MyOrdersEvent {
+sealed class MyOrdersEvent : ViewEvent {
 
-   data object OnRemoveHeadFromQueue : MyOrdersEvent()
+    data object OnRetryNetwork : MyOrdersEvent()
 
-    data class Error(
-        val uiComponent: UIComponent
-    ) : MyOrdersEvent()
-
-   data object OnRetryNetwork : MyOrdersEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : MyOrdersEvent()
