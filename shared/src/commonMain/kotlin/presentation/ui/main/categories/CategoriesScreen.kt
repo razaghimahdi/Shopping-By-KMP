@@ -22,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_8dp
@@ -37,16 +39,16 @@ import shoping_by_kmp.shared.generated.resources.categories
 fun CategoriesScreen(
     state: CategoriesState,
     events: (CategoriesEvent) -> Unit,
+    errors: Flow<UIComponent>,
     popup: () -> Unit,
     navigateToSearch: (Long) -> Unit,
 ) {
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(CategoriesEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
-        onTryAgain = { events(CategoriesEvent.OnRetryNetwork)},
+        onTryAgain = { events(CategoriesEvent.OnRetryNetwork) },
         titleToolbar = stringResource(Res.string.categories),
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup
