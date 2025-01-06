@@ -9,21 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.MultiStateAnimationCircleFilledCanvas
 import presentation.component.Spacer_32dp
 import presentation.theme.grey_700
 import presentation.theme.splashBackground
-import presentation.ui.splash.view_model.LoginEvent
-import presentation.ui.splash.view_model.LoginState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.discover
 import shoping_by_kmp.shared.generated.resources.enjoy
@@ -32,26 +27,8 @@ import shoping_by_kmp.shared.generated.resources.live_your_perfect
 import shoping_by_kmp.shared.generated.resources.shop
 import shoping_by_kmp.shared.generated.resources.splash_title
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-internal fun SplashScreen(
-    state: LoginState,
-    events: (LoginEvent) -> Unit,
-    navigateToMain: () -> Unit,
-    navigateToLogin: () -> Unit,
-) {
-
-
-
-    LaunchedEffect(state.navigateToMain) {
-        delay(3000L)
-        if (state.navigateToMain) {
-            navigateToMain()
-        } else {
-            navigateToLogin()
-        }
-    }
-
+internal fun SplashScreen() {
 
 
     Box(

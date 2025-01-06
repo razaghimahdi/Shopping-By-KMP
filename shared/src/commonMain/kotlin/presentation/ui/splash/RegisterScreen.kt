@@ -33,7 +33,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import business.core.UIComponent
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DEFAULT__BUTTON_SIZE_EXTRA
 import presentation.component.DefaultButton
@@ -66,20 +67,13 @@ import shoping_by_kmp.shared.generated.resources.sign_in
 import shoping_by_kmp.shared.generated.resources.sign_up
 import shoping_by_kmp.shared.generated.resources.terms_condition
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RegisterScreen(
     state: LoginState,
     events: (LoginEvent) -> Unit,
-    navigateToMain: () -> Unit,
+    errors: Flow<UIComponent>,
     popUp: () -> Unit
 ) {
-
-    LaunchedEffect(state.navigateToMain) {
-        if (state.navigateToMain) {
-            navigateToMain()
-        }
-    }
 
     var isUsernameError by rememberSaveable { mutableStateOf(false) }
     var isPasswordError by rememberSaveable { mutableStateOf(false) }
@@ -87,8 +81,7 @@ fun RegisterScreen(
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(LoginEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState
     ) {
         Column(
