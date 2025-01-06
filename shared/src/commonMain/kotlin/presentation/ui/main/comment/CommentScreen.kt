@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import business.core.UIComponent
 import business.core.UIComponentState
+import kotlinx.coroutines.flow.Flow
 import presentation.component.AddCommentDialog
 import presentation.component.DefaultScreenUI
 import presentation.theme.BorderColor
@@ -27,7 +29,12 @@ import shoping_by_kmp.shared.generated.resources.no_comments
 
 
 @Composable
-fun CommentScreen(state: CommentState, events: (CommentEvent) -> Unit, popup: () -> Unit) {
+fun CommentScreen(
+    state: CommentState,
+    errors: Flow<UIComponent>,
+    events: (CommentEvent) -> Unit,
+    popup: () -> Unit
+) {
 
     if (state.addCommentDialogState == UIComponentState.Show) {
         AddCommentDialog(onDismissRequest = {
@@ -38,8 +45,8 @@ fun CommentScreen(state: CommentState, events: (CommentEvent) -> Unit, popup: ()
             })
     }
 
-    DefaultScreenUI(queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(CommentEvent.OnRemoveHeadFromQueue) },
+    DefaultScreenUI(
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CommentEvent.OnRetryNetwork) },

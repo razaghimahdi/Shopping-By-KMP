@@ -3,12 +3,13 @@ package presentation.ui.main.comment.view_model
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewEvent
 
-sealed class CommentEvent {
+sealed class CommentEvent : ViewEvent {
 
     data class OnUpdateAddCommentDialogState(val value: UIComponentState) : CommentEvent()
 
-   data object GetComments : CommentEvent()
+    data object GetComments : CommentEvent()
 
     data class OnUpdateProductId(val id: Long) : CommentEvent()
 
@@ -17,13 +18,8 @@ sealed class CommentEvent {
         val comment: String,
     ) : CommentEvent()
 
-   data object OnRemoveHeadFromQueue : CommentEvent()
+    data object OnRetryNetwork : CommentEvent()
 
-    data class Error(
-        val uiComponent: UIComponent
-    ) : CommentEvent()
-
-   data object OnRetryNetwork : CommentEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : CommentEvent()

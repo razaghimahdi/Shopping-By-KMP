@@ -1,33 +1,23 @@
 package presentation.ui.main.comment.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
-import business.constants.CUSTOM_TAG
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.core.UIComponentState
 import business.interactors.main.AddCommentInteractor
 import business.interactors.main.GetCommentsInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import presentation.navigation.DetailNavigation
 
 class CommentViewModel(
     private val getCommentsInteractor: GetCommentsInteractor,
     private val addCommentInteractor: AddCommentInteractor,
-) : ViewModel() {
+) : BaseViewModel<CommentEvent, CommentState, Nothing>() {
 
+    override fun setInitialState() = CommentState()
 
-    val state: MutableState<CommentState> = mutableStateOf(CommentState())
-
-
-    fun onTriggerEvent(event: CommentEvent) {
+    override fun onTriggerEvent(event: CommentEvent) {
         when (event) {
 
             is CommentEvent.AddComment -> {
@@ -46,14 +36,6 @@ class CommentViewModel(
                 onUpdateProductId(event.id)
             }
 
-            is CommentEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is CommentEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
-            }
-
             is CommentEvent.OnRetryNetwork -> {
                 onRetryNetwork()
             }
@@ -66,7 +48,7 @@ class CommentViewModel(
 
 
     private fun onUpdateProductId(id: Long) {
-        state.value = state.value.copy(productId = id)
+        setState { copy(productId = id) }
     }
 
 
@@ -77,7 +59,7 @@ class CommentViewModel(
             when (dataState) {
                 is DataState.NetworkStatus -> {}
                 is DataState.Response -> {
-                    onTriggerEvent(CommentEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
@@ -87,8 +69,7 @@ class CommentViewModel(
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
@@ -102,50 +83,25 @@ class CommentViewModel(
                 }
 
                 is DataState.Response -> {
-                    onTriggerEvent(CommentEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
                     dataState.data?.let {
-                        state.value = state.value.copy(comments = it)
+                        setState { copy(comments = it) }
                     }
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
     private fun onUpdateAddCommentDialogState(value: UIComponentState) {
-        state.value = state.value.copy(addCommentDialogState = value)
+        setState { copy(addCommentDialogState = value) }
     }
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
-    }
-
 
     private fun onRetryNetwork() {
         onTriggerEvent(CommentEvent.GetComments)
@@ -153,7 +109,7 @@ class CommentViewModel(
 
 
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 
