@@ -24,6 +24,7 @@ fun WishlistNav() {
             val viewModel: WishlistViewModel = koinInject()
             WishlistScreen(
                 state = viewModel.state.value,
+                errors = viewModel.errors,
                 events = viewModel::onTriggerEvent
             ) {
                 navigator.navigate(WishlistNavigation.Detail(it))

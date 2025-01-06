@@ -4,6 +4,7 @@ import business.core.NetworkState
 import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
+import business.core.ViewState
 import business.domain.main.Category
 import business.domain.main.Wishlist
 import business.domain.main.category_all
@@ -16,5 +17,4 @@ data class WishlistState(
     val selectedCategory: Category = category_all,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-)
+) : ViewState

@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import business.constants.PAGINATION_PAGE_SIZE
 import business.core.ProgressBarState
+import business.core.UIComponent
+import kotlinx.coroutines.flow.Flow
 import presentation.component.CategoryChipsBox
 import presentation.component.DefaultScreenUI
 import presentation.component.ProductBox
@@ -34,13 +36,13 @@ import shoping_by_kmp.shared.generated.resources.wishlist_is_empty
 fun WishlistScreen(
     state: WishlistState,
     events: (WishlistEvent) -> Unit,
+    errors: Flow<UIComponent>,
     navigateToDetail: (Long) -> Unit
 ) {
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(WishlistEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(WishlistEvent.OnRetryNetwork) }
