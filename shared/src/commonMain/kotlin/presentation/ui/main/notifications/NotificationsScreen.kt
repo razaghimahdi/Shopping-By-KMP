@@ -24,7 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.domain.main.Notification
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
@@ -44,12 +46,12 @@ import shoping_by_kmp.shared.generated.resources.notifications
 fun NotificationsScreen(
     state: NotificationsState,
     events: (NotificationsEvent) -> Unit,
+    errors: Flow<UIComponent>,
     popup: () -> Unit
 ) {
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(NotificationsEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(NotificationsEvent.OnRetryNetwork) },
