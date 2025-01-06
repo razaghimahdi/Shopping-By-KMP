@@ -3,10 +3,10 @@ package presentation.ui.main.search.view_model
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewEvent
 import business.domain.main.Category
 
-sealed class SearchEvent {
-
+sealed class SearchEvent : ViewEvent {
 
     data class Search(
         val minPrice: Int? = null,
@@ -14,7 +14,7 @@ sealed class SearchEvent {
         val categories: List<Category>? = null,
     ) : SearchEvent()
 
-   data object GetNextPage : SearchEvent()
+    data object GetNextPage : SearchEvent()
 
     data class OnUpdateSelectedSort(val value: Int) : SearchEvent()
 
@@ -28,16 +28,9 @@ sealed class SearchEvent {
 
     data class OnUpdateFilterDialogState(val value: UIComponentState) : SearchEvent()
 
-   data object OnRemoveHeadFromQueue : SearchEvent()
+    data object OnRetryNetwork : SearchEvent()
 
-    data class Error(
-        val uiComponent: UIComponent
-    ) : SearchEvent()
-
-   data object OnRetryNetwork : SearchEvent()
-    data class OnUpdateNetworkState(
-        val networkState: NetworkState
-    ) : SearchEvent()
+    data class OnUpdateNetworkState(val networkState: NetworkState) : SearchEvent()
 
 
 }

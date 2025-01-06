@@ -36,8 +36,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Product
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.component.CircleButton
@@ -64,6 +66,7 @@ import shoping_by_kmp.shared.generated.resources.sort
 fun SearchScreen(
     state: SearchState,
     events: (SearchEvent) -> Unit,
+    errors: Flow<UIComponent>,
     navigateToDetailScreen: (Long) -> Unit,
     popUp: () -> Unit
 ) {
@@ -78,8 +81,7 @@ fun SearchScreen(
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(SearchEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(SearchEvent.OnRetryNetwork) }
@@ -203,7 +205,9 @@ private fun ProductSearchBox(product: Product, isLastItem: Boolean, navigateToDe
                 }
             }
 
-            if (!isLastItem) HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp))
+            if (!isLastItem) HorizontalDivider(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
+            )
         }
     }
 }

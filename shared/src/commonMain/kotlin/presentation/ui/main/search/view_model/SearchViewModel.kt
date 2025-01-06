@@ -1,32 +1,24 @@
 package presentation.ui.main.search.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-
-import business.constants.CUSTOM_TAG
+import androidx.lifecycle.viewModelScope
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Category
 import business.interactors.main.GetSearchFilterInteractor
 import business.interactors.main.SearchInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,
     private val getSearchFilterInteractor: GetSearchFilterInteractor,
-) : ViewModel() {
+) : BaseViewModel<SearchEvent, SearchState, Nothing>() {
 
+    override fun setInitialState() = SearchState()
 
-    val state: MutableState<SearchState> = mutableStateOf(SearchState())
-
-
-    fun onTriggerEvent(event: SearchEvent) {
+    override fun onTriggerEvent(event: SearchEvent) {
         when (event) {
 
             is SearchEvent.Search -> {
@@ -65,14 +57,6 @@ class SearchViewModel(
                 onUpdateSelectedCategory(categories = event.categories)
             }
 
-            is SearchEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is SearchEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
-            }
-
             is SearchEvent.OnRetryNetwork -> {
                 onRetryNetwork()
             }
@@ -89,23 +73,23 @@ class SearchViewModel(
 
 
     private fun onUpdateSelectedSort(value: Int) {
-        state.value = state.value.copy(selectedSort = value)
+        setState { copy(selectedSort = value) }
     }
 
     private fun onUpdatePriceRange(value: ClosedFloatingPointRange<Float>) {
-        state.value = state.value.copy(selectedRange = value)
+        setState { copy(selectedRange = value) }
     }
 
     private fun onUpdateSortDialogState(value: UIComponentState) {
-        state.value = state.value.copy(sortDialogState = value)
+        setState { copy(sortDialogState = value) }
     }
 
     private fun onUpdateFilterDialogState(value: UIComponentState) {
-        state.value = state.value.copy(filterDialogState = value)
+        setState { copy(filterDialogState = value) }
     }
 
     private fun onUpdateSearchText(value: String) {
-        state.value = state.value.copy(searchText = value)
+        setState { copy(searchText = value) }
     }
 
     private fun getSearchFilter() {
@@ -114,22 +98,22 @@ class SearchViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(SearchEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
                         dataState.data?.let {
-                            state.value = state.value.copy(searchFilter = it)
-
-                            state.value = state.value.copy(
-                                selectedRange = it.minPrice.toFloat()..it.maxPrice.toFloat()
-                            )
+                            setState {
+                                copy(
+                                    searchFilter = it,
+                                    selectedRange = it.minPrice.toFloat()..it.maxPrice.toFloat()
+                                )
+                            }
                         }
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
@@ -153,31 +137,28 @@ class SearchViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(SearchEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
                         dataState.data?.let {
-                            state.value =
-                                state.value.copy(search = it)
+                            setState { copy(search = it) }
                         }
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
     }
 
     private fun resetPaging() {
-        state.value = state.value.copy(page = 1)
-        state.value = state.value.copy(hasNextPage = true)
+        setState { copy(page = 1, hasNextPage = true) }
     }
 
     private fun getNextPage() {
-        state.value = state.value.copy(page = state.value.page + 1)
+        setState { copy(page = state.value.page + 1) }
         searchInteractor.execute(
             page = state.value.page,
             minPrice = state.value.selectedRange.start.toInt(),
@@ -189,54 +170,28 @@ class SearchViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(SearchEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
                         dataState.data?.let {
-                            state.value =
-                                state.value.copy(search = it)
+                            setState { copy(search = it) }
                             if (it.products.isEmpty()) {
-                                state.value = state.value.copy(hasNextPage = false)
+                                setState { copy(hasNextPage = false) }
                             }
                         }
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
     }
 
     private fun onUpdateSelectedCategory(categories: List<Category>) {
-        state.value = state.value.copy(selectedCategory = categories)
+        setState { copy(selectedCategory = categories) }
     }
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
-    }
-
 
     private fun onRetryNetwork() {
         getSearchFilter()
@@ -244,7 +199,7 @@ class SearchViewModel(
 
 
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 

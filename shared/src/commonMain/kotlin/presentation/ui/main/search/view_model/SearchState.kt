@@ -5,6 +5,7 @@ import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewState
 import business.domain.main.Category
 import business.domain.main.Search
 import business.domain.main.SearchFilter
@@ -22,5 +23,4 @@ data class SearchState(
     val sortDialogState: UIComponentState = UIComponentState.Hide,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-)
+) : ViewState
