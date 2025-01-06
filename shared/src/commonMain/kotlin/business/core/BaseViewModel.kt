@@ -24,7 +24,6 @@ An attempt to post an event without subscribers will suspend as soon as the chan
 waiting for a subscriber to appear. Posted events are never dropped by default.
 * */
 
-const val SIDE_EFFECTS_KEY = "side-effects_key"
 
 abstract class BaseViewModel<Event : ViewEvent,
         UiState : ViewState,
