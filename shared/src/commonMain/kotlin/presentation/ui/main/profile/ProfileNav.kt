@@ -35,6 +35,7 @@ fun ProfileNav(logout: () -> Unit) {
             ProfileScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
                 navigateToAddress = {
                     navigator.navigate(ProfileNavigation.Address)
                 },
@@ -64,6 +65,8 @@ fun ProfileNav(logout: () -> Unit) {
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 logout = logout,
+                errors = viewModel.errors,
+                action = viewModel.action,
                 popup = {
                     navigator.popBackStack()
                 },
@@ -72,6 +75,7 @@ fun ProfileNav(logout: () -> Unit) {
         composable<ProfileNavigation.MyCoupons> {
             val viewModel: MyCouponsViewModel = koinInject()
             MyCouponsScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
             ) {
@@ -90,6 +94,7 @@ fun ProfileNav(logout: () -> Unit) {
         composable<ProfileNavigation.MyOrders> {
             val viewModel: MyOrdersViewModel = koinInject()
             MyOrdersScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
             ) {
@@ -99,6 +104,7 @@ fun ProfileNav(logout: () -> Unit) {
         composable<ProfileNavigation.PaymentMethod> {
             val viewModel: PaymentMethodViewModel = koinInject()
             PaymentMethodScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
             ) {
@@ -109,6 +115,7 @@ fun ProfileNav(logout: () -> Unit) {
             val viewModel: EditProfileViewModel = koinInject()
             EditProfileScreen(
                 state = viewModel.state.value,
+                errors = viewModel.errors,
                 events = viewModel::onTriggerEvent,
             ) {
                 navigator.popBackStack()
@@ -117,6 +124,7 @@ fun ProfileNav(logout: () -> Unit) {
         composable<ProfileNavigation.Address> {
             val viewModel: AddressViewModel = koinInject()
             AddressScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
             ) {

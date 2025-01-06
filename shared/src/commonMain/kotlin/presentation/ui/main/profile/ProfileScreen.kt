@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -52,6 +54,7 @@ import shoping_by_kmp.shared.generated.resources.my_orders
 fun ProfileScreen(
     state: ProfileState,
     events: (ProfileEvent) -> Unit,
+    errors: Flow<UIComponent>,
     navigateToAddress: () -> Unit,
     navigateToEditProfile: () -> Unit,
     navigateToPaymentMethod: () -> Unit,
@@ -62,8 +65,7 @@ fun ProfileScreen(
 ) {
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(ProfileEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(ProfileEvent.OnRetryNetwork) }
@@ -91,29 +93,48 @@ fun ProfileScreen(
             Spacer_32dp()
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileItemBox(title = stringResource(Res.string.edit_profile), image = Res.drawable.profile2) {
+                ProfileItemBox(
+                    title = stringResource(Res.string.edit_profile),
+                    image = Res.drawable.profile2
+                ) {
                     navigateToEditProfile()
                 }
                 ProfileItemBox(
                     title = stringResource(Res.string.manage_address),
                     image = Res.drawable.location2
                 ) { navigateToAddress() }
-                ProfileItemBox(title = stringResource(Res.string.payment_methods), image = Res.drawable.payment) {
+                ProfileItemBox(
+                    title = stringResource(Res.string.payment_methods),
+                    image = Res.drawable.payment
+                ) {
                     navigateToPaymentMethod()
                 }
-                ProfileItemBox(title = stringResource(Res.string.my_orders), image = Res.drawable.order) {
+                ProfileItemBox(
+                    title = stringResource(Res.string.my_orders),
+                    image = Res.drawable.order
+                ) {
                     navigateToMyOrders()
                 }
-                ProfileItemBox(title = stringResource(Res.string.my_coupons), image = Res.drawable.coupon) {
+                ProfileItemBox(
+                    title = stringResource(Res.string.my_coupons),
+                    image = Res.drawable.coupon
+                ) {
                     navigateToMyCoupons()
                 }
                 /*ProfileItemBox(title = "My Wallet", image = "wallet.xml") {
                     navigateToMyWallet()
                 }*/
-                ProfileItemBox(title = stringResource(Res.string.settings), image = Res.drawable.setting2) {
+                ProfileItemBox(
+                    title = stringResource(Res.string.settings),
+                    image = Res.drawable.setting2
+                ) {
                     navigateToSettings()
                 }
-                ProfileItemBox(title = stringResource(Res.string.help_center), image = Res.drawable.warning, isLastItem = true) {}
+                ProfileItemBox(
+                    title = stringResource(Res.string.help_center),
+                    image = Res.drawable.warning,
+                    isLastItem = true
+                ) {}
             }
 
         }
