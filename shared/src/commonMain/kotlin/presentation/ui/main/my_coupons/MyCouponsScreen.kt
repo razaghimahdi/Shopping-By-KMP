@@ -24,9 +24,11 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.domain.main.Coupons
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
@@ -36,21 +38,24 @@ import presentation.theme.grey_050
 import presentation.ui.main.my_coupons.view_model.MyCouponsEvent
 import presentation.ui.main.my_coupons.view_model.MyCouponsState
 import shoping_by_kmp.shared.generated.resources.Res
-import shoping_by_kmp.shared.generated.resources.offer
-import org.jetbrains.compose.resources.stringResource
 import shoping_by_kmp.shared.generated.resources.best_offer_for_you
-import shoping_by_kmp.shared.generated.resources.get_off
 import shoping_by_kmp.shared.generated.resources.copy_code
+import shoping_by_kmp.shared.generated.resources.get_off
 import shoping_by_kmp.shared.generated.resources.my_coupons
+import shoping_by_kmp.shared.generated.resources.offer
 
 
 @Composable
-fun MyCouponsScreen(state: MyCouponsState, events: (MyCouponsEvent) -> Unit, popup: () -> Unit) {
+fun MyCouponsScreen(
+    state: MyCouponsState,
+    errors: Flow<UIComponent>,
+    events: (MyCouponsEvent) -> Unit,
+    popup: () -> Unit
+) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(MyCouponsEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(MyCouponsEvent.OnRetryNetwork) },
