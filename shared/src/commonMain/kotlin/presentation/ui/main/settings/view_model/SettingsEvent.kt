@@ -2,19 +2,13 @@ package presentation.ui.main.settings.view_model
 
 import business.core.NetworkState
 import business.core.UIComponent
+import business.core.ViewEvent
 
-sealed class SettingsEvent {
+sealed class SettingsEvent : ViewEvent {
 
-   data object Logout : SettingsEvent()
+    data object Logout : SettingsEvent()
 
-   data object OnRemoveHeadFromQueue : SettingsEvent()
+    data object OnRetryNetwork : SettingsEvent()
 
-    data class Error(
-        val uiComponent: UIComponent
-    ) : SettingsEvent()
-
-   data object OnRetryNetwork : SettingsEvent()
-    data class OnUpdateNetworkState(
-        val networkState: NetworkState
-    ) : SettingsEvent()
+    data class OnUpdateNetworkState(val networkState: NetworkState) : SettingsEvent()
 }

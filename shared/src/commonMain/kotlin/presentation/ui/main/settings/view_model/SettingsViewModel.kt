@@ -1,41 +1,23 @@
 package presentation.ui.main.settings.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import business.constants.CUSTOM_TAG
+import androidx.lifecycle.viewModelScope
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.interactors.main.LogoutInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
 class SettingsViewModel(
     private val logoutInteractor: LogoutInteractor,
-) : ViewModel() {
+) : BaseViewModel<SettingsEvent, SettingsState, SettingsAction>() {
 
+    override fun setInitialState() = SettingsState()
 
-
-    val state: MutableState<SettingsState> = mutableStateOf(SettingsState())
-
-
-    fun onTriggerEvent(event: SettingsEvent) {
+    override fun onTriggerEvent(event: SettingsEvent) {
         when (event) {
-
- 
             is SettingsEvent.Logout -> {
                 logout()
-            }
-
-            is SettingsEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is SettingsEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
             }
 
             is SettingsEvent.OnRetryNetwork -> {
@@ -49,53 +31,28 @@ class SettingsViewModel(
     }
 
     private fun logout() {
-
         logoutInteractor.execute()
             .onEach { dataState ->
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(SettingsEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
                         dataState.data?.let {
-                            state.value = state.value.copy(logout = it)
-
+                            if (it) {
+                                setAction { SettingsAction.Navigation.PopUp }
+                            }
                         }
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
     }
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
-    }
-
 
     private fun onRetryNetwork() {
 
@@ -103,7 +60,7 @@ class SettingsViewModel(
 
 
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 

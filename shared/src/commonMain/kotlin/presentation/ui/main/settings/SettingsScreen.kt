@@ -17,38 +17,49 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.DefaultScreenUI
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
 import presentation.theme.BorderColor
+import presentation.ui.main.settings.view_model.SettingsAction
 import presentation.ui.main.settings.view_model.SettingsEvent
 import presentation.ui.main.settings.view_model.SettingsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.arrow_right
 import shoping_by_kmp.shared.generated.resources.exit
-import org.jetbrains.compose.resources.stringResource
-import shoping_by_kmp.shared.generated.resources.setting
 import shoping_by_kmp.shared.generated.resources.logout
+import shoping_by_kmp.shared.generated.resources.setting
 
 
 @Composable
 fun SettingsScreen(
     state: SettingsState,
     events: (SettingsEvent) -> Unit,
+    errors: Flow<UIComponent>,
+    action: Flow<SettingsAction>,
     popup: () -> Unit,
     logout: () -> Unit
 ) {
-    LaunchedEffect(key1 = state.logout) {
-        if (state.logout) {
-            logout()
-        }
+
+    LaunchedEffect(key1 = action) {
+        action.onEach { effect ->
+            when (effect) {
+                SettingsAction.Navigation.PopUp -> {
+                    logout()
+                }
+            }
+        }.collect {}
     }
 
+
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(SettingsEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(SettingsEvent.OnRetryNetwork) },
