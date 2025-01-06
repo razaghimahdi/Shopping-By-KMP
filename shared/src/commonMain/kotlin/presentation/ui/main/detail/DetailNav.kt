@@ -33,6 +33,7 @@ fun DetailNav(id: Long, popUp: () -> Unit) {
             }
             DetailScreen(state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
                 popup = {
                     popUp()
                 }, navigateToMoreComment = {
@@ -52,6 +53,7 @@ fun DetailNav(id: Long, popUp: () -> Unit) {
 
             CommentScreen(state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
                 popup = {
                     navigator.popBackStack()
                 })

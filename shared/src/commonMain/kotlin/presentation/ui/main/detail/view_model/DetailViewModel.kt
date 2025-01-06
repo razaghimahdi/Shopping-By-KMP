@@ -1,33 +1,24 @@
 package presentation.ui.main.detail.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import business.constants.CUSTOM_TAG
+import androidx.lifecycle.viewModelScope
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.interactors.main.AddBasketInteractor
 import business.interactors.main.LikeInteractor
 import business.interactors.main.ProductInteractor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
 class DetailViewModel(
     private val productInteractor: ProductInteractor,
     private val addBasketInteractor: AddBasketInteractor,
     private val likeInteractor: LikeInteractor,
-) : ViewModel() {
+) : BaseViewModel<DetailEvent, DetailState, Nothing>() {
 
+    override fun setInitialState() = DetailState()
 
-
-
-    val state: MutableState<DetailState> = mutableStateOf(DetailState())
-
-
-    fun onTriggerEvent(event: DetailEvent) {
+    override fun onTriggerEvent(event: DetailEvent) {
         when (event) {
 
             is DetailEvent.Like -> {
@@ -46,14 +37,6 @@ class DetailViewModel(
                 getProduct(event.id)
             }
 
-            is DetailEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is DetailEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
-            }
-
             is DetailEvent.OnRetryNetwork -> {
                 onRetryNetwork()
             }
@@ -65,7 +48,7 @@ class DetailViewModel(
     }
 
     private fun onUpdateSelectedImage(value: String) {
-        state.value = state.value.copy(selectedImage = value)
+        setState { copy(selectedImage = value) }
     }
 
 
@@ -75,7 +58,7 @@ class DetailViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
@@ -85,8 +68,7 @@ class DetailViewModel(
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
@@ -99,14 +81,13 @@ class DetailViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {}
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
@@ -114,8 +95,7 @@ class DetailViewModel(
 
 
     private fun updateLike() {
-        state.value =
-            state.value.copy(product = state.value.product.copy(isLike = !state.value.product.isLike))
+        setState { copy(product = state.value.product.copy(isLike = !state.value.product.isLike)) }
     }
 
 
@@ -125,58 +105,35 @@ class DetailViewModel(
                 is DataState.NetworkStatus -> {
                     onTriggerEvent(DetailEvent.OnUpdateNetworkState(dataState.networkState))
                 }
+
                 is DataState.Response -> {
-                    onTriggerEvent(DetailEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
                     dataState.data?.let {
-                        state.value = state.value.copy(product = it)
-                        state.value =
-                            state.value.copy(selectedImage = it.gallery.firstOrNull() ?: "")
+                        setState {
+                            copy(
+                                product = it,
+                                selectedImage = it.gallery.firstOrNull() ?: ""
+                            )
+                        }
                     }
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
-    }
-
-
     private fun onRetryNetwork() {
         getProduct(state.value.product.id)
     }
 
-
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 

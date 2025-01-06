@@ -35,8 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.domain.main.Comment
 import business.domain.main.Product
+import kotlinx.coroutines.flow.Flow
 import presentation.component.CircleButton
 import presentation.component.CircleImage
 import presentation.component.DEFAULT__BUTTON_SIZE
@@ -68,16 +70,16 @@ import shoping_by_kmp.shared.generated.resources.no_comments
 
 @Composable
 fun DetailScreen(
+    errors: Flow<UIComponent>,
+    state: DetailState,
+    events: (DetailEvent) -> Unit,
     popup: () -> Unit,
     navigateToMoreComment: (Long) -> Unit,
-    state: DetailState,
-    events: (DetailEvent) -> Unit
 ) {
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(DetailEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(DetailEvent.OnRetryNetwork) }
@@ -279,7 +281,10 @@ fun BuyButtonBox(product: Product, onClick: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(stringResource(Res.string.total_price), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(Res.string.total_price),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Text(product.getPrice(), style = MaterialTheme.typography.titleLarge)
             }
 
