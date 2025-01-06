@@ -4,6 +4,7 @@ import business.core.NetworkState
 import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
+import business.core.ViewState
 import business.domain.main.Home
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
@@ -15,5 +16,4 @@ data class HomeState(
     val time: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-)
+) : ViewState

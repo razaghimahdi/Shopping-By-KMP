@@ -1,12 +1,9 @@
 package presentation.ui.main.home.view_model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import business.constants.CUSTOM_TAG
+import androidx.lifecycle.viewModelScope
+import business.core.BaseViewModel
 import business.core.DataState
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 import business.interactors.main.HomeInteractor
 import business.interactors.main.LikeInteractor
 import kotlinx.coroutines.flow.launchIn
@@ -14,33 +11,20 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 
 class HomeViewModel(
     private val homeInteractor: HomeInteractor,
     private val likeInteractor: LikeInteractor,
-) : ViewModel() {
+) : BaseViewModel<HomeEvent, HomeState, Nothing>() {
+
+    override fun setInitialState() = HomeState()
 
 
-
-    val state: MutableState<HomeState> = mutableStateOf(HomeState())
-
-
-
-    fun onTriggerEvent(event: HomeEvent) {
+    override fun onTriggerEvent(event: HomeEvent) {
         when (event) {
 
             is HomeEvent.Like -> {
                 likeProduct(id = event.id)
-            }
-
-            is HomeEvent.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-
-            is HomeEvent.Error -> {
-                appendToMessageQueue(event.uiComponent)
             }
 
             is HomeEvent.OnRetryNetwork -> {
@@ -64,7 +48,7 @@ class HomeViewModel(
                 when (dataState) {
                     is DataState.NetworkStatus -> {}
                     is DataState.Response -> {
-                        onTriggerEvent(HomeEvent.Error(dataState.uiComponent))
+                        setError { dataState.uiComponent }
                     }
 
                     is DataState.Data -> {
@@ -74,8 +58,7 @@ class HomeViewModel(
                     }
 
                     is DataState.Loading -> {
-                        state.value =
-                            state.value.copy(progressBarState = dataState.progressBarState)
+                        setState { copy(progressBarState = dataState.progressBarState) }
                     }
                 }
             }.launchIn(viewModelScope)
@@ -107,14 +90,16 @@ class HomeViewModel(
             tmpFlashSale[indexCurrentItemFlashSale] = currentItemFlashSale
         }
 
-        state.value =
-            state.value.copy(
+        setState {
+            copy(
                 home = state.value.home.copy(
                     flashSale = state.value.home.flashSale.copy(
                         products = tmpFlashSale
                     )
                 )
             )
+        }
+
     }
 
     private fun updateNewestProductLike(id: Long) {
@@ -137,8 +122,8 @@ class HomeViewModel(
             tmpNewestProduct[indexCurrentItemNewestProduct] = currentItemNewestProduct
         }
 
-        state.value =
-            state.value.copy(home = state.value.home.copy(newestProduct = tmpNewestProduct))
+        setState { copy(home = state.value.home.copy(newestProduct = tmpNewestProduct)) }
+
     }
 
     private fun updateMostSaleProductLike(id: Long) {
@@ -158,8 +143,7 @@ class HomeViewModel(
             tmpMostSale[indexCurrentItemMostSale] = currentItemMostSale
         }
 
-        state.value =
-            state.value.copy(home = state.value.home.copy(mostSale = tmpMostSale))
+        setState { copy(home = state.value.home.copy(mostSale = tmpMostSale)) }
     }
 
 
@@ -169,51 +153,25 @@ class HomeViewModel(
                 is DataState.NetworkStatus -> {
                     onTriggerEvent(HomeEvent.OnUpdateNetworkState(dataState.networkState))
                 }
+
                 is DataState.Response -> {
-                    onTriggerEvent(HomeEvent.Error(dataState.uiComponent))
+                    setError { dataState.uiComponent }
                 }
 
                 is DataState.Data -> {
                     dataState.data?.let {
                         val currentDateTime =
                             Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
-                        state.value = state.value.copy(home = it)
-                        state.value = state.value.copy(time = currentDateTime)
+                        setState { copy(home = it, time = currentDateTime) }
                     }
                 }
 
                 is DataState.Loading -> {
-                    state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    setState { copy(progressBarState = dataState.progressBarState) }
                 }
             }
         }.launchIn(viewModelScope)
     }
-
-
-    private fun appendToMessageQueue(uiComponent: UIComponent) {
-        if (uiComponent is UIComponent.None) {
-            println("${CUSTOM_TAG}: onTriggerEvent:  ${uiComponent.message}")
-            return
-        }
-
-        val queue = state.value.errorQueue
-        queue.add(uiComponent)
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-        state.value = state.value.copy(errorQueue = queue)
-    }
-
-    private fun removeHeadMessage() {
-        try {
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
-            val queue = state.value.errorQueue
-            queue.remove() // can throw exception if empty
-            state.value = state.value.copy(errorQueue = queue)
-        } catch (e: Exception) {
-            println("${CUSTOM_TAG}: removeHeadMessage: Nothing to remove from DialogQueue")
-        }
-    }
-
 
     private fun onRetryNetwork() {
         getHome()
@@ -221,7 +179,7 @@ class HomeViewModel(
 
 
     private fun onUpdateNetworkState(networkState: NetworkState) {
-        state.value = state.value.copy(networkState = networkState)
+        setState { copy(networkState = networkState) }
     }
 
 

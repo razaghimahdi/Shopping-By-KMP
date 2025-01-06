@@ -48,8 +48,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import business.constants.Sort
+import business.core.UIComponent
 import business.domain.main.Category
 import coil3.compose.AsyncImage
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -84,19 +86,16 @@ fun HomeScreen(
     navigateToDetail: (Long) -> Unit = {},
     state: HomeState,
     events: (HomeEvent) -> Unit = {},
+    errors: Flow<UIComponent>,
     navigateToNotifications: () -> Unit = {},
     navigateToSetting: () -> Unit = {},
     navigateToCategories: () -> Unit = {},
     navigateToSearch: (Long?, Int?) -> Unit = { _, _ -> },
 ) {
-
-
     val pagerState = rememberPagerState { state.home.banners.size }
 
-
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(HomeEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(HomeEvent.OnRetryNetwork) }

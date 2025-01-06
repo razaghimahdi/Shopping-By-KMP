@@ -34,6 +34,7 @@ fun HomeNav(logout: () -> Unit) {
         composable<HomeNavigation.Home> {
             val viewModel: HomeViewModel = koinInject()
             HomeScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToNotifications = {
@@ -59,6 +60,8 @@ fun HomeNav(logout: () -> Unit) {
             SettingsScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
+                action = viewModel.action,
                 logout = logout,
                 popup = {
                     navigator.popBackStack()
@@ -71,6 +74,7 @@ fun HomeNav(logout: () -> Unit) {
             CategoriesScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
+                errors = viewModel.errors,
                 popup = {
                     navigator.popBackStack()
                 },
@@ -98,6 +102,7 @@ fun HomeNav(logout: () -> Unit) {
                 }
             }
             SearchScreen(
+                errors = viewModel.errors,
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
                 navigateToDetailScreen = {
@@ -120,6 +125,7 @@ fun HomeNav(logout: () -> Unit) {
             val viewModel: NotificationsViewModel = koinInject()
             NotificationsScreen(
                 state = viewModel.state.value,
+                errors = viewModel.errors,
                 events = viewModel::onTriggerEvent,
                 popup = {
                     navigator.popBackStack()

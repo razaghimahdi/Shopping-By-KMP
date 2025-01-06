@@ -2,17 +2,12 @@ package presentation.ui.main.home.view_model
 
 import business.core.NetworkState
 import business.core.UIComponent
+import business.core.ViewEvent
 
-sealed class HomeEvent {
+sealed class HomeEvent : ViewEvent {
 
+    data object OnRetryNetwork : HomeEvent()
 
-   data object OnRemoveHeadFromQueue : HomeEvent()
-
-    data class Error(
-        val uiComponent: UIComponent
-    ) : HomeEvent()
-
-   data object OnRetryNetwork : HomeEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : HomeEvent()
