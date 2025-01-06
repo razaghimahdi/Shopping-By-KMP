@@ -5,11 +5,11 @@ import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewState
 import business.domain.main.Address
 import business.domain.main.ShippingType
 
 data class CheckoutState(
-    val buyingSuccess: Boolean = false,
     val totalCost: Long = 0L,
     val totalBasket: Long = 0L,
     val addresses: List<Address> = listOf(),
@@ -18,5 +18,4 @@ data class CheckoutState(
     val selectShippingDialogState: UIComponentState = UIComponentState.Hide,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-)
+) : ViewState

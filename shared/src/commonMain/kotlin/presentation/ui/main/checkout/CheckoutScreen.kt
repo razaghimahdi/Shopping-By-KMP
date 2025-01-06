@@ -25,8 +25,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Address
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -40,10 +43,13 @@ import presentation.component.Spacer_16dp
 import presentation.component.Spacer_32dp
 import presentation.component.Spacer_8dp
 import presentation.component.noRippleClickable
+import presentation.navigation.SplashNavigation
 import presentation.theme.BorderColor
 import presentation.theme.DefaultCardColorsTheme
+import presentation.ui.main.checkout.view_model.CheckoutAction
 import presentation.ui.main.checkout.view_model.CheckoutEvent
 import presentation.ui.main.checkout.view_model.CheckoutState
+import presentation.ui.splash.view_model.LoginAction
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.change
 import shoping_by_kmp.shared.generated.resources.checkout
@@ -57,19 +63,24 @@ import shoping_by_kmp.shared.generated.resources.submit
 import shoping_by_kmp.shared.generated.resources.total_cost
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun CheckoutScreen(
     state: CheckoutState,
+    errors: Flow<UIComponent>,
+    action: Flow<CheckoutAction>,
     events: (CheckoutEvent) -> Unit,
     navigateToAddress: () -> Unit,
     popup: () -> Unit
 ) {
 
-    LaunchedEffect(key1 = state.buyingSuccess) {
-        if (state.buyingSuccess) {
-            popup()
-        }
+    LaunchedEffect(key1 = action) {
+        action.onEach { effect ->
+            when (effect) {
+                CheckoutAction.Navigation.PopUp -> {
+                    popup()
+                }
+            }
+        }.collect {}
     }
 
 
@@ -79,8 +90,7 @@ fun CheckoutScreen(
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(CheckoutEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(CheckoutEvent.OnRetryNetwork) },
@@ -95,11 +105,15 @@ fun CheckoutScreen(
 
                 Spacer_32dp()
 
-                Text(stringResource(Res.string.shipping_address), style = MaterialTheme.typography.titleLarge)
+                Text(
+                    stringResource(Res.string.shipping_address),
+                    style = MaterialTheme.typography.titleLarge
+                )
                 Spacer_12dp()
                 ShippingBox(
                     title = stringResource(Res.string.home),
-                    image = Res.drawable.location2, detail = state.selectedAddress.getShippingAddress()
+                    image = Res.drawable.location2,
+                    detail = state.selectedAddress.getShippingAddress()
                 ) {
                     navigateToAddress()
                 }
@@ -108,7 +122,10 @@ fun CheckoutScreen(
                 HorizontalDivider(color = BorderColor)
                 Spacer_16dp()
 
-                Text(stringResource(Res.string.choose_shipping_type), style = MaterialTheme.typography.titleLarge)
+                Text(
+                    stringResource(Res.string.choose_shipping_type),
+                    style = MaterialTheme.typography.titleLarge
+                )
                 Spacer_12dp()
                 ShippingBox(
                     title = state.selectedShipping.title,
@@ -162,7 +179,10 @@ fun CheckoutButtonBox(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(stringResource(Res.string.shipping_cost), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(Res.string.shipping_cost),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Text(shippingCost, style = MaterialTheme.typography.titleLarge)
             }
             Spacer_8dp()
@@ -172,7 +192,10 @@ fun CheckoutButtonBox(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(stringResource(Res.string.total_cost), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(Res.string.total_cost),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Text(totalCost, style = MaterialTheme.typography.titleLarge)
             }
 
@@ -188,7 +211,6 @@ fun CheckoutButtonBox(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ShippingBox(title: String, image: DrawableResource, detail: String, onClick: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth()) {

@@ -3,10 +3,11 @@ package presentation.ui.main.checkout.view_model
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewEvent
 import business.domain.main.Address
 import business.domain.main.ShippingType
 
-sealed class CheckoutEvent {
+sealed class CheckoutEvent : ViewEvent {
 
     data class OnUpdateSelectedShipping(val value: ShippingType) : CheckoutEvent()
 
@@ -16,13 +17,8 @@ sealed class CheckoutEvent {
 
     data object BuyProduct : CheckoutEvent()
 
-    data object OnRemoveHeadFromQueue : CheckoutEvent()
-
-    data class Error(
-        val uiComponent: UIComponent
-    ) : CheckoutEvent()
-
     data object OnRetryNetwork : CheckoutEvent()
+
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : CheckoutEvent()
