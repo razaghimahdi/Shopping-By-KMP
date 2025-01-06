@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.core.UIComponentState
 import business.domain.main.Address
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -45,9 +47,13 @@ import shoping_by_kmp.shared.generated.resources.mail
 import shoping_by_kmp.shared.generated.resources.no_address
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: () -> Unit) {
+fun AddressScreen(
+    state: AddressState,
+    errors: Flow<UIComponent>,
+    events: (AddressEvent) -> Unit,
+    popup: () -> Unit
+) {
 
     if (state.addAddressDialogState == UIComponentState.Show) {
         AddAddressDialog(onDismissRequest = {
@@ -66,8 +72,8 @@ fun AddressScreen(state: AddressState, events: (AddressEvent) -> Unit, popup: ()
             })
     }
 
-    DefaultScreenUI(queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(AddressEvent.OnRemoveHeadFromQueue) },
+    DefaultScreenUI(
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(AddressEvent.OnRetryNetwork) },

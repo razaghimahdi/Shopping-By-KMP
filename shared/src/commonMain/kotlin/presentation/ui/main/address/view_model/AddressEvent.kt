@@ -3,8 +3,9 @@ package presentation.ui.main.address.view_model
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewEvent
 
-sealed class AddressEvent {
+sealed class AddressEvent : ViewEvent {
 
     data class OnUpdateAddAddressDialogState(val value: UIComponentState) : AddressEvent()
 
@@ -16,13 +17,7 @@ sealed class AddressEvent {
         val zipCode: String,
     ) : AddressEvent()
 
-   data object OnRemoveHeadFromQueue : AddressEvent()
-
-    data class Error(
-        val uiComponent: UIComponent
-    ) : AddressEvent()
-
-   data object OnRetryNetwork : AddressEvent()
+    data object OnRetryNetwork : AddressEvent()
 
     data class OnUpdateNetworkState(
         val networkState: NetworkState

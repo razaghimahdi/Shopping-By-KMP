@@ -5,6 +5,7 @@ import business.core.ProgressBarState
 import business.core.Queue
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewState
 import business.domain.main.Address
 
 data class AddressState(
@@ -12,5 +13,4 @@ data class AddressState(
     val addAddressDialogState: UIComponentState = UIComponentState.Hide,
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-)
+) : ViewState
