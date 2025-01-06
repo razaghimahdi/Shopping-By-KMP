@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import business.core.UIComponent
 import business.core.UIComponentState
 import common.PermissionCallback
 import common.PermissionStatus
@@ -32,8 +33,10 @@ import common.createPermissionsManager
 import common.rememberCameraManager
 import common.rememberGalleryManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
 import presentation.component.CircleImage
 import presentation.component.DEFAULT__BUTTON_SIZE
 import presentation.component.DefaultButton
@@ -46,18 +49,16 @@ import presentation.component.Spacer_8dp
 import presentation.theme.DefaultTextFieldTheme
 import presentation.ui.main.edit_profile.view_model.EditProfileEvent
 import presentation.ui.main.edit_profile.view_model.EditProfileState
-import org.jetbrains.compose.resources.stringResource
 import shoping_by_kmp.shared.generated.resources.Res
-import shoping_by_kmp.shared.generated.resources.select
-import shoping_by_kmp.shared.generated.resources.edit_profile
-import shoping_by_kmp.shared.generated.resources.cancel
 import shoping_by_kmp.shared.generated.resources.age
-import shoping_by_kmp.shared.generated.resources.name
-import shoping_by_kmp.shared.generated.resources.settings
-import shoping_by_kmp.shared.generated.resources.permission_required_desc
-import shoping_by_kmp.shared.generated.resources.product_details
-import shoping_by_kmp.shared.generated.resources.permission_required_title
+import shoping_by_kmp.shared.generated.resources.cancel
+import shoping_by_kmp.shared.generated.resources.edit_profile
 import shoping_by_kmp.shared.generated.resources.email
+import shoping_by_kmp.shared.generated.resources.name
+import shoping_by_kmp.shared.generated.resources.permission_required_desc
+import shoping_by_kmp.shared.generated.resources.permission_required_title
+import shoping_by_kmp.shared.generated.resources.select
+import shoping_by_kmp.shared.generated.resources.settings
 import shoping_by_kmp.shared.generated.resources.submit
 
 
@@ -65,6 +66,7 @@ import shoping_by_kmp.shared.generated.resources.submit
 fun EditProfileScreen(
     state: EditProfileState,
     events: (EditProfileEvent) -> Unit,
+    errors: Flow<UIComponent>,
     popup: () -> Unit
 ) {
 
@@ -163,8 +165,7 @@ fun EditProfileScreen(
 
 
     DefaultScreenUI(
-        queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(EditProfileEvent.OnRemoveHeadFromQueue) },
+        errors = errors,
         progressBarState = state.progressBarState,
         networkState = state.networkState,
         onTryAgain = { events(EditProfileEvent.OnRetryNetwork) },

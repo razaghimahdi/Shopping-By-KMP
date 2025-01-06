@@ -4,8 +4,9 @@ import androidx.compose.ui.graphics.ImageBitmap
 import business.core.NetworkState
 import business.core.UIComponent
 import business.core.UIComponentState
+import business.core.ViewEvent
 
-sealed class EditProfileEvent {
+sealed class EditProfileEvent : ViewEvent {
 
     data class UpdateProfile(val imageBitmap: ImageBitmap?) : EditProfileEvent()
 
@@ -17,16 +18,10 @@ sealed class EditProfileEvent {
 
     data class OnUpdateAge(val value: String) : EditProfileEvent()
 
-    data class Error(
-        val uiComponent: UIComponent
-    ) : EditProfileEvent()
+    data object OnRetryNetwork : EditProfileEvent()
 
-   data object OnRetryNetwork : EditProfileEvent()
     data class OnUpdateNetworkState(
         val networkState: NetworkState
     ) : EditProfileEvent()
-
-
-   data object OnRemoveHeadFromQueue : EditProfileEvent()
 
 }
