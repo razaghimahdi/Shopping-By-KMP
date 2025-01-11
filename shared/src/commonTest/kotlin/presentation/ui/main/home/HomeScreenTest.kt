@@ -6,8 +6,10 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
+import business.core.UIComponent
 import business.datasoruce.network.main.HomeFakeDataGenerator
 import business.datasoruce.serializeHomeData
+import kotlinx.coroutines.flow.MutableSharedFlow
 import presentation.ui.main.home.view_model.HomeState
 import kotlin.test.Test
 
@@ -25,7 +27,8 @@ class HomeScreenTest {
                 val state = remember {
                     HomeState(home = homeData)
                 }
-                HomeScreen(state = state)
+                val errors = MutableSharedFlow<UIComponent>()
+                HomeScreen(state = state, errors = errors)
             }
             //onRoot().printToLog("UI Hierarchy")
 
