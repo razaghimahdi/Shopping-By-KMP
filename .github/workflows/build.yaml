@@ -40,7 +40,7 @@ jobs:
       # Build for iOS
       - name: Build iOS
         if: matrix.platform == 'ios'
-        run: ./gradlew :shared:packForXcode
+        run: ./gradlew :shared:linkDebugFrameworkIosFat
 
       # Run tests
       - name: Run tests
