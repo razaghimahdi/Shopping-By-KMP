@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macOS-latest, windows-latest]
 
     strategy:
       matrix:
@@ -57,7 +57,7 @@ jobs:
 
   lint:
     name: Lint and Format
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
       # Checkout the repository
@@ -71,7 +71,7 @@ jobs:
   deploy:
     name: Deploy (Optional)
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
       # Example for deployment: publish to GitHub Pages
       - name: Deploy artifacts
