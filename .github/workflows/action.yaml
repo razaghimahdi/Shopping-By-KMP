@@ -32,12 +32,6 @@ jobs:
           path: ~/.gradle/caches
           key: gradle-${{ matrix.platform }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      # Set up Kotlin Multiplatform environment
-      - name: Set up Kotlin environment
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libimobiledevice-utils ideviceinstaller ios-deploy
-
       # Build for Android
       - name: Build Android
         if: matrix.platform == 'android'
