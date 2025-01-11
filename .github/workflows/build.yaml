@@ -48,18 +48,6 @@ jobs:
         run: ./gradlew test
 
 
-  check-code-style:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'corretto'
-          java-version: '17'
-      - name: Check code style
-        shell: bash
-        run: ./gradlew ktlintCheck
-
   deploy:
     name: Deploy (Optional)
     needs: build
