@@ -6,6 +6,7 @@ android-version-code = "1"
 android-version-name = "1.0"
 agp = "8.7.0"
 kotlin = "2.1.0"
+ktlint = "12.1.2"
 kotlinxCoroutinesCore = "1.8.1-Beta"
 ktor = "2.3.7"
 compose = "1.7.6"
@@ -128,6 +129,7 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 
 # Plugins defined by this project
