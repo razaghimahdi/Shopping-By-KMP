@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    tags:
+      - 'v1.0.0' 
   pull_request:
+    tags:
+      - 'v1.0.0' 
 
 jobs:
   build:
@@ -46,6 +50,49 @@ jobs:
 #      - name: Run tests
 #        if: matrix.platform == 'ios'
 #        run: ./gradlew test
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          path: |
+            androidApp/release/*.apk
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: release-artifacts
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }} # Use the pushed tag (e.g., v1.0.0)
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Changes
+            - Describe your changes here.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: androidApp/release/androidApp-release.apk
+          asset_name: androidApp-release.apk
+          asset_content_type: application/vnd.android.package-archive
 
 
   deploy:
