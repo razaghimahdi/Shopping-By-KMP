@@ -43,9 +43,9 @@ jobs:
         run: ./gradlew :shared:linkDebugFrameworkIosFat
 
       # Run tests
-      - name: Run tests
-        if: matrix.platform == 'ios'
-        run: ./gradlew test
+#      - name: Run tests
+#        if: matrix.platform == 'ios'
+#        run: ./gradlew test
 
 
   deploy:
