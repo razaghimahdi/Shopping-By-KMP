@@ -68,22 +68,19 @@ jobs:
         with:
           name: release-artifacts
 
-      - name: Create GitHub Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref_name }} # Use the pushed tag (e.g., v1.0.0)
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            ## Changes
-            - Describe your changes here.
-          draft: false
-          prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
 
       - name: Upload Release Assets
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: androidApp/release/androidApp-release.apk
