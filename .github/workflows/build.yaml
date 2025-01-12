@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     tags:
-      - 'v1.0.0' 
+      - 'v*.*.*'
   pull_request:
     tags:
-      - 'v1.0.0' 
+      - 'v*.*.*'
 
 jobs:
   build:
