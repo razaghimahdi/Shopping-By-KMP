@@ -1,15 +1,11 @@
 package presentation.ui.main.profile.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.GetProfileInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.GetProfileUseCase
 
 class ProfileViewModel(
-    private val getProfileInteractor: GetProfileInteractor,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : BaseViewModel<ProfileEvent, ProfileState, Nothing>() {
 
     override fun setInitialState() = ProfileState()
@@ -33,27 +29,16 @@ class ProfileViewModel(
 
 
     private fun getProfile() {
-        getProfileInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(ProfileEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(profile = it) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getProfileUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(profile = it) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(ProfileEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

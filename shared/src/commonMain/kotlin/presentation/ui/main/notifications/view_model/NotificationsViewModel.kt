@@ -1,18 +1,14 @@
 package presentation.ui.main.notifications.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.GetNotificationsInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.GetNotificationsUseCase
 
 class NotificationsViewModel(
-    private val getNotificationsInteractor: GetNotificationsInteractor
+    private val getNotificationsUseCase: GetNotificationsUseCase
 ) : BaseViewModel<NotificationsEvent, NotificationsState, Nothing>() {
 
-    override fun setInitialState()=NotificationsState()
+    override fun setInitialState() = NotificationsState()
 
     override fun onTriggerEvent(event: NotificationsEvent) {
         when (event) {
@@ -33,26 +29,16 @@ class NotificationsViewModel(
 
 
     private fun getNotifications() {
-
-        getNotificationsInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(NotificationsEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    setState { copy(notifications = dataState.data ?: listOf()) }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getNotificationsUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(notifications = it) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(NotificationsEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

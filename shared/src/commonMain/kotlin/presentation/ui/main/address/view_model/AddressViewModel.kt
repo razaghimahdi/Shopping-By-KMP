@@ -1,18 +1,14 @@
 package presentation.ui.main.address.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
 import business.core.UIComponentState
-import business.interactors.main.AddAddressInteractor
-import business.interactors.main.GetAddressesInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.AddAddressUseCase
+import business.interactors.main.GetAddressesUseCase
 
 class AddressViewModel(
-    private val getAddressesInteractor: GetAddressesInteractor,
-    private val addAddressInteractor: AddAddressInteractor,
+    private val getAddressesUseCase: GetAddressesUseCase,
+    private val addAddressUseCase: AddAddressUseCase,
 ) : BaseViewModel<AddressEvent, AddressState, Nothing>() {
 
     override fun setInitialState() = AddressState()
@@ -56,55 +52,35 @@ class AddressViewModel(
         state: String,
         zipCode: String,
     ) {
-        addAddressInteractor.execute(
-            address = address,
-            country = country,
-            city = city,
-            state = state,
-            zipCode = zipCode
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        if (it) getAddresses()
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(addAddressUseCase.execute(
+            AddAddressUseCase.Params(
+                address = address,
+                country = country,
+                city = city,
+                state = state,
+                zipCode = zipCode
+            )
+        ), onSuccess = {
+            it?.let {
+                if (it) getAddresses()
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun getAddresses() {
-        getAddressesInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(AddressEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(addresses = it) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getAddressesUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(addresses = it) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(AddressEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onUpdateAddAddressDialogState(value: UIComponentState) {

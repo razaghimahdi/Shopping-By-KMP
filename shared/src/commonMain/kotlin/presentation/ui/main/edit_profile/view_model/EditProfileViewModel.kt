@@ -1,21 +1,17 @@
 package presentation.ui.main.edit_profile.view_model
 
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
 import business.core.UIComponentState
-import business.interactors.main.GetEmailFromCacheInteractor
-import business.interactors.main.GetProfileInteractor
-import business.interactors.main.UpdateProfileInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.GetEmailFromCacheUseCase
+import business.interactors.main.GetProfileUseCase
+import business.interactors.main.UpdateProfileUseCase
 
 class EditProfileViewModel(
-    private val updateProfileInteractor: UpdateProfileInteractor,
-    private val getProfileInteractor: GetProfileInteractor,
-    private val getEmailFromCacheInteractor: GetEmailFromCacheInteractor,
+    private val updateProfileUseCase: UpdateProfileUseCase,
+    private val getProfileUseCase: GetProfileUseCase,
+    private val getEmailFromCacheUseCase: GetEmailFromCacheUseCase,
 ) : BaseViewModel<EditProfileEvent, EditProfileState, Nothing>() {
 
     override fun setInitialState() = EditProfileState()
@@ -60,27 +56,18 @@ class EditProfileViewModel(
     }
 
     private fun updateProfile(imageBitmap: ImageBitmap?) {
-        updateProfileInteractor.execute(
-            name = state.value.name,
-            age = state.value.age,
-            image = imageBitmap
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(EditProfileEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {}
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
-            }
-        }.launchIn(viewModelScope)
+        executeUseCase(updateProfileUseCase.execute(
+            UpdateProfileUseCase.Params(
+                name = state.value.name,
+                age = state.value.age,
+                image = imageBitmap
+            )
+        ), onSuccess = {}, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(EditProfileEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onUpdateImageOptionDialog(value: UIComponentState) {
@@ -100,52 +87,30 @@ class EditProfileViewModel(
     }
 
     private fun getProfile() {
-        getProfileInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(EditProfileEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(name = it.name, image = it.profileUrl, age = it.age) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getProfileUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(name = it.name, image = it.profileUrl, age = it.age) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(EditProfileEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
 
     private fun getEmail() {
-        getEmailFromCacheInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(EditProfileEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(email = it) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getEmailFromCacheUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(email = it) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(EditProfileEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

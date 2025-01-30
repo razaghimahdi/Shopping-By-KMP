@@ -1,18 +1,14 @@
 package presentation.ui.main.comment.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
 import business.core.UIComponentState
-import business.interactors.main.AddCommentInteractor
-import business.interactors.main.GetCommentsInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.AddCommentUseCase
+import business.interactors.main.GetCommentsUseCase
 
 class CommentViewModel(
-    private val getCommentsInteractor: GetCommentsInteractor,
-    private val addCommentInteractor: AddCommentInteractor,
+    private val getCommentsUseCase: GetCommentsUseCase,
+    private val addCommentUseCase: AddCommentUseCase,
 ) : BaseViewModel<CommentEvent, CommentState, Nothing>() {
 
     override fun setInitialState() = CommentState()
@@ -53,50 +49,39 @@ class CommentViewModel(
 
 
     private fun addComment(comment: String, rate: Double) {
-        addCommentInteractor.execute(
-            productId = state.value.productId, rate = rate, comment = comment
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
+        executeUseCase(
+            addCommentUseCase.execute(
+                AddCommentUseCase.Params(
+                    productId = state.value.productId,
+                    rate = rate,
+                    comment = comment
+                )
+            ), onSuccess = {
+                it?.let {
+                    if (it) onTriggerEvent(CommentEvent.GetComments)
                 }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        if (it) onTriggerEvent(CommentEvent.GetComments)
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+            }, onLoading = {
+                setState { copy(progressBarState = it) }
             }
-        }.launchIn(viewModelScope)
+        )
     }
 
     private fun getComments() {
-        getCommentsInteractor.execute(state.value.productId).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CommentEvent.OnUpdateNetworkState(dataState.networkState))
-                }
 
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
 
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(comments = it) }
-                    }
+        executeUseCase(
+            getCommentsUseCase.execute(
+                GetCommentsUseCase.Params(state.value.productId)
+            ), onSuccess = {
+                it?.let {
+                    setState { copy(comments = it) }
                 }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+            }, onLoading = {
+                setState { copy(progressBarState = it) }
+            }, onNetworkStatus = {
+                setEvent(CommentEvent.OnUpdateNetworkState(it))
             }
-        }.launchIn(viewModelScope)
+        )
     }
 
     private fun onUpdateAddCommentDialogState(value: UIComponentState) {

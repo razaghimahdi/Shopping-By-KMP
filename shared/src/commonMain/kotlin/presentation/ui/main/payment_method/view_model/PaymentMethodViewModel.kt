@@ -1,10 +1,7 @@
 package presentation.ui.main.payment_method.view_model
 
-import business.constants.CUSTOM_TAG
 import business.core.BaseViewModel
 import business.core.NetworkState
-import business.core.Queue
-import business.core.UIComponent
 
 class PaymentMethodViewModel : BaseViewModel<PaymentMethodEvent, PaymentMethodState, Nothing>() {
 

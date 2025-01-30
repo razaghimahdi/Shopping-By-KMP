@@ -1,15 +1,11 @@
 package presentation.ui.main.settings.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.LogoutInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.LogoutUseCase
 
 class SettingsViewModel(
-    private val logoutInteractor: LogoutInteractor,
+    private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<SettingsEvent, SettingsState, SettingsAction>() {
 
     override fun setInitialState() = SettingsState()
@@ -31,27 +27,14 @@ class SettingsViewModel(
     }
 
     private fun logout() {
-        logoutInteractor.execute()
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            if (it) {
-                                setAction { SettingsAction.Navigation.PopUp }
-                            }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
-                }
-            }.launchIn(viewModelScope)
+        executeUseCase(logoutUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setAction { SettingsAction.Navigation.PopUp }
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun onRetryNetwork() {

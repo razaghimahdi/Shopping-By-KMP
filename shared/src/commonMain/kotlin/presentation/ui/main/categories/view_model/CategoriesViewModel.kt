@@ -1,15 +1,11 @@
 package presentation.ui.main.categories.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.HomeInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.HomeUseCase
 
 class CategoriesViewModel(
-    private val homeInteractor: HomeInteractor,
+    private val homeUseCase: HomeUseCase,
 ) : BaseViewModel<CategoriesEvent, CategoriesState, Nothing>() {
 
 
@@ -35,27 +31,16 @@ class CategoriesViewModel(
 
 
     private fun getCategories() {
-        homeInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CategoriesEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(categories = it.categories) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(homeUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(categories = it.categories) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(CategoriesEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

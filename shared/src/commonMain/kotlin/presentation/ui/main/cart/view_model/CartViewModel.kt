@@ -1,19 +1,15 @@
 package presentation.ui.main.cart.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.AddBasketInteractor
-import business.interactors.main.BasketListInteractor
-import business.interactors.main.DeleteBasketInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.AddBasketUseCase
+import business.interactors.main.BasketListUseCase
+import business.interactors.main.DeleteBasketUseCase
 
 class CartViewModel(
-    private val basketListInteractor: BasketListInteractor,
-    private val addBasketInteractor: AddBasketInteractor,
-    private val deleteBasketInteractor: DeleteBasketInteractor,
+    private val basketListUseCase: BasketListUseCase,
+    private val addBasketUseCase: AddBasketUseCase,
+    private val deleteBasketUseCase: DeleteBasketUseCase,
 ) : BaseViewModel<CartEvent, CartState, Nothing>() {
 
     override fun setInitialState() = CartState()
@@ -44,70 +40,49 @@ class CartViewModel(
     }
 
     private fun getCart() {
-        basketListInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CartEvent.OnUpdateNetworkState(dataState.networkState))
+        executeUseCase(basketListUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(baskets = it) }
+                val totalCost = state.value.baskets.sumOf { basket ->
+                    basket.price
                 }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(baskets = it) }
-                        val totalCost = state.value.baskets.sumOf { basket ->
-                            basket.price
-                        }
-                        setState { copy(totalCost = "$ $totalCost") }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+                setState { copy(totalCost = "$ $totalCost") }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(CartEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun deleteFromBasket(id: Long) {
-        deleteBasketInteractor.execute(id = id).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
+        executeUseCase(
+            deleteBasketUseCase.execute(DeleteBasketUseCase.Params(id = id)),
+            onSuccess = {
+                it?.let {
+                    if (it) setEvent(CartEvent.OnRetryNetwork)
                 }
-
-                is DataState.Data -> {
-                    if (dataState.data == true) onTriggerEvent(CartEvent.OnRetryNetwork)
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+            },
+            onLoading = {
+                setState { copy(progressBarState = it) }
             }
-        }.launchIn(viewModelScope)
+        )
     }
 
 
     private fun addProduct(id: Long) {
-        addBasketInteractor.execute(id = id, count = 1).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
+        executeUseCase(
+            addBasketUseCase.execute(AddBasketUseCase.Params(id = id, count = 1)),
+            onSuccess = {
+                it?.let {
+                    if (it) setEvent(CartEvent.OnRetryNetwork)
                 }
-
-                is DataState.Data -> {
-                    if (dataState.data == true) onTriggerEvent(CartEvent.OnRetryNetwork)
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+            },
+            onLoading = {
+                setState { copy(progressBarState = it) }
             }
-        }.launchIn(viewModelScope)
+        )
     }
 
 

@@ -6,14 +6,15 @@ import business.core.DataState
 import business.core.NetworkState
 import business.domain.main.Category
 import business.domain.main.category_all
-import business.interactors.main.LikeInteractor
-import business.interactors.main.WishListInteractor
+import business.interactors.main.LikeUseCase
+import business.interactors.main.WishListUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import presentation.ui.main.address.view_model.AddressEvent
 
 class WishlistViewModel(
-    private val wishListInteractor: WishListInteractor,
-    private val likeInteractor: LikeInteractor,
+    private val wishListUseCase: WishListUseCase,
+    private val likeUseCase: LikeUseCase,
 ) : BaseViewModel<WishlistEvent, WishlistState, Nothing>() {
 
     override fun setInitialState() = WishlistState()
@@ -48,88 +49,65 @@ class WishlistViewModel(
     }
 
     private fun likeProduct(id: Long) {
-        likeInteractor.execute(id = id)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
+        executeUseCase(likeUseCase.execute(LikeUseCase.Params(id = id)), onSuccess = {
+            it?.let {
+                if (it) {
+                    val currentList = state.value.wishlist.products.toMutableList()
+                    val item = currentList.find { product ->
+                        product.id == id
                     }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            if (it) {
-                                val currentList = state.value.wishlist.products.toMutableList()
-                                val item = currentList.find { product ->
-                                    product.id == id
-                                }
-                                currentList.remove(item)
-                                setState { copy(wishlist = state.value.wishlist.copy(products = currentList)) }
-                            }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
+                    currentList.remove(item)
+                    setState { copy(wishlist = state.value.wishlist.copy(products = currentList)) }
                 }
-            }.launchIn(viewModelScope)
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun getWishlist() {
-        wishListInteractor.execute(categoryId = state.value.categoryId, page = 1)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {
-                        onTriggerEvent(WishlistEvent.OnUpdateNetworkState(dataState.networkState))
-                    }
+        executeUseCase(
+            wishListUseCase.execute(
+                WishListUseCase.Params(
+                    categoryId = state.value.categoryId,
+                    page = 1
+                )
+            ), onSuccess = {
+                it?.let {
+                    val categories = it.categories.toMutableList()
+                    categories.add(0, category_all)
 
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-
-                            val categories = it.categories.toMutableList()
-                            categories.add(0, category_all)
-
-                            setState { copy(wishlist = it.copy(categories = categories)) }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
+                    setState { copy(wishlist = it.copy(categories = categories)) }
                 }
-            }.launchIn(viewModelScope)
+            }, onLoading = {
+                setState { copy(progressBarState = it) }
+            }, onNetworkStatus = {
+                setEvent(WishlistEvent.OnUpdateNetworkState(it))
+            }
+        )
     }
 
 
     private fun getNextPage() {
         setState { copy(page = state.value.page + 1) }
-        wishListInteractor.execute(categoryId = state.value.categoryId, page = state.value.page)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            setState { copy(wishlist = state.value.wishlist.copy(products = it.products)) }
-                            if (it.products.isEmpty()) {
-                                setState { copy(hasNextPage = false) }
-                            }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
+        executeUseCase(
+            wishListUseCase.execute(
+                WishListUseCase.Params(
+                    categoryId = state.value.categoryId,
+                    page = state.value.page
+                )
+            ), onSuccess = {
+                it?.let {
+                    setState { copy(wishlist = state.value.wishlist.copy(products = it.products)) }
+                    if (it.products.isEmpty()) {
+                        setState { copy(hasNextPage = false) }
                     }
                 }
-            }.launchIn(viewModelScope)
+            }, onLoading = {
+                setState { copy(progressBarState = it) }
+            }
+        )
     }
 
     private fun onUpdateSelectedCategory(category: Category) {

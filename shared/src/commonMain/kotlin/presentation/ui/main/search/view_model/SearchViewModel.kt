@@ -6,14 +6,16 @@ import business.core.DataState
 import business.core.NetworkState
 import business.core.UIComponentState
 import business.domain.main.Category
-import business.interactors.main.GetSearchFilterInteractor
-import business.interactors.main.SearchInteractor
+import business.domain.main.Search
+import business.interactors.main.GetSearchFilterUseCase
+import business.interactors.main.SearchUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import presentation.ui.main.address.view_model.AddressEvent
 
 class SearchViewModel(
-    private val searchInteractor: SearchInteractor,
-    private val getSearchFilterInteractor: GetSearchFilterInteractor,
+    private val searchUseCase: SearchUseCase,
+    private val getSearchFilterUseCase: GetSearchFilterUseCase,
 ) : BaseViewModel<SearchEvent, SearchState, Nothing>() {
 
     override fun setInitialState() = SearchState()
@@ -93,30 +95,19 @@ class SearchViewModel(
     }
 
     private fun getSearchFilter() {
-        getSearchFilterInteractor.execute()
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            setState {
-                                copy(
-                                    searchFilter = it,
-                                    selectedRange = it.minPrice.toFloat()..it.maxPrice.toFloat()
-                                )
-                            }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
+        executeUseCase(getSearchFilterUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState {
+                    copy(
+                        searchFilter = it,
+                        selectedRange = it.minPrice.toFloat()..it.maxPrice.toFloat()
+                    )
                 }
-            }.launchIn(viewModelScope)
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
 
@@ -126,31 +117,22 @@ class SearchViewModel(
         categories: List<Category>? = null,
     ) {
         resetPaging()
-        searchInteractor.execute(
-            page = state.value.page,
-            minPrice = minPrice,
-            maxPrice = maxPrice,
-            categories = categories,
-            sort = state.value.selectedSort,
+        executeUseCase(searchUseCase.execute(
+            SearchUseCase.Params(
+                page = state.value.page,
+                minPrice = minPrice,
+                maxPrice = maxPrice,
+                categories = categories,
+                sort = state.value.selectedSort,
+            )
+        ), onSuccess = {
+            it?.let {
+                setState { copy(search = it) }
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
         )
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            setState { copy(search = it) }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
-                }
-            }.launchIn(viewModelScope)
     }
 
     private fun resetPaging() {
@@ -159,34 +141,25 @@ class SearchViewModel(
 
     private fun getNextPage() {
         setState { copy(page = state.value.page + 1) }
-        searchInteractor.execute(
-            page = state.value.page,
-            minPrice = state.value.selectedRange.start.toInt(),
-            maxPrice = state.value.selectedRange.endInclusive.toInt(),
-            categories = state.value.selectedCategory,
-            sort = state.value.selectedSort,
-        )
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            setState { copy(search = it) }
-                            if (it.products.isEmpty()) {
-                                setState { copy(hasNextPage = false) }
-                            }
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
+        executeUseCase(searchUseCase.execute(
+            SearchUseCase.Params(
+                page = state.value.page,
+                minPrice = state.value.selectedRange.start.toInt(),
+                maxPrice = state.value.selectedRange.endInclusive.toInt(),
+                categories = state.value.selectedCategory,
+                sort = state.value.selectedSort,
+            )
+        ), onSuccess = {
+            it?.let {
+                setState { copy(search = it) }
+                if (it.products.isEmpty()) {
+                    setState { copy(hasNextPage = false) }
                 }
-            }.launchIn(viewModelScope)
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun onUpdateSelectedCategory(categories: List<Category>) {

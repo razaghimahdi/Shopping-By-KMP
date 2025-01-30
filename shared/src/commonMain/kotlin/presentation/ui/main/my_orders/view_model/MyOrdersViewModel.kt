@@ -1,15 +1,11 @@
 package presentation.ui.main.my_orders.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.GetOrdersInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.GetOrdersUseCase
 
 class MyOrdersViewModel(
-    private val getOrdersInteractor: GetOrdersInteractor
+    private val getOrdersUseCase: GetOrdersUseCase
 ) : BaseViewModel<MyOrdersEvent, MyOrdersState, Nothing>() {
 
     override fun setInitialState() = MyOrdersState()
@@ -32,26 +28,16 @@ class MyOrdersViewModel(
     }
 
     private fun getOrders() {
-
-        getOrdersInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(MyOrdersEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    setState { copy(orders = dataState.data ?: listOf()) }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(getOrdersUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(orders = it) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(MyOrdersEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

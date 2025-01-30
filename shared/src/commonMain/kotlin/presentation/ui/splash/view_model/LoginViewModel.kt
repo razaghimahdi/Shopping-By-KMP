@@ -1,19 +1,15 @@
 package presentation.ui.splash.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.splash.CheckTokenInteractor
-import business.interactors.splash.LoginInteractor
-import business.interactors.splash.RegisterInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.splash.CheckTokenUseCase
+import business.interactors.splash.LoginUseCase
+import business.interactors.splash.RegisterUseCase
 
 class LoginViewModel(
-    private val loginInteractor: LoginInteractor,
-    private val registerInteractor: RegisterInteractor,
-    private val checkTokenInteractor: CheckTokenInteractor,
+    private val loginUseCase: LoginUseCase,
+    private val registerUseCase: RegisterUseCase,
+    private val checkTokenUseCase: CheckTokenUseCase,
 ) : BaseViewModel<LoginEvent, LoginState, LoginAction>() {
 
     override fun setInitialState() = LoginState()
@@ -41,14 +37,6 @@ class LoginViewModel(
                 onUpdateUsernameLogin(event.value)
             }
 
-//            is LoginEvent.OnRemoveHeadFromQueue -> {
-//                removeHeadMessage()
-//            }
-//
-//            is LoginEvent.Error -> {
-//                appendToMessageQueue(event.uiComponent)
-//            }
-
             is LoginEvent.OnRetryNetwork -> {
                 onRetryNetwork()
             }
@@ -64,97 +52,70 @@ class LoginViewModel(
     }
 
     private fun checkToken() {
-        checkTokenInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
+        executeUseCase(checkTokenUseCase.execute(Unit), onSuccess = {
+            it?.let {
+
+                setState {
+                    copy(isTokenValid = it)
                 }
 
-                is DataState.Data -> {
-
-                    setState {
-                        copy(isTokenValid = dataState.data ?: false)
-                    }
-
-                    setAction {
-                        if (dataState.data == true) {
-                            LoginAction.Navigation.NavigateToMain
-                        } else {
-                            LoginAction.Navigation.NavigateToLogin
-                        }
-                    }
-
-                }
-
-                is DataState.Loading -> {
-                    setState {
-                        copy(progressBarState = dataState.progressBarState)
+                setAction {
+                    if (it) {
+                        LoginAction.Navigation.NavigateToMain
+                    } else {
+                        LoginAction.Navigation.NavigateToLogin
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun login() {
-        loginInteractor.execute(
-            email = state.value.usernameLogin,
-            password = state.value.passwordLogin,
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    setAction {
-                        if (!dataState.data.isNullOrEmpty()) {
-                            LoginAction.Navigation.NavigateToMain
-                        } else {
-                            LoginAction.Navigation.NavigateToLogin
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState {
-                        copy(progressBarState = dataState.progressBarState)
+        executeUseCase(loginUseCase.execute(
+            LoginUseCase.Params(
+                email = state.value.usernameLogin,
+                password = state.value.passwordLogin,
+            )
+        ), onSuccess = {
+            it?.let {
+                setAction {
+                    if (it.isNotEmpty()) {
+                        LoginAction.Navigation.NavigateToMain
+                    } else {
+                        LoginAction.Navigation.NavigateToLogin
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
     private fun register() {
-        registerInteractor.execute(
-            email = state.value.usernameLogin,
-            password = state.value.passwordLogin,
-            name = state.value.nameRegister
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {}
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    setAction {
-                        if (!dataState.data.isNullOrEmpty()) {
-                            LoginAction.Navigation.NavigateToMain
-                        } else {
-                            LoginAction.Navigation.NavigateToLogin
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState {
-                        copy(progressBarState = dataState.progressBarState)
+        executeUseCase(registerUseCase.execute(
+            RegisterUseCase.Params(
+                email = state.value.usernameLogin,
+                password = state.value.passwordLogin,
+                name = state.value.nameRegister
+            )
+        ), onSuccess = {
+            it?.let {
+                setAction {
+                    if (it.isNotEmpty()) {
+                        LoginAction.Navigation.NavigateToMain
+                    } else {
+                        LoginAction.Navigation.NavigateToLogin
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
 

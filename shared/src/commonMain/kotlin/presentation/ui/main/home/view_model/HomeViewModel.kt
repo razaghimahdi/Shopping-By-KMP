@@ -1,20 +1,16 @@
 package presentation.ui.main.home.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.HomeInteractor
-import business.interactors.main.LikeInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.HomeUseCase
+import business.interactors.main.LikeUseCase
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 class HomeViewModel(
-    private val homeInteractor: HomeInteractor,
-    private val likeInteractor: LikeInteractor,
+    private val homeUseCase: HomeUseCase,
+    private val likeUseCase: LikeUseCase,
 ) : BaseViewModel<HomeEvent, HomeState, Nothing>() {
 
     override fun setInitialState() = HomeState()
@@ -43,34 +39,21 @@ class HomeViewModel(
 
 
     private fun likeProduct(id: Long) {
-        likeInteractor.execute(id = id)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            if (it) updateLike(id)
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
-                }
-            }.launchIn(viewModelScope)
+        executeUseCase(likeUseCase.execute(LikeUseCase.Params(id = id)), onSuccess = {
+            it?.let {
+                if (it) updateLike(id)
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
 
     private fun updateLike(id: Long) {
-
         updateMostSaleProductLike(id = id)
         updateNewestProductLike(id = id)
         updateFlashSaleProductLike(id = id)
-
     }
 
     private fun updateFlashSaleProductLike(id: Long) {
@@ -148,29 +131,18 @@ class HomeViewModel(
 
 
     private fun getHome() {
-        homeInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(HomeEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        val currentDateTime =
-                            Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
-                        setState { copy(home = it, time = currentDateTime) }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
-                }
+        executeUseCase(homeUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                val currentDateTime =
+                    Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
+                setState { copy(home = it, time = currentDateTime) }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(HomeEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {

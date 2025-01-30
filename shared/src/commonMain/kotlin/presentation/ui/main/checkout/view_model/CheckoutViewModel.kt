@@ -1,17 +1,13 @@
 package presentation.ui.main.checkout.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
 import business.core.UIComponentState
 import business.domain.main.Address
 import business.domain.main.ShippingType
-import business.interactors.main.BasketListInteractor
-import business.interactors.main.BuyProductInteractor
-import business.interactors.main.GetAddressesInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.BasketListUseCase
+import business.interactors.main.BuyProductUseCase
+import business.interactors.main.GetAddressesUseCase
 
 val shippingType_global = listOf(
     ShippingType("Economy", 25, 7),
@@ -21,9 +17,9 @@ val shippingType_global = listOf(
 )
 
 class CheckoutViewModel(
-    private val getAddressesInteractor: GetAddressesInteractor,
-    private val basketListInteractor: BasketListInteractor,
-    private val buyProductInteractor: BuyProductInteractor,
+    private val getAddressesUseCase: GetAddressesUseCase,
+    private val basketListUseCase: BasketListUseCase,
+    private val buyProductUseCase: BuyProductUseCase,
 ) : BaseViewModel<CheckoutEvent, CheckoutState, CheckoutAction>() {
 
     override fun setInitialState() = CheckoutState()
@@ -65,91 +61,60 @@ class CheckoutViewModel(
     }
 
     private fun buyProduct() {
-        buyProductInteractor.execute(
-            addressId = state.value.selectedAddress.id,
-            shippingType = shippingType_global.indexOf(state.value.selectedShipping)
-        ).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CheckoutEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        if (it) {
-                            setAction { CheckoutAction.Navigation.PopUp }
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
+        executeUseCase(buyProductUseCase.execute(
+            BuyProductUseCase.Params(
+                addressId = state.value.selectedAddress.id,
+                shippingType = shippingType_global.indexOf(state.value.selectedShipping)
+            )
+        ), onSuccess = {
+            it?.let {
+                if (it) {
+                    setAction { CheckoutAction.Navigation.PopUp }
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(CheckoutEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun getCart() {
-        basketListInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CheckoutEvent.OnUpdateNetworkState(dataState.networkState))
+        executeUseCase(basketListUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                val totalCost = it.sumOf { basket ->
+                    basket.price
                 }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        val totalCost = it.sumOf { basket ->
-                            basket.price
-                        }
-                        setState {
-                            copy(
-                                totalBasket = totalCost,
-                                totalCost = totalCost + state.value.selectedShipping.price
-                            )
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
+                setState {
+                    copy(
+                        totalBasket = totalCost,
+                        totalCost = totalCost + state.value.selectedShipping.price
+                    )
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(CheckoutEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun getAddresses() {
-        getAddressesInteractor.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(CheckoutEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState { copy(addresses = it) }
-                        it.firstOrNull()?.let { address ->
-                            setState { copy(selectedAddress = address) }
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
+        executeUseCase(getAddressesUseCase.execute(Unit), onSuccess = {
+            it?.let {
+                setState { copy(addresses = it) }
+                it.firstOrNull()?.let { address ->
+                    setState { copy(selectedAddress = address) }
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(CheckoutEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onUpdateSelectShippingDialogState(value: UIComponentState) {

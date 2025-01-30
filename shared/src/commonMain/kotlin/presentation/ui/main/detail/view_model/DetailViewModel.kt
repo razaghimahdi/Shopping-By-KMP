@@ -1,19 +1,15 @@
 package presentation.ui.main.detail.view_model
 
-import androidx.lifecycle.viewModelScope
 import business.core.BaseViewModel
-import business.core.DataState
 import business.core.NetworkState
-import business.interactors.main.AddBasketInteractor
-import business.interactors.main.LikeInteractor
-import business.interactors.main.ProductInteractor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import business.interactors.main.AddBasketUseCase
+import business.interactors.main.LikeUseCase
+import business.interactors.main.ProductUseCase
 
 class DetailViewModel(
-    private val productInteractor: ProductInteractor,
-    private val addBasketInteractor: AddBasketInteractor,
-    private val likeInteractor: LikeInteractor,
+    private val productUseCase: ProductUseCase,
+    private val addBasketUseCase: AddBasketUseCase,
+    private val likeUseCase: LikeUseCase,
 ) : BaseViewModel<DetailEvent, DetailState, Nothing>() {
 
     override fun setInitialState() = DetailState()
@@ -53,44 +49,26 @@ class DetailViewModel(
 
 
     private fun likeProduct(id: Long) {
-        likeInteractor.execute(id = id)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {
-                        dataState.data?.let {
-                            if (it) updateLike()
-                        }
-                    }
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
-                }
-            }.launchIn(viewModelScope)
+        executeUseCase(likeUseCase.execute(LikeUseCase.Params(id = id)), onSuccess = {
+            it?.let {
+                if (it) updateLike()
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
 
     private fun addBasket(id: Long) {
-        addBasketInteractor.execute(id = id, 1)
-            .onEach { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> {}
-                    is DataState.Response -> {
-                        setError { dataState.uiComponent }
-                    }
-
-                    is DataState.Data -> {}
-
-                    is DataState.Loading -> {
-                        setState { copy(progressBarState = dataState.progressBarState) }
-                    }
-                }
-            }.launchIn(viewModelScope)
+        executeUseCase(addBasketUseCase.execute(AddBasketUseCase.Params(id = id, 1)), onSuccess = {
+            it?.let {
+                if (it) updateLike()
+            }
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }
+        )
     }
 
 
@@ -100,32 +78,21 @@ class DetailViewModel(
 
 
     private fun getProduct(id: Long) {
-        productInteractor.execute(id = id).onEach { dataState ->
-            when (dataState) {
-                is DataState.NetworkStatus -> {
-                    onTriggerEvent(DetailEvent.OnUpdateNetworkState(dataState.networkState))
-                }
-
-                is DataState.Response -> {
-                    setError { dataState.uiComponent }
-                }
-
-                is DataState.Data -> {
-                    dataState.data?.let {
-                        setState {
-                            copy(
-                                product = it,
-                                selectedImage = it.gallery.firstOrNull() ?: ""
-                            )
-                        }
-                    }
-                }
-
-                is DataState.Loading -> {
-                    setState { copy(progressBarState = dataState.progressBarState) }
+        executeUseCase(productUseCase.execute(ProductUseCase.Params(id = id)), onSuccess = {
+            it?.let {
+                setState {
+                    copy(
+                        product = it,
+                        selectedImage = it.gallery.firstOrNull() ?: ""
+                    )
                 }
             }
-        }.launchIn(viewModelScope)
+        }, onLoading = {
+            setState { copy(progressBarState = it) }
+        }, onNetworkStatus = {
+            setEvent(DetailEvent.OnUpdateNetworkState(it))
+        }
+        )
     }
 
     private fun onRetryNetwork() {
