@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -83,4 +85,24 @@ abstract class BaseViewModel<Event : ViewEvent,
             _errors.send(effectValue)
         }
     }
+
+
+    fun <T> executeUseCase(
+        flow: Flow<DataState<T>>,
+        onSuccess: (T?) -> Unit,
+        onLoading: (ProgressBarState) -> Unit,
+        onNetworkStatus: (NetworkState) -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            flow.collectLatest { dataState ->
+                when (dataState) {
+                    is DataState.NetworkStatus -> onNetworkStatus(dataState.networkState)
+                    is DataState.Response -> setError { dataState.uiComponent }
+                    is DataState.Data -> onSuccess(dataState.data)
+                    is DataState.Loading -> onLoading(dataState.progressBarState)
+                }
+            }
+        }
+    }
+
 }
