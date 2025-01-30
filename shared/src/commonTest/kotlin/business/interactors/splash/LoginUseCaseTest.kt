@@ -15,9 +15,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class LoginInteractorTest {
+class LoginUseCaseTest {
 
-    private lateinit var loginInteractor: LoginInteractor
+    private lateinit var loginUseCase: LoginUseCase
     private lateinit var service: SplashService
     private lateinit var appDataStoreManager: AppDataStore
     private var email = ""
@@ -30,14 +30,16 @@ class LoginInteractorTest {
         // setup
         service = SplashServiceFake.build(type = LoginServiceResponseType.TimeOut)
         appDataStoreManager = AppDataStoreFake()
-        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        loginUseCase = LoginUseCase(service, appDataStoreManager)
         email = LoginFakeDataGenerator.email
         password = LoginFakeDataGenerator.password
 
         // Execute the use-case
-        val result = loginInteractor.execute(
-            email = email,
-            password = password
+        val result = loginUseCase.execute(
+            LoginUseCase.Params(
+                email = email,
+                password = password
+            )
         ).toList()
 
 
@@ -61,19 +63,20 @@ class LoginInteractorTest {
     }
 
 
-
     @Test
     fun `Test if email or password is empty`() = runBlocking {
 
         // setup
         service = SplashServiceFake.build(type = LoginServiceResponseType.FillDataCurrently)
         appDataStoreManager = AppDataStoreFake()
-        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        loginUseCase = LoginUseCase(service, appDataStoreManager)
 
         // Execute the use-case
-        val result = loginInteractor.execute(
-            email = email,
-            password = password
+        val result = loginUseCase.execute(
+            LoginUseCase.Params(
+                email = email,
+                password = password
+            )
         ).toList()
 
 
@@ -103,14 +106,16 @@ class LoginInteractorTest {
         // setup
         service = SplashServiceFake.build(type = LoginServiceResponseType.MalformedData)
         appDataStoreManager = AppDataStoreFake()
-        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        loginUseCase = LoginUseCase(service, appDataStoreManager)
         email = LoginFakeDataGenerator.email
         password = LoginFakeDataGenerator.password
 
         // Execute the use-case
-        val result = loginInteractor.execute(
-            email = email,
-            password = password
+        val result = loginUseCase.execute(
+            LoginUseCase.Params(
+                email = email,
+                password = password
+            )
         ).toList()
 
 
@@ -144,14 +149,16 @@ class LoginInteractorTest {
         // setup
         service = SplashServiceFake.build(type = LoginServiceResponseType.GoodData)
         appDataStoreManager = AppDataStoreFake()
-        loginInteractor = LoginInteractor(service, appDataStoreManager)
+        loginUseCase = LoginUseCase(service, appDataStoreManager)
         email = LoginFakeDataGenerator.email
         password = LoginFakeDataGenerator.password
 
         // Execute the use-case
-        val result = loginInteractor.execute(
-            email = email,
-            password = password
+        val result = loginUseCase.execute(
+            LoginUseCase.Params(
+                email = email,
+                password = password
+            )
         ).toList()
 
 
