@@ -8,29 +8,29 @@ import business.datasource.network.main.MainService
 import business.datasource.network.main.MainServiceImpl
 import business.datasource.network.splash.SplashService
 import business.datasource.network.splash.SplashServiceImpl
-import business.interactors.main.AddAddressInteractor
-import business.interactors.main.AddBasketInteractor
-import business.interactors.main.AddCommentInteractor
-import business.interactors.main.BasketListInteractor
-import business.interactors.main.BuyProductInteractor
-import business.interactors.main.DeleteBasketInteractor
-import business.interactors.main.GetAddressesInteractor
-import business.interactors.main.GetCommentsInteractor
-import business.interactors.main.GetEmailFromCacheInteractor
-import business.interactors.main.GetNotificationsInteractor
-import business.interactors.main.GetOrdersInteractor
-import business.interactors.main.GetProfileInteractor
-import business.interactors.main.GetSearchFilterInteractor
-import business.interactors.main.HomeInteractor
-import business.interactors.main.LikeInteractor
-import business.interactors.main.LogoutInteractor
-import business.interactors.main.ProductInteractor
-import business.interactors.main.SearchInteractor
-import business.interactors.main.UpdateProfileInteractor
-import business.interactors.main.WishListInteractor
-import business.interactors.splash.CheckTokenInteractor
-import business.interactors.splash.LoginInteractor
-import business.interactors.splash.RegisterInteractor
+import business.interactors.main.AddAddressUseCase
+import business.interactors.main.AddBasketUseCase
+import business.interactors.main.AddCommentUseCase
+import business.interactors.main.BasketListUseCase
+import business.interactors.main.BuyProductUseCase
+import business.interactors.main.DeleteBasketUseCase
+import business.interactors.main.GetAddressesUseCase
+import business.interactors.main.GetCommentsUseCase
+import business.interactors.main.GetEmailFromCacheUseCase
+import business.interactors.main.GetNotificationsUseCase
+import business.interactors.main.GetOrdersUseCase
+import business.interactors.main.GetProfileUseCase
+import business.interactors.main.GetSearchFilterUseCase
+import business.interactors.main.HomeUseCase
+import business.interactors.main.LikeUseCase
+import business.interactors.main.LogoutUseCase
+import business.interactors.main.ProductUseCase
+import business.interactors.main.SearchUseCase
+import business.interactors.main.UpdateProfileUseCase
+import business.interactors.main.WishListUseCase
+import business.interactors.splash.CheckTokenUseCase
+import business.interactors.splash.LoginUseCase
+import business.interactors.splash.RegisterUseCase
 import common.Context
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -80,29 +80,29 @@ fun appModule(context: Context) = module {
     factory { CartViewModel(get(), get(), get()) }
     factory { DetailViewModel(get(), get(), get()) }
     factory { SearchViewModel(get(), get()) }
-    single { WishListInteractor(get(), get()) }
-    single { BasketListInteractor(get(), get()) }
-    single { GetProfileInteractor(get(), get()) }
-    single { UpdateProfileInteractor(get(), get()) }
+    single { WishListUseCase(get(), get()) }
+    single { BasketListUseCase(get(), get()) }
+    single { GetProfileUseCase(get(), get()) }
+    single { UpdateProfileUseCase(get(), get()) }
     single { TokenManager(get(), get()) }
-    single { LogoutInteractor(get()) }
-    single { GetEmailFromCacheInteractor(get()) }
-    single { GetSearchFilterInteractor(get(), get()) }
-    single { SearchInteractor(get(), get()) }
-    single { AddCommentInteractor(get(), get()) }
-    single { BuyProductInteractor(get(), get()) }
+    single { LogoutUseCase(get()) }
+    single { GetEmailFromCacheUseCase(get()) }
+    single { GetSearchFilterUseCase(get(), get()) }
+    single { SearchUseCase(get(), get()) }
+    single { AddCommentUseCase(get(), get()) }
+    single { BuyProductUseCase(get(), get()) }
     single { CommentViewModel(get(), get()) }
-    single { GetCommentsInteractor(get(), get()) }
-    single { GetAddressesInteractor(get(), get()) }
-    single { GetOrdersInteractor(get(), get()) }
-    single { GetNotificationsInteractor(get(), get()) }
-    single { AddAddressInteractor(get(), get()) }
-    single { AddBasketInteractor(get(), get()) }
-    single { DeleteBasketInteractor(get(), get()) }
-    single { LikeInteractor(get(), get()) }
-    single { LoginInteractor(get(), get()) }
-    single { RegisterInteractor(get(), get()) }
-    single { CheckTokenInteractor(get()) }
-    single { HomeInteractor(get(), get()) }
-    single { ProductInteractor(get(), get()) }
+    single { GetCommentsUseCase(get(), get()) }
+    single { GetAddressesUseCase(get(), get()) }
+    single { GetOrdersUseCase(get(), get()) }
+    single { GetNotificationsUseCase(get(), get()) }
+    single { AddAddressUseCase(get(), get()) }
+    single { AddBasketUseCase(get(), get()) }
+    single { DeleteBasketUseCase(get(), get()) }
+    single { LikeUseCase(get(), get()) }
+    single { LoginUseCase(get(), get()) }
+    single { RegisterUseCase(get(), get()) }
+    single { CheckTokenUseCase(get()) }
+    single { HomeUseCase(get(), get()) }
+    single { ProductUseCase(get(), get()) }
 }
