@@ -26,7 +26,7 @@ precompose-tlaster = "1.5.10"
 precompose-viewmodel-tlaster = "1.5.10"
 androidx-appcompat = "1.7.0"
 androidx-core = "1.13.1"
-androidx-datastore = "1.1.1"
+androidx-datastore = "1.1.2"
 sqldelight = "2.0.1"
 koin = "4.0.0"
 koin-compose = "4.0.0"
@@ -59,6 +59,8 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }
 
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json-ver" }

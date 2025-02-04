@@ -55,14 +55,14 @@ import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
 
-fun appModule(context: Context) = module {
+fun appModule(context: Context?) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
         KtorHttpClient.httpClient(get())
     }
     single<SplashService> { SplashServiceImpl(get()) }
     single<MainService> { MainServiceImpl(get()) }
-    single<AppDataStore> { AppDataStoreManager(context) }
+    if (context != null) single<AppDataStore> { AppDataStoreManager(context) }
     factory { SharedViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }

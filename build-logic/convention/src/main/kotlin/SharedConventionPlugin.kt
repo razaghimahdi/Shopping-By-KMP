@@ -61,7 +61,7 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("kotlinx.serialization.json").get())
                         implementation(libs.findLibrary("kotlinx.datetime").get())
                         implementation(libs.findLibrary("kotlinx.coroutines.core").get())
-                        implementation(libs.findLibrary("androidx.datastore.preferences").get())
+                      //  implementation(libs.findLibrary("androidx.datastore.preferences").get())
                         implementation(libs.findLibrary("compose.navigation").get())
                         implementation(
                             libs.findLibrary("androidx.lifecycle.viewmodel.compose").get()

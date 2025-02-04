@@ -23,7 +23,7 @@ import presentation.ui.splash.SplashNav
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-internal fun App(context: Context) {
+internal fun App(context: Context?) {
 
     KoinApplication(application = {
         modules(appModule(context))

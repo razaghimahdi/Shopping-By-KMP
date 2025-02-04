@@ -22,6 +22,13 @@ kotlin {
             isStatic = true
         }
     }
+    js(IR) {
+        browser()
+    }
+
+    wasmJs {
+        browser()
+    }
 
     sourceSets {
 
@@ -45,6 +52,13 @@ kotlin {
         iosMain {
             dependencies {
                 
+            }
+        }
+
+
+        jsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
 
