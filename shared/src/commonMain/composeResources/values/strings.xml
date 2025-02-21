@@ -10,7 +10,14 @@
     <string name="more_payment_options">More Payment Options</string>
     <string name="payment_method">Payment Method</string>
     <string name="no_address">No Addresses!</string>
+    <string name="add_new_address">Add New Address</string>
     <string name="shop">Shop</string>
+    <string name="confirm">Confirm</string>
+    <string name="country">Country:</string>
+    <string name="zip_code">Zip Code:</string>
+    <string name="address_dot">Address:</string>
+    <string name="city">City:</string>
+    <string name="state">State:</string>
     <string name="discover">Discover</string>
     <string name="enjoy">Enjoy</string>
     <string name="live_your_perfect">LIVE YOUR
