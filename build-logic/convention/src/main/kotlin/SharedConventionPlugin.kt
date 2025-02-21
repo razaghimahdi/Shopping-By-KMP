@@ -83,6 +83,8 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("ktor.okhttp").get())
                         implementation(libs.findLibrary("system.ui.controller").get())
                         implementation(libs.findLibrary("accompanist.permissions").get())
+                        implementation(libs.findLibrary("maps.compose").get())
+                        implementation(libs.findBundle("play.services").get())
                         api(libs.findLibrary("coil3.gif").get())
                         api(libs.findLibrary("coil3.svg").get())
                         api(libs.findLibrary("coil3.core").get())
