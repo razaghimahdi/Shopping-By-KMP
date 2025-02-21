@@ -5,7 +5,7 @@ android-targetSdk = "35"
 android-version-code = "1"
 android-version-name = "1.0"
 agp = "8.7.0"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 ktlint = "12.1.2"
 kotlinxCoroutinesCore = "1.8.1-Beta"
 ktor = "2.3.7"
@@ -37,6 +37,9 @@ turbine = "1.0.0"
 mockk = "1.8.13.kotlin13"
 accompanist-version = "0.33.2-alpha"
 accompanist-permissions = "0.32.0"
+mapCompose = "6.1.0"
+play-services-maps = "18.2.0"
+play-services-location = "21.0.1"
 
 
 [libraries]
@@ -44,6 +47,7 @@ accompanist-permissions = "0.32.0"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation-ver" }
 androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapCompose" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
@@ -113,9 +117,14 @@ coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3-io" }
 coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
 
 
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
+
+
 [bundles]
 compose = ["compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview", "compose-foundation", "compose-material3"]
 ktor = ["ktor-core", "ktor-logging", "ktor-serialization", "ktor-negotiation"]
+play-services = ["play-services-location","play-services-maps"]
 
 
 [plugins]
