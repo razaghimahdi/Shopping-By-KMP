@@ -15,6 +15,12 @@ sealed interface CartNavigation {
     data object Address : CartNavigation
 
     @Serializable
+    data object AddAddress : CartNavigation
+
+    @Serializable
+    data object AddAddressInformation : CartNavigation
+
+    @Serializable
     data class Detail(val id: Long) : CartNavigation
 
 }

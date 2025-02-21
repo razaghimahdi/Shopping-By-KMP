@@ -12,6 +12,12 @@ sealed interface ProfileNavigation {
     data object Address : ProfileNavigation
 
     @Serializable
+    data object AddAddress : ProfileNavigation
+
+    @Serializable
+    data object AddAddressInformation : ProfileNavigation
+
+    @Serializable
     data object EditProfile : ProfileNavigation
 
     @Serializable
