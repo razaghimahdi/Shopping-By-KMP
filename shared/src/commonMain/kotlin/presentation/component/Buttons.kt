@@ -18,7 +18,6 @@ import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,7 +41,7 @@ val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp
 
 @Composable
 fun CircleButton(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     imageVector: ImageVector,
     onClick: () -> Unit
 ) {
@@ -135,6 +134,31 @@ fun DefaultButton(
         onClick = onClick,
         progressBarState = progressBarState,
     ) {
+        Text(
+            text = text,
+            style = style,
+        )
+    }
+}
+
+
+@Composable
+fun IconButton(
+    modifier: Modifier = Modifier,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
+    shape: Shape = MaterialTheme.shapes.extraLarge,
+    icon: ImageVector,
+    text: String,
+    onClick: () -> Unit
+) {
+    Button(
+        modifier = modifier,
+        colors = DefaultButtonTheme(),
+        shape = shape,
+        onClick = onClick
+    ) {
+        Icon(icon, null, tint = MaterialTheme.colorScheme.background)
+        Spacer_4dp()
         Text(
             text = text,
             style = style,
