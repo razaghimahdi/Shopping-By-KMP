@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import common.ChangeStatusBarColors
+import common.Context
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.navigation.BottomNavigation
@@ -35,7 +36,7 @@ import presentation.ui.main.profile.ProfileNav
 import presentation.ui.main.wishlist.WishlistNav
 
 @Composable
-fun MainNav(logout: () -> Unit) {
+fun MainNav(context: Context, logout: () -> Unit) {
 
 
     val navBottomBarController = rememberNavController()
@@ -56,10 +57,10 @@ fun MainNav(logout: () -> Unit) {
                     WishlistNav()
                 }
                 composable(route = BottomNavigation.Cart.route) {
-                    CartNav()
+                    CartNav(context = context)
                 }
                 composable(route = BottomNavigation.Profile.route) {
-                    ProfileNav(logout = logout)
+                    ProfileNav(context = context, logout = logout)
                 }
             }
         }
@@ -68,7 +69,6 @@ fun MainNav(logout: () -> Unit) {
 }
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BottomNavigationUI(
     navController: NavController,

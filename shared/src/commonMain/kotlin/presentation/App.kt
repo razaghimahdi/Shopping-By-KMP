@@ -62,7 +62,7 @@ internal fun App(context: Context) {
                         })
                     }
                     composable<AppNavigation.Main> {
-                        MainNav {
+                        MainNav (context = context){
                             navigator.popBackStack()
                             navigator.navigate(AppNavigation.Splash)
                         }
