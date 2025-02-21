@@ -7,19 +7,7 @@ import business.core.ViewEvent
 
 sealed class AddressEvent : ViewEvent {
 
-    data class OnUpdateAddAddressDialogState(val value: UIComponentState) : AddressEvent()
-
-    data class AddAddress(
-        val address: String,
-        val country: String,
-        val city: String,
-        val state: String,
-        val zipCode: String,
-    ) : AddressEvent()
-
     data object OnRetryNetwork : AddressEvent()
 
-    data class OnUpdateNetworkState(
-        val networkState: NetworkState
-    ) : AddressEvent()
+    data class OnUpdateNetworkState(val networkState: NetworkState) : AddressEvent()
 }

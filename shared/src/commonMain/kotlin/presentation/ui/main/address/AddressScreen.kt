@@ -52,25 +52,9 @@ fun AddressScreen(
     state: AddressState,
     errors: Flow<UIComponent>,
     events: (AddressEvent) -> Unit,
-    popup: () -> Unit
+    navigateToAddAddress: () -> Unit,
+    popup: () -> Unit,
 ) {
-
-    if (state.addAddressDialogState == UIComponentState.Show) {
-        AddAddressDialog(onDismissRequest = {
-            events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Hide))
-        },
-            onExecute = { address, country, city, state, zipCode ->
-                events(
-                    AddressEvent.AddAddress(
-                        country = country,
-                        address = address,
-                        city = city,
-                        state = state,
-                        zipCode = zipCode
-                    )
-                )
-            })
-    }
 
     DefaultScreenUI(
         errors = errors,
@@ -81,7 +65,7 @@ fun AddressScreen(
         startIconToolbar = Icons.AutoMirrored.Filled.ArrowBack,
         onClickStartIconToolbar = popup,
         endIconToolbar = Icons.Filled.Add,
-        onClickEndIconToolbar = { events(AddressEvent.OnUpdateAddAddressDialogState(UIComponentState.Show)) }) {
+        onClickEndIconToolbar = navigateToAddAddress) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
