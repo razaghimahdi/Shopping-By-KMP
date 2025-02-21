@@ -50,5 +50,14 @@
     <string>We need access to your photo library for...</string>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show your current position on the map.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to track movement on the map.</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+         <string>googlechromes</string>
+         <string>comgooglemaps</string>
+    </array>
 </dict>
 </plist>

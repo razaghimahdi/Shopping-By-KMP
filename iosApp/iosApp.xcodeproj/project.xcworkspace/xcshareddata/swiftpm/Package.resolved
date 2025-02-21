@@ -1,0 +1,15 @@
+{
+  "originHash" : "fe5dd08882d08507f16493adf883e323b1dd5a821ac629f6777702bda6b2ba4e",
+  "pins" : [
+    {
+      "identity" : "ios-maps-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googlemaps/ios-maps-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9fa352d6eca4a731949efcdb27ed851f1fcd4447"
+      }
+    }
+  ],
+  "version" : 3
+}
