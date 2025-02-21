@@ -50,6 +50,9 @@ If you like or are using this project to learn or start your solution, please gi
 Obviously it would be more updates, What we are working on these days?
 - **Product Comparison:** Easily compare features, prices, and reviews of two products side by side for a smarter shopping choice.
   
+## **Latest Features 🏄‍♂️**
+- In last updated, I added `map` to managing address. So user can select its location before adding address information to be more specific
+
 #### **Future Plans:**
 - **Web platfrom:** Soon we gonna have release for web
 
@@ -86,7 +89,7 @@ During the development of this project,
 i encountered several challenges that required creative solutions. 
 Some of the key challenges I addressed include:
 
-- **Native Functionality Challenges:** Implementing native functionalities posed challenges in image selection, camera access permissions, status bar customization, and image upload via Ktor.
+- **Native Functionality Challenges:** Implementing native functionalities posed challenges in image selection, camera access permissions, location access permissions, google maps, status bar customization, and image upload via Ktor.
 - **UI Testing:** Developing comprehensive UI tests across multiple platforms presented challenges in ensuring consistent behavior and visual presentation.
 - **Unit Testing:** Writing unit tests for shared code and platform-specific implementations required careful consideration of differences in testing frameworks and environments.
 - **User Session Management:** Securely managing user sessions across platforms involved implementing robust authentication mechanisms while prioritizing privacy and security.
