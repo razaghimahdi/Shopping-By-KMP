@@ -36,6 +36,7 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import presentation.SharedViewModel
 import presentation.token_manager.TokenManager
+import presentation.ui.main.add_address.view_model.AddAddressViewModel
 import presentation.ui.main.address.view_model.AddressViewModel
 import presentation.ui.main.cart.view_model.CartViewModel
 import presentation.ui.main.categories.view_model.CategoriesViewModel
@@ -66,7 +67,8 @@ fun appModule(context: Context) = module {
     factory { SharedViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }
-    factory { AddressViewModel(get(), get()) }
+    factory { AddressViewModel(get()) }
+    factory { AddAddressViewModel(get()) }
     factory { CategoriesViewModel(get()) }
     factory { ProfileViewModel(get()) }
     factory { SettingsViewModel(get()) }
