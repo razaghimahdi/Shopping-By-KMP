@@ -26,6 +26,8 @@ If you like or are using this project to learn or start your solution, please gi
 
 [How to create custom Number Formatting in CMP](https://medium.com/@razaghimahdi78/number-formatting-in-jetpack-compose-multiplatform-b3fd01308f6c)
 
+[How to upload in CMP Using Ktor](https://medium.com/@razaghimahdi78/uploading-in-compose-multiplatform-using-ktor-a-comprehensive-guide-f2dd28799a20)
+
 
 ## Features ✨
 | Feature                     | Status           |
@@ -51,7 +53,7 @@ Obviously it would be more updates, What we are working on these days?
 - **Product Comparison:** Easily compare features, prices, and reviews of two products side by side for a smarter shopping choice.
   
 ## **Latest Features 🏄‍♂️**
-- In last updated, I added `map` to managing address. So user can select its location before adding address information to be more specific
+- In last updated, I added `GoogleMap` to managing address. So user can select its location before adding address information to be more specific
 
 #### **Future Plans:**
 - **Web platfrom:** Soon we gonna have release for web
