@@ -132,6 +132,11 @@ fun DetailScreen(
                                         events(DetailEvent.OnUpdateSelectedImage(it))
                                     }
                                 }
+                                if (state.product.gallery.isEmpty()){
+                                    items(8){
+                                        ImageSliderBox(""){}
+                                    }
+                                }
                             }
                         }
                     }

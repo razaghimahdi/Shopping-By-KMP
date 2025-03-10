@@ -64,6 +64,7 @@ import shoping_by_kmp.shared.generated.resources.active
 import shoping_by_kmp.shared.generated.resources.address
 import shoping_by_kmp.shared.generated.resources.amount
 import shoping_by_kmp.shared.generated.resources.arrow_down
+import shoping_by_kmp.shared.generated.resources.default_image_loader
 import shoping_by_kmp.shared.generated.resources.delivery_cost
 import shoping_by_kmp.shared.generated.resources.delivery_type
 import shoping_by_kmp.shared.generated.resources.failed
@@ -246,7 +247,9 @@ private fun OrderBox(order: Order) {
                         it.image,
                         null,
                         modifier = Modifier.size(55.dp).padding(horizontal = 4.dp),
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
+                        error = painterResource(Res.drawable.default_image_loader),
+                        placeholder = painterResource(Res.drawable.default_image_loader),
                     )
                 }
             }
