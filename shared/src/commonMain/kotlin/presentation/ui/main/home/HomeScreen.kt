@@ -70,6 +70,7 @@ import presentation.ui.main.home.view_model.HomeState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.bell
 import shoping_by_kmp.shared.generated.resources.category
+import shoping_by_kmp.shared.generated.resources.default_image_loader
 import shoping_by_kmp.shared.generated.resources.flash_sale
 import shoping_by_kmp.shared.generated.resources.location
 import shoping_by_kmp.shared.generated.resources.most_sale
@@ -474,12 +475,6 @@ private fun CategoryBox(category: Category, onCategoryClick: () -> Unit) {
                     modifier = Modifier.fillMaxSize().size(55.dp),
                     contentScale = ContentScale.Crop
                 )
-                /*  Image(
-                      painter = rememberAsyncImagePainter(category.icon),
-                      null,
-                      modifier = Modifier.fillMaxSize().size(55.dp),
-                      contentScale = ContentScale.Crop
-                  )*/
             }
             Spacer_8dp()
             Text(
