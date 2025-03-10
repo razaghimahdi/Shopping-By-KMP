@@ -1,6 +1,5 @@
 package presentation.ui.splash.view_model
 
-import business.core.UIComponent
 import business.core.ViewSingleAction
 
 sealed class LoginAction : ViewSingleAction {
