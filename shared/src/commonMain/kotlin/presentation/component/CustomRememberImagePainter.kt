@@ -9,7 +9,6 @@ import org.jetbrains.compose.resources.painterResource
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.default_image_loader
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun rememberCustomImagePainter(
     model: Any?,
@@ -22,7 +21,6 @@ fun rememberCustomImagePainter(
     contentScale = contentScale
 )
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun rememberCustomImagePainter(
     model: Any?,
