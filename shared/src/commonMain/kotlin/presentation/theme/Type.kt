@@ -104,3 +104,43 @@ fun LatoTypography(): Typography {
         ),
     )
 }
+
+
+@Composable
+fun StallionTypography(): Typography {
+    val stallion = FontFamily(
+        Font(
+            resource = Res.font.stallion_beatsides_regular,
+            weight = FontWeight.Normal,
+            style = FontStyle.Normal
+        ),
+    )
+
+    return Typography(
+        headlineSmall = TextStyle(
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 24.sp,
+            fontFamily = stallion
+        ),
+        titleLarge = TextStyle(
+            fontWeight = FontWeight.Normal,
+            fontSize = 18.sp,
+            fontFamily = stallion
+        ),
+        bodyLarge = TextStyle(
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            fontFamily = stallion
+        ),
+        bodyMedium = TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 14.sp,
+            fontFamily = stallion
+        ),
+        labelMedium = TextStyle(
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.sp,
+            fontFamily = stallion
+        ),
+    )
+}
