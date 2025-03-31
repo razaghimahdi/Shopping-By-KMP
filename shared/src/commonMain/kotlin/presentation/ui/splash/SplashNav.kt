@@ -1,6 +1,7 @@
 package presentation.ui.splash
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -21,7 +22,7 @@ internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain:
     val navigator = rememberNavController()
 
     LaunchedEffect(viewModel) {
-        delay(3000L)
+        delay(4000L)
         viewModel.action.onEach { effect ->
             when (effect) {
                 LoginAction.Navigation.NavigateToMain -> {
@@ -38,7 +39,7 @@ internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain:
     }
 
 
-    ChangeStatusBarColors(Color.Black)
+    ChangeStatusBarColors(MaterialTheme.colorScheme.primary)
     NavHost(
         startDestination = SplashNavigation.Splash,
         navController = navigator,
