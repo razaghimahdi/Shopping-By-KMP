@@ -11,14 +11,14 @@ jobs:
 
     strategy:
       matrix:
-        platform: [android, ios]
+        platform: [android, ios, desktop]
 
     steps:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up JDK for Android builds
+      # Set up JDK for Android & Desktop builds
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -43,58 +43,26 @@ jobs:
         run: ./gradlew :shared:linkDebugFrameworkIosFat
 
       # Run tests
-#      - name: Run tests
-#        if: matrix.platform == 'ios'
-#        run: ./gradlew test
+      #      - name: Run tests
+      #        if: matrix.platform == 'ios'
+      #        run: ./gradlew test
 
-      - name: Upload Build Artifacts
+      # Build for Desktop
+      - name: Build Desktop
+        if: matrix.platform == 'desktop'
+        run: ./gradlew :desktopApp:packageDistributionForCurrentOS
+
+      # Upload artifacts
+      - name: Upload Build Artifacts (Android)
         if: matrix.platform == 'android'
         uses: actions/upload-artifact@v4
         with:
-          name: release-artifacts
-          path: |
-            androidApp/release/*.apk
+          name: android-apk
+          path: androidApp/build/outputs/apk/debug/androidApp-debug.apk
 
-  release:
-    name: Create GitHub Release
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+      - name: Upload Build Artifacts (Desktop)
+        if: matrix.platform == 'desktop'
+        uses: actions/upload-artifact@v4
         with:
-          name: release-artifacts
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
-        with:
-          tag_name: ${{ github.run_number }}
-          release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
-
-      - name: Upload Release Assets
-        id: upload_release_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: androidApp/release/androidApp-release.apk
-          asset_name: androidApp-release.apk
-          asset_content_type: application/vnd.android.package-archive
-
-
-  deploy:
-    name: Deploy (Optional)
-    needs: build
-    runs-on: macOS-latest
-    steps:
-      # Example for deployment: publish to GitHub Pages
-      - name: Deploy artifacts
-        run: echo "Add your deployment steps here."
+          name: desktop-app
+          path: desktopApp/build/compose/binaries/main/**/*
