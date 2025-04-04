@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.first
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(APP_DATASTORE)
 
-actual suspend fun Context.getData(key: String): String? {
-    return dataStore.data.first()[stringPreferencesKey(key)] ?: ""
+actual suspend fun Context?.getData(key: String): String? {
+    return this?.dataStore!!.data.first()[stringPreferencesKey(key)] ?: ""
 }
 
-actual suspend fun Context.putData(key: String, `object`: String) {
-    dataStore.edit {
+actual suspend fun Context?.putData(key: String, `object`: String) {
+    this?.dataStore!!.edit {
         it[stringPreferencesKey(key)] = `object`
     }
 }

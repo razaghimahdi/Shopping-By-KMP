@@ -32,19 +32,19 @@ import com.google.maps.android.compose.rememberMarkerState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 actual fun MapComponent(
-    context: Context,
+    context: Context?,
     onLatitude: (Double) -> Unit,
     onLongitude: (Double) -> Unit,
 ) {
 
-    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context!!) }
     var currentLocation by remember { mutableStateOf<LatLng?>(null) }
     val cameraPositionState = rememberCameraPositionState()
     val permissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
 
     LaunchedEffect(permissionState.status) {
         if (permissionState.status.isGranted) {
-            getLastKnownLocation(context, fusedLocationClient) { latLng ->
+            getLastKnownLocation(context!!, fusedLocationClient) { latLng ->
                 currentLocation = latLng
                 cameraPositionState.position = CameraPosition.fromLatLngZoom(latLng, 15f)
                 onLatitude(currentLocation?.latitude ?: 0.0)

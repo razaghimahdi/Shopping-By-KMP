@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 expect fun MapComponent(
-    context: Context,
+    context: Context?,
     onLatitude: (Double) -> Unit,
     onLongitude: (Double) -> Unit,
 )

@@ -10,7 +10,7 @@ import mapViewController
 
 @Composable
 actual fun MapComponent(
-    context: Context,
+    context: Context?,
     onLatitude: (Double) -> Unit,
     onLongitude: (Double) -> Unit,
 ) {
