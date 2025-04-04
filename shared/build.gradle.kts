@@ -1,3 +1,5 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
     alias(libs.plugins.shopping.kotlinMultiplatform)
     alias(libs.plugins.shopping.shared)
@@ -23,6 +25,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     sourceSets {
 
         commonTest {
@@ -45,6 +49,11 @@ kotlin {
         iosMain {
             dependencies {
                 
+            }
+        }
+        jvmMain {
+            dependencies {
+
             }
         }
 
