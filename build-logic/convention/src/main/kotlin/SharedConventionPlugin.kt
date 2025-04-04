@@ -98,6 +98,16 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("ktor.ios").get())
                     }
                 }
+
+                jvmMain {
+                    dependencies {
+                        implementation(composeDeps.desktop.common)
+                        implementation(composeDeps.desktop.currentOs)
+                        implementation(libs.findLibrary("ktor.okhttp").get())
+                        implementation(libs.findLibrary("kotlinx.coroutines.swing").get())
+                        implementation(libs.findLibrary("androidx.datastore.preferences").get())
+                    }
+                }
             }
         }
     }
