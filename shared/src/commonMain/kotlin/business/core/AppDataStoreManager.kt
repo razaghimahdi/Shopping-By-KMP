@@ -6,7 +6,7 @@ import common.putData
 
 const val APP_DATASTORE = "com.razzaghi.shoppingbykmp"
 
-class AppDataStoreManager(val context: Context) : AppDataStore {
+class AppDataStoreManager(val context: Context?) : AppDataStore {
 
     override suspend fun setValue(
         key: String,

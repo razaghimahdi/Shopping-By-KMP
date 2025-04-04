@@ -30,7 +30,7 @@ import shoping_by_kmp.shared.generated.resources.confirm
 
 @Composable
 fun AddAddressScreen(
-    context: Context,
+    context: Context?,
     state: AddAddressState,
     errors: Flow<UIComponent>,
     action: Flow<AddAddressAction>,

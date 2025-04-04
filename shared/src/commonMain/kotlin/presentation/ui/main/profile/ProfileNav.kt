@@ -32,7 +32,7 @@ import presentation.ui.main.settings.SettingsScreen
 import presentation.ui.main.settings.view_model.SettingsViewModel
 
 @Composable
-fun ProfileNav(context: Context, logout: () -> Unit) {
+fun ProfileNav(context: Context?, logout: () -> Unit) {
     val addressViewModel: AddAddressViewModel = koinInject()
     val navigator = rememberNavController()
     NavHost(

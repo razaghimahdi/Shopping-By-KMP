@@ -26,7 +26,7 @@ import presentation.ui.main.checkout.view_model.CheckoutViewModel
 import presentation.ui.main.detail.DetailNav
 
 @Composable
-fun CartNav(context: Context) {
+fun CartNav(context: Context?) {
     val navigator = rememberNavController()
     val addressViewModel: AddAddressViewModel = koinInject()
     NavHost(

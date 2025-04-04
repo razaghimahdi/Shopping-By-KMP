@@ -56,7 +56,7 @@ import presentation.ui.main.wishlist.view_model.WishlistViewModel
 import presentation.ui.splash.view_model.LoginViewModel
 
 
-fun appModule(context: Context) = module {
+fun appModule(context: Context?) = module {
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
         KtorHttpClient.httpClient(get())

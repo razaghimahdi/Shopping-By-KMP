@@ -36,7 +36,7 @@ import presentation.ui.main.profile.ProfileNav
 import presentation.ui.main.wishlist.WishlistNav
 
 @Composable
-fun MainNav(context: Context, logout: () -> Unit) {
+fun MainNav(context: Context?, logout: () -> Unit) {
 
 
     val navBottomBarController = rememberNavController()
