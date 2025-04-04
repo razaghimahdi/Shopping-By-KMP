@@ -23,7 +23,7 @@ import presentation.ui.splash.SplashNav
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-internal fun App(context: Context) {
+internal fun App(context: Context?) {
 
     KoinApplication(application = {
         modules(appModule(context))
@@ -62,7 +62,7 @@ internal fun App(context: Context) {
                         })
                     }
                     composable<AppNavigation.Main> {
-                        MainNav (context = context){
+                        MainNav(context = context) {
                             navigator.popBackStack()
                             navigator.navigate(AppNavigation.Splash)
                         }
