@@ -2,7 +2,7 @@
 
 Welcome to the documentation for the Jetpack Compose Multiplatform Shopping Application! 
 This is a cross-platform application that is built using Jetpack Compose Multiplatform, a declarative framework for sharing UIs across multiple platforms with Kotlin. 
-The application allows users to browse, search, and purchase products from a shopping catalog on Android, iOS and Desktop.
+The application allows users to browse, search, and purchase products from a shopping catalog on Android, iOS, Desktop and AndroidTV.
 
 ![Wallpaper](screenshots/banner.png)
 ![Wallpaper](screenshots/banner2.png)
@@ -57,6 +57,7 @@ Obviously it would be more updates, What we are working on these days?
 - **Product Comparison:** Easily compare features, prices, and reviews of two products side by side for a smarter shopping choice.
   
 ## **Latest Features 🏄‍♂️**
+- Added `TvApp`, from now it can used on AndroidTV. 
 - Added `DesktopApp`, from now it can used on Desktop. 
 - Refactored Splash's UI with smoother animation
 - In last updated, I added `GoogleMap` to managing address. So user can select its location before adding address information to be more specific
