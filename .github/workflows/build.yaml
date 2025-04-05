@@ -11,70 +11,64 @@ jobs:
 
     strategy:
       matrix:
-        platform: [android, ios, desktop, tv]
+        platform: [android, ios, tv, desktop]
 
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up JDK for Android & Desktop builds
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: temurin
 
-      # Cache Gradle
       - name: Cache Gradle
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: gradle-${{ matrix.platform }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      # Build Android
+      # Build Android APK
       - name: Build Android
         if: matrix.platform == 'android'
         run: ./gradlew :androidApp:assembleDebug
 
-      # Build TV
-      - name: Build TV
-        if: matrix.platform == 'tv'
-        run: ./gradlew :tvApp:assembleDebug
-
-      # Build iOS
-      - name: Build iOS
-        if: matrix.platform == 'ios'
-        run: ./gradlew :shared:linkDebugFrameworkIosFat
-
-      # Build Desktop
-      - name: Build Desktop
-        if: matrix.platform == 'desktop'
-        run: ./gradlew :desktopApp:packageDistributionForCurrentOS
-
-      # Upload Android APK
-      - name: Upload Build Artifacts (Android)
+      - name: Upload Android APK
         if: matrix.platform == 'android'
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
           path: androidApp/build/outputs/apk/debug/androidApp-debug.apk
 
-      # Upload TV APK
-      - name: Upload Build Artifacts (TV)
+      # Build iOS Framework
+      - name: Build iOS
+        if: matrix.platform == 'ios'
+        run: ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
+
+      # Build Android TV APK
+      - name: Build TV App
+        if: matrix.platform == 'tv'
+        run: ./gradlew :tvApp:assembleDebug
+
+      - name: Upload TV APK
         if: matrix.platform == 'tv'
         uses: actions/upload-artifact@v4
         with:
           name: tv-apk
           path: tvApp/build/outputs/apk/debug/tvApp-debug.apk
 
-      # Upload Desktop Artifacts
-      - name: Upload Build Artifacts (Desktop)
+      # Build Desktop App
+      - name: Build Desktop
+        if: matrix.platform == 'desktop'
+        run: ./gradlew :desktopApp:packageDistributionForCurrentOS
+
+      - name: Upload Desktop App
         if: matrix.platform == 'desktop'
         uses: actions/upload-artifact@v4
         with:
           name: desktop-app
-          path: desktopApp/build/compose/binaries/main/**/*
+          path: desktopApp/build/compose/binaries/**
 
   release:
     name: Create GitHub Release
@@ -85,10 +79,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download Build Artifacts
+      - name: Download Android APK
         uses: actions/download-artifact@v4
         with:
           name: android-apk
+          path: ./artifacts/android
+
+      - name: Download TV APK
+        uses: actions/download-artifact@v4
+        with:
+          name: tv-apk
+          path: ./artifacts/tv
+
+      - name: Download Desktop App
+        uses: actions/download-artifact@v4
+        with:
+          name: desktop-app
+          path: ./artifacts/desktop
+
+      - name: Zip Desktop Output
+        run: |
+          cd ./artifacts/desktop
+          zip -r ../desktopApp.zip .
 
       - name: Create Release
         id: create_release
@@ -99,21 +111,32 @@ jobs:
           tag_name: ${{ github.run_number }}
           release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
 
-      - name: Upload Android APK to Release
-        id: upload_android_release
+      - name: Upload Android APK
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: androidApp/build/outputs/apk/debug/androidApp-debug.apk
+          asset_path: ./artifacts/android/androidApp-debug.apk
           asset_name: androidApp-debug.apk
           asset_content_type: application/vnd.android.package-archive
 
-  deploy:
-    name: Deploy (Optional)
-    needs: build
-    runs-on: macOS-latest
-    steps:
-      - name: Deploy artifacts
-        run: echo "Add your deployment steps here."
+      - name: Upload TV APK
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/tv/tvApp-debug.apk
+          asset_name: tvApp-debug.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload Desktop App Zip
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/desktopApp.zip
+          asset_name: desktopApp.zip
+          asset_content_type: application/zip
