@@ -34,3 +34,4 @@ rootProject.name = "Shoping_By_KMP"
 include(":androidApp")
 include(":shared")
 include(":desktopApp")
+include(":tvApp")
