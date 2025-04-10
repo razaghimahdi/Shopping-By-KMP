@@ -27,6 +27,10 @@ kotlin {
 
     jvm()
 
+    js(IR) {
+        browser()
+    }
+
     sourceSets {
 
         commonTest {
@@ -48,11 +52,17 @@ kotlin {
         }
         iosMain {
             dependencies {
-                
+
             }
         }
         jvmMain {
             dependencies {
+
+            }
+        }
+
+        jsMain {
+            dependencies{
 
             }
         }
