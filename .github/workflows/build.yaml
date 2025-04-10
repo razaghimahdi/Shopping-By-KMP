@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [ android, ios, tv, desktop ]
+        platform: [ android, ios, tv, desktop, web]
 
     steps:
       - name: Checkout repository
