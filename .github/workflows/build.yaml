@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [android, ios, tv, desktop]
+        platform: [ android, ios, tv, desktop ]
 
     steps:
       - name: Checkout repository
@@ -69,6 +69,11 @@ jobs:
         with:
           name: desktop-app
           path: desktopApp/build/compose/binaries/**
+
+      # Build Web App
+      - name: Build WebApp
+        if: matrix.platform == 'web'
+        run: ./gradlew :webApp:jsBrowserProductionWebpack
 
   release:
     name: Create GitHub Release
@@ -140,3 +145,10 @@ jobs:
           asset_path: ./artifacts/desktopApp.zip
           asset_name: desktopApp.zip
           asset_content_type: application/zip
+
+      - name: Upload Web Distribution
+        if: matrix.platform == 'web'
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: webApp/build/distributions/
