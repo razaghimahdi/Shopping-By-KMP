@@ -107,7 +107,7 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("kotlinx.coroutines.swing").get())
                     }
                 }
-                jvmMain {
+                jsMain {
                     dependencies {
                         implementation(composeDeps.html.core)
                         implementation(libs.findLibrary("ktor.client.js").get())
