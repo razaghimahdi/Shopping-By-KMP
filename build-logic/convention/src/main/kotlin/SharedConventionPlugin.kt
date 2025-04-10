@@ -61,7 +61,6 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("kotlinx.serialization.json").get())
                         implementation(libs.findLibrary("kotlinx.datetime").get())
                         implementation(libs.findLibrary("kotlinx.coroutines.core").get())
-                        implementation(libs.findLibrary("androidx.datastore.preferences").get())
                         implementation(libs.findLibrary("compose.navigation").get())
                         implementation(
                             libs.findLibrary("androidx.lifecycle.viewmodel.compose").get()
@@ -83,6 +82,7 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("ktor.okhttp").get())
                         implementation(libs.findLibrary("system.ui.controller").get())
                         implementation(libs.findLibrary("accompanist.permissions").get())
+                        implementation(libs.findLibrary("androidx.datastore.preferences").get())
                         implementation(libs.findLibrary("maps.compose").get())
                         implementation(libs.findBundle("play.services").get())
                         api(libs.findLibrary("coil3.gif").get())
@@ -105,7 +105,12 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(composeDeps.desktop.currentOs)
                         implementation(libs.findLibrary("ktor.okhttp").get())
                         implementation(libs.findLibrary("kotlinx.coroutines.swing").get())
-                        implementation(libs.findLibrary("androidx.datastore.preferences").get())
+                    }
+                }
+                jvmMain {
+                    dependencies {
+                        implementation(composeDeps.html.core)
+                        implementation(libs.findLibrary("ktor.client.js").get())
                     }
                 }
             }
