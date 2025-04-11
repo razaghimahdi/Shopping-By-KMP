@@ -2,8 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shopping By KMP</title>
+    <title>Shopping-by-KMP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Important! -->
     <script src="skiko.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            touch-action: none; /* optional fix for weird touch scrolling */
+        }
+    </style>
 </head>
 <body>
 <canvas id="ComposeTarget"></canvas>
