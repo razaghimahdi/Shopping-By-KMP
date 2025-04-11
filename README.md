@@ -21,7 +21,7 @@ https://github.com/user-attachments/assets/9b7cbb10-3f95-4355-a9c7-3b23147dda18
 
 ### Web
 
-#### [Live] (https://razaghimahdi.github.io/Shopping-By-KMP/)
+#### [Live](https://razaghimahdi.github.io/Shopping-By-KMP/)
 
 
 
