@@ -8,19 +8,20 @@ The application allows users to browse, search, and purchase products from a sho
 ![Wallpaper](screenshots/banner2.png)
 
 
-
+### Android & IOS
 https://github.com/razaghimahdi/Shopping-By-KMP/assets/61207818/a4702cbf-1449-48b0-88f1-bcb9c42d273e
 
 
-
+### Desktop
 https://github.com/user-attachments/assets/2ceedcef-0ec8-4886-904a-3975e6c2ea6f
 
 
-
-
+### AndroidTV
 https://github.com/user-attachments/assets/9b7cbb10-3f95-4355-a9c7-3b23147dda18
 
+### Web
 
+#### [Live] (https://razaghimahdi.github.io/Shopping-By-KMP/)
 
 
 
@@ -67,8 +68,6 @@ Obviously it would be more updates, What we are working on these days?
 - Refactored Splash's UI with smoother animation
 - In last updated, I added `GoogleMap` to managing address. So user can select its location before adding address information to be more specific
 
-#### **Future Plans:**
-- **Web platfrom:** Soon we gonna have release for web
 
 ## Tech Stack 📚
 - Kotlin Multiplatform 
@@ -151,6 +150,13 @@ The panel comes with a comprehensive **API**, ensuring scalability and flexibili
 - **Admin Dashboard:** Manage products, categories, orders, and customers seamlessly.
 - **Laravel & Livewire:** Leverage the power of Laravel's backend with Livewire for reactive UI.
 - **Full API:** Enables external integrations and interactions with the shopping platform.
+
+
+## How to run web locally ?
+✅ For development:
+```./gradlew :webApp:jsBrowserDevelopmentRun```
+✅ For production:
+```./gradlew :webApp:jsBrowserProductionRun```
 
 
 ## Contributing
