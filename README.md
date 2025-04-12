@@ -19,9 +19,10 @@ https://github.com/user-attachments/assets/2ceedcef-0ec8-4886-904a-3975e6c2ea6f
 ### AndroidTV
 https://github.com/user-attachments/assets/9b7cbb10-3f95-4355-a9c7-3b23147dda18
 
-### Web
-https://github.com/user-attachments/assets/808a72b9-d591-44e4-a29f-16a1fd99e462
+### Web 
 #### [Live](https://razaghimahdi.github.io/Shopping-By-KMP/)
+https://github.com/user-attachments/assets/808a72b9-d591-44e4-a29f-16a1fd99e462
+
 
 
 
@@ -155,6 +156,7 @@ The panel comes with a comprehensive **API**, ensuring scalability and flexibili
 ## How to run web locally ?
 ✅ For development:
 ```./gradlew :webApp:jsBrowserDevelopmentRun```
+
 ✅ For production:
 ```./gradlew :webApp:jsBrowserProductionRun```
 
