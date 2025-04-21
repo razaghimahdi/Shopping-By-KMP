@@ -7,6 +7,7 @@ import business.interactors.main.LikeUseCase
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import presentation.util.DateTimeConverter
 
 class HomeViewModel(
     private val homeUseCase: HomeUseCase,
@@ -133,9 +134,14 @@ class HomeViewModel(
     private fun getHome() {
         executeUseCase(homeUseCase.execute(Unit), onSuccess = {
             it?.let {
-                val currentDateTime =
-                    Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
-                setState { copy(home = it, time = currentDateTime) }
+                val dateTime = DateTimeConverter.toLocalDateTime(it.flashSale.expiredAt)
+
+                if (dateTime != null) {
+                    setState { copy(home = it, time = dateTime) }
+                } else {
+                    setState { copy(home = it, time = null) }
+                }
+
             }
         }, onLoading = {
             setState { copy(progressBarState = it) }

@@ -278,7 +278,7 @@ fun HomeScreen(
 
                 Spacer_16dp()
 
-
+                if (state.time != null) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -292,14 +292,16 @@ fun HomeScreen(
                             stringResource(Res.string.flash_sale),
                             style = MaterialTheme.typography.titleLarge
                         )
-                        TimerBox(state = state)
+
+                            TimerBox(state = state)
+
                     }
                     /* Text(
                          "See All",
                          style = MaterialTheme.typography.labelMedium,
                          color = MaterialTheme.colorScheme.primary
                      )*/
-                }
+                }}
 
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -393,6 +395,9 @@ fun HomeScreen(
 
 @Composable
 fun TimerBox(state: HomeState) {
+    val time = state.time ?: return
+    // if time is null do not render any thing
+
     Row(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically,
