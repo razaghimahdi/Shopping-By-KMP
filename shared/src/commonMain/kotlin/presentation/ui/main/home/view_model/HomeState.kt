@@ -11,7 +11,7 @@ import kotlinx.datetime.toLocalDateTime
 
 data class HomeState(
     val home: Home = Home(),
-    val time: LocalDateTime? = null,
+    val time: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val networkState: NetworkState = NetworkState.Good,
 ) : ViewState
