@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [ android, ios, tv, desktop, web]
+        platform: [ android, ios, tv, desktop, web, automotive ]
 
     steps:
       - name: Checkout repository
@@ -58,6 +58,18 @@ jobs:
           name: tv-apk
           path: tvApp/build/outputs/apk/debug/tvApp-debug.apk
 
+      # Build Automotive APK
+      - name: Build Automotive App
+        if: matrix.platform == 'automotive'
+        run: ./gradlew :automotiveApp:assembleDebug
+
+      - name: Upload Automotive APK
+        if: matrix.platform == 'automotive'
+        uses: actions/upload-artifact@v4
+        with:
+          name: automotive-apk
+          path: automotiveApp/build/outputs/apk/debug/automotiveApp-debug.apk
+
       # Build Desktop App
       - name: Build Desktop
         if: matrix.platform == 'desktop'
@@ -74,6 +86,13 @@ jobs:
       - name: Build WebApp
         if: matrix.platform == 'web'
         run: ./gradlew :webApp:jsBrowserProductionWebpack
+
+      - name: Upload WebApp
+        if: matrix.platform == 'web'
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: webApp/build/distributions/
 
   release:
     name: Create GitHub Release
@@ -95,6 +114,12 @@ jobs:
         with:
           name: tv-apk
           path: ./artifacts/tv
+
+      - name: Download Automotive APK
+        uses: actions/download-artifact@v4
+        with:
+          name: automotive-apk
+          path: ./artifacts/automotive
 
       - name: Download Desktop App
         uses: actions/download-artifact@v4
@@ -136,6 +161,16 @@ jobs:
           asset_name: tvApp-debug.apk
           asset_content_type: application/vnd.android.package-archive
 
+      - name: Upload Automotive APK
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/automotive/automotiveApp-debug.apk
+          asset_name: automotiveApp-debug.apk
+          asset_content_type: application/vnd.android.package-archive
+
       - name: Upload Desktop App Zip
         uses: actions/upload-release-asset@v1
         env:
@@ -145,10 +180,3 @@ jobs:
           asset_path: ./artifacts/desktopApp.zip
           asset_name: desktopApp.zip
           asset_content_type: application/zip
-
-      - name: Upload Web Distribution
-        if: matrix.platform == 'web'
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-dist
-          path: webApp/build/distributions/
