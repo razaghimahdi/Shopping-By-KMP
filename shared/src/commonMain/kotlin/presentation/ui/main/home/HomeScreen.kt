@@ -1,6 +1,7 @@
 package presentation.ui.main.home
 
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -67,6 +68,7 @@ import presentation.theme.DefaultCardColorsTheme
 import presentation.theme.PagerDotColor
 import presentation.ui.main.home.view_model.HomeEvent
 import presentation.ui.main.home.view_model.HomeState
+import presentation.util.toLocalDateTimeOrNull
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.bell
 import shoping_by_kmp.shared.generated.resources.category
@@ -278,27 +280,30 @@ fun HomeScreen(
 
                 Spacer_16dp()
 
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
+                AnimatedVisibility(visible = state.home.flashSale.expiredAt.toLocalDateTimeOrNull() != null) {
                     Row(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.Start
                     ) {
-                        Text(
-                            stringResource(Res.string.flash_sale),
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        TimerBox(state = state)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                stringResource(Res.string.flash_sale),
+                                style = MaterialTheme.typography.titleLarge
+                            )
+
+                            TimerBox(state = state)
+
+                        }
+                        /* Text(
+                             "See All",
+                             style = MaterialTheme.typography.labelMedium,
+                             color = MaterialTheme.colorScheme.primary
+                         )*/
                     }
-                    /* Text(
-                         "See All",
-                         style = MaterialTheme.typography.labelMedium,
-                         color = MaterialTheme.colorScheme.primary
-                     )*/
                 }
 
                 LazyRow(
@@ -393,6 +398,7 @@ fun HomeScreen(
 
 @Composable
 fun TimerBox(state: HomeState) {
+
     Row(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically,

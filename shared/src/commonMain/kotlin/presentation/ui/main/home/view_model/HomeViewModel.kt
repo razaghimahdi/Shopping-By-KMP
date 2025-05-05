@@ -4,9 +4,10 @@ import business.core.BaseViewModel
 import business.core.NetworkState
 import business.interactors.main.HomeUseCase
 import business.interactors.main.LikeUseCase
-import kotlinx.datetime.Instant
+import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import presentation.util.toLocalDateTimeOrNull
 
 class HomeViewModel(
     private val homeUseCase: HomeUseCase,
@@ -133,9 +134,13 @@ class HomeViewModel(
     private fun getHome() {
         executeUseCase(homeUseCase.execute(Unit), onSuccess = {
             it?.let {
-                val currentDateTime =
-                    Instant.parse(it.flashSale.expiredAt).toLocalDateTime(TimeZone.UTC)
-                setState { copy(home = it, time = currentDateTime) }
+                val dateTime = it.flashSale.expiredAt.toLocalDateTimeOrNull()
+                setState {
+                    copy(
+                        home = it,
+                        time = dateTime ?: Clock.System.now().toLocalDateTime(TimeZone.UTC)
+                    )
+                }
             }
         }, onLoading = {
             setState { copy(progressBarState = it) }
