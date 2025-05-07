@@ -152,14 +152,43 @@ You can use the same APIs to build user interfaces for both Android and iOS.
 -->
 
 ## Backend 🌐
-[This project](https://github.com/aydenGill/shop-admin-panel) involves building a robust admin panel for managing an e-commerce platform. 
-It utilizes **Laravel** for the backend structure and **Livewire** for dynamic frontend interactions. 
-The panel comes with a comprehensive **API**, ensuring scalability and flexibility.
 
-### Features
-- **Admin Dashboard:** Manage products, categories, orders, and customers seamlessly.
-- **Laravel & Livewire:** Leverage the power of Laravel's backend with Livewire for reactive UI.
-- **Full API:** Enables external integrations and interactions with the shopping platform.
+This project features two powerful backend implementations: a **Kotlin-based backend using Ktor** for modern connected applications, and a **Laravel + Livewire** backend for managing an admin panel.
+
+### Kotlin Backend (Primary)
+
+> 🔗 [View Kotlin Backend Repository](https://github.com/razaghimahdi/shopping_by_ktor)
+
+The Kotlin backend is built with **Ktor**, a modern framework for creating asynchronous web applications and services. It leverages **Kotlin Coroutines** for non-blocking execution and includes a set of carefully selected libraries to ensure security, scalability, and maintainability.
+
+#### Tech Stack
+
+- **Ktor** – Framework to build asynchronous connected applications using Kotlin Coroutines.
+- **Exposed** – Lightweight SQL library with a typesafe DSL and DAO support for PostgreSQL.
+- **PostgreSQL** – Open-source, advanced object-relational database.
+- **Koin** – Pragmatic and lightweight dependency injection framework for Kotlin.
+- **kotlinx-datetime** – Multiplatform date and time library.
+- **Bcrypt** – Java-based implementation of the bcrypt password hashing algorithm.
+- **Apache Commons Email** – Simplified email-sending library built on JavaMail.
+- **ktor-openapi-tools** – Plugin to generate OpenAPI specs with Swagger UI and ReDoc.
+- **Valiktor** – Type-safe, fluent DSL for validating Kotlin objects.
+
+This stack enables building reactive APIs, secure user management, and robust database interactions, all with a clean and maintainable architecture.
+
+---
+
+### Laravel Admin Panel
+
+> 🔗 [View Laravel Admin Panel Repository](https://github.com/soheilkhaledabdi/shop-admin-panel)
+
+Alongside the Kotlin backend, the project also provides a **Laravel + Livewire** admin panel for managing the e-commerce platform.
+
+#### Features
+
+- **Admin Dashboard**: Manage products, categories, orders, and customers seamlessly.
+- **Laravel & Livewire**: Combine Laravel’s backend power with Livewire’s reactive UI components.
+- **Comprehensive API**: Designed for extensibility and easy integration with the shopping platform.
+
 
 
 ## How to run web locally ?
