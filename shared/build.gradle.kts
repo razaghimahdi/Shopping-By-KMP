@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.shopping.kotlinMultiplatform)
     alias(libs.plugins.shopping.shared)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 ktlint {

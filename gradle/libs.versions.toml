@@ -1,22 +1,24 @@
 [versions]
-android-compileSdk = "35"
+android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "35"
 android-version-code = "1"
 android-version-name = "1.0"
 agp = "8.9.1"
-kotlin = "2.1.20"
+kotlin = "2.2.20"
 ktlint = "12.1.2"
-kotlinxCoroutinesCore = "1.8.1"
+kotlinxCoroutinesCore = "1.9.0"
 ktor = "2.3.7"
-compose = "1.7.8"
-compose-multiplatform = "1.8.0"
-compose-material3 = "1.3.1"
+compose = "1.9.0"
+compose-multiplatform = "1.9.0"
+compose-material3 = "1.9.0-beta06"
 compose-compiler = "1.5.8"
-androidx-lifecycle = "2.8.4"
-compose-navigation-ver = "2.8.0-alpha11"
+androidx-lifecycle = "2.9.4"
+compose-navigation-ver = "2.9.0"
 compose-plugin = "1.5.11"
 androidx-activityCompose = "1.10.1"
+androidx-window = "1.4.0"
+androidx-savedstate = "1.3.4"
 kotlinx-serialization-json-ver = "1.6.3"
 kotlinx-components-resources-ver = "1.7.3"
 kotlinx-datetime = "0.6.0"
@@ -118,6 +120,10 @@ coil3-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil3-io"
 coil3-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil3-io" }
 coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3-io" }
 coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
+
+
+androidx-window = { module = "org.jetbrains.androidx.window:window-core", version.ref = "androidx-window" }
+androidx-savedstate = { module = "org.jetbrains.androidx.savedstate:savedstate", version.ref = "androidx-savedstate" }
 
 
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }

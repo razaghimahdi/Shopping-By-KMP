@@ -9,7 +9,6 @@ plugins {
 
 kotlin {
     js(IR) {
-        moduleName = "webApp"
         browser {
             commonWebpackConfig {
                 outputFileName = "webApp.js"
@@ -27,13 +26,15 @@ kotlin {
             }
         }
         binaries.executable()
+        compilerOptions {
+            outputModuleName.set("webApp")
+        }
     }
 
 
 
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "webApp"
         browser {
             commonWebpackConfig {
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
@@ -48,7 +49,10 @@ kotlin {
                 }
             }
         }
-        binaries.executable()
+        binaries.executable() // Often good to keep this before compilerOptions
+        compilerOptions {
+            outputModuleName.set("webApp")
+        }
     }
 
     val copyJsResources = tasks.create("copyJsResourcesWorkaround", Copy::class.java) {
