@@ -1,15 +1,13 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport // <-- Import changed
 import org.jetbrains.skiko.wasm.onWasmReady
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
-        CanvasBasedWindow("Shopping-by-KMP") {
+        // Targets an HTML element with the id "composeApp"
+        ComposeViewport(viewportContainerId = "ComposeTarget") {
             MainView()
         }
     }
 }
-
-
-

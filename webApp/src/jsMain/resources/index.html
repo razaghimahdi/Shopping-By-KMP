@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shopping-by-KMP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Important! -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="skiko.js"></script>
     <style>
         html, body {
@@ -14,16 +14,16 @@
             width: 100%;
         }
 
-        canvas {
-            display: block;
+        #ComposeTarget {
             width: 100vw;
             height: 100vh;
-            touch-action: none; /* optional fix for weird touch scrolling */
+            display: block;
+            touch-action: none; /* Prevents unwanted touch scrolling */
         }
     </style>
 </head>
 <body>
-<canvas id="ComposeTarget"></canvas>
+<div id="ComposeTarget"></div>
 <script src="webApp.js"></script>
 </body>
 </html>
