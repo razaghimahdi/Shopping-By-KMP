@@ -1,13 +1,13 @@
 package presentation
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
@@ -39,36 +39,51 @@ internal fun App(context: Context?) {
         }
 
         AppTheme {
-            val navigator = rememberNavController()
-            val viewModel: SharedViewModel = koinInject()
 
+            val viewModel: SharedViewModel = koinInject()
+            val backStack = rememberNavBackStack(
+                SavedStateConfiguration.DEFAULT,
+                AppNavigation.Splash
+            )
             LaunchedEffect(key1 = viewModel.tokenManager.state.value.isTokenAvailable) {
                 if (!viewModel.tokenManager.state.value.isTokenAvailable) {
-                    navigator.popBackStack()
-                    navigator.navigate(AppNavigation.Splash)
+                    if (backStack.lastOrNull() != AppNavigation.Splash) {
+                        backStack.clear()
+                        backStack.add(AppNavigation.Splash)
+                    }
                 }
             }
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                NavHost(
-                    navController = navigator,
-                    startDestination = AppNavigation.Splash,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    composable<AppNavigation.Splash> {
-                        SplashNav(navigateToMain = {
-                            navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Main)
-                        })
+            NavDisplay(
+                backStack = backStack,
+                modifier = Modifier.fillMaxSize(),
+                onBack = {
+                    if (backStack.size > 1) {
+                        backStack.removeAt(backStack.lastIndex)
                     }
-                    composable<AppNavigation.Main> {
-                        MainNav(context = context) {
-                            navigator.popBackStack()
-                            navigator.navigate(AppNavigation.Splash)
+                },
+                entryProvider = { key ->
+                    val destination = key as AppNavigation
+
+                    when (destination) {
+                        AppNavigation.Splash -> NavEntry(key) {
+                            SplashNav(navigateToMain = {
+                                backStack.clear()
+                                backStack.add(AppNavigation.Main)
+                            })
                         }
+
+                        AppNavigation.Main -> NavEntry(key) {
+                            MainNav(context = context, logout = {
+                                backStack.clear()
+                                backStack.add(AppNavigation.Splash)
+                            })
+                        }
+
                     }
                 }
-            }
+            )
+
 
         }
     }
