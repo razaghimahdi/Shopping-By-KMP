@@ -62,6 +62,10 @@ class SharedConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("kotlinx.datetime").get())
                         implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                         implementation(libs.findLibrary("compose.navigation").get())
+                        implementation(libs.findLibrary("navigation3.ui").get())
+                        implementation(libs.findLibrary("navigation3.runtime").get())
+                       // implementation(libs.findLibrary("navigation3.viewmodel").get())
+                       // implementation(libs.findLibrary("navigation3.adaptive").get())
                         implementation(
                             libs.findLibrary("androidx.lifecycle.viewmodel.compose").get()
                         )
