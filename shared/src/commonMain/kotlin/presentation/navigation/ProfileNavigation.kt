@@ -1,9 +1,10 @@
 package presentation.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface ProfileNavigation {
+sealed interface ProfileNavigation: NavKey {
 
     @Serializable
     data object Profile : ProfileNavigation
