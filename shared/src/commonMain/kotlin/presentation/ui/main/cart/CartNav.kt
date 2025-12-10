@@ -1,17 +1,16 @@
 package presentation.ui.main.cart
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.ui.NavDisplay
 import common.Context
 import org.koin.compose.koinInject
 import presentation.navigation.CartNavigation
@@ -27,86 +26,110 @@ import presentation.ui.main.detail.DetailNav
 
 @Composable
 fun CartNav(context: Context?) {
-    val navigator = rememberNavController()
+    val backStack = remember { mutableStateListOf<CartNavigation>(CartNavigation.Cart) }
+
     val addressViewModel: AddAddressViewModel = koinInject()
-    NavHost(
-        startDestination = CartNavigation.Cart,
-        navController = navigator,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        composable<CartNavigation.Cart> {
-            val viewModel: CartViewModel = koinInject()
-            CartScreen(
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                errors = viewModel.errors,
-                navigateToDetail = {
-                    navigator.navigate(CartNavigation.Detail(it))
-                }, navigateToCheckout = {
-                    navigator.navigate(CartNavigation.Checkout)
-                })
-        }
-        composable<CartNavigation.Checkout> {
-            val viewModel: CheckoutViewModel = koinInject()
-            CheckoutScreen(
-                errors = viewModel.errors,
-                action = viewModel.action,
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                navigateToAddress = {
-                    navigator.navigate(CartNavigation.Address)
-                },
-                popup = { navigator.popBackStack() },
-            )
-        }
-        composable<CartNavigation.Address> {
-            val viewModel: AddressViewModel = koinInject()
-            AddressScreen(
-                errors = viewModel.errors,
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                navigateToAddAddress = { navigator.navigate(CartNavigation.AddAddress) },
-                popup = { navigator.popBackStack() },
-            )
-        }
-        composable<CartNavigation.Detail> { backStackEntry ->
-            val argument = backStackEntry.toRoute<CartNavigation.Detail>()
-            val id = argument.id
-            DetailNav(id) {
-                navigator.popBackStack()
+
+
+
+    NavDisplay(
+        backStack = backStack, onBack = { backStack.removeLastOrNull() },
+        entryProvider = { key ->
+            when (key) {
+                CartNavigation.Cart -> NavEntry(key) {
+
+                    val viewModel: CartViewModel = koinInject()
+                    CartScreen(
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        errors = viewModel.errors,
+                        navigateToDetail = {
+                            backStack.add(CartNavigation.Detail(it))
+                        }, navigateToCheckout = {
+                            backStack.add(CartNavigation.Checkout)
+                        })
+                }
+
+                is CartNavigation.Checkout -> NavEntry(key) {
+
+                    val viewModel: CheckoutViewModel = koinInject()
+                    CheckoutScreen(
+                        errors = viewModel.errors,
+                        action = viewModel.action,
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        navigateToAddress = {
+                            backStack.add(CartNavigation.Address)
+                        },
+                        popup = { backStack.removeLastOrNull() },
+                    )
+                }
+
+                is CartNavigation.Address -> NavEntry(key) {
+                    val viewModel: AddressViewModel = koinInject()
+                    AddressScreen(
+                        errors = viewModel.errors,
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        navigateToAddAddress = {
+                            backStack.add(CartNavigation.AddAddress)
+                        },
+                        popup = { backStack.removeLastOrNull() },
+                    )
+                }
+
+                is CartNavigation.Detail -> NavEntry(key) { entry->
+                    val id = key.id
+                    DetailNav(id) {
+                        backStack.removeLastOrNull()
+                    }
+                }
+
+                is CartNavigation.AddAddress -> NavEntry(key) {
+                    AddAddressScreen(
+                        context = context,
+                        errors = addressViewModel.errors,
+                        state = addressViewModel.state.value,
+                        action = addressViewModel.action,
+                        events = addressViewModel::onTriggerEvent,
+                        navigateToAddInformation = {
+                            backStack.add(CartNavigation.AddAddressInformation)
+                        },
+                        popup = { backStack.removeLastOrNull() },
+                    )
+                }
+
+                is CartNavigation.AddAddressInformation -> NavEntry(
+                    key,
+                    metadata = NavDisplay.transitionSpec {
+                        slideInVertically(
+                            initialOffsetY = { it },
+                            animationSpec = tween(1000)
+                        ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+                    } + NavDisplay.popTransitionSpec {
+                        EnterTransition.None togetherWith
+                                slideOutVertically(
+                                    targetOffsetY = { it },
+                                    animationSpec = tween(1000)
+                                )
+                    } + NavDisplay.predictivePopTransitionSpec {
+                        EnterTransition.None togetherWith
+                                slideOutVertically(
+                                    targetOffsetY = { it },
+                                    animationSpec = tween(1000)
+                                )
+                    },
+                ) {
+                    AddAddressInformationScreen(
+                        errors = addressViewModel.errors,
+                        state = addressViewModel.state.value,
+                        action = addressViewModel.action,
+                        events = addressViewModel::onTriggerEvent,
+                        popup = { backStack.removeLastOrNull() },
+                    )
+                }
             }
-        }
-        composable<CartNavigation.AddAddress> {
-            AddAddressScreen(
-                context = context,
-                errors = addressViewModel.errors,
-                state = addressViewModel.state.value,
-                action = addressViewModel.action,
-                events = addressViewModel::onTriggerEvent,
-                navigateToAddInformation = { navigator.navigate(CartNavigation.AddAddressInformation) },
-                popup = { navigator.popBackStack() },
-            )
-        }
-        composable<CartNavigation.AddAddressInformation> (
-            enterTransition = {
-                slideInVertically(
-                    initialOffsetY = { 1000 },
-                    animationSpec = tween(500)
-                ) + fadeIn(tween(300))
-            },
-            exitTransition = {
-                slideOutVertically(
-                    targetOffsetY = { 1000 },
-                    animationSpec = tween(750)
-                ) + fadeOut(tween(500))
-            }){
-            AddAddressInformationScreen(
-                errors = addressViewModel.errors,
-                state = addressViewModel.state.value,
-                action = addressViewModel.action,
-                events = addressViewModel::onTriggerEvent,
-                popup = { navigator.popBackStack() },
-            )
-        }
-    }
+        })
+
+
 }

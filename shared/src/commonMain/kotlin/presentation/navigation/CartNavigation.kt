@@ -1,9 +1,10 @@
 package presentation.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface CartNavigation {
+sealed interface CartNavigation : NavKey{
 
     @Serializable
     data object Cart : CartNavigation
