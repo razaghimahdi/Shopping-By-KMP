@@ -1,14 +1,12 @@
 package presentation.ui.splash
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import common.ChangeStatusBarColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onEach
@@ -19,7 +17,11 @@ import presentation.ui.splash.view_model.LoginViewModel
 
 @Composable
 internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain: () -> Unit) {
-    val navigator = rememberNavController()
+
+    val backStack = rememberNavBackStack(
+        SavedStateConfiguration.DEFAULT,
+        SplashNavigation.Splash
+    )
 
     LaunchedEffect(viewModel) {
         delay(4000L)
@@ -30,42 +32,54 @@ internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain:
                 }
 
                 LoginAction.Navigation.NavigateToLogin -> {
-                    navigator.popBackStack()
-                    navigator.navigate(SplashNavigation.Login)
+                    backStack.clear()
+                    backStack.add(SplashNavigation.Login)
                 }
-
             }
         }.collect {}
     }
 
-
     ChangeStatusBarColors(MaterialTheme.colorScheme.primary)
-    NavHost(
-        startDestination = SplashNavigation.Splash,
-        navController = navigator,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        composable<SplashNavigation.Splash> {
-            SplashScreen()
-        }
-        composable<SplashNavigation.Login> {
-            LoginScreen(
-                navigateToRegister = {
-                    navigator.navigate(SplashNavigation.Register)
-                },
-                errors = viewModel.errors,
-                state = viewModel.state.value,
-                events = { event -> viewModel.setEvent(event) }
-            )
-        }
-        composable<SplashNavigation.Register> {
-            RegisterScreen(popUp = {
-                navigator.popBackStack()
-            }, state = viewModel.state.value,
-                errors = viewModel.errors,
-                events = { event -> viewModel.setEvent(event) }
-            )
-        }
-    }
 
+    NavDisplay(
+        backStack = backStack,
+        onBack = {
+            if (backStack.size > 1) {
+                backStack.removeAt(backStack.lastIndex)
+            }
+        },
+        entryProvider = { key ->
+            val destination = key as SplashNavigation
+            when (destination) {
+                SplashNavigation.Splash -> NavEntry(key) {
+                    SplashScreen()
+                }
+
+                SplashNavigation.Login -> NavEntry(key) {
+                    LoginScreen(
+                        navigateToRegister = {
+                            backStack.add(SplashNavigation.Register)
+                        },
+                        errors = viewModel.errors,
+                        state = viewModel.state.value,
+                        events = { event -> viewModel.setEvent(event) }
+                    )
+                }
+
+                SplashNavigation.Register -> NavEntry(key) {
+                    RegisterScreen(
+                        popUp = {
+                            if (backStack.size > 1) {
+                                backStack.removeAt(backStack.lastIndex)
+                            }
+                        },
+                        state = viewModel.state.value,
+                        errors = viewModel.errors,
+                        events = { event -> viewModel.setEvent(event) }
+                    )
+                }
+
+            }
+        }
+    )
 }

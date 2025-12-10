@@ -1,9 +1,10 @@
 package presentation.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface SplashNavigation {
+sealed interface SplashNavigation : NavKey {
 
     @Serializable
     data object Splash : SplashNavigation
