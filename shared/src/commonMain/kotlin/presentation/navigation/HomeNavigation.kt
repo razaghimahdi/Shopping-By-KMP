@@ -1,9 +1,10 @@
 package presentation.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface HomeNavigation {
+sealed interface HomeNavigation : NavKey {
 
     @Serializable
     data class Search(val categoryId: Long?, val sort: Int?) : HomeNavigation

@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import business.domain.main.Category
 import org.koin.compose.koinInject
 import presentation.navigation.HomeNavigation
@@ -25,113 +25,120 @@ import presentation.ui.main.settings.view_model.SettingsViewModel
 
 @Composable
 fun HomeNav(logout: () -> Unit) {
-    val navigator = rememberNavController()
-    NavHost(
-        startDestination = HomeNavigation.Home,
-        navController = navigator,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        composable<HomeNavigation.Home> {
-            val viewModel: HomeViewModel = koinInject()
-            HomeScreen(
-                errors = viewModel.errors,
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                navigateToNotifications = {
-                    navigator.navigate(HomeNavigation.Notification)
-                },
-                navigateToCategories = {
-                    navigator.navigate(HomeNavigation.Categories)
-                },
-                navigateToSetting = {
-                    navigator.navigate(HomeNavigation.Settings)
-                },
-                navigateToDetail = {
-                    navigator.navigate(HomeNavigation.Detail(id = it))
-                }) { categoryId, sort ->
-                navigator.navigate(
-                    HomeNavigation.Search(categoryId = categoryId, sort = sort)
-                )
+    val backStack = rememberNavBackStack(
+        SavedStateConfiguration.DEFAULT,
+        HomeNavigation.Home
+    )
+
+    NavDisplay(
+        backStack = backStack,
+        modifier = Modifier.fillMaxSize(),
+        onBack = {
+            if (backStack.size > 1) {
+                backStack.removeAt(backStack.lastIndex)
+            }
+        },
+        entryProvider = { key ->
+            when (val destination = key as HomeNavigation) {
+                HomeNavigation.Home -> NavEntry(destination) {
+                    val viewModel: HomeViewModel = koinInject()
+                    HomeScreen(
+                        errors = viewModel.errors,
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        navigateToNotifications = {
+                            backStack.add(HomeNavigation.Notification)
+                        },
+                        navigateToCategories = {
+                            backStack.add(HomeNavigation.Categories)
+                        },
+                        navigateToSetting = {
+                            backStack.add(HomeNavigation.Settings)
+                        },
+                        navigateToDetail = {
+                            backStack.add(HomeNavigation.Detail(id = it))
+                        }) { categoryId, sort ->
+                        backStack.add(
+                            HomeNavigation.Search(categoryId = categoryId, sort = sort)
+                        )
+                    }
+                }
+
+                HomeNavigation.Settings -> NavEntry(destination) {
+                    val viewModel: SettingsViewModel = koinInject()
+                    SettingsScreen(
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        errors = viewModel.errors,
+                        action = viewModel.action,
+                        logout = logout,
+                        popup = {
+                            if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                        },
+                    )
+                }
+
+                HomeNavigation.Categories -> NavEntry(destination) {
+                    val viewModel: CategoriesViewModel = koinInject()
+                    CategoriesScreen(
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        errors = viewModel.errors,
+                        popup = {
+                            if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                        },
+                    ) { categoryId ->
+                        backStack.add(
+                            HomeNavigation.Search(categoryId = categoryId, sort = null)
+                        )
+                    }
+                }
+
+                is HomeNavigation.Search -> NavEntry(destination) {
+                    val viewModel: SearchViewModel = koinInject()
+                    val categoryId = destination.categoryId
+                    val sort = destination.sort
+
+                    LaunchedEffect(categoryId) {
+                        val categories = if (categoryId != null) listOf(Category(id = categoryId)) else null
+                        sort?.let {
+                            viewModel.onTriggerEvent(SearchEvent.OnUpdateSelectedSort(sort))
+                        }
+                        if (categoryId != null || sort != null) {
+                            viewModel.onTriggerEvent(SearchEvent.Search(categories = categories))
+                        }
+                    }
+                    SearchScreen(
+                        errors = viewModel.errors,
+                        state = viewModel.state.value,
+                        events = viewModel::onTriggerEvent,
+                        navigateToDetailScreen = {
+                            backStack.add(HomeNavigation.Detail(it))
+                        },
+                        popUp = {
+                            if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                        }
+                    )
+                }
+
+                is HomeNavigation.Detail -> NavEntry(destination) {
+                    DetailNav(destination.id) {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+
+                HomeNavigation.Notification -> NavEntry(destination) {
+                    val viewModel: NotificationsViewModel = koinInject()
+                    NotificationsScreen(
+                        state = viewModel.state.value,
+                        errors = viewModel.errors,
+                        events = viewModel::onTriggerEvent,
+                        popup = {
+                            if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                        },
+                    )
+                }
             }
         }
-
-        composable<HomeNavigation.Settings>{
-            val viewModel: SettingsViewModel = koinInject()
-            SettingsScreen(
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                errors = viewModel.errors,
-                action = viewModel.action,
-                logout = logout,
-                popup = {
-                    navigator.popBackStack()
-                },
-            )
-        }
-
-        composable<HomeNavigation.Categories> {
-            val viewModel: CategoriesViewModel = koinInject()
-            CategoriesScreen(
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                errors = viewModel.errors,
-                popup = {
-                    navigator.popBackStack()
-                },
-            ) { categoryId ->
-                navigator.navigate(
-                    HomeNavigation.Search(categoryId=categoryId,sort = null)
-                )
-            }
-        }
-
-
-
-        composable<HomeNavigation.Search> {backStackEntry->
-            val viewModel: SearchViewModel = koinInject()
-            val argument = backStackEntry.toRoute<HomeNavigation.Search>()
-            val categoryId = argument.categoryId
-            val sort = argument.sort
-            LaunchedEffect(categoryId){
-                val categories = if (categoryId != null) listOf(Category(id = categoryId)) else null
-                sort?.let {
-                    viewModel.onTriggerEvent(SearchEvent.OnUpdateSelectedSort(sort))
-                }
-                if (categoryId != null || sort != null) {
-                    viewModel.onTriggerEvent(SearchEvent.Search(categories = categories))
-                }
-            }
-            SearchScreen(
-                errors = viewModel.errors,
-                state = viewModel.state.value,
-                events = viewModel::onTriggerEvent,
-                navigateToDetailScreen = {
-                    navigator.navigate(HomeNavigation.Detail(it))
-                },
-                popUp = {
-                    navigator.popBackStack()
-                }
-            )
-        }
-
-        composable<HomeNavigation.Detail>{ backStackEntry ->
-            val argument = backStackEntry.toRoute<HomeNavigation.Detail>()
-            val id = argument.id
-                DetailNav(id) {
-                    navigator.popBackStack()
-                }
-        }
-        composable<HomeNavigation.Notification>{
-            val viewModel: NotificationsViewModel = koinInject()
-            NotificationsScreen(
-                state = viewModel.state.value,
-                errors = viewModel.errors,
-                events = viewModel::onTriggerEvent,
-                popup = {
-                    navigator.popBackStack()
-                },
-            )
-        }
-
-    }
+    )
 }
