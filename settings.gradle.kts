@@ -1,5 +1,6 @@
+rootProject.name = "KotlinProject"
+
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         google {
             mavenContent {
@@ -23,17 +24,16 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
-        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
-rootProject.name = "Shoping_By_KMP"
-include(":androidApp")
-include(":shared")
-include(":desktopApp")
-include(":tvApp")
-include(":webApp")
-include(":automotiveApp")
+include(":app:androidApp")
+include(":app:desktopApp")
+include(":app:shared")
+include(":app:webApp")
+include(":core")
+include(":server")
