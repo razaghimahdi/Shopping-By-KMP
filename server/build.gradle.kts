@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.ktor)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 group = "com.razzaghi.shopingbykmp"
@@ -14,6 +15,38 @@ dependencies {
     implementation(libs.logback)
     implementation(libs.ktor.serverCore)
     implementation(libs.ktor.serverNetty)
+    testImplementation(libs.ktor.serverTestHost)
+    testImplementation(libs.kotlin.testJunit)
+
+    // Core Server
+    implementation(libs.logback)
+    implementation(libs.ktor.serverCore)
+    implementation(libs.ktor.serverNetty)
+
+    // Ktor Features
+    implementation(libs.ktor.serverContentNegotiation)
+    implementation(libs.ktor.serializationKotlinxJson)
+    implementation(libs.ktor.serverAuth)
+    implementation(libs.ktor.serverCors)
+    implementation(libs.ktor.serverCallLogging)
+    implementation(libs.ktor.serverAuthJwt)
+
+    // Database
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.javaTime)
+    implementation(libs.postgresql)
+    implementation(libs.hikaricp)
+
+    // Koin DI
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logger)
+
+    // Security
+    implementation(libs.bcrypt)
+
+    // Testing
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
 }
