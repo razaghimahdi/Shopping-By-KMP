@@ -1,6 +1,7 @@
 rootProject.name = "KotlinProject"
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             mavenContent {
