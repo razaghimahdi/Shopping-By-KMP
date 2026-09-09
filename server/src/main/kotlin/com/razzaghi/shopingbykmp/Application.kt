@@ -32,11 +32,14 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
+import io.ktor.server.http.content.staticFiles
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.request.receive
 import kotlinx.serialization.json.Json
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
+import java.io.File
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -97,6 +100,11 @@ fun Application.module() {
         get("/") {
             call.respondText("Shopping-By-KMP API is running!")
         }
+
+        staticFiles("/uploads", File("uploads"))
+
+        staticResources("/category-image", "category-image")
+        staticResources("/product-image", "product-image")
 
         authRoutes()
         notificationRoutes()
