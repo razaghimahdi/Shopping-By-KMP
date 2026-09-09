@@ -1,0 +1,58 @@
+name: Deploy Backend Server
+
+on:
+  push:
+    branches:
+      - master # Or 'main', depending on your default branch
+    paths:
+      # Only trigger the deployment if changes happen in these backend-related folders
+      - 'server/**'
+      - 'core/**'
+      - 'gradle/**'
+      - 'build-logic/**'
+      - '.github/workflows/deploy-server.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Setup Gradle Cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Fat JAR
+        # Uses the Ktor plugin to generate a standalone executable JAR
+        run: ./gradlew :server:buildFatJar
+
+      - name: Copy JAR to Server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          # Path where Ktor places the compiled Fat JAR
+          source: "server/build/libs/*-all.jar"
+          # The destination directory on your Linux server
+          target: "/opt/shopping-backend"
+          # Removes the 'server/build/libs/' folder structure when copying
+          strip_components: 3
+
+      - name: Restart Systemd Service
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          # Restart the service so Nginx picks up the new live process
+          script: |
+            sudo systemctl restart shopping-backend.service
+            sudo systemctl status shopping-backend.service
