@@ -1,49 +1,40 @@
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidMultiplatformLibrary)
-    kotlin("plugin.serialization") version "2.0.20"
+    id("com.razzaghi.shopingbykmp.core")
 }
 
 kotlin {
-    iosArm64()
-    iosSimulatorArm64()
-    
-    jvm()
-    
-    js {
-        browser()
-    }
-    
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
-    
-    android {
-       namespace = "com.razzaghi.shopingbykmp.core"
-       compileSdk = libs.versions.android.compileSdk.get().toInt()
-       minSdk = libs.versions.android.minSdk.get().toInt()
-    
-       compilerOptions {
-           jvmTarget = JvmTarget.JVM_11
-       }
-       androidResources {
-           enable = true
-       }
-       withHostTest {
-           isIncludeAndroidResources = true
-       }
-    }
-    
     sourceSets {
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+            // Dependency Injection
+            api(libs.koin.core)
+
+            // Ktor Networking
+            api(libs.ktor.core)
+            api(libs.ktor.logging)
+            api(libs.ktor.serialization)
+            api(libs.ktor.negotiation)
+
+            // Persistence
+            api(libs.androidx.datastore.preferences.core)
+            api(libs.androidx.datastore.preferences)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+
+        androidMain.dependencies {
+            implementation(libs.ktor.okhttp)
+        }
+
+        getByName("desktopMain").dependencies {
+            implementation(libs.ktor.okhttp)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin.ios)
+            implementation(libs.ktor.ios)
+        }
+
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+            implementation(libs.ktor.client.json)
         }
     }
 }

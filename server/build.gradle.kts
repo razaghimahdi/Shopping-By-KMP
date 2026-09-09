@@ -6,24 +6,21 @@ plugins {
 
 group = "com.razzaghi.shopingbykmp"
 version = "1.0.0"
+
 application {
     mainClass = "com.razzaghi.shopingbykmp.ApplicationKt"
 }
 
 dependencies {
+    // Shared multiplatform models & DTOs
     api(project(":core"))
-    implementation(libs.logback)
-    implementation(libs.ktor.serverCore)
-    implementation(libs.ktor.serverNetty)
-    testImplementation(libs.ktor.serverTestHost)
-    testImplementation(libs.kotlin.testJunit)
 
-    // Core Server
+    // Logging & Engine
     implementation(libs.logback)
     implementation(libs.ktor.serverCore)
     implementation(libs.ktor.serverNetty)
 
-    // Ktor Features
+    // Ktor Server Plugins
     implementation(libs.ktor.serverContentNegotiation)
     implementation(libs.ktor.serializationKotlinxJson)
     implementation(libs.ktor.serverAuth)
@@ -31,7 +28,7 @@ dependencies {
     implementation(libs.ktor.serverCallLogging)
     implementation(libs.ktor.serverAuthJwt)
 
-    // Database
+    // Database & Connection Pooling
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
@@ -39,7 +36,7 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.hikaricp)
 
-    // Koin DI
+    // Dependency Injection
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger)
 
