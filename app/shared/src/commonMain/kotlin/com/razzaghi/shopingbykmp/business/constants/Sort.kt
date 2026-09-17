@@ -1,4 +1,4 @@
-package business.constants
+package com.razzaghi.shopingbykmp.business.constants
 
 object Sort {
     const val MOST_SALE = 4

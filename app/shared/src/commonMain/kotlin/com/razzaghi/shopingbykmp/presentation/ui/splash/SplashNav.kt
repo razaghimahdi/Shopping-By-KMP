@@ -1,21 +1,23 @@
-package presentation.ui.splash
+package com.razzaghi.shopingbykmp.presentation.ui.splash
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import common.ChangeStatusBarColors
+import com.razzaghi.shopingbykmp.presentation.util.ChangeStatusBarColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onEach
 import org.koin.compose.koinInject
-import presentation.navigation.SplashNavigation
-import presentation.ui.splash.view_model.LoginAction
-import presentation.ui.splash.view_model.LoginViewModel
+import com.razzaghi.shopingbykmp.presentation.navigation.SplashNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.splash.LoginScreen
+import com.razzaghi.shopingbykmp.presentation.ui.splash.RegisterScreen
+import com.razzaghi.shopingbykmp.presentation.ui.splash.SplashScreen
+import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginAction
+import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginViewModel
 
 @Composable
 internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain: () -> Unit) {
@@ -59,9 +61,10 @@ internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain:
             )
         }
         composable<SplashNavigation.Register> {
-            RegisterScreen(popUp = {
-                navigator.popBackStack()
-            }, state = viewModel.state.value,
+            RegisterScreen(
+                popUp = {
+                    navigator.popBackStack()
+                }, state = viewModel.state.value,
                 errors = viewModel.errors,
                 events = { event -> viewModel.setEvent(event) }
             )

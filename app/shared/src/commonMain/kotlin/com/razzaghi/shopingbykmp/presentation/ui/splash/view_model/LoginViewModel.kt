@@ -1,10 +1,10 @@
-package presentation.ui.splash.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.splash.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
-import business.interactors.splash.CheckTokenUseCase
-import business.interactors.splash.LoginUseCase
-import business.interactors.splash.RegisterUseCase
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.interactors.splash.CheckTokenUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.LoginUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.RegisterUseCase
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,

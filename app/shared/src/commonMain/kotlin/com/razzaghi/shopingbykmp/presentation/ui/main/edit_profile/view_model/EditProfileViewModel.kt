@@ -1,9 +1,9 @@
-package presentation.ui.main.edit_profile.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.view_model
 
 import androidx.compose.ui.graphics.ImageBitmap
-import business.core.BaseViewModel
-import business.core.NetworkState
-import business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
 import com.razzaghi.shopingbykmp.business.interactors.main.GetEmailFromCacheUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.GetProfileUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.UpdateProfileUseCase

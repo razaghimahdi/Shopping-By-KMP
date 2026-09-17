@@ -1,4 +1,4 @@
-package business.constants
+package com.razzaghi.shopingbykmp.business.constants
 
 const val AUTHORIZATION_BEARER_TOKEN = "Bearer "
 

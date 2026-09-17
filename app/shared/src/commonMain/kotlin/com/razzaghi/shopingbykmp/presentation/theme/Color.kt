@@ -1,4 +1,4 @@
-package presentation.theme
+package com.razzaghi.shopingbykmp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

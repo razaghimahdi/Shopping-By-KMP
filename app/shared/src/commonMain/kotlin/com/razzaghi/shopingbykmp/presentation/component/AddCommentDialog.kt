@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,8 +27,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import presentation.theme.BorderColor
-import presentation.theme.DefaultTextFieldTheme
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultTextFieldTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)

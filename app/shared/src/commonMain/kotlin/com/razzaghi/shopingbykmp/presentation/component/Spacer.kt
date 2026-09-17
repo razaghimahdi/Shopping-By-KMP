@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size

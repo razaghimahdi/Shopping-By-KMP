@@ -1,4 +1,4 @@
-package presentation.ui.main.settings
+package com.razzaghi.shopingbykmp.presentation.ui.main.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,19 +17,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_32dp
-import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
-import presentation.theme.BorderColor
-import presentation.ui.main.settings.view_model.SettingsAction
-import presentation.ui.main.settings.view_model.SettingsEvent
-import presentation.ui.main.settings.view_model.SettingsState
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsAction
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.arrow_right
 import shoping_by_kmp.shared.generated.resources.exit

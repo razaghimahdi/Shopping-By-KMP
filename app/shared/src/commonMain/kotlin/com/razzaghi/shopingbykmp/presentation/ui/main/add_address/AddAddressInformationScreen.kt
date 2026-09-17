@@ -1,4 +1,4 @@
-package presentation.ui.main.add_address
+package com.razzaghi.shopingbykmp.presentation.ui.main.add_address
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -20,22 +20,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
-import common.Context
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DEFAULT__BUTTON_SIZE
-import presentation.component.DefaultButton
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_16dp
-import presentation.component.Spacer_32dp
-import presentation.component.Spacer_8dp
-import presentation.theme.BorderColor
-import presentation.theme.DefaultTextFieldTheme
-import presentation.ui.main.add_address.view_model.AddAddressAction
-import presentation.ui.main.add_address.view_model.AddAddressEvent
-import presentation.ui.main.add_address.view_model.AddAddressState
+import com.razzaghi.shopingbykmp.presentation.component.DEFAULT__BUTTON_SIZE
+import com.razzaghi.shopingbykmp.presentation.component.DefaultButton
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_16dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultTextFieldTheme
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressAction
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.add_new_address
 import shoping_by_kmp.shared.generated.resources.country

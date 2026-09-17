@@ -1,6 +1,6 @@
-package business.core
+package com.razzaghi.shopingbykmp.business.core
 
-import business.util.handleUseCaseException
+import com.razzaghi.shopingbykmp.business.util.handleUseCaseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

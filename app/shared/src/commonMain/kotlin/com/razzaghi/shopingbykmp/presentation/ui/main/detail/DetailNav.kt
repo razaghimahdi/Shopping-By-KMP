@@ -1,4 +1,4 @@
-package presentation.ui.main.detail
+package com.razzaghi.shopingbykmp.presentation.ui.main.detail
 
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,12 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.koin.compose.koinInject
-import presentation.navigation.DetailNavigation
-import presentation.ui.main.comment.CommentScreen
-import presentation.ui.main.comment.view_model.CommentEvent
-import presentation.ui.main.comment.view_model.CommentViewModel
-import presentation.ui.main.detail.view_model.DetailEvent
-import presentation.ui.main.detail.view_model.DetailViewModel
+import com.razzaghi.shopingbykmp.presentation.navigation.DetailNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.CommentScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model.DetailEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model.DetailViewModel
 
 @Composable
 fun DetailNav(id: Long, popUp: () -> Unit) {

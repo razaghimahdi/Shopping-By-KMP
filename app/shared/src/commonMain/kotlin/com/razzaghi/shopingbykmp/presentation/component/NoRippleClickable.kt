@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

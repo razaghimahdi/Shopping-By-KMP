@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.theme.BorderColor
-import presentation.theme.DefaultImageButtonTheme
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultImageButtonTheme
 
 
 @OptIn(ExperimentalResourceApi::class)

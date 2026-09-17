@@ -1,13 +1,13 @@
-package presentation.ui.main.wishlist.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.ViewState
-import business.domain.main.Category
-import business.domain.main.Wishlist
-import business.domain.main.category_all
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.Queue
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.domain.main.Wishlist
+import com.razzaghi.shopingbykmp.business.domain.main.category_all
 
 data class WishlistState(
     val categoryId: Long? = null,

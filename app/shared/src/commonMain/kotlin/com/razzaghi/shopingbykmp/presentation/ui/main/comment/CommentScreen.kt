@@ -1,4 +1,4 @@
-package presentation.ui.main.comment
+package com.razzaghi.shopingbykmp.presentation.ui.main.comment
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,15 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import business.core.UIComponent
-import business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
 import kotlinx.coroutines.flow.Flow
-import presentation.component.AddCommentDialog
-import presentation.component.DefaultScreenUI
-import presentation.theme.BorderColor
-import presentation.ui.main.comment.view_model.CommentEvent
-import presentation.ui.main.comment.view_model.CommentState
-import presentation.ui.main.detail.CommentBox
+import com.razzaghi.shopingbykmp.presentation.component.AddCommentDialog
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentState
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.CommentBox
 import org.jetbrains.compose.resources.stringResource
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.comments

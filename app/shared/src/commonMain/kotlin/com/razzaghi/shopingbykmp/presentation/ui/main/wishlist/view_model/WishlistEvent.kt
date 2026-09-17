@@ -1,9 +1,9 @@
-package presentation.ui.main.wishlist.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model
 
-import business.core.NetworkState
-import business.core.UIComponent
-import business.core.ViewEvent
-import business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewEvent
+import com.razzaghi.shopingbykmp.business.domain.main.Category
 
 sealed class WishlistEvent : ViewEvent {
 

@@ -1,14 +1,10 @@
-package business.interactors.splash
+package com.razzaghi.shopingbykmp.business.interactors.splash
 
 
-import business.constants.DataStoreKeys
-import business.core.AppDataStore
-import business.core.BaseDataStoreUseCase
-import business.core.DataState
-import business.core.ProgressBarState
-import business.util.handleUseCaseException
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.razzaghi.shopingbykmp.business.constants.DataStoreKeys
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseDataStoreUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 
 class CheckTokenUseCase(
     private val appDataStoreManager: AppDataStore,

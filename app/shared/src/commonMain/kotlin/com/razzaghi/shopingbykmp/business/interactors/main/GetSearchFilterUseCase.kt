@@ -1,14 +1,14 @@
 package com.razzaghi.shopingbykmp.business.interactors.main
 
 
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.SearchFilterDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.toSearchFilter
-import business.domain.main.SearchFilter
+import com.razzaghi.shopingbykmp.business.domain.main.toSearchFilter
+import com.razzaghi.shopingbykmp.business.domain.main.SearchFilter
 
 class GetSearchFilterUseCase(
     private val service: MainService,

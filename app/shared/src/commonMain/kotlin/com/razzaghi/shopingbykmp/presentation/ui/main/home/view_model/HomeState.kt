@@ -1,9 +1,9 @@
-package presentation.ui.main.home.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.home.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.ViewState
-import business.domain.main.Home
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Home
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

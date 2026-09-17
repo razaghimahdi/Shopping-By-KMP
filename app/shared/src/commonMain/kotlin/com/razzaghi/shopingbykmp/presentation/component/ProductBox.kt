@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +27,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import business.domain.main.Product
+import com.razzaghi.shopingbykmp.business.domain.main.Product
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.painterResource
-import presentation.theme.BackgroundContent
-import presentation.theme.orange_400
+import com.razzaghi.shopingbykmp.presentation.theme.BackgroundContent
+import com.razzaghi.shopingbykmp.presentation.theme.orange_400
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.default_image_loader
 

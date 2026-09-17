@@ -1,13 +1,13 @@
 package com.razzaghi.shopingbykmp.business.interactors.main
 
 
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.AddressDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.toAddress
+import com.razzaghi.shopingbykmp.business.domain.main.toAddress
 import com.razzaghi.shopingbykmp.business.domain.main.Address
 
 class GetAddressesUseCase(

@@ -1,14 +1,14 @@
 package com.razzaghi.shopingbykmp.business.interactors.main
 
 
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.CommentDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.toComment
-import business.domain.main.Comment
+import com.razzaghi.shopingbykmp.business.domain.main.toComment
+import com.razzaghi.shopingbykmp.business.domain.main.Comment
 
 class GetCommentsUseCase(
     private val service: MainService,

@@ -1,7 +1,7 @@
-package presentation.ui.main.cart.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
 import com.razzaghi.shopingbykmp.business.interactors.main.AddBasketUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.BasketListUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.DeleteBasketUseCase
@@ -44,7 +44,7 @@ class CartViewModel(
             it?.let {
                 setState { copy(baskets = it) }
                 val totalCost = state.value.baskets.sumOf { basket ->
-                    basket.price
+                    basket.product.price
                 }
                 setState { copy(totalCost = "$ $totalCost") }
             }

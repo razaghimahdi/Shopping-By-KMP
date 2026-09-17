@@ -1,4 +1,4 @@
-package business.constants
+package com.razzaghi.shopingbykmp.business.constants
 
 const val SHIPPING_ACTIVE = 0
 const val SHIPPING_SUCCESS = 1

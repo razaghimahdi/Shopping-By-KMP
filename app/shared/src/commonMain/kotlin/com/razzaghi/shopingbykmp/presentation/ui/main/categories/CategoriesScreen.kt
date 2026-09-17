@@ -1,4 +1,4 @@
-package presentation.ui.main.categories
+package com.razzaghi.shopingbykmp.presentation.ui.main.categories
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,16 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
-import business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.domain.main.Category
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
-import presentation.ui.main.categories.view_model.CategoriesEvent
-import presentation.ui.main.categories.view_model.CategoriesState
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.ui.main.categories.view_model.CategoriesEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.categories.view_model.CategoriesState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.categories
 

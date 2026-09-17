@@ -1,6 +1,6 @@
 package com.razzaghi.shopingbykmp.business.datasource.network.main
 
-import business.constants.BASE_URL
+import com.razzaghi.shopingbykmp.business.constants.BASE_URL
 import com.razzaghi.shopingbykmp.business.datasource.network.common.JRNothing
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.AddressDTO
@@ -24,6 +24,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.FormPart
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
+import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -34,7 +35,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
 import io.ktor.http.takeFrom
-import io.ktor.util.InternalAPI
+import io.ktor.utils.io.InternalAPI
 import io.ktor.utils.io.core.buildPacket
 import io.ktor.utils.io.core.writeFully
 

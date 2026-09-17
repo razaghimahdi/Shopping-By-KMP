@@ -11,29 +11,28 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
-import coil3.fetch.NetworkFetcher
-import common.Context
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import com.razzaghi.shopingbykmp.di.appModule
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
-import presentation.navigation.AppNavigation
-import presentation.theme.AppTheme
-import presentation.ui.main.MainNav
-import presentation.ui.splash.SplashNav
+import com.razzaghi.shopingbykmp.presentation.navigation.AppNavigation
+import com.razzaghi.shopingbykmp.presentation.theme.AppTheme
+import com.razzaghi.shopingbykmp.presentation.ui.main.MainNav
+import com.razzaghi.shopingbykmp.presentation.ui.splash.SplashNav
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-internal fun App(context: Context?) {
+fun App() {
 
     KoinApplication(application = {
-        modules(appModule(context))
+        modules(appModule())
     }) {
 
 
         setSingletonImageLoaderFactory { context ->
             ImageLoader.Builder(context)
                 .components {
-                    add(NetworkFetcher.Factory())
+                    add(KtorNetworkFetcherFactory())
                 }
                 .build()
         }
@@ -62,7 +61,7 @@ internal fun App(context: Context?) {
                         })
                     }
                     composable<AppNavigation.Main> {
-                        MainNav(context = context) {
+                        MainNav() {
                             navigator.popBackStack()
                             navigator.navigate(AppNavigation.Splash)
                         }

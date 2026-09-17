@@ -1,9 +1,7 @@
 package com.razzaghi.shopingbykmp.di
 
 
-import business.core.AppDataStore
-import business.core.AppDataStoreManager
-import business.core.KtorHttpClient
+import com.razzaghi.shopingbykmp.business.core.KtorHttpClient
 import com.razzaghi.shopingbykmp.business.datasource.network.splash.SplashService
 import com.razzaghi.shopingbykmp.business.datasource.network.splash.SplashServiceImpl
 import com.razzaghi.shopingbykmp.business.interactors.main.AddAddressUseCase
@@ -26,44 +24,45 @@ import com.razzaghi.shopingbykmp.business.interactors.main.ProductUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.SearchUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.UpdateProfileUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.WishListUseCase
-import business.interactors.splash.CheckTokenUseCase
-import business.interactors.splash.LoginUseCase
-import business.interactors.splash.RegisterUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.CheckTokenUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.LoginUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.RegisterUseCase
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainServiceImpl
-import common.Context
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import com.razzaghi.shopingbykmp.presentation.SharedViewModel
-import presentation.token_manager.TokenManager
-import presentation.ui.main.add_address.view_model.AddAddressViewModel
-import presentation.ui.main.address.view_model.AddressViewModel
-import presentation.ui.main.cart.view_model.CartViewModel
-import presentation.ui.main.categories.view_model.CategoriesViewModel
-import presentation.ui.main.checkout.view_model.CheckoutViewModel
-import presentation.ui.main.comment.view_model.CommentViewModel
-import presentation.ui.main.detail.view_model.DetailViewModel
-import presentation.ui.main.edit_profile.view_model.EditProfileViewModel
-import presentation.ui.main.home.view_model.HomeViewModel
-import presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
-import presentation.ui.main.my_orders.view_model.MyOrdersViewModel
-import presentation.ui.main.notifications.view_model.NotificationsViewModel
-import presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
-import presentation.ui.main.profile.view_model.ProfileViewModel
-import presentation.ui.main.search.view_model.SearchViewModel
-import presentation.ui.main.settings.view_model.SettingsViewModel
-import presentation.ui.main.wishlist.view_model.WishlistViewModel
-import presentation.ui.splash.view_model.LoginViewModel
+import com.razzaghi.shopingbykmp.presentation.token_manager.TokenManager
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model.CartViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.categories.view_model.CategoriesViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.CheckoutViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model.DetailViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.view_model.EditProfileViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.home.view_model.HomeViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_orders.view_model.MyOrdersViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.notifications.view_model.NotificationsViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.profile.view_model.ProfileViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginViewModel
 
 
-fun appModule(context: Context?) = module {
+fun appModule() = module {
+
+    includes(dataStoreModule())
+
     single { Json { isLenient = true; ignoreUnknownKeys = true } }
     single {
         KtorHttpClient.httpClient(get())
     }
     single<SplashService> { SplashServiceImpl(get()) }
     single<MainService> { MainServiceImpl(get()) }
-    single<AppDataStore> { AppDataStoreManager(context) }
     factory { SharedViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { HomeViewModel(get(), get()) }

@@ -1,13 +1,13 @@
-package presentation.ui.main.home.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.home.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
 import com.razzaghi.shopingbykmp.business.interactors.main.HomeUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.LikeUseCase
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import presentation.util.toLocalDateTimeOrNull
+import com.razzaghi.shopingbykmp.presentation.util.toLocalDateTimeOrNull
 
 class HomeViewModel(
     private val homeUseCase: HomeUseCase,

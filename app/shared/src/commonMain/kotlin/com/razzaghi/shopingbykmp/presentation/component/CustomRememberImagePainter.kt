@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale

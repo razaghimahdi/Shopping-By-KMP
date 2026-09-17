@@ -1,17 +1,17 @@
-package presentation.ui.main.search.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model
 
 import androidx.lifecycle.viewModelScope
-import business.core.BaseViewModel
-import business.core.DataState
-import business.core.NetworkState
-import business.core.UIComponentState
-import business.domain.main.Category
-import business.domain.main.Search
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.DataState
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.domain.main.Search
 import com.razzaghi.shopingbykmp.business.interactors.main.GetSearchFilterUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.SearchUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import presentation.ui.main.address.view_model.AddressEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressEvent
 
 class SearchViewModel(
     private val searchUseCase: SearchUseCase,

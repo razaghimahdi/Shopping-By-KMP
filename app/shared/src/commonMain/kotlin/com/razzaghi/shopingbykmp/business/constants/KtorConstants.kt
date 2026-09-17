@@ -1,3 +1,3 @@
-package business.constants
+package com.razzaghi.shopingbykmp.business.constants
 
-const val BASE_URL = "https://shop.soheilkhaledabadi.ir/api/v1/"
+const val BASE_URL = "http://localhost:8080/"

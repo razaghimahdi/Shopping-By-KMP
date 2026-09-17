@@ -1,4 +1,4 @@
-package presentation.ui.main.cart
+package com.razzaghi.shopingbykmp.presentation.ui.main.cart
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.spring
@@ -43,22 +43,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
-import business.domain.main.Basket
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.domain.main.Basket
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DEFAULT__BUTTON_SIZE
-import presentation.component.DefaultButton
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_16dp
-import presentation.component.Spacer_4dp
-import presentation.component.noRippleClickable
-import presentation.component.rememberCustomImagePainter
-import presentation.theme.BorderColor
-import presentation.theme.DefaultCardColorsTheme
-import presentation.ui.main.cart.view_model.CartEvent
-import presentation.ui.main.cart.view_model.CartState
+import com.razzaghi.shopingbykmp.presentation.component.DEFAULT__BUTTON_SIZE
+import com.razzaghi.shopingbykmp.presentation.component.DefaultButton
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_16dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_4dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.component.rememberCustomImagePainter
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultCardColorsTheme
+import com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model.CartEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model.CartState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.basket_is_empty
 import shoping_by_kmp.shared.generated.resources.proceed_to_checkout
@@ -87,11 +87,11 @@ fun CartScreen(
                     CartBox(
                         it,
                         addMoreProduct = {
-                            events(CartEvent.AddProduct(it.productId))
+                            events(CartEvent.AddProduct(it.product.id))
                         },
                         navigateToDetail = navigateToDetail
                     ) {
-                        events(CartEvent.DeleteFromBasket(it.productId))
+                        events(CartEvent.DeleteFromBasket(it.product.id))
                     }
                 }
             }
@@ -222,11 +222,11 @@ fun DismissCartContent(
                     .weight(.3f)
                     .clip(MaterialTheme.shapes.small)
                     .noRippleClickable {
-                        navigateToDetail(basket.productId)
+                        navigateToDetail(basket.product.id)
                     }
             ) {
                 Image(
-                    painter = rememberCustomImagePainter(basket.image),
+                    painter = rememberCustomImagePainter(basket.product.image),
                     null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -237,14 +237,14 @@ fun DismissCartContent(
 
             Column(modifier = Modifier.weight(.4f)) {
                 Text(
-                    basket.title,
+                    basket.product.title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer_4dp()
                 Text(
-                    basket.category.name,
+                    basket.product.category.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodySmall

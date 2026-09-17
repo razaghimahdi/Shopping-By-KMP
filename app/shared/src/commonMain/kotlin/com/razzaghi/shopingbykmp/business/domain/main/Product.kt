@@ -1,6 +1,7 @@
-package business.domain.main
+package com.razzaghi.shopingbykmp.business.domain.main
 
-import common.Format
+import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.ProductDTO
+import com.razzaghi.shopingbykmp.presentation.util.Format
 
 data class Product(
     val description: String = "",
@@ -26,4 +27,18 @@ val product_sample = Product(
     rate = 4.4,
     title = "Nike-121",
     category = Category(name = "Shoes")
+)
+
+fun ProductDTO.toProduct() = Product(
+    description = description ?: "",
+    id = id ?: 0,
+    image = image ?: "",
+    isLike = isLike ?: false,
+    likes = likes ?: 0,
+    price = price ?: 0L,
+    rate = rate ?: 0.0,
+    title = title ?: "",
+    category = category?.toCategory() ?: Category(),
+    comments = comments?.map { it.toComment() } ?: listOf(),
+    gallery = gallery ?: listOf()
 )

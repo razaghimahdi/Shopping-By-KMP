@@ -1,6 +1,6 @@
-package presentation.ui.splash.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.splash.view_model
 
-import business.core.ViewSingleAction
+import com.razzaghi.shopingbykmp.business.core.ViewSingleAction
 
 sealed class LoginAction : ViewSingleAction {
 

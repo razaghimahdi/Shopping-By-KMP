@@ -1,6 +1,6 @@
-package presentation.ui.main.checkout.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model
 
-import business.core.ViewSingleAction
+import com.razzaghi.shopingbykmp.business.core.ViewSingleAction
 
 sealed class CheckoutAction : ViewSingleAction {
 

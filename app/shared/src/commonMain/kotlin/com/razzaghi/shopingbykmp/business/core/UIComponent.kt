@@ -1,4 +1,4 @@
-package business.core
+package com.razzaghi.shopingbykmp.business.core
 
 import com.razzaghi.shopingbykmp.business.datasource.network.common.JAlertResponse
 

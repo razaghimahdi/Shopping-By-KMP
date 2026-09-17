@@ -1,11 +1,11 @@
-package presentation.ui.main.detail.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.ViewState
-import business.domain.main.Product
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.Queue
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Product
 
 data class DetailState(
     val product: Product = Product(),

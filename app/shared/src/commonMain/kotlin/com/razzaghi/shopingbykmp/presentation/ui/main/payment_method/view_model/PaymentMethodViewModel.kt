@@ -1,7 +1,7 @@
-package presentation.ui.main.payment_method.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
 
 class PaymentMethodViewModel : BaseViewModel<PaymentMethodEvent, PaymentMethodState, Nothing>() {
 

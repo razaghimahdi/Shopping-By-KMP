@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,12 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import business.constants.CUSTOM_TAG
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.ViewSingleAction
+import com.razzaghi.shopingbykmp.business.constants.CUSTOM_TAG
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewSingleAction
+import com.razzaghi.shopingbykmp.business.core.Queue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.jetbrains.compose.resources.ExperimentalResourceApi

@@ -1,4 +1,4 @@
-package presentation.ui.main.profile
+package com.razzaghi.shopingbykmp.presentation.ui.main.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,20 +17,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponent
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.component.CircleImage
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_12dp
-import presentation.component.Spacer_16dp
-import presentation.component.Spacer_32dp
-import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
-import presentation.ui.main.profile.view_model.ProfileEvent
-import presentation.ui.main.profile.view_model.ProfileState
+import com.razzaghi.shopingbykmp.presentation.component.CircleImage
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_12dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_16dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.ui.main.profile.view_model.ProfileEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.profile.view_model.ProfileState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.arrow_right
 import shoping_by_kmp.shared.generated.resources.coupon

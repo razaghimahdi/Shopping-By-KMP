@@ -1,12 +1,12 @@
-package presentation.ui.main.comment.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.UIComponentState
-import business.core.ViewState
-import business.domain.main.Comment
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.Queue
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Comment
 
 data class CommentState(
     val productId: Long = 0,

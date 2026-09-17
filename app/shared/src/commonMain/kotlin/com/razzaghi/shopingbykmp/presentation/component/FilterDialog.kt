@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,9 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import business.core.UIComponentState
-import presentation.ui.main.search.view_model.SearchEvent
-import presentation.ui.main.search.view_model.SearchState
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

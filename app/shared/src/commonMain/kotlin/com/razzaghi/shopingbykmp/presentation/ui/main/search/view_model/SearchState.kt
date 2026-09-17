@@ -1,14 +1,14 @@
-package presentation.ui.main.search.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.UIComponentState
-import business.core.ViewState
-import business.domain.main.Category
-import business.domain.main.Search
-import business.domain.main.SearchFilter
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.Queue
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.domain.main.Search
+import com.razzaghi.shopingbykmp.business.domain.main.SearchFilter
 
 data class SearchState(
     val selectedCategory: List<Category> = listOf(),

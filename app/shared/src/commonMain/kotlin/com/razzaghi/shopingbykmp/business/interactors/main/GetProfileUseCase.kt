@@ -1,14 +1,14 @@
 package com.razzaghi.shopingbykmp.business.interactors.main
 
 
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.ProfileDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.toProfile
-import business.domain.main.Profile
+import com.razzaghi.shopingbykmp.business.domain.main.toProfile
+import com.razzaghi.shopingbykmp.business.domain.main.Profile
 
 class GetProfileUseCase(
     private val service: MainService,

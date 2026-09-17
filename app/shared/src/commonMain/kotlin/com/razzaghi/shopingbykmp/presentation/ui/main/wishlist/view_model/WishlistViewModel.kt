@@ -1,16 +1,16 @@
-package presentation.ui.main.wishlist.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model
 
 import androidx.lifecycle.viewModelScope
-import business.core.BaseViewModel
-import business.core.DataState
-import business.core.NetworkState
-import business.domain.main.Category
-import business.domain.main.category_all
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.DataState
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.domain.main.Category
+import com.razzaghi.shopingbykmp.business.domain.main.category_all
 import com.razzaghi.shopingbykmp.business.interactors.main.LikeUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.WishListUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import presentation.ui.main.address.view_model.AddressEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressEvent
 
 class WishlistViewModel(
     private val wishListUseCase: WishListUseCase,

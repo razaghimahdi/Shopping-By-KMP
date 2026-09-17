@@ -1,4 +1,4 @@
-package presentation.navigation
+package com.razzaghi.shopingbykmp.presentation.navigation
 
 import org.jetbrains.compose.resources.DrawableResource
 import shoping_by_kmp.shared.generated.resources.Res

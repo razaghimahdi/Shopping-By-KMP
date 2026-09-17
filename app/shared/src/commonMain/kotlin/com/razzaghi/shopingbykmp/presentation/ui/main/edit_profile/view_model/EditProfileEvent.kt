@@ -1,10 +1,10 @@
-package presentation.ui.main.edit_profile.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.view_model
 
 import androidx.compose.ui.graphics.ImageBitmap
-import business.core.NetworkState
-import business.core.UIComponent
-import business.core.UIComponentState
-import business.core.ViewEvent
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.ViewEvent
 
 sealed class EditProfileEvent : ViewEvent {
 

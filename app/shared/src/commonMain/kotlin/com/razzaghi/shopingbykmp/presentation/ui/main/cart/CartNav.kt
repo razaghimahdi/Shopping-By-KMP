@@ -1,4 +1,4 @@
-package presentation.ui.main.cart
+package com.razzaghi.shopingbykmp.presentation.ui.main.cart
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,21 +12,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import common.Context
 import org.koin.compose.koinInject
-import presentation.navigation.CartNavigation
-import presentation.ui.main.add_address.AddAddressInformationScreen
-import presentation.ui.main.add_address.AddAddressScreen
-import presentation.ui.main.add_address.view_model.AddAddressViewModel
-import presentation.ui.main.address.AddressScreen
-import presentation.ui.main.address.view_model.AddressViewModel
-import presentation.ui.main.cart.view_model.CartViewModel
-import presentation.ui.main.checkout.CheckoutScreen
-import presentation.ui.main.checkout.view_model.CheckoutViewModel
-import presentation.ui.main.detail.DetailNav
+import com.razzaghi.shopingbykmp.presentation.navigation.CartNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.AddAddressInformationScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.AddAddressScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.AddressScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model.CartViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.CheckoutScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.CheckoutViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.DetailNav
 
 @Composable
-fun CartNav(context: Context?) {
+fun CartNav() {
     val navigator = rememberNavController()
     val addressViewModel: AddAddressViewModel = koinInject()
     NavHost(
@@ -78,7 +77,6 @@ fun CartNav(context: Context?) {
         }
         composable<CartNavigation.AddAddress> {
             AddAddressScreen(
-                context = context,
                 errors = addressViewModel.errors,
                 state = addressViewModel.state.value,
                 action = addressViewModel.action,

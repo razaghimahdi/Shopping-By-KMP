@@ -1,4 +1,4 @@
-package presentation.ui.main.profile
+package com.razzaghi.shopingbykmp.presentation.ui.main.profile
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -11,28 +11,27 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import common.Context
 import org.koin.compose.koinInject
-import presentation.navigation.ProfileNavigation
-import presentation.ui.main.add_address.AddAddressInformationScreen
-import presentation.ui.main.add_address.AddAddressScreen
-import presentation.ui.main.add_address.view_model.AddAddressViewModel
-import presentation.ui.main.address.AddressScreen
-import presentation.ui.main.address.view_model.AddressViewModel
-import presentation.ui.main.edit_profile.EditProfileScreen
-import presentation.ui.main.edit_profile.view_model.EditProfileViewModel
-import presentation.ui.main.my_coupons.MyCouponsScreen
-import presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
-import presentation.ui.main.my_orders.MyOrdersScreen
-import presentation.ui.main.my_orders.view_model.MyOrdersViewModel
-import presentation.ui.main.payment_method.PaymentMethodScreen
-import presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
-import presentation.ui.main.profile.view_model.ProfileViewModel
-import presentation.ui.main.settings.SettingsScreen
-import presentation.ui.main.settings.view_model.SettingsViewModel
+import com.razzaghi.shopingbykmp.presentation.navigation.ProfileNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.AddAddressInformationScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.AddAddressScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.AddressScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.EditProfileScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.view_model.EditProfileViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.MyCouponsScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.view_model.MyCouponsViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_orders.MyOrdersScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_orders.view_model.MyOrdersViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.PaymentMethodScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.profile.view_model.ProfileViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.SettingsScreen
+import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsViewModel
 
 @Composable
-fun ProfileNav(context: Context?, logout: () -> Unit) {
+fun ProfileNav(logout: () -> Unit) {
     val addressViewModel: AddAddressViewModel = koinInject()
     val navigator = rememberNavController()
     NavHost(
@@ -146,7 +145,7 @@ fun ProfileNav(context: Context?, logout: () -> Unit) {
         }
         composable<ProfileNavigation.AddAddress> {
             AddAddressScreen(
-                context = context,
+                
                 errors = addressViewModel.errors,
                 state = addressViewModel.state.value,
                 action = addressViewModel.action,

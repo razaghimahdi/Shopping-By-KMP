@@ -1,4 +1,4 @@
-package presentation.ui.main.wishlist
+package com.razzaghi.shopingbykmp.presentation.ui.main.wishlist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,17 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import business.constants.PAGINATION_PAGE_SIZE
-import business.core.ProgressBarState
-import business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.constants.PAGINATION_PAGE_SIZE
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
 import kotlinx.coroutines.flow.Flow
-import presentation.component.CategoryChipsBox
-import presentation.component.DefaultScreenUI
-import presentation.component.ProductBox
-import presentation.component.Spacer_8dp
-import presentation.theme.BorderColor
-import presentation.ui.main.wishlist.view_model.WishlistEvent
-import presentation.ui.main.wishlist.view_model.WishlistState
+import com.razzaghi.shopingbykmp.presentation.component.CategoryChipsBox
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.ProductBox
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistState
 import org.jetbrains.compose.resources.stringResource
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.wishlist_is_empty

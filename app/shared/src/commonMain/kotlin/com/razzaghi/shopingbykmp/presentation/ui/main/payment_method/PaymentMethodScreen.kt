@@ -1,4 +1,4 @@
-package presentation.ui.main.payment_method
+package com.razzaghi.shopingbykmp.presentation.ui.main.payment_method
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -20,21 +20,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponent
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_16dp
-import presentation.component.Spacer_32dp
-import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
-import presentation.theme.BorderColor
-import presentation.theme.DefaultCardColorsTheme
-import presentation.ui.main.payment_method.view_model.PaymentMethodEvent
-import presentation.ui.main.payment_method.view_model.PaymentMethodState
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_16dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultCardColorsTheme
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.apple
 import shoping_by_kmp.shared.generated.resources.apple_pay

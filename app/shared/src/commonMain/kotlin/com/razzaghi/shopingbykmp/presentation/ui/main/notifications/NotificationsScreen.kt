@@ -1,4 +1,4 @@
-package presentation.ui.main.notifications
+package com.razzaghi.shopingbykmp.presentation.ui.main.notifications
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,17 +24,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
-import business.domain.main.Notification
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.domain.main.Notification
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_8dp
-import presentation.theme.BorderColor
-import presentation.theme.grey_050
-import presentation.ui.main.notifications.view_model.NotificationsEvent
-import presentation.ui.main.notifications.view_model.NotificationsState
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.grey_050
+import com.razzaghi.shopingbykmp.presentation.ui.main.notifications.view_model.NotificationsEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.notifications.view_model.NotificationsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.bell
 import shoping_by_kmp.shared.generated.resources.mark_all_as_read

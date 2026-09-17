@@ -1,4 +1,4 @@
-package presentation.ui.splash
+package com.razzaghi.shopingbykmp.presentation.ui.splash
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
@@ -49,7 +49,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.img_headphone_splash
 import shoping_by_kmp.shared.generated.resources.img_shoe1_splash

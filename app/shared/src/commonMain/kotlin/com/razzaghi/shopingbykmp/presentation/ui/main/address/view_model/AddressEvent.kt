@@ -1,9 +1,9 @@
-package presentation.ui.main.address.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model
 
-import business.core.NetworkState
-import business.core.UIComponent
-import business.core.UIComponentState
-import business.core.ViewEvent
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.core.ViewEvent
 
 sealed class AddressEvent : ViewEvent {
 

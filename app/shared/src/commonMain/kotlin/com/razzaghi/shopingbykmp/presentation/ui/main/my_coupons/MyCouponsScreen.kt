@@ -1,4 +1,4 @@
-package presentation.ui.main.my_coupons
+package com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,19 +24,19 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import business.core.UIComponent
-import business.domain.main.Coupons
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.domain.main.Coupons
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.component.DefaultScreenUI
-import presentation.component.Spacer_32dp
-import presentation.component.Spacer_8dp
-import presentation.component.noRippleClickable
-import presentation.theme.BorderColor
-import presentation.theme.grey_050
-import presentation.ui.main.my_coupons.view_model.MyCouponsEvent
-import presentation.ui.main.my_coupons.view_model.MyCouponsState
+import com.razzaghi.shopingbykmp.presentation.component.DefaultScreenUI
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_32dp
+import com.razzaghi.shopingbykmp.presentation.component.Spacer_8dp
+import com.razzaghi.shopingbykmp.presentation.component.noRippleClickable
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.grey_050
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.view_model.MyCouponsEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.view_model.MyCouponsState
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.best_offer_for_you
 import shoping_by_kmp.shared.generated.resources.copy_code

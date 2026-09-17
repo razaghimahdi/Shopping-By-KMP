@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,14 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import business.constants.Sort.HIGHER_PRICE
-import business.constants.Sort.LOWEST_PRICE
-import business.constants.Sort.MOST_SALE
-import business.constants.Sort.NEWEST
-import business.constants.Sort.OLDEST
-import business.core.UIComponentState
-import presentation.ui.main.search.view_model.SearchEvent
-import presentation.ui.main.search.view_model.SearchState
+import com.razzaghi.shopingbykmp.business.constants.Sort.HIGHER_PRICE
+import com.razzaghi.shopingbykmp.business.constants.Sort.LOWEST_PRICE
+import com.razzaghi.shopingbykmp.business.constants.Sort.MOST_SALE
+import com.razzaghi.shopingbykmp.business.constants.Sort.NEWEST
+import com.razzaghi.shopingbykmp.business.constants.Sort.OLDEST
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

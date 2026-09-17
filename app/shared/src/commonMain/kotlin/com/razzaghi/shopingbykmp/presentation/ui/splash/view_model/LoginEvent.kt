@@ -1,8 +1,8 @@
-package presentation.ui.splash.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.splash.view_model
 
-import business.core.NetworkState
-import business.core.UIComponent
-import business.core.ViewEvent
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewEvent
 
 sealed class LoginEvent : ViewEvent {
     data class OnUpdateNameRegister(val value: String) : LoginEvent()

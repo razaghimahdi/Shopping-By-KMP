@@ -1,4 +1,6 @@
-package business.domain.main
+package com.razzaghi.shopingbykmp.business.domain.main
+
+import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.CommentDTO
 
 
 data class Comment(
@@ -7,4 +9,12 @@ data class Comment(
     val createAt: String,
     val rate: Double,
     val user: User
+)
+
+fun CommentDTO.toComment() = Comment(
+    id = id ?: 0,
+    comment = comment ?: "",
+    createAt = createAt ?: "",
+    rate = rate ?: 0.0,
+    user = user?.toUser() ?: User(),
 )

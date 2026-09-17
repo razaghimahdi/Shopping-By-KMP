@@ -1,4 +1,4 @@
-package business.core
+package com.razzaghi.shopingbykmp.business.core
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State

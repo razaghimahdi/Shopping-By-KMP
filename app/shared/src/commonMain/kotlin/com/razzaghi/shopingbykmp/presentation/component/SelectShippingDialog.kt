@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,14 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import business.core.UIComponentState
-import business.domain.main.ShippingType
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.domain.main.ShippingType
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.theme.BorderColor
-import presentation.ui.main.checkout.view_model.CheckoutEvent
-import presentation.ui.main.checkout.view_model.CheckoutState
-import presentation.ui.main.checkout.view_model.shippingType_global
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.CheckoutEvent
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.CheckoutState
+import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.shippingType_global
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.shipping
 

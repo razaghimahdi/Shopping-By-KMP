@@ -1,4 +1,4 @@
-package presentation.token_manager
+package com.razzaghi.shopingbykmp.presentation.token_manager
 
 sealed class TokenEvent {
     data object CheckToken : TokenEvent()

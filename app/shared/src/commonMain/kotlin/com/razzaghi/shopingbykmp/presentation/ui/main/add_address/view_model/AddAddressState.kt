@@ -1,8 +1,8 @@
-package presentation.ui.main.add_address.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.ViewState
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.ViewState
 
 data class AddAddressState(
     val latitude: Double = 0.0,

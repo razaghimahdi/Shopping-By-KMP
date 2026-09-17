@@ -1,10 +1,10 @@
-package presentation.ui.main.checkout.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
-import business.core.UIComponentState
-import business.domain.main.Address
-import business.domain.main.ShippingType
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponentState
+import com.razzaghi.shopingbykmp.business.domain.main.Address
+import com.razzaghi.shopingbykmp.business.domain.main.ShippingType
 import com.razzaghi.shopingbykmp.business.interactors.main.BasketListUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.BuyProductUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.GetAddressesUseCase
@@ -84,7 +84,7 @@ class CheckoutViewModel(
         executeUseCase(basketListUseCase.execute(Unit), onSuccess = {
             it?.let {
                 val totalCost = it.sumOf { basket ->
-                    basket.price
+                    basket.product.price
                 }
                 setState {
                     copy(

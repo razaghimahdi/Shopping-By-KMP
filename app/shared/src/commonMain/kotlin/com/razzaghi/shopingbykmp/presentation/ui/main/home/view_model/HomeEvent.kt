@@ -1,8 +1,8 @@
-package presentation.ui.main.home.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.home.view_model
 
-import business.core.NetworkState
-import business.core.UIComponent
-import business.core.ViewEvent
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewEvent
 
 sealed class HomeEvent : ViewEvent {
 

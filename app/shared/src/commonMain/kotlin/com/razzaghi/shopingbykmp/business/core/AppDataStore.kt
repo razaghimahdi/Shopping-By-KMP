@@ -1,4 +1,4 @@
-package business.core
+package com.razzaghi.shopingbykmp.business.core
 
 
 interface AppDataStore {

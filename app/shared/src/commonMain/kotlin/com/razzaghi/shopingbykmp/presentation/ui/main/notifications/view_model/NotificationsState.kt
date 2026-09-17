@@ -1,11 +1,11 @@
-package presentation.ui.main.notifications.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.notifications.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.Queue
-import business.core.UIComponent
-import business.core.ViewState
-import business.domain.main.Notification
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.Queue
+import com.razzaghi.shopingbykmp.business.core.UIComponent
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Notification
 
 data class NotificationsState(
     val notifications: List<Notification> = listOf(),

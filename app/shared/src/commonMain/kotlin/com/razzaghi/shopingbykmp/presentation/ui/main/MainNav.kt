@@ -1,4 +1,4 @@
-package presentation.ui.main
+package com.razzaghi.shopingbykmp.presentation.ui.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,20 +23,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import common.ChangeStatusBarColors
-import common.Context
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import com.razzaghi.shopingbykmp.presentation.util.ChangeStatusBarColors
 import org.jetbrains.compose.resources.painterResource
-import presentation.navigation.BottomNavigation
-import presentation.theme.DefaultCardColorsTheme
-import presentation.theme.DefaultNavigationBarItemTheme
-import presentation.ui.main.cart.CartNav
-import presentation.ui.main.home.HomeNav
-import presentation.ui.main.profile.ProfileNav
-import presentation.ui.main.wishlist.WishlistNav
+import com.razzaghi.shopingbykmp.presentation.navigation.BottomNavigation
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultCardColorsTheme
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultNavigationBarItemTheme
+import com.razzaghi.shopingbykmp.presentation.ui.main.cart.CartNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.home.HomeNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.profile.ProfileNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.WishlistNav
 
 @Composable
-fun MainNav(context: Context?, logout: () -> Unit) {
+fun MainNav(logout: () -> Unit) {
 
 
     val navBottomBarController = rememberNavController()
@@ -57,10 +55,10 @@ fun MainNav(context: Context?, logout: () -> Unit) {
                     WishlistNav()
                 }
                 composable(route = BottomNavigation.Cart.route) {
-                    CartNav(context = context)
+                    CartNav()
                 }
                 composable(route = BottomNavigation.Profile.route) {
-                    ProfileNav(context = context, logout = logout)
+                    ProfileNav(logout = logout)
                 }
             }
         }
@@ -99,7 +97,8 @@ fun BottomNavigationUI(
                 BottomNavigation.Profile,
             )
             items.forEach {
-                NavigationBarItem(label = { Text(text = it.title) },
+                NavigationBarItem(
+                    label = { Text(text = it.title) },
                     colors = DefaultNavigationBarItemTheme(),
                     selected = it.route == currentRoute,
                     icon = {

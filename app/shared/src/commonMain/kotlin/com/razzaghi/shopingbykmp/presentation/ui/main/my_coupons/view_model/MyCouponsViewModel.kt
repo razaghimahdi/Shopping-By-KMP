@@ -1,8 +1,8 @@
-package presentation.ui.main.my_coupons.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.view_model
 
-import business.core.BaseViewModel
-import business.core.NetworkState
-import business.domain.main.Coupons
+import com.razzaghi.shopingbykmp.business.core.BaseViewModel
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.domain.main.Coupons
 
 class MyCouponsViewModel : BaseViewModel<MyCouponsEvent, MyCouponsState, Nothing>() {
 

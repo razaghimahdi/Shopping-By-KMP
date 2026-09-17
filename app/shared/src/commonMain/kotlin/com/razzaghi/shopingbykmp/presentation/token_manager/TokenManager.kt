@@ -1,11 +1,10 @@
-package presentation.token_manager
+package com.razzaghi.shopingbykmp.presentation.token_manager
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import business.core.DataState
-import com.razzaghi.shopingbykmp.business.interactors.main.AddAddressUseCase
+import com.razzaghi.shopingbykmp.business.core.DataState
 import com.razzaghi.shopingbykmp.business.interactors.main.LogoutUseCase
-import business.interactors.splash.CheckTokenUseCase
+import com.razzaghi.shopingbykmp.business.interactors.splash.CheckTokenUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn

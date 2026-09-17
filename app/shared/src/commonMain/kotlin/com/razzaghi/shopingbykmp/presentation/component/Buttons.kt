@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
@@ -29,11 +29,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import business.core.ProgressBarState
-import presentation.theme.BorderColor
-import presentation.theme.DefaultButtonTheme
-import presentation.theme.DefaultButtonWithBorderPrimaryTheme
-import presentation.theme.DefaultCardColorsTheme
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.presentation.theme.BorderColor
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultButtonTheme
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultButtonWithBorderPrimaryTheme
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultCardColorsTheme
 
 val DEFAULT__BUTTON_SIZE = 50.dp
 val DEFAULT__BUTTON_SIZE_EXTRA = 60.dp

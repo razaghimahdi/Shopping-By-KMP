@@ -1,4 +1,4 @@
-package presentation.theme
+package com.razzaghi.shopingbykmp.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

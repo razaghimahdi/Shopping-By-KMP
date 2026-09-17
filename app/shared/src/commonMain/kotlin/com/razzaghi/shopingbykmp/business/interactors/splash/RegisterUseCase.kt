@@ -1,11 +1,11 @@
-package business.interactors.splash
+package com.razzaghi.shopingbykmp.business.interactors.splash
 
 
-import business.constants.AUTHORIZATION_BEARER_TOKEN
-import business.constants.DataStoreKeys
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.constants.AUTHORIZATION_BEARER_TOKEN
+import com.razzaghi.shopingbykmp.business.constants.DataStoreKeys
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.splash.SplashService
 

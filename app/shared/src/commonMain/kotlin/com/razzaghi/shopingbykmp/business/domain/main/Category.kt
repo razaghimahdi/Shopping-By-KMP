@@ -1,4 +1,6 @@
-package business.domain.main
+package com.razzaghi.shopingbykmp.business.domain.main
+
+import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.CategoryDTO
 
 data class Category(
     val icon: String = "",
@@ -12,4 +14,11 @@ val category_all = Category(
     id = -1,
     name = "All",
     parent = 0,
+)
+
+fun CategoryDTO.toCategory() = Category(
+    icon = icon ?: "",
+    name = name ?: "",
+    id = id ?: 0,
+    parent = parent ?: 0,
 )

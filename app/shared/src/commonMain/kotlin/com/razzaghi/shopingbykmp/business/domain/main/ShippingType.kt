@@ -1,6 +1,6 @@
-package business.domain.main
+package com.razzaghi.shopingbykmp.business.domain.main
 
-import common.Format
+import com.razzaghi.shopingbykmp.presentation.util.Format
 
 data class ShippingType(val title: String, val price: Long, val arrivalDay: Int){
     fun getEstimatedDay() = "Estimated Arrival in $arrivalDay days"

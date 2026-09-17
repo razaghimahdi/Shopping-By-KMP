@@ -1,9 +1,9 @@
-package presentation.ui.main.address.view_model
+package com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model
 
-import business.core.NetworkState
-import business.core.ProgressBarState
-import business.core.ViewState
-import business.domain.main.Address
+import com.razzaghi.shopingbykmp.business.core.NetworkState
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.ViewState
+import com.razzaghi.shopingbykmp.business.domain.main.Address
 
 data class AddressState(
     val addresses: List<Address> = listOf(),

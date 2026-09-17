@@ -1,9 +1,9 @@
 package com.razzaghi.shopingbykmp.business.datasource.network.splash
 
-import business.constants.BASE_URL
+import com.razzaghi.shopingbykmp.business.constants.BASE_URL
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
-import com.razzaghi.shopingbykmp.business.datasource.network.responses.LoginRequestDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.responses.RegisterRequestDTO
+import com.razzaghi.shopingbykmp.business.datasource.network.splash.responses.LoginRequestDTO
+import com.razzaghi.shopingbykmp.business.datasource.network.splash.responses.RegisterRequestDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post

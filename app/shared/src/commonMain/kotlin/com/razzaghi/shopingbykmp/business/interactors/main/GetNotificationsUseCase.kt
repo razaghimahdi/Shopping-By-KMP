@@ -1,14 +1,14 @@
 package com.razzaghi.shopingbykmp.business.interactors.main
 
 
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.NotificationDTO
-import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.toNotification
-import business.domain.main.Notification
+import com.razzaghi.shopingbykmp.business.domain.main.toNotification
+import com.razzaghi.shopingbykmp.business.domain.main.Notification
 
 class GetNotificationsUseCase(
     private val service: MainService,

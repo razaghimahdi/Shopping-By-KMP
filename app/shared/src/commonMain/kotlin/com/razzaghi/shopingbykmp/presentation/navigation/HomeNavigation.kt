@@ -1,4 +1,4 @@
-package presentation.navigation
+package com.razzaghi.shopingbykmp.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

@@ -1,4 +1,4 @@
-package presentation.component
+package com.razzaghi.shopingbykmp.presentation.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,8 +17,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.theme.DefaultTextFieldTheme
-import presentation.theme.IconColorGrey
+import com.razzaghi.shopingbykmp.presentation.theme.DefaultTextFieldTheme
+import com.razzaghi.shopingbykmp.presentation.theme.IconColorGrey
 import shoping_by_kmp.shared.generated.resources.Res
 import shoping_by_kmp.shared.generated.resources.ic_password_hide
 import shoping_by_kmp.shared.generated.resources.ic_password_show

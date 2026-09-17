@@ -1,4 +1,4 @@
-package business.core
+package com.razzaghi.shopingbykmp.business.core
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpResponseValidator
@@ -12,8 +12,8 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import presentation.token_manager.TokenEvent
-import presentation.token_manager.TokenManager
+import com.razzaghi.shopingbykmp.presentation.token_manager.TokenEvent
+import com.razzaghi.shopingbykmp.presentation.token_manager.TokenManager
 
 object KtorHttpClient {
 

@@ -2,12 +2,12 @@ package com.razzaghi.shopingbykmp.business.interactors.main
 
 
 import androidx.compose.ui.graphics.ImageBitmap
-import business.core.AppDataStore
-import business.core.BaseUseCase
-import business.core.ProgressBarState
+import com.razzaghi.shopingbykmp.business.core.AppDataStore
+import com.razzaghi.shopingbykmp.business.core.BaseUseCase
+import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.MainService
-import common.toBytes
+import com.razzaghi.shopingbykmp.presentation.util.toBytes
 
 class UpdateProfileUseCase(
     private val service: MainService,
