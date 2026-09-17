@@ -11,10 +11,11 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
     fun init() {
         // TODO: Move these to environment variables or an application.conf file later
-        val driverClassName = "org.postgresql.Driver"
-        val jdbcURL = "jdbc:postgresql://localhost:5432/shopping_db"
-        val user = "postgres"
-        val password = "password"
+        val driverClassName = "com.mysql.cj.jdbc.Driver"
+        // Note: We add the timezone flag as MySQL often requires it to prevent connection crashes
+        val jdbcURL = "jdbc:mysql://localhost:3306/shopping_db?useSSL=false&serverTimezone=UTC"
+        val user = "root" // Default MySQL user is usually root, not postgres
+        val password = "root" // <-- MAKE SURE TO PUT YOUR ACTUAL MYSQL PASSWORD HERE
 
         val hikariConfig = HikariConfig().apply {
             setDriverClassName(driverClassName)

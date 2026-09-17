@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.javaTime)
     implementation(libs.postgresql)
+    implementation(libs.mysql.connector)
     implementation(libs.hikaricp)
 
     // Dependency Injection
