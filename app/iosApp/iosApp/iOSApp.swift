@@ -1,10 +1,16 @@
 import SwiftUI
+import shared
+import GoogleMaps
+
 
 @main
 struct iOSApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+    init() {
+        GMSServices.provideAPIKey("YOUR_API_KEY")
     }
+	var body: some Scene {
+		WindowGroup {
+			ContentView()
+		}
+	}
 }
