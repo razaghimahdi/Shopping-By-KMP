@@ -1,4 +1,4 @@
-rootProject.name = "KotlinProject"
+rootProject.name = "Shopping-By-Kmp"
 
 pluginManagement {
     includeBuild("build-logic")

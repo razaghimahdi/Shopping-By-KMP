@@ -9,7 +9,6 @@ plugins {
 }
 
 kotlin {
-    // 1. iOS Targets
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -20,15 +19,12 @@ kotlin {
         }
     }
 
-    // 2. Desktop Target
     jvm("desktop")
 
-    // 3. Web Target
-    js {
-        browser()
-    }
+    js { browser() }
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs { browser() }
 
-    // 4. Android Target
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -37,48 +33,48 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // LINK TO YOUR BUSINESS LOGIC MODULE
             api(project(":core"))
 
-            // Data & Architecture
             implementation(libs.kotlinx.datetime)
 
-            // Compose Core
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.materialIcons)
 
-            // Architecture & Navigation
+            @Suppress("DEPRECATION")
+            implementation(compose.materialIconsExtended)
+
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.compose.navigation)
 
-            // Third-Party UI (This fixes the missing 'io' references!)
-            implementation(libs.coil3)
-            implementation(libs.coil3.network)
             implementation(libs.koin.compose)
 
-            // Moko / PreCompose
-            implementation(libs.precompose)
-            implementation(libs.precompose.viewmodel)
-            implementation(libs.mvvm.compose)
+
+
+            implementation(libs.coil3)
+            implementation(libs.coil3.core)
+            implementation(libs.coil3.network)
         }
 
         androidMain.dependencies {
+            implementation(libs.koin.android)
+
+            implementation(libs.androidx.datastore.preferences)
+
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.uiTooling)
 
-            // Android UI specifics
             implementation(libs.system.ui.controller)
             implementation(libs.accompanist.permissions)
             implementation(libs.maps.compose)
             implementation(libs.play.services.maps)
             implementation(libs.play.services.location)
 
-            // Coil specific formats
             implementation(libs.coil3.video)
             implementation(libs.coil3.gif)
             implementation(libs.coil3.svg)
@@ -106,4 +102,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+compose.resources {
+    packageOfResClass = "shoping_by_kmp.shared.generated.resources"
 }

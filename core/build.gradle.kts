@@ -15,8 +15,8 @@ kotlin {
             api(libs.ktor.negotiation)
 
             // Persistence
+            api(libs.androidx.datastore.core)
             api(libs.androidx.datastore.preferences.core)
-            api(libs.androidx.datastore.preferences)
         }
 
         androidMain.dependencies {

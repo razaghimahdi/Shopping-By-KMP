@@ -26,10 +26,14 @@ class CoreConventionPlugin : Plugin<Project> {
         extensions.configure<KotlinMultiplatformExtension> {
             androidTarget()
             jvm("desktop")
-            iosX64()
+
             iosArm64()
             iosSimulatorArm64()
+
             js { browser() }
+
+            @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+            wasmJs { browser() }
 
             applyDefaultHierarchyTemplate()
 
@@ -40,14 +44,12 @@ class CoreConventionPlugin : Plugin<Project> {
                 }
 
                 commonMain.dependencies {
-                    implementation(composeDeps.runtime)
-                    implementation(composeDeps.foundation)
-                    implementation(composeDeps.animation)
-                    implementation(composeDeps.material3)
-                    implementation(composeDeps.components.resources)
-                    implementation(composeDeps.components.uiToolingPreview)
+                    implementation(libs.findLibrary("compose-runtime").get())
+                    implementation(libs.findLibrary("compose-foundation").get())
+                    implementation(libs.findLibrary("compose-material3").get())
+                    implementation(libs.findLibrary("compose-components-resources").get())
+                    implementation(libs.findLibrary("compose-uiToolingPreview").get())
 
-                    // Notice the exact hyphens matching your TOML file here
                     implementation(libs.findLibrary("kotlinx-serialization-json").get())
                     implementation(libs.findLibrary("kotlinx-coroutines-core").get())
                     implementation(libs.findLibrary("kotlinx-datetime").get())

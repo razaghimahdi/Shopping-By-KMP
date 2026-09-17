@@ -1,21 +1,22 @@
 [versions]
 # Core Build
-agp = "9.0.1"
+agp = "9.1.0"
 kotlin = "2.4.10"
 composeMultiplatform = "1.11.1"
 
 # Android Config
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "24"
-android-targetSdk = "36"
+android-targetSdk = "37"
 android-version-code = "1"
 android-version-name = "1.0"
-
+compose-material3-version = "1.11.0-alpha07"
+compose-icons-version = "1.7.3"
 # AndroidX & Jetpack
 androidx-activity = "1.13.0"
 androidx-appcompat = "1.8.0"
 androidx-core = "1.19.0"
-androidx-datastore = "1.2.0-alpha01"
+androidx-datastore = "1.3.0-alpha10"
 androidx-lifecycle = "2.11.0-beta01"
 androidx-savedstate = "1.3.4"
 androidx-window = "1.4.0"
@@ -27,13 +28,13 @@ kotlin-wrappers = "2026.8.4"
 
 # Networking & DI (Ktor 3 & Koin)
 ktor = "3.5.2"
-koin = "3.5.3"
-koin-compose = "1.1.2"
+koin = "4.0.0"
+koin-compose = "4.0.0"
 
 # UI & Utilities
 accompanist-version = "0.33.2-alpha"
 accompanist-permissions = "0.32.0"
-coil3-io = "3.0.0-alpha01"
+coil3-io = "3.6.0"
 image-loader-qdsfdhvh = "1.6.8"
 mokoVersion = "0.16.1"
 precompose-tlaster = "1.5.10"
@@ -70,11 +71,12 @@ wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", ve
 # --- Compose Multiplatform Core ---
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3-version" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
-compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+compose-uiToolingPreview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "composeMultiplatform" }
+compose-materialIcons = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "compose-icons-version" }
 
 # --- AndroidX ---
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -87,6 +89,7 @@ androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-p
 androidx-window = { module = "org.jetbrains.androidx.window:window-core", version.ref = "androidx-window" }
 androidx-savedstate = { module = "org.jetbrains.androidx.savedstate:savedstate", version.ref = "androidx-savedstate" }
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation-ver" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "androidx-datastore" }
 
 # --- Maps & Locations ---
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapCompose" }
@@ -139,11 +142,11 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 system-ui-controller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-version" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3-io" }
-coil3-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coil3-io" }
+coil3-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3-io" }
+coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
 coil3-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil3-io" }
 coil3-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil3-io" }
 coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3-io" }
-coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
 image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "image-loader-qdsfdhvh" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose-tlaster" }
 precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose-tlaster" }
