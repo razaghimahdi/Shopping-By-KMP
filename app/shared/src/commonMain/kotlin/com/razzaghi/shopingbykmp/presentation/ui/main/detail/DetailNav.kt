@@ -11,11 +11,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import com.razzaghi.shopingbykmp.presentation.navigation.DetailNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.comment.CommentScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentEvent
 import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model.DetailEvent
 import com.razzaghi.shopingbykmp.presentation.ui.main.detail.view_model.DetailViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailNav(id: Long, popUp: () -> Unit) {
@@ -26,8 +28,7 @@ fun DetailNav(id: Long, popUp: () -> Unit) {
         modifier = Modifier.fillMaxSize()
     ) {
         composable<DetailNavigation.Detail> {
-
-            val viewModel: DetailViewModel = koinInject()
+            val viewModel = koinViewModel<DetailViewModel>()
             LaunchedEffect(id) {
                 viewModel.onTriggerEvent(DetailEvent.GetProduct(id))
             }
@@ -41,8 +42,7 @@ fun DetailNav(id: Long, popUp: () -> Unit) {
                 })
         }
         composable<DetailNavigation.Comment> { backStackEntry ->
-
-            val viewModel: CommentViewModel = koinInject()
+            val viewModel = koinViewModel<CommentViewModel>()
             val argument = backStackEntry.toRoute<DetailNavigation.Comment>()
             val id = argument.id
 

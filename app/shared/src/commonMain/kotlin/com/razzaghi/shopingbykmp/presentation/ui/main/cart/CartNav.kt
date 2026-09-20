@@ -23,6 +23,8 @@ import com.razzaghi.shopingbykmp.presentation.ui.main.cart.view_model.CartViewMo
 import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.CheckoutScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.checkout.view_model.CheckoutViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.detail.DetailNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.notifications.view_model.NotificationsViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CartNav() {
@@ -34,7 +36,7 @@ fun CartNav() {
         modifier = Modifier.fillMaxSize()
     ) {
         composable<CartNavigation.Cart> {
-            val viewModel: CartViewModel = koinInject()
+            val viewModel = koinViewModel<CartViewModel>()
             CartScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
@@ -46,7 +48,7 @@ fun CartNav() {
                 })
         }
         composable<CartNavigation.Checkout> {
-            val viewModel: CheckoutViewModel = koinInject()
+            val viewModel = koinViewModel<CheckoutViewModel>()
             CheckoutScreen(
                 errors = viewModel.errors,
                 action = viewModel.action,
@@ -59,7 +61,7 @@ fun CartNav() {
             )
         }
         composable<CartNavigation.Address> {
-            val viewModel: AddressViewModel = koinInject()
+            val viewModel = koinViewModel<AddressViewModel>()
             AddressScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,

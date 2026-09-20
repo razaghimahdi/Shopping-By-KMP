@@ -10,7 +10,9 @@ import androidx.navigation.toRoute
 import org.koin.compose.koinInject
 import com.razzaghi.shopingbykmp.presentation.navigation.WishlistNavigation
 import com.razzaghi.shopingbykmp.presentation.ui.main.detail.DetailNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun WishlistNav() {
@@ -21,7 +23,7 @@ fun WishlistNav() {
         modifier = Modifier.fillMaxSize()
     ) {
         composable<WishlistNavigation.Wishlist> {
-            val viewModel: WishlistViewModel = koinInject()
+            val viewModel = koinViewModel<WishlistViewModel>()
             WishlistScreen(
                 state = viewModel.state.value,
                 errors = viewModel.errors,

@@ -22,6 +22,8 @@ import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchEv
 import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.settings.SettingsScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeNav(logout: () -> Unit) {
@@ -32,7 +34,8 @@ fun HomeNav(logout: () -> Unit) {
         modifier = Modifier.fillMaxSize()
     ) {
         composable<HomeNavigation.Home> {
-            val viewModel: HomeViewModel = koinInject()
+            val viewModel = koinViewModel<HomeViewModel>()
+
             HomeScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,
@@ -56,7 +59,8 @@ fun HomeNav(logout: () -> Unit) {
         }
 
         composable<HomeNavigation.Settings>{
-            val viewModel: SettingsViewModel = koinInject()
+            val viewModel = koinViewModel<SettingsViewModel>()
+
             SettingsScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
@@ -70,7 +74,8 @@ fun HomeNav(logout: () -> Unit) {
         }
 
         composable<HomeNavigation.Categories> {
-            val viewModel: CategoriesViewModel = koinInject()
+            val viewModel = koinViewModel<CategoriesViewModel>()
+
             CategoriesScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
@@ -88,7 +93,7 @@ fun HomeNav(logout: () -> Unit) {
 
 
         composable<HomeNavigation.Search> {backStackEntry->
-            val viewModel: SearchViewModel = koinInject()
+            val viewModel = koinViewModel<SearchViewModel>()
             val argument = backStackEntry.toRoute<HomeNavigation.Search>()
             val categoryId = argument.categoryId
             val sort = argument.sort
@@ -122,7 +127,7 @@ fun HomeNav(logout: () -> Unit) {
                 }
         }
         composable<HomeNavigation.Notification>{
-            val viewModel: NotificationsViewModel = koinInject()
+            val viewModel = koinViewModel<NotificationsViewModel>()
             NotificationsScreen(
                 state = viewModel.state.value,
                 errors = viewModel.errors,

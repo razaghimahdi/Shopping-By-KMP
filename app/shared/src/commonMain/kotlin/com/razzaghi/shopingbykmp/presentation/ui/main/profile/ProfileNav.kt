@@ -18,6 +18,7 @@ import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.AddAddressScre
 import com.razzaghi.shopingbykmp.presentation.ui.main.add_address.view_model.AddAddressViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.address.AddressScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.address.view_model.AddressViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.comment.view_model.CommentViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.EditProfileScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.edit_profile.view_model.EditProfileViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.my_coupons.MyCouponsScreen
@@ -29,10 +30,11 @@ import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.
 import com.razzaghi.shopingbykmp.presentation.ui.main.profile.view_model.ProfileViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.settings.SettingsScreen
 import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ProfileNav(logout: () -> Unit) {
-    val addressViewModel: AddAddressViewModel = koinInject()
+    val addressViewModel = koinViewModel<AddAddressViewModel>()
     val navigator = rememberNavController()
     NavHost(
         startDestination = ProfileNavigation.Profile,
@@ -69,7 +71,8 @@ fun ProfileNav(logout: () -> Unit) {
             )
         }
         composable<ProfileNavigation.Settings> {
-            val viewModel: SettingsViewModel = koinInject()
+            val viewModel = koinViewModel<SettingsViewModel>()
+
             SettingsScreen(
                 state = viewModel.state.value,
                 events = viewModel::onTriggerEvent,
@@ -82,7 +85,7 @@ fun ProfileNav(logout: () -> Unit) {
             )
         }
         composable<ProfileNavigation.MyCoupons> {
-            val viewModel: MyCouponsViewModel = koinInject()
+            val viewModel = koinViewModel<MyCouponsViewModel>()
             MyCouponsScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,
@@ -101,7 +104,7 @@ fun ProfileNav(logout: () -> Unit) {
             }*/
         }
         composable<ProfileNavigation.MyOrders> {
-            val viewModel: MyOrdersViewModel = koinInject()
+            val viewModel = koinViewModel<MyOrdersViewModel>()
             MyOrdersScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,
@@ -111,7 +114,7 @@ fun ProfileNav(logout: () -> Unit) {
             }
         }
         composable<ProfileNavigation.PaymentMethod> {
-            val viewModel: PaymentMethodViewModel = koinInject()
+            val viewModel = koinViewModel<PaymentMethodViewModel>()
             PaymentMethodScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,
@@ -121,7 +124,7 @@ fun ProfileNav(logout: () -> Unit) {
             }
         }
         composable<ProfileNavigation.EditProfile> {
-            val viewModel: EditProfileViewModel = koinInject()
+            val viewModel = koinViewModel<EditProfileViewModel>()
             EditProfileScreen(
                 state = viewModel.state.value,
                 errors = viewModel.errors,
@@ -131,7 +134,7 @@ fun ProfileNav(logout: () -> Unit) {
             }
         }
         composable<ProfileNavigation.Address> {
-            val viewModel: AddressViewModel = koinInject()
+            val viewModel = koinViewModel<AddressViewModel>()
             AddressScreen(
                 errors = viewModel.errors,
                 state = viewModel.state.value,

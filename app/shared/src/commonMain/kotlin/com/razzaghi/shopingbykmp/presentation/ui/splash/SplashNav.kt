@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.razzaghi.shopingbykmp.presentation.SharedViewModel
 import com.razzaghi.shopingbykmp.presentation.util.ChangeStatusBarColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onEach
@@ -18,10 +19,12 @@ import com.razzaghi.shopingbykmp.presentation.ui.splash.RegisterScreen
 import com.razzaghi.shopingbykmp.presentation.ui.splash.SplashScreen
 import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginAction
 import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun SplashNav(viewModel: LoginViewModel = koinInject(), navigateToMain: () -> Unit) {
+internal fun SplashNav(navigateToMain: () -> Unit) {
     val navigator = rememberNavController()
+    val viewModel = koinViewModel<LoginViewModel>()
 
     LaunchedEffect(viewModel) {
         delay(4000L)
