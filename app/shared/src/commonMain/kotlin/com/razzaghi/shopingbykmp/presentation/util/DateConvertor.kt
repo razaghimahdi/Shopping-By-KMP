@@ -1,7 +1,7 @@
 package com.razzaghi.shopingbykmp.presentation.util
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 
 fun String.convertDate() :String{

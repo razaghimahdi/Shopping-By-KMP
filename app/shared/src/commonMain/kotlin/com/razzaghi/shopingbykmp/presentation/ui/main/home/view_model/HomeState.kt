@@ -4,7 +4,7 @@ import com.razzaghi.shopingbykmp.business.core.NetworkState
 import com.razzaghi.shopingbykmp.business.core.ProgressBarState
 import com.razzaghi.shopingbykmp.business.core.ViewState
 import com.razzaghi.shopingbykmp.business.domain.main.Home
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

@@ -14,6 +14,8 @@ kotlin {
             api(libs.ktor.serialization)
             api(libs.ktor.negotiation)
 
+            api(libs.kotlinx.datetime)
+
             // Persistence
             api(libs.androidx.datastore.core)
             api(libs.androidx.datastore.preferences.core)

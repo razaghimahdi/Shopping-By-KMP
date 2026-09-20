@@ -4,7 +4,7 @@ import com.razzaghi.shopingbykmp.business.core.BaseViewModel
 import com.razzaghi.shopingbykmp.business.core.NetworkState
 import com.razzaghi.shopingbykmp.business.interactors.main.HomeUseCase
 import com.razzaghi.shopingbykmp.business.interactors.main.LikeUseCase
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import com.razzaghi.shopingbykmp.presentation.util.toLocalDateTimeOrNull
