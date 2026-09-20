@@ -3,7 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.androidApplication)
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeCompiler) // This already applies org.jetbrains.kotlin.plugin.compose!
+    id("org.jetbrains.compose") // Keep this one, it bundles your multiplatform resources
 }
 
 kotlin {

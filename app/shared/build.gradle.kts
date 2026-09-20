@@ -39,11 +39,11 @@ kotlin {
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
-            implementation(libs.compose.materialIcons)
+
+            implementation(libs.compose.material3)
 
             @Suppress("DEPRECATION")
             implementation(compose.materialIconsExtended)
@@ -53,8 +53,7 @@ kotlin {
             implementation(libs.compose.navigation)
 
             implementation(libs.koin.compose)
-
-
+            implementation(libs.koin.compose.viewmodel)
 
             implementation(libs.coil3)
             implementation(libs.coil3.core)
@@ -63,7 +62,6 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.koin.android)
-
             implementation(libs.androidx.datastore.preferences)
 
             implementation(libs.compose.uiToolingPreview)

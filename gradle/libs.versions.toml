@@ -10,8 +10,7 @@ android-minSdk = "24"
 android-targetSdk = "37"
 android-version-code = "1"
 android-version-name = "1.0"
-compose-material3-version = "1.11.0-alpha07"
-compose-icons-version = "1.7.3"
+compose-material3-version = "1.12.0-alpha03"
 # AndroidX & Jetpack
 androidx-activity = "1.13.0"
 androidx-appcompat = "1.8.0"
@@ -27,9 +26,10 @@ kotlinx-coroutines = "1.11.0"
 kotlin-wrappers = "2026.8.4"
 
 # Networking & DI (Ktor 3 & Koin)
-ktor = "3.5.2"
-koin = "4.0.0"
+ktor = "3.0.0"
+koin = "4.0.2"
 koin-compose = "4.0.0"
+koin-compose-viewmodel = "4.0.0"
 
 # UI & Utilities
 accompanist-version = "0.33.2-alpha"
@@ -77,7 +77,6 @@ compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMul
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "composeMultiplatform" }
-compose-materialIcons = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "compose-icons-version" }
 
 # --- AndroidX ---
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -103,6 +102,7 @@ koin-logger = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-compose-viewmodel" }
 
 # --- Ktor Client (Frontend) ---
 ktor-darwin-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }

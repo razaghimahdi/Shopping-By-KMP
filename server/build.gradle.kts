@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.ktor)
+    id("application")
     alias(libs.plugins.kotlinSerialization)
-
 }
 
 group = "com.razzaghi.shopingbykmp"
@@ -13,8 +12,7 @@ application {
 }
 
 dependencies {
-    // Shared multiplatform models & DTOs
-    api(project(":core"))
+    implementation(project(":core"))
 
     // Logging & Engine
     implementation(libs.logback)
