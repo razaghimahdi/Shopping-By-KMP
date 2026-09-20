@@ -2,7 +2,7 @@ name: Deploy WebApp
 
 on:
   push:
-#    branches: [web2] # or your preferred branch
+  #    branches: [web2] # or your preferred branch
   workflow_dispatch:
 
 permissions:
@@ -37,12 +37,12 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build WebApp
-        run: ./gradlew :webApp:jsBrowserDistribution
+        run: ./gradlew :app:webApp:jsBrowserDistribution
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: webApp/build/dist/js/productionExecutable
+          path: app/webApp/build/dist/js/productionExecutable
 
   deploy:
     runs-on: ubuntu-latest

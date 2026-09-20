@@ -1,42 +1,45 @@
 package com.razzaghi.shopingbykmp
 
-
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    // FIX: Removed the <*, *, *, *, *> type arguments entirely for AGP 9.x compatibility
+    commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
-        compileSdk =  libs.findVersion("android.compileSdk").get().toString().toInt()
-        namespace ="com.razzaghi.shopingbykmp.android"
+        compileSdk = libs.findVersion("android-compileSdk").get().toString().toInt()
 
-        defaultConfig {
-            minSdk = libs.findVersion("android.minSdk").get().toString().toInt()
+        // Dynamic namespace derived from module path
+        if (namespace == null) {
+            val modulePath = path.replace(":", ".").removePrefix(".")
+            namespace = "com.razzaghi.shopingbykmp.$modulePath"
         }
 
-        sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        sourceSets["main"].res.srcDirs("src/androidMain/res")
-        sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
-        sourceSets["main"].res.srcDirs("src/commonMain/composeResources", "src/androidMain/res")
+        // FIX: Using .apply {} to safely scope into the configuration blocks for AGP 9.x
+        defaultConfig.apply {
+            minSdk = libs.findVersion("android-minSdk").get().toString().toInt()
+        }
 
+        sourceSets.getByName("main").apply {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            res.srcDirs("src/androidMain/res")
+        }
 
-        compileOptions {
+        compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
     }
 
     configureKotlin()
-
 }
 
 internal fun Project.configureKotlinJvm() {
@@ -51,14 +54,11 @@ internal fun Project.configureKotlinJvm() {
 private fun Project.configureKotlin() {
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
-            // Set the JVM target
             jvmTarget.set(JvmTarget.JVM_17)
 
-            // Read the 'warningsAsErrors' project property
             val warningsAsErrors: String? by project
             allWarningsAsErrors.set(warningsAsErrors.toBoolean())
 
-            // Add free compiler arguments for specific API opt-ins
             freeCompilerArgs.addAll(
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
