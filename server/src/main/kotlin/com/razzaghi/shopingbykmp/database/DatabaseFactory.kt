@@ -13,7 +13,7 @@ object DatabaseFactory {
         // TODO: Move these to environment variables or an application.conf file later
         val driverClassName = "com.mysql.cj.jdbc.Driver"
         // Note: We add the timezone flag as MySQL often requires it to prevent connection crashes
-        val jdbcURL = "jdbc:mysql://localhost:3306/shopping_db?useSSL=false&serverTimezone=UTC"
+        val jdbcURL = "jdbc:mysql://localhost:3306/shopping_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
         val user = "root" // Default MySQL user is usually root, not postgres
         val password = "root" // <-- MAKE SURE TO PUT YOUR ACTUAL MYSQL PASSWORD HERE
 
