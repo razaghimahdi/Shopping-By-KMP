@@ -3,9 +3,8 @@ name: Deploy Backend Server
 on:
   push:
     branches:
-      - master # Or 'main', depending on your default branch
+      - master
     paths:
-      # Only trigger the deployment if changes happen in these backend-related folders
       - 'server/**'
       - 'core/**'
       - 'gradle/**'
@@ -29,22 +28,20 @@ jobs:
       - name: Setup Gradle Cache
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Build Fat JAR
-        # Uses the Ktor plugin to generate a standalone executable JAR
-        run: ./gradlew :server:buildFatJar
+      - name: Build Distribution
+        # Uses the native application plugin task instead of buildFatJar
+        run: ./gradlew :server:installDist
 
-      - name: Copy JAR to Server via SCP
+      - name: Copy Distribution to Server via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          # Path where Ktor places the compiled Fat JAR
-          source: "server/build/libs/*-all.jar"
-          # The destination directory on your Linux server
+          # Path where the application plugin places the executable package
+          source: "server/build/install/server/*"
           target: "/opt/shopping-backend"
-          # Removes the 'server/build/libs/' folder structure when copying
-          strip_components: 3
+          strip_components: 4
 
       - name: Restart Systemd Service
         uses: appleboy/ssh-action@v1.0.3
@@ -52,7 +49,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          # Restart the service so Nginx picks up the new live process
           script: |
+            # Ensure the generated start script is executable before restarting
+            sudo chmod +x /opt/shopping-backend/bin/server
             sudo systemctl restart shopping-backend.service
             sudo systemctl status shopping-backend.service

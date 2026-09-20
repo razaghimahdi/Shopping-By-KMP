@@ -32,67 +32,67 @@ jobs:
       # Build Android APK
       - name: Build Android
         if: matrix.platform == 'android'
-        run: ./gradlew :androidApp:assembleDebug
+        run: ./gradlew :app:androidApp:assembleDebug
 
       - name: Upload Android APK
         if: matrix.platform == 'android'
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: androidApp/build/outputs/apk/debug/androidApp-debug.apk
+          path: app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
 
       # Build iOS Framework
       - name: Build iOS
         if: matrix.platform == 'ios'
-        run: ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
+        run: ./gradlew :app:shared:linkDebugFrameworkIosSimulatorArm64
 
       # Build Android TV APK
       - name: Build TV App
         if: matrix.platform == 'tv'
-        run: ./gradlew :tvApp:assembleDebug
+        run: ./gradlew :app:tvApp:assembleDebug
 
       - name: Upload TV APK
         if: matrix.platform == 'tv'
         uses: actions/upload-artifact@v4
         with:
           name: tv-apk
-          path: tvApp/build/outputs/apk/debug/tvApp-debug.apk
+          path: app/tvApp/build/outputs/apk/debug/tvApp-debug.apk
 
       # Build Automotive APK
       - name: Build Automotive App
         if: matrix.platform == 'automotive'
-        run: ./gradlew :automotiveApp:assembleDebug
+        run: ./gradlew :app:automotiveApp:assembleDebug
 
       - name: Upload Automotive APK
         if: matrix.platform == 'automotive'
         uses: actions/upload-artifact@v4
         with:
           name: automotive-apk
-          path: automotiveApp/build/outputs/apk/debug/automotiveApp-debug.apk
+          path: app/automotiveApp/build/outputs/apk/debug/automotiveApp-debug.apk
 
       # Build Desktop App
       - name: Build Desktop
         if: matrix.platform == 'desktop'
-        run: ./gradlew :desktopApp:packageDistributionForCurrentOS
+        run: ./gradlew :app:desktopApp:packageDistributionForCurrentOS
 
       - name: Upload Desktop App
         if: matrix.platform == 'desktop'
         uses: actions/upload-artifact@v4
         with:
           name: desktop-app
-          path: desktopApp/build/compose/binaries/**
+          path: app/desktopApp/build/compose/binaries/**
 
       # Build Web App
       - name: Build WebApp
         if: matrix.platform == 'web'
-        run: ./gradlew :webApp:jsBrowserProductionWebpack
+        run: ./gradlew :app:webApp:jsBrowserProductionWebpack
 
       - name: Upload WebApp
         if: matrix.platform == 'web'
         uses: actions/upload-artifact@v4
         with:
           name: web-dist
-          path: webApp/build/distributions/
+          path: app/webApp/build/distributions/
 
   release:
     name: Create GitHub Release
