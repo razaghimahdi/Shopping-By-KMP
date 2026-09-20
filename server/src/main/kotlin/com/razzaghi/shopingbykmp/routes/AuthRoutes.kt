@@ -16,8 +16,8 @@ import kotlin.getValue
 
 
 fun Route.authRoutes() {
-    val authRepository by inject<AuthRepository>()
-    val tokenManager by inject<TokenManager>()
+    val authRepository by application.inject<AuthRepository>()
+    val tokenManager by application.inject<TokenManager>()
 
     post("/login") {
         val request = call.receive<LoginRequestDTO>()
@@ -34,32 +34,43 @@ fun Route.authRoutes() {
                 )
             )
         } else {
-            call.respond(HttpStatusCode.Unauthorized, MainGenericResponse(
-                result = null,
-                status = false,
-                alert = JAlertResponse(title = "Error", message = "Invalid email or password")
-            ))
+            call.respond(
+                HttpStatusCode.Unauthorized, MainGenericResponse(
+                    result = null,
+                    status = false,
+                    alert = JAlertResponse(title = "Error", message = "Invalid email or password")
+                )
+            )
         }
     }
 
     post("/register") {
-        val request = call.receive<RegisterRequestDTO>()
-        val isRegistered = authRepository.registerUser(request)
+        try {
+            val request = call.receive<RegisterRequestDTO>()
+            val isRegistered = authRepository.registerUser(request)
 
-        if (isRegistered) {
-            val token = tokenManager.generateJWTToken(request.email)
+            if (isRegistered) {
+                val token = tokenManager.generateJWTToken(request.email)
 
-            call.respond(HttpStatusCode.Created, MainGenericResponse(
-                result = token,
-                status = true,
-                alert = JAlertResponse(title = "Welcome", message = "Account created successfully")
-            ))
-        } else {
-            call.respond(HttpStatusCode.Conflict, MainGenericResponse(
-                result = null,
-                status = false,
-                alert = JAlertResponse(title = "Error", message = "User with this email already exists")
-            ))
+                call.respond(
+                    HttpStatusCode.Created, MainGenericResponse(
+                        result = token,
+                        status = true,
+                        alert = JAlertResponse(title = "Welcome", message = "Account created successfully")
+                    )
+                )
+            } else {
+                call.respond(
+                    HttpStatusCode.Conflict, MainGenericResponse(
+                        result = null,
+                        status = false,
+                        alert = JAlertResponse(title = "Error", message = "User with this email already exists")
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace() // Forces the stack trace into your server terminal
+            call.respondText("BACKEND CRASH: ${e.message}", status = HttpStatusCode.InternalServerError)
         }
     }
 }

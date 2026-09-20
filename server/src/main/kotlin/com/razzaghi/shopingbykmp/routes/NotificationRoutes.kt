@@ -2,6 +2,7 @@ package com.razzaghi.shopingbykmp.routes
 
 import com.razzaghi.shopingbykmp.business.datasource.network.common.JAlertResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
+import com.razzaghi.shopingbykmp.repository.CommentRepository
 import com.razzaghi.shopingbykmp.repository.NotificationRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -10,9 +11,10 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import kotlin.getValue
 
 fun Route.notificationRoutes() {
-    val repository by inject<NotificationRepository>()
+    val repository by application.inject<NotificationRepository>()
 
     authenticate("auth-jwt") {
         get("/notifications") {

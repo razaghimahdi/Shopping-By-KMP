@@ -12,7 +12,7 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Route.orderRoutes() {
-    val repository by inject<OrderRepository>()
+    val repository by application.inject<OrderRepository>()
 
     authenticate("auth-jwt") {
         get("/orders") {

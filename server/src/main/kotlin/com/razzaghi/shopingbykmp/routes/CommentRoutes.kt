@@ -4,6 +4,7 @@ import com.razzaghi.shopingbykmp.business.datasource.network.common.JAlertRespon
 import com.razzaghi.shopingbykmp.business.datasource.network.common.JRNothing
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.CommentRequestDTO
+import com.razzaghi.shopingbykmp.repository.CatalogRepository
 import com.razzaghi.shopingbykmp.repository.CommentRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -13,9 +14,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import kotlin.getValue
 
 fun Route.commentRoutes() {
-    val repository by inject<CommentRepository>()
+    val repository by application.inject<CommentRepository>()
 
     authenticate("auth-jwt") {
         route("/comment") {

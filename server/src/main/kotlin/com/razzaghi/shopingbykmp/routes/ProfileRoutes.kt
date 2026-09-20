@@ -18,7 +18,7 @@ import java.io.File
 import java.util.UUID
 
 fun Route.profileRoutes() {
-    val repository by inject<ProfileRepository>()
+    val repository by application.inject<ProfileRepository>()
 
     authenticate("auth-jwt") {
         route("/profile") {

@@ -11,7 +11,7 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Route.searchRoutes() {
-    val repository by inject<SearchRepository>()
+    val repository by application.inject<SearchRepository>()
 
     authenticate("auth-jwt") {
         route("/search") {

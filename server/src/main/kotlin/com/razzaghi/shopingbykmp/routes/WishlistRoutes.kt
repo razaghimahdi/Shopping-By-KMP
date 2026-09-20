@@ -13,7 +13,7 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Route.wishlistRoutes() {
-    val repository by inject<WishlistRepository>()
+    val repository by application.inject<WishlistRepository>()
 
     authenticate("auth-jwt") {
 

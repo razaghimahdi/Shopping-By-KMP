@@ -5,6 +5,8 @@ import com.razzaghi.shopingbykmp.business.datasource.network.common.JRNothing
 import com.razzaghi.shopingbykmp.business.datasource.network.common.MainGenericResponse
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.BasketAddRequestDTO
 import com.razzaghi.shopingbykmp.business.datasource.network.main.responses.BasketDeleteRequestDTO
+import com.razzaghi.shopingbykmp.repository.AddressRepository
+import com.razzaghi.shopingbykmp.repository.AuthRepository
 import com.razzaghi.shopingbykmp.repository.BasketRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -14,9 +16,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import kotlin.getValue
 
 fun Route.basketRoutes() {
-    val repository by inject<BasketRepository>()
+    val repository by application.inject<BasketRepository>()
 
     authenticate("auth-jwt") {
         route("/basket") {
