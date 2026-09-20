@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitViewController
-import globalLatitude
-import globalLongitude
-import mapViewController
+import com.razzaghi.shopingbykmp.globalLatitude
+import com.razzaghi.shopingbykmp.globalLongitude
+import com.razzaghi.shopingbykmp.mapViewController
 
 @Composable
 actual fun MapComponent(
