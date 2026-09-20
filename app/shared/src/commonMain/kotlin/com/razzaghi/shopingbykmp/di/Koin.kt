@@ -51,6 +51,7 @@ import com.razzaghi.shopingbykmp.presentation.ui.main.search.view_model.SearchVi
 import com.razzaghi.shopingbykmp.presentation.ui.main.settings.view_model.SettingsViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistViewModel
 import com.razzaghi.shopingbykmp.presentation.ui.splash.view_model.LoginViewModel
+import org.koin.core.module.dsl.viewModel
 
 
 fun appModule() = module {
@@ -63,24 +64,29 @@ fun appModule() = module {
     }
     single<SplashService> { SplashServiceImpl(get()) }
     single<MainService> { MainServiceImpl(get()) }
-    factory { SharedViewModel(get()) }
-    factory { LoginViewModel(get(), get(), get()) }
-    factory { HomeViewModel(get(), get()) }
-    factory { AddressViewModel(get()) }
-    factory { AddAddressViewModel(get()) }
-    factory { CategoriesViewModel(get()) }
-    factory { ProfileViewModel(get()) }
-    factory { SettingsViewModel(get()) }
-    factory { EditProfileViewModel(get(), get(), get()) }
-    factory { PaymentMethodViewModel() }
-    factory { NotificationsViewModel(get()) }
-    factory { MyCouponsViewModel() }
-    factory { MyOrdersViewModel(get()) }
-    factory { CheckoutViewModel(get(), get(), get()) }
-    factory { WishlistViewModel(get(), get()) }
-    factory { CartViewModel(get(), get(), get()) }
-    factory { DetailViewModel(get(), get(), get()) }
-    factory { SearchViewModel(get(), get()) }
+
+
+    viewModel { SharedViewModel(get()) }
+    viewModel { LoginViewModel(get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get()) }
+    viewModel { AddressViewModel(get()) }
+    viewModel { AddAddressViewModel(get()) }
+    viewModel { CategoriesViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { EditProfileViewModel(get(), get(), get()) }
+    viewModel { PaymentMethodViewModel() }
+    viewModel { NotificationsViewModel(get()) }
+    viewModel { MyCouponsViewModel() }
+    viewModel { MyOrdersViewModel(get()) }
+    viewModel { CheckoutViewModel(get(), get(), get()) }
+    viewModel { WishlistViewModel(get(), get()) }
+    viewModel { CartViewModel(get(), get(), get()) }
+    viewModel { DetailViewModel(get(), get(), get()) }
+    viewModel { SearchViewModel(get(), get()) }
+    viewModel { CommentViewModel(get(), get()) }
+
+
     single { WishListUseCase(get(), get()) }
     single { BasketListUseCase(get(), get()) }
     single { GetProfileUseCase(get(), get()) }
@@ -92,7 +98,6 @@ fun appModule() = module {
     single { SearchUseCase(get(), get()) }
     single { AddCommentUseCase(get(), get()) }
     single { BuyProductUseCase(get(), get()) }
-    single { CommentViewModel(get(), get()) }
     single { GetCommentsUseCase(get(), get()) }
     single { GetAddressesUseCase(get(), get()) }
     single { GetOrdersUseCase(get(), get()) }
