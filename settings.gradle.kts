@@ -39,6 +39,8 @@ plugins {
 include(":app:androidApp")
 include(":app:desktopApp")
 include(":app:shared")
+include(":app:tvApp")
+include(":app:automotiveApp")
 include(":app:webApp")
 include(":core")
 include(":server")
