@@ -1,0 +1,56 @@
+name: Deploy Backend Server
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'server/**'
+      - 'core/**'
+      - 'gradle/**'
+      - 'build-logic/**'
+      - '.github/workflows/deploy-server.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Setup Gradle Cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Distribution
+        # Uses the native application plugin task instead of buildFatJar
+        run: ./gradlew :server:installDist
+
+      - name: Copy Distribution to Server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          # Path where the application plugin places the executable package
+          source: "server/build/install/server/*"
+          target: "/opt/shopping-backend"
+          strip_components: 4
+
+      - name: Restart Systemd Service
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # Ensure the generated start script is executable before restarting
+            sudo chmod +x /opt/shopping-backend/bin/server
+            sudo systemctl restart shopping-backend.service
+            sudo systemctl status shopping-backend.service

@@ -1,0 +1,44 @@
+package com.razzaghi.shopingbykmp.presentation.ui.main.wishlist
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import org.koin.compose.koinInject
+import com.razzaghi.shopingbykmp.presentation.navigation.WishlistNavigation
+import com.razzaghi.shopingbykmp.presentation.ui.main.detail.DetailNav
+import com.razzaghi.shopingbykmp.presentation.ui.main.payment_method.view_model.PaymentMethodViewModel
+import com.razzaghi.shopingbykmp.presentation.ui.main.wishlist.view_model.WishlistViewModel
+import org.koin.compose.viewmodel.koinViewModel
+
+@Composable
+fun WishlistNav() {
+    val navigator = rememberNavController()
+    NavHost(
+        startDestination = WishlistNavigation.Wishlist,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        composable<WishlistNavigation.Wishlist> {
+            val viewModel = koinViewModel<WishlistViewModel>()
+            WishlistScreen(
+                state = viewModel.state.value,
+                errors = viewModel.errors,
+                events = viewModel::onTriggerEvent
+            ) {
+                navigator.navigate(WishlistNavigation.Detail(it))
+            }
+        }
+        composable<WishlistNavigation.Detail> { backStackEntry ->
+
+            val argument = backStackEntry.toRoute<WishlistNavigation.Detail>()
+            val id = argument.id
+            DetailNav(id) {
+                navigator.popBackStack()
+            }
+        }
+    }
+}

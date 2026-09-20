@@ -1,3 +1,5 @@
+rootProject.name = "Shopping-By-Kmp"
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -10,6 +12,8 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -23,17 +27,20 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
-        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
-rootProject.name = "Shoping_By_KMP"
-include(":androidApp")
-include(":shared")
-include(":desktopApp")
-include(":tvApp")
-include(":webApp")
-include(":automotiveApp")
+include(":app:androidApp")
+include(":app:desktopApp")
+include(":app:shared")
+include(":app:tvApp")
+include(":app:automotiveApp")
+include(":app:webApp")
+include(":core")
+include(":server")

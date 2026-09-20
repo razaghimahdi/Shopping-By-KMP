@@ -5,12 +5,13 @@ plugins {
 group = "com.razzaghi.shopingbykmp.buildlogic"
 
 dependencies {
-    compileOnly(libs.plugins.kotlin.serialization.toDep())
-    compileOnly(libs.plugins.androidApplication.toDep())
-    compileOnly(libs.plugins.androidLibrary.toDep())
-    compileOnly(libs.plugins.composeMultiplatform.toDep())
-    compileOnly(libs.plugins.kotlinMultiplatform.toDep())
-    compileOnly(libs.plugins.compose.compiler.toDep())
+    // Changed from compileOnly to implementation so they are available at runtime!
+    implementation(libs.plugins.androidApplication.toDep())
+    implementation(libs.plugins.androidLibrary.toDep())
+    implementation(libs.plugins.composeMultiplatform.toDep())
+    implementation(libs.plugins.composeCompiler.toDep())
+    implementation(libs.plugins.kotlinMultiplatform.toDep())
+    implementation(libs.plugins.kotlinSerialization.toDep())
 }
 
 fun Provider<PluginDependency>.toDep() = map {
@@ -30,9 +31,9 @@ gradlePlugin {
             id = "com.razzaghi.shopingbykmp.kotlinMultiplatform"
             implementationClass = "KotlinMultiplatformConventionPlugin"
         }
-        register("shared") {
-            id = "com.razzaghi.shopingbykmp.shared"
-            implementationClass = "SharedConventionPlugin"
+        register("core") {
+            id = "com.razzaghi.shopingbykmp.core"
+            implementationClass = "CoreConventionPlugin"
         }
         register("androidApp") {
             id = "com.razzaghi.shopingbykmp.androidApp"
